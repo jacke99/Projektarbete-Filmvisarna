@@ -7,3 +7,9 @@
 * {
   font-family: "Karla", sans-serif;
 }
+
+@layer utilities {
+  .translate-50-50 {
+    transform: translate(-50%, -50%);
+  }
+}
