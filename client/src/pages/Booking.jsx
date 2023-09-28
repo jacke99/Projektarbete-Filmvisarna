@@ -4,6 +4,7 @@ import { killersImage } from "../assets";
 import {styles} from "../styles.js"
 import { Link } from 'react-router-dom';
 import MovieFilterForm from "../components/MovieFilterForm";
+import BookMovieHero from "../components/BookMovieHero";
 
 export default function Booking() {
 
@@ -22,7 +23,7 @@ export default function Booking() {
       </div>
  </div>
   <MovieFilterForm/>
- 
+ <BookMovieHero/>
   
   </div>
   )
