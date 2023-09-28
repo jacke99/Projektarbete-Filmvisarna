@@ -8,7 +8,7 @@ const styles = {
     "text-white-100 font-inconsolata  sm:text-[15px] md:text-[20px] lg:text-[25px]",
   trailerTitle: "text-gold sm:text-[20px] md:text-[35px] lg:text-[40px]",
   trailerSubTitle: "text-gold sm:text-[13px] md:text-[20px] lg:text-[25px]",
-  regInputs: "bg-white-500 shadow appearance-none border rounded-lg w-40 py-4 px-3 m-1 my-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+  regInputs: ": bg-white-500 shadow appearance-none border rounded-lg  py-4 px-3 m-2 my-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
   
 };
 
