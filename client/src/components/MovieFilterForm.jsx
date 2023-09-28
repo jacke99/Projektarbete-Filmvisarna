@@ -3,7 +3,7 @@ import {styles} from "../styles.js";
 
 export default function MovieFilterForm(){
     return(
-        <div className="max-w-md mx-auto">
+        <div className="max-w-full">
   <form className="flex flex-col space-y-4 items-center my-10 sm: [flex-col] md:[flex-col] lg:[flex-row]">
 
     <div className="md:flex md:space-x-4">
