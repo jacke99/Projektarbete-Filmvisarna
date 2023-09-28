@@ -5,7 +5,7 @@ export default {
     extend: {
       colors: {
         primary: "#050816",
-        footerGrey: "363636",
+        footerGrey: "#363636",
         gold: "#DACA88",
         "black-100": "#100d25",
         "black-200": "#090325",
