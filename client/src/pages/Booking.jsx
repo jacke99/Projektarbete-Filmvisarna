@@ -8,12 +8,13 @@ export default function Booking() {
 
   return(
   <div className="bg-primary font-inconsolata">
-    <div>
+    <div className="relative">
       <img
         src={killersImage} 
         alt="photo from the movie Killers"
         style={{ width: '100%', maxHeight: 'auto' }}
       />
+      <h1 className={`${styles.centerAbsolutePos} text-gold`}>test text</h1>
  </div>
 
  <div className="max-w-md mx-auto">
@@ -27,7 +28,8 @@ export default function Booking() {
         <select
           id="ageLimit"
           name="ageLimit"
-          className={`w-full border border-gray-300 rounded-md p-1.5 text-sm text-gray-400 my-2`}
+          
+          className={`${styles.inputStyle}`}
         >
           <option value="0">Alla åldrar</option>
           <option value="12">12 år</option>
@@ -44,7 +46,8 @@ export default function Booking() {
           type="date"
           id="datePicker"
           name="datePicker"
-          className={`w-full border border-gray-300 rounded-md p-1.5 text-sm text-gray-400 my-2`}
+          size="20"
+          className={`${styles.inputStyle}`}
         />
       </div>
     </div>
@@ -55,6 +58,7 @@ export default function Booking() {
         type="text"
         id="filmTitle"
         name="filmTitle"
+        
         className={`w-full border border-gray-300 rounded-md p-1.5 text-sm text-gray-400 my-2`}
       />
     </div>
