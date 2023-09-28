@@ -9,7 +9,7 @@ export default function Booking() {
 
 
   return(
-  <div className="bg-primary font-inconsolata">
+  <div className="bg-primary font-inconsolata max-w-full min-w-full">
     <div className="relative">
       <img
         src={killersImage} 
