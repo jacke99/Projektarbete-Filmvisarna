@@ -10,6 +10,10 @@ const styles = {
   trailerSubTitle: "text-gold sm:text-[13px] md:text-[18px] lg:text-[20px]",
   movieDescInfo:
     "text-white-100 sm:text-[12px] md:text-[15px] lg:text-[20px] flex flex-col py-2",
+  inputStyle:
+    "w-full border border-gray-300 rounded-md p-1.5 text-sm text-gray-400 my-2 h-8",
+  centerAbsolutePos:
+    "absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2",
 };
 
 export { styles };
