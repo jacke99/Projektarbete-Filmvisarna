@@ -1,4 +1,4 @@
-import aLittleLifeImage from "./aLittelLifeImage.png";
+import aLittlerLifeImage from "./aLitterLifeImage.png";
 import aLittleLifePoster from "./aLittleLifePoster.png";
 import logo from "./filmvisarna-logo.png";
 import killersImage from "./killersImage.jpg";
@@ -11,7 +11,7 @@ import theCreatorImage from "./theCreatorImage.png";
 import theCreatorPoster from "./theCreatorPoster.jpg";
 
 export {
-  aLittleLifeImage,
+  aLittlerLifeImage,
   aLittleLifePoster,
   logo,
   killersImage,
