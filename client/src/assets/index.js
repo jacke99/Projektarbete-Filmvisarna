@@ -28,4 +28,8 @@ export {
   smsPoster,
   theCreatorImage,
   theCreatorPoster,
+<<<<<<< HEAD
 };
+=======
+}; 
+>>>>>>> 89514c6c9754d74b8081a5a475bc92215f0672d8
