@@ -1,5 +1,13 @@
+import {
+  theCreatorPoster,
+  smsPoster,
+  killersPoster,
+  pastLivesPoster,
+  aLittleLifePoster,
+} from "../assets/index.js";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import MovieCard from "./movieCard.jsx";
 
 export default function MultiCarousel() {
   const responsive = {
@@ -10,24 +18,55 @@ export default function MultiCarousel() {
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 3,
+      items: 4,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 2,
+      items: 4,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1,
+      items: 2,
     },
   };
 
-  return (
-    <Carousel responsive={responsive}>
-      <div>Item 1</div>
-      <div>Item 2</div>
-      <div>Item 3</div>
-      <div>Item 4</div>
-    </Carousel>
-  );
+  const movieData = [
+    {
+      id: 1,
+      title: "A little life",
+      img: aLittleLifePoster,
+      alt: "picture from movie A little life ",
+    },
+    {
+      id: 2,
+      title: "Killers of the Flower Moon",
+      img: killersPoster,
+      alt: "picture from movie Killers of the Flower Moon ",
+    },
+    {
+      id: 3,
+      title: "Passed lives",
+      img: pastLivesPoster,
+      alt: "picture from movie Passed Lives ",
+    },
+    {
+      id: 4,
+      title: "SMS",
+      img: smsPoster,
+      alt: "picture from movie SMS ",
+    },
+    {
+      id: 5,
+      title: "The Creator",
+      img: theCreatorPoster,
+      alt: "picture from movie The Creator ",
+    },
+  ];
+
+  const movie = movieData.map((movie) => (
+    // eslint-disable-next-line react/jsx-key
+    <MovieCard title={movie.title} img={movie.img} alt={movie.alt} />
+  ));
+
+  return <Carousel responsive={responsive}>{movie}</Carousel>;
 }
