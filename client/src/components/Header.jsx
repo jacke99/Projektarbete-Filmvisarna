@@ -6,7 +6,7 @@ export default function Header() {
   const [active, setActive] = useState("")
   const [toggle, setToggle] = useState(false)
   return (
-  <nav className={`${styles.paddingX} bg-primary fixed w-full py-5 top-0 flex justify-between border-b-2 border-gold`}>
+  <nav className={`${styles.paddingX} bg-primary fixed w-full py-5 top-0 flex justify-between border-b-2 border-gold z-20`}>
     <div className="w-full flex">
       <Link to="/" onClick={() => {
         setActive("")
