@@ -1,8 +1,8 @@
-import filmvisarnaLogo from "../assets/filmvisarna-logo.png" 
-
+import filmvisarnaLogo from "../assets/logo.png" 
 
 export default function Footer() {
-  return <footer
+  return ( 
+    <footer
     className="px-3 fixed bottom-0 w-full bg-gray-600 text-white">
       <div className="">
         <div className="flex justify-between pt-6">
@@ -87,5 +87,6 @@ export default function Footer() {
             >
           </p>
         </div>
-  </footer>
+    </footer>
+  );
 }
