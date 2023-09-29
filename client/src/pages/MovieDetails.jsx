@@ -2,8 +2,8 @@ import { killersPoster, killersImage } from "../assets/index.js";
 import { styles } from "../styles.js";
 export default function MovieDetails() {
   return (
-    <div className=" h-full bg-primary">
-      <div className="relative h-96 md:h-[28rem] lg:h-[32rem]">
+    <div className=" mt-20 h-full bg-primary">
+      <div className="relative h-96 md:h-[30rem] lg:h-[36rem]">
         <img
           src={killersImage}
           alt="movie poster"

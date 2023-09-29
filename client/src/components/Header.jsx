@@ -7,7 +7,7 @@ export default function Header() {
   const [toggle, setToggle] = useState(false);
   return (
     <nav
-      className={`${styles.paddingX} fixed top-0 flex w-full justify-between border-b-2 border-gold bg-primary py-5`}
+      className={`${styles.paddingX} fixed top-0 z-20 flex w-full justify-between border-b-2 border-gold bg-primary py-5`}
     >
       <div className="flex w-full">
         <Link
