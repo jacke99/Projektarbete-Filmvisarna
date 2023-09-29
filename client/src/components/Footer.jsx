@@ -1,9 +1,10 @@
-import filmvisarnaLogo from "../assets/filmvisarna-logo.png" 
+import filmvisarnaLogo from "../assets/logo.png" 
 
 
 export default function Footer() {
-  return <footer
-    className="px-3 fixed bottom-0 w-full bg-gray-600 text-white">
+  return ( 
+  <footer
+    className="px-3 bottom-0 w-full bg-[#363636] text-white">
       <div className="">
         <div className="flex justify-between pt-6">
         <div className="flex justify-start font-semibold tracking-widest">
@@ -59,7 +60,7 @@ export default function Footer() {
       <div className="flex w-full justify-end text-xs mr-3.5 mb-0 mt-3">
       <span>© 2023 Copyright:</span>
       <a
-        className=" ml-1 font-semibold tracking-widest text-neutral-600 dark:text-neutral-400"
+        className=" ml-1 mb-1 font-semibold tracking-widest text-neutral-600 dark:text-neutral-400"
         href="https://tailwind-elements.com/"
         >Filmvisarna</a
       >
@@ -88,4 +89,5 @@ export default function Footer() {
           </p>
         </div>
   </footer>
+  );
 }
