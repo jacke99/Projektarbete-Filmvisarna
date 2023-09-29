@@ -3,7 +3,7 @@ import { styles } from "../styles.js";
 export default function MovieDetails() {
   return (
     <div className=" h-full bg-primary">
-      <div className="relative h-96">
+      <div className="relative h-96 md:h-[28rem] lg:h-[32rem]">
         <img
           src={killersImage}
           alt="movie poster"
@@ -12,14 +12,14 @@ export default function MovieDetails() {
         <img
           src={killersPoster}
           alt="movie poster"
-          className="  md: absolute bottom-28 left-5 block h-44 sm:hidden"
+          className="  absolute bottom-28 left-5 block h-44 sm:hidden "
         />
         <div
           className={`absolute bottom-7 left-5 rounded bg-primary bg-opacity-60 p-1 lg:left-24`}
         >
           <p className={`${styles.trailerTitle} `}>Lorem Ipsum</p>
           <p className={`${styles.trailerSubTitle} `}>Romantica, Comadia</p>
-          <p className={`${styles.trailerSubTitle} font-inconsolata bold`}>
+          <p className={`${styles.trailerSubTitle} bold font-inconsolata`}>
             1 tim 33min | 11 år
           </p>
         </div>
