@@ -10,8 +10,8 @@ import smsPoster from "./smsPoster.png";
 import theCreatorImage from "./theCreatorImage.png";
 import theCreatorPoster from "./theCreatorPoster.jpg";
 import menu from "./menu.svg";
-import account_circle from "./account_circle.svg"
-import close from "./close.svg"
+import account_circle from "./account_circle.svg";
+import close from "./close.svg";
 
 export {
   aLittleLifeImage,
@@ -28,4 +28,8 @@ export {
   smsPoster,
   theCreatorImage,
   theCreatorPoster,
+<<<<<<< HEAD
+};
+=======
 }; 
+>>>>>>> 89514c6c9754d74b8081a5a475bc92215f0672d8
