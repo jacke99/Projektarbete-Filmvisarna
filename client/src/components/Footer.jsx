@@ -3,7 +3,7 @@ import filmvisarnaLogo from "../assets/logo.png"
 export default function Footer() {
   return ( 
     <footer
-    className="px-3 fixed bottom-0 w-full bg-gray-600 text-white">
+    className="px-3 bottom-0 w-full bg-gray-600 text-white">
       <div className="">
         <div className="flex justify-between pt-6">
         <div className="flex justify-start font-semibold tracking-widest">
