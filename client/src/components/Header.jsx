@@ -41,6 +41,22 @@ export default function Header() {
               Hem
             </li>
           </Link>
+
+          <Link
+            to="/"
+            onClick={() => {
+              setActive("");
+              window.scrollTo(0, 0);
+            }}
+          >
+            <li
+              className={`${
+                active === "" ? "text-white" : "text-gold"
+              } cursor-pointer hover:text-white`}
+            >
+              Hem
+            </li>
+          </Link>
           <Link
             to="/movies"
             onClick={() => {
