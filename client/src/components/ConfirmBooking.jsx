@@ -8,10 +8,13 @@ export default function ConfirmBooking() {
   };
 
   return (
-    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white z-50 p-5 shadow-md text-center">
+    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gold z-50 p-5 shadow-md text-center">
       {bookingConfirmed && (
         <div className="booking-confirmation">
-          <p>Your booking has been confirmed!</p>
+          <h1>Tack för din bokning!</h1>
+          <p>dina bokade platser: stol 33, stol 32 rad 3</p>
+          <p>dinmail@mail.com</p>
+          <p>07633XXXXX</p>
           <button onClick={handleCloseConfirmation} className='booking-btn'>Close</button>
         </div>
       )}
