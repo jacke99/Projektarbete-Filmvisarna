@@ -9,7 +9,7 @@ export default function Register() {
       <h2 className={`${styles.headerText} text-white text-center  pt-40 pb-10  text-4xl`}>
         Bli en del av familjen!
       </h2>
-      <p className=" text-white text-center w-[60%] m-auto lg:text-lg">Välkommen till oss på Filmvisarna. Vi älskar film! Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia
+      <p className=" text-white text-center sm:w-[70%] px-6 md:-[60%] m-auto lg:text-lg">Välkommen till oss på Filmvisarna. Vi älskar film! Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia
          e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo 
         tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. quando.</p>
     </div>
