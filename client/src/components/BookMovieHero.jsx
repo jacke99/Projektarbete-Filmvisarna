@@ -1,5 +1,3 @@
-import React from "react";
-import {styles} from "../styles.js";
 import { killersPoster, pastLivesPoster,smsPoster } from "../assets";
 export default function BookMovieHero(){
     return(
