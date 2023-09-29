@@ -4,11 +4,11 @@ import TicketCounter from "../components/TicketCounter";
 
 export default function BookMovie() {
   return (
-    <section>
+    <section className="mt-20 flex flex-col items-center ">
         <TicketCounter />
         <ChooseSeats />
 
-        <button>Boka</button>
+        <button className="bg-gold">Boka</button>
     </section>
   )
 }
