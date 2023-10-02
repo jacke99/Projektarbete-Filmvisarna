@@ -12,6 +12,10 @@ import theCreatorPoster from "./theCreatorPoster.jpg";
 import menu from "./menu.svg";
 import account_circle from "./account_circle.svg";
 import close from "./close.svg";
+import footerIconFB from "../assets/footerIconFB.svg";
+import footerIconGH from "../assets/footerIconGH.svg";
+import fotterIconIG from "../assets/footerIconIG.svg";
+import fotterIconTW from "../assets/footerIconTW.svg";
 
 export {
   aLittleLifeImage,
@@ -28,4 +32,8 @@ export {
   smsPoster,
   theCreatorImage,
   theCreatorPoster,
+  footerIconFB,
+  footerIconGH,
+  fotterIconIG,
+  fotterIconTW,
 };
