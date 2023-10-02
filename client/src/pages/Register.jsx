@@ -42,7 +42,7 @@ export default function Register() {
       
       {/* Password Confirm */}
       <input className={`${styles.regInputs} w-[85%]  `} {...defaults('confirm_password', 'Bekräfta lösenord. . .',  { minLength: 8, type: 'password' }, 
-      val => val === formData.password, 'You must match the password!'
+      val => val === formData.password, 'OBS - lösenorden måste matcha varandra!'
       )} />
 
       {/* Button Submit */}
