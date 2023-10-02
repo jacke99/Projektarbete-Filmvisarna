@@ -12,6 +12,8 @@ import theCreatorPoster from "./theCreatorPoster.jpg";
 import menu from "./menu.svg";
 import account_circle from "./account_circle.svg";
 import close from "./close.svg";
+import popcorn from "./popcorn.jpg";
+import projector from "./projector.jpg"
 
 export {
   aLittleLifeImage,
@@ -28,4 +30,6 @@ export {
   smsPoster,
   theCreatorImage,
   theCreatorPoster,
+  popcorn,
+  projector
 };
