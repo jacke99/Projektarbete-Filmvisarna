@@ -11,11 +11,11 @@ export default function BookMovie() {
     senior: 0,
   });
   return (
-    <section>
-        <TicketCounter />
-        <ChooseSeats />
+    <section className="intems-center mt-20 flex flex-col">
+      <TicketCounter />
+      <ChooseSeats />
 
-        <button>Boka</button>
+      <button>Boka</button>
     </section>
-  )
+  );
 }
