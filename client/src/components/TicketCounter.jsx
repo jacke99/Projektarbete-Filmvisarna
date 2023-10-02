@@ -15,11 +15,11 @@ export default function TicketCounter() {
     }
   }
   return (
-    <div className="mt-28 flex flex-col text-center text-xl text-white sm:flex-row justify-evenly sm:mt-40 sm:text-2xl">
-      <div className="sm:text-3xl">
-        <h2 className="mb-6 text-3xl sm:text-4xl">Välj antal biljetter</h2>
-        <div className="flex flex-col">
-          <p className="text-">Vuxen</p>
+    <div className="mt-28 flex flex-col text-center text-xl text-white sm:flex-row justify-evenly sm:mt-40 sm:text-2xl p-8">
+      <div className="sm:text-3xl lg:w-2/5">
+        <h2 className="mb-6 text-3xl sm:text-3xl lg:text-left">Välj antal biljetter</h2>
+        <div className="lg:flex lg:items-center lg:justify-between">
+          <p className="sm:text-2xl">Vuxen</p>
           <div className=" flex items-center justify-center">
             <button className="text-4xl sm:text-5xl" name="adult" onClick={(e) => decreaseCounters(e)}>
               -
@@ -30,8 +30,8 @@ export default function TicketCounter() {
             </button>
           </div>
         </div>
-        <div>
-          <p>Barn</p>
+        <div className="lg:flex lg:items-center lg:justify-between">
+          <p className="sm:text-2xl">Barn</p>
           <div className="flex items-center justify-center">
             <button className="text-4xl sm:text-5xl" name="child" onClick={(e) => decreaseCounters(e)}>
               -
@@ -42,8 +42,8 @@ export default function TicketCounter() {
             </button>
           </div>
         </div>
-        <div>
-          <p>Pensionär</p>
+        <div className="lg:flex lg:items-center lg:justify-between">
+          <p className="sm:text-2xl">Pensionär</p>
           <div className="flex items-center justify-center">
             <button className="text-4xl sm:text-5xl" name="senior" onClick={(e) => decreaseCounters(e)}>
               -
