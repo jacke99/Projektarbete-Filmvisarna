@@ -1,8 +1,6 @@
 import Header from "../components/Header.jsx";
 import {
   killersImage,
-  theCreatorPoster,
-  killersPoster,
   theCreatorImage,
   pastLivesImage,
 } from "../assets/index.js";
@@ -17,7 +15,7 @@ export default function Home() {
         <MovieImgBlock movieImg={killersImage} />
         <MultiCarousel />
         <MovieImgBlock movieImg={theCreatorImage} />
-
+        <MultiCarousel />
         <MovieImgBlock movieImg={pastLivesImage} />
       </main>
     </>
