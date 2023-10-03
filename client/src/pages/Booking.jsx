@@ -5,7 +5,7 @@ import {styles} from "../styles.js"
 import { Link } from 'react-router-dom';
 import MovieFilterForm from "../components/MovieFilterForm";
 import BookMovieHero from "../components/BookMovieHero";
-import ConfirmBooking from "../components/ConfirmBooking";
+
 
 export default function Booking() {
 
@@ -25,7 +25,7 @@ export default function Booking() {
  </div>
   <MovieFilterForm/>
  <BookMovieHero/>
- <ConfirmBooking/>
+
   
   </div>
   )
