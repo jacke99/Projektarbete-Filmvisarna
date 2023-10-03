@@ -1,3 +1,7 @@
+import BookingPartTwo from "../components/BookingPartTwo";
+
 export default function Movies() {
-  return <div>Movies</div>;
+  return <div>
+<BookingPartTwo/>
+  </div>;
 }
