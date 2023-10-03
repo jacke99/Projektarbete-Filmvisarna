@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import MovieDetails from "./pages/MovieDetails";
 import "./index.css";
 
+
 const router = createBrowserRouter([
   {
     path: "/",
