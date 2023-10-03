@@ -35,7 +35,7 @@ export default function Footer() {
           className="h-6 w-6"
         />
       </div>
-      
+      </div>
       <div className="flex w-full justify-end text-xs mr-3.5 mb-0 mt-3">
       <span>© 2023 Copyright:</span>
       <a
@@ -43,7 +43,6 @@ export default function Footer() {
         href="https://tailwind-elements.com/"
         >Filmvisarna</a
       >
-      </div>
       </div>
         <div className="flex justify-around border-t-2 p-3 text-xs gap-1 border-gray-400">
           <p className="">
