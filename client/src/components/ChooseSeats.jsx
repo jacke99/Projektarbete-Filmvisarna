@@ -109,12 +109,25 @@ export default function ChooseSeats() {
     
     return <div>{rows}</div>;
     };
-
+  console.log(seats)
   return (
-    <div className="lg:w-80 md:w-[70%] w-[80%] container">
-    <div className="screen">
+    <div className="lg:w-80 md:w-[70%] w-[80%] container mt-5">
+    <div className="screen mb-7 mt-4">
     </div>
         {DivGenerator()}
+        <div className="text-white text-center mt-2 mb-4">
+          <p>Total tickets:  {counters.total}</p>
+          <p>
+           Row: {seats.length && seats[0].row + " -"} {seats.length && seats.length > 1 ? "Seats: " : "Seat: "}
+          {seats.length && seats.map((seat, i) => {
+            if(i + 1 === seats.length) {
+             return seat.seat
+            } else {
+             return seat.seat + ", "
+            }
+            })}
+          </p>
+        </div>
     </div>
   )
 }

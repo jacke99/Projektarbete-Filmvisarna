@@ -19,7 +19,7 @@ export default function TicketCounter() {
     }
   }
   return (
-    <div className="mt-28 flex flex-col text-center text-xl text-white sm:flex-row justify-evenly sm:mt-40 sm:text-2xl p-8 lg:w-[80%]">
+    <div className="flex flex-col text-center text-xl text-white sm:flex-row justify-evenly sm:mt-40 sm:text-2xl p-8 lg:w-[80%]">
       <div className="sm:text-3xl lg:w-2/5">
         <h2 className="mb-6 text-3xl sm:text-3xl lg:text-left lg:text-[2.5rem]">Välj antal biljetter</h2>
         <div className="lg:flex lg:items-center lg:justify-between">
