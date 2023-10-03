@@ -4,12 +4,14 @@ export function useFormDefaults() {
 
   const [formData, setFormData] = useState({});
 
+  console.log(formData);
+
   function defaults(
     name,
     placeholder,
     override = {},
     validator = () => true,
-    invalidMessage = 'Not valid'
+    invalidMessage = 'Inte giltig'
   ) {
     return {
       name,
