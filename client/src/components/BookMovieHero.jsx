@@ -15,7 +15,7 @@ export default function BookMovieHero(){
         <p className="font-inconsolata text-xs">Sifi, drama</p>
         <p className="text-xs">1 tim 33min | 11 år</p>
       </div>
-      <button className={`${styles.buttonStyle} md:ml-auto`}>Boka</button>
+      <button className={`${styles.buttonStyle} md:ml-auto lg:ml-auto`}>Boka</button>
     </div>
 
     <div className="max-w-full p-4 flex items-center justify-between md:justify-start lg:justify-start md:px-20 lg:px-96">
@@ -30,7 +30,7 @@ export default function BookMovieHero(){
         <p className="font-inconsolata text-xs">Sifi, drama</p>
         <p className="text-xs">1 tim 33min | 11 år</p>
       </div>
-      <button className={`${styles.buttonStyle} md:ml-auto`}>Boka</button>
+      <button className={`${styles.buttonStyle} md:ml-auto lg:ml-auto`}>Boka</button>
     </div>
 
 
@@ -46,7 +46,7 @@ export default function BookMovieHero(){
         <p className="font-inconsolata text-xs">Sifi, drama</p>
         <p className="text-xs">1 tim 33min | 11 år</p>
       </div>
-      <button className={`${styles.buttonStyle} md:ml-auto`}>Boka</button>
+      <button className={`${styles.buttonStyle} md:ml-auto lg:ml-auto`}>Boka</button>
     </div>
 </>
 )

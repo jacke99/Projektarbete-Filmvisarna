@@ -5,11 +5,11 @@ import { styles } from "../styles";
 
 export default function BookingPartTwo(){
     return(
-        <div className=" mt-40 px-6 flex flex-col">
+        <div className="lg:px-96 mt-40 px-6 flex flex-col">
              <NavLink to="/booking" className="text-white-100 font-inconsolata underline mb-6"> Tillbaka</NavLink>
-            <h1 className="text-white-100 text-xl mb-8">The Creator | Sön 24 sep</h1>
+            <h1 className="text-white-100 text-xl mb-8 lg:text-4xl">The Creator | Sön 24 sep</h1>
             
-            <div className="mb-10 max-w-full flex items-end justify-start md:justify-start lg:justify-start">
+     <div className="mb-10 max-w-full flex items-end justify-start md:justify-start lg:justify-start">
       <img
         src={killersPoster}
         alt="movie poster from Killers of the flower moon"
@@ -33,7 +33,7 @@ export default function BookingPartTwo(){
     <div className="text-white-100 mb-10">
         <p>Totalt att betala: 298.00 SEK</p>
     </div>
-    <button className={`${styles.buttonStyle} mb-10 md:max-w-xs`}>Boka</button>
+    <button className={`${styles.buttonStyle} mb-10 md:max-w-xs lg:`}>Boka</button>
 
     </div>
     )
