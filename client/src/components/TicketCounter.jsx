@@ -8,12 +8,14 @@ export default function TicketCounter() {
     const {name} = e.target;
     if(eval(counters.adult + counters.child + counters.senior) < 8) {
       counters[name]++
+      counters.total++
     }
   }
   function decreaseCounters(e) {
     const {name} = e.target;
     if (counters[name] > 0) {
       counters[name]--
+      counters.total--
     }
   }
   return (
