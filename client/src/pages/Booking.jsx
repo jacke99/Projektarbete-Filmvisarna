@@ -3,10 +3,15 @@ import { styles } from "../styles.js";
 import { Link } from "react-router-dom";
 import MovieFilterForm from "../components/MovieFilterForm";
 import BookMovieHero from "../components/BookMovieHero";
+import BookingPartTwo from "../components/BookingPartTwo";
 
 
 export default function Booking() {
   return (
+    <BookingPartTwo/>
+  );
+}
+{/*
     <div className="mt-20 min-w-full max-w-full bg-primary font-inconsolata">
       <div className="relative">
         <img
@@ -26,6 +31,4 @@ export default function Booking() {
       </div>
       <MovieFilterForm />
       <BookMovieHero />
-    </div>
-  );
-}
+</div>*/}
