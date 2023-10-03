@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import MovieFilterForm from "../components/MovieFilterForm";
 import BookMovieHero from "../components/BookMovieHero";
 
+
 export default function Booking() {
   return (
     <div className="mt-20 min-w-full max-w-full bg-primary font-inconsolata">
