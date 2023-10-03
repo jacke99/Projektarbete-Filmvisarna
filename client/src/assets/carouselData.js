@@ -13,7 +13,7 @@ import {
 export const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
-    breakpoint: { max: 1536, min: 1280 },
+    breakpoint: { max: Infinity, min: 1280 },
     items: 4,
   },
   desktop: {
