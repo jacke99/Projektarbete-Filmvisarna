@@ -1,6 +1,7 @@
 import ChooseSeats from "../components/ChooseSeats";
 import TicketCounter from "../components/TicketCounter";
-import { useStates } from "react-easier";
+import {useStates} from "react-easier"
+
 
 export default function BookMovie() {
   //eslint-disable-next-line
@@ -10,11 +11,11 @@ export default function BookMovie() {
     senior: 0,
   });
   return (
-    <section className="intems-center mt-20 flex flex-col">
-      <TicketCounter />
-      <ChooseSeats />
+    <section className="mt-20 mb-40 flex flex-col items-center ">
+        <TicketCounter />
+        <ChooseSeats />
 
-      <button>Boka</button>
+        <button className="bg-gold">Fortsätt</button>
     </section>
   );
 }
