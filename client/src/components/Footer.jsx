@@ -35,28 +35,7 @@ export default function Footer() {
           className="h-6 w-6"
         />
       </div>
-      <div className="flex justify-around gap-1 border-t-2 border-gray-400 p-3 text-xs">
-        <p className="">
-          <a href="#!" className="">
-            Om oss
-          </a>
-        </p>
-        <p className="">
-          <a href="#!" className="">
-            Kontakta oss
-          </a>
-        </p>
-        <p className="">
-          <a href="#!" className="">
-            Villkor
-          </a>
-        </p>
-        <p>
-          <a href="#!" className="">
-            Nyhetsbrev
-          </a>
-        </p>
-      </div>
+      
       <div className="flex w-full justify-end text-xs mr-3.5 mb-0 mt-3">
       <span>© 2023 Copyright:</span>
       <a
