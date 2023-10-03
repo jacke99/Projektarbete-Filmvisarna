@@ -22,36 +22,44 @@ export default function Register() {
     </header>
 
     <form className="flex flex-col items-center  w-screen md:w-2/3 m-auto lg:w-2/4 lg:text-lg"  >
+
     {/* Firstname and lastname */}
       <div className=" flex justify-center lg:w-[100%] md:w-[100%] sm:w-[100%] ">
         <input 
            className={`${styles.regInputs} w-[41%] `} 
-           type="text" {...defaults('Fname', 'Förnamn. . .')} />
+           type="text" 
+           {...defaults('Fname', 'Förnamn. . .')} />
         
         <input 
           className={`${styles.regInputs} w-[41%] `} 
-          type="text" {...defaults('Lname', 'Efternamn. . .')} />
+          type="text" 
+          {...defaults('Lname', 'Efternamn. . .')} />
       </div>
       
       {/* Phone number */}
       <input 
         className={`${styles.regInputs} w-[85%]  `}  
-        type="phone" {...defaults('phone', 'Telefon. . . ', { minLength: 8, type: 'tel' }, 
+        type="phone" 
+        {...defaults('phone', 'Telefon. . . ',
+        { minLength: 8, type: 'tel' },  
         val => /^\d*$/.test(val), 'OBS - Endast nummer är tillåten på denna rad!')} />
       
       {/* Email address */}
-      <input className={`${styles.regInputs} w-[85%]  `} {...defaults('email', 'Epost. . .')}/>
+      <input 
+        className={`${styles.regInputs} w-[85%]  `} {...defaults('email', 'Epost. . .')}/>
       
       {/* Password */}
       <input 
-        className={`${styles.regInputs} w-[85%] `} {...defaults('password', 'Lösenord. . .', { minLength: 8, 
+        className={`${styles.regInputs} w-[85%] `} {...defaults('password', 'Lösenord. . .',
+        { minLength: 8, 
         type: 'password' }, 
         val => /\d/.test(val) && /[A-Z]/.test(val) && /[a-z]/.test(val),
         'OBS - Lösenordet måste innehålla : 1 stor bokstav, en liten bokstav samt minst 1 siffra' )} /> 
       
       {/* Password Confirm */}
       <input 
-        className={`${styles.regInputs} w-[85%]  `} {...defaults('confirm_password', 'Bekräfta lösenord. . .',  { minLength: 8, 
+        className={`${styles.regInputs} w-[85%]  `} {...defaults('confirm_password', 'Bekräfta lösenord. . .',  
+        { minLength: 8, 
         type: 'password' }, 
         val => val === formData.password, 'OBS - lösenorden måste matcha varandra!'
       )} />
