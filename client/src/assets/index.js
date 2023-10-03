@@ -15,6 +15,11 @@ import close from "./close.svg";
 import openheimerPoster from "./openheimerPoster.jpeg";
 import dumbMoneyPoster from "./dumbMoneyPoster.jpeg";
 import prinsessanMononokePoster from "./prinsessanMononokePoster.png";
+import projector from "./projector.jpg";
+import footerIconFB from "../assets/footerIconFB.svg";
+import footerIconGH from "../assets/footerIconGH.svg";
+import fotterIconIG from "../assets/footerIconIG.svg";
+import fotterIconTW from "../assets/footerIconTW.svg";
 
 export {
   aLittleLifeImage,
@@ -34,4 +39,9 @@ export {
   openheimerPoster,
   dumbMoneyPoster,
   prinsessanMononokePoster,
+  projector,
+  footerIconFB,
+  footerIconGH,
+  fotterIconIG,
+  fotterIconTW,
 };

@@ -1,4 +1,5 @@
 import { killersPoster, pastLivesPoster, smsPoster } from "../assets";
+import { styles } from "../styles";
 export default function BookMovieHero() {
   return (
     <>
@@ -14,7 +15,7 @@ export default function BookMovieHero() {
           <p className="font-inconsolata text-xs">Sifi, drama</p>
           <p className="text-xs">1 tim 33min | 11 år</p>
         </div>
-        <button className="rounded-md bg-gold p-1 px-4 text-black-100 md:ml-auto lg:ml-auto">
+        <button className={`${styles.buttonStyle} md:ml-auto lg:ml-auto`}>
           Boka
         </button>
       </div>
