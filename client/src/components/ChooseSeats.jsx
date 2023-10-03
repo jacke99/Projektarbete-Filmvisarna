@@ -1,7 +1,9 @@
 import {useState, useEffect} from "react"
+import {useStates} from "react-easier"
 export default function ChooseSeats() {
     const [seats, setSeats] = useState([])
-    
+    const counters = useStates("ticketCounter");
+
     useEffect(() => {
       seats.forEach(seat => {
         document.getElementById(`row${seat.row}seat-${seat.seat}`).classList.add("bg-white")
@@ -81,9 +83,9 @@ export default function ChooseSeats() {
     // eslint-disable-next-line
     const Seat = ({ seatNumber, rowNumber }) => (
         <div className={"bg-footerGrey seat lg:w-5 lg:h-5 md:w-8 md:h-8 w-5 h-5 cursor-pointer"} 
-        key={seatNumber} id={`row${rowNumber}seat-${seatNumber}`} onClick={(event) => bookSeats(event, 4)}
-        onMouseEnter={(event => handleMouseEnter(event, 4))}
-        onMouseLeave={(event) => handleMouseLeave(event, 4)}
+        key={seatNumber} id={`row${rowNumber}seat-${seatNumber}`} onClick={(event) => bookSeats(event, counters.total)}
+        onMouseEnter={(event => handleMouseEnter(event, counters.total))}
+        onMouseLeave={(event) => handleMouseLeave(event, counters.total)}
         >
         </div>
       );
