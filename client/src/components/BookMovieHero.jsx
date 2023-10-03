@@ -35,15 +35,13 @@ export default function BookMovieHero(){
           <p className="font-inconsolata text-xs">Sifi, drama</p>
           <p className="text-xs">1 tim 33min | 11 år</p>
         </div>
-        <button className="rounded-md bg-gold p-1 px-4 text-black-100 md:ml-auto lg:ml-auto">
-          Boka
-        </button>
-      </div>
-      <button className="bg-gold text-black-100 rounded-md px-4 p-1 md:ml-auto lg:ml-auto"
+        <button className="bg-gold text-black-100 rounded-md px-4 p-1 md:ml-auto lg:ml-auto"
         onClick={() => {
           navigate("/booking/1")
           window.scrollTo(0, 0)}}
       >Boka</button>
+      </div>
+      
     
 
       <div className="flex max-w-full items-center justify-between p-4 md:justify-start md:px-20 lg:justify-start lg:px-96">
@@ -58,15 +56,14 @@ export default function BookMovieHero(){
           <p className="font-inconsolata text-xs">Sifi, drama</p>
           <p className="text-xs">1 tim 33min | 11 år</p>
         </div>
-        <button className="rounded-md bg-gold p-1 px-4 text-black-100 md:ml-auto lg:ml-auto">
-          Boka
+        <button className="bg-gold text-black-100 rounded-md px-4 p-1 md:ml-auto lg:ml-auto"
+            onClick={() => {
+              navigate("/booking/1")
+              window.scrollTo(0, 0)}}
+          >Boka
         </button>
       </div>
-      <button className="bg-gold text-black-100 rounded-md px-4 p-1 md:ml-auto lg:ml-auto"
-        onClick={() => {
-          navigate("/booking/1")
-          window.scrollTo(0, 0)}}
-      >Boka</button>
+      
 </>
 )
 }
