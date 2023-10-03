@@ -1,3 +1,4 @@
+import BookingTicketsForm from "../components/BookingTicketsForm";
 import ChooseSeats from "../components/ChooseSeats";
 import TicketCounter from "../components/TicketCounter";
 import {useStates} from "react-easier"
@@ -16,6 +17,8 @@ export default function BookMovie() {
         <ChooseSeats />
 
         <button className="bg-gold">Fortsätt</button>
+
+        <BookingTicketsForm />
     </section>
   );
 }
