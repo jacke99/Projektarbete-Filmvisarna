@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 
+//MovieCars används som kort för filmer och tillhörande filmtitel i bildkarusellen
 export default function MovieCard({ title, img, alt }) {
   return (
     <div className="flex flex-col items-center justify-center gap-3">
@@ -11,22 +12,10 @@ export default function MovieCard({ title, img, alt }) {
 
       <h2
         className="lg:text-l
-       text-s w-[150px] font-inconsolata text-white lg:w-[200px] "
+       text-s w-[150px] font-inconsolata text-white lg:w-[200px]"
       >
         {title}
       </h2>
     </div>
   );
-}
-
-{
-  /* <div className=" flex flex-col items-center justify-center gap-3">
-  <img
-    className=" h-[296px] w-[200px] rounded-lg object-cover object-center"
-    src={img}
-    alt={alt}
-  />
-
-  <h2 className="text-l w-[200px] font-inconsolata text-white">{title}</h2>
-</div>; */
 }

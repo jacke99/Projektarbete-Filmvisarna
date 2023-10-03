@@ -8,6 +8,8 @@ import {
   prinsessanMononokePoster,
   dumbMoneyPoster,
 } from "../assets/index.js";
+
+//Måste finnas för React-Multi-Carousel
 export const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
@@ -28,6 +30,7 @@ export const responsive = {
   },
 };
 
+//Data som används för att mappa ut items(movieCards) till React-Multi-Carousel
 export const movieData = [
   {
     id: 1,

@@ -4,7 +4,7 @@ import {
   theCreatorImage,
   pastLivesImage,
 } from "../assets/index.js";
-import MovieImgBlock from "../components/MovieImgBlock.jsx";
+import HeroMovie from "../components/HeroMovie.jsx";
 import MultiCarousel from "../components/multi-carousel.jsx";
 
 export default function Home() {
@@ -12,11 +12,11 @@ export default function Home() {
     <>
       <Header />
       <main>
-        <MovieImgBlock movieImg={killersImage} />
+        <HeroMovie movieImg={killersImage} />
         <MultiCarousel />
-        <MovieImgBlock movieImg={theCreatorImage} />
+        <HeroMovie movieImg={theCreatorImage} />
         <MultiCarousel />
-        <MovieImgBlock movieImg={pastLivesImage} />
+        <HeroMovie movieImg={pastLivesImage} />
       </main>
     </>
   );
