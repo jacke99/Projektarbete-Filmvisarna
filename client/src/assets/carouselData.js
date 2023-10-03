@@ -4,23 +4,26 @@ import {
   killersPoster,
   pastLivesPoster,
   aLittleLifePoster,
+  openheimerPoster,
+  prinsessanMononokePoster,
+  dumbMoneyPoster,
 } from "../assets/index.js";
 export const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
-    breakpoint: { max: 4000, min: 3000 },
-    items: 5,
+    breakpoint: { max: 1536, min: 1280 },
+    items: 4,
   },
   desktop: {
-    breakpoint: { max: 3000, min: 1024 },
+    breakpoint: { max: 1280, min: 1024 },
     items: 4,
   },
   tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 4,
+    breakpoint: { max: 1024, min: 640 },
+    items: 3,
   },
   mobile: {
-    breakpoint: { max: 464, min: 0 },
+    breakpoint: { max: 640, min: 0 },
     items: 2,
   },
 };
@@ -58,20 +61,20 @@ export const movieData = [
   },
   {
     id: 6,
-    title: "The Creator",
-    img: theCreatorPoster,
-    alt: "picture from movie The Creator ",
+    title: "Dumb Money",
+    img: dumbMoneyPoster,
+    alt: "picture from movie Dumb Money",
   },
   {
     id: 7,
-    title: "The Creator",
-    img: theCreatorPoster,
-    alt: "picture from movie The Creator ",
+    title: "Openheimer",
+    img: openheimerPoster,
+    alt: "picture from movie Openheimer",
   },
   {
     id: 8,
-    title: "The Creator",
-    img: theCreatorPoster,
-    alt: "picture from movie The Creator ",
+    title: "Prinsessan Mononoke",
+    img: prinsessanMononokePoster,
+    alt: "picture from movie Prinsessan Mononoke",
   },
 ];

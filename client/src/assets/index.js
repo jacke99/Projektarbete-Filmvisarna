@@ -1,5 +1,5 @@
 import aLittleLifeImage from "./aLittleLifeImage.png";
-import aLittleLifePoster from "./aLittleLifePoster.png";
+import aLittleLifePoster from "./aLittleLifePoster.jpg";
 import logo from "./logo.png";
 import killersImage from "./killersImage.jpg";
 import killersPoster from "./killersPoster.jpg";
@@ -12,6 +12,9 @@ import theCreatorPoster from "./theCreatorPoster.jpg";
 import menu from "./menu.svg";
 import account_circle from "./account_circle.svg";
 import close from "./close.svg";
+import openheimerPoster from "./openheimerPoster.jpeg";
+import dumbMoneyPoster from "./dumbMoneyPoster.jpeg";
+import prinsessanMononokePoster from "./prinsessanMononokePoster.png";
 
 export {
   aLittleLifeImage,
@@ -28,4 +31,7 @@ export {
   smsPoster,
   theCreatorImage,
   theCreatorPoster,
+  openheimerPoster,
+  dumbMoneyPoster,
+  prinsessanMononokePoster,
 };
