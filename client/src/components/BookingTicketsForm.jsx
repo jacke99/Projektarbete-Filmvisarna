@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export default function BookingTicketsForm() {
-
+    const navigate = useNavigate()
   return (
     <div className="text-white flex flex-col w-4/5 items-center m-auto">
         <div className="flex flex-col">
@@ -12,7 +12,7 @@ export default function BookingTicketsForm() {
                 <li className="ml-6">Rabatt på dryck och snacks</li>
             </ul>
 
-            <button className="bg-gold w-36 text-black px-6 py-2 rounded m-auto">Bli medlem</button>
+            <button className="bg-gold w-36 text-black px-6 py-2 rounded m-auto" onClick={() => navigate("/register")}>Bli medlem</button>
             <p className="text-center mb-8 mt-1">eller <Link className="underline" to="/register">logga in!</Link></p>
         </div>
         <form className="flex flex-col">
