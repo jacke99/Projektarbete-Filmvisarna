@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import MovieFilterForm from "../components/MovieFilterForm";
 import BookMovieHero from "../components/BookMovieHero";
 
-
 export default function Booking() {
   return (
     <div className="mt-20 min-w-full max-w-full bg-primary font-inconsolata">
@@ -12,7 +11,7 @@ export default function Booking() {
         <img
           src={killersImage}
           alt="photo from the movie Killers"
-          style={{ width: "100%", maxHeight: "auto" }}
+          className="w-full object-cover object-center lg:h-[550px]"
         />
         <div
           className={`${styles.centerAbsolutePos} top-1/2 flex flex-col text-center text-gold`}
