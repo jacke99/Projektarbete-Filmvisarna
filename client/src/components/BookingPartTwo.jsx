@@ -3,9 +3,11 @@ import { NavLink } from "react-router-dom";
 import { styles } from "../styles";
 
 
+
 export default function BookingPartTwo(){
     return(
-        <div className="lg:px-96 mt-40 px-6 flex flex-col">
+        <>
+        <div className="lg:px-96 mt-40 px-6 flex flex-col md:items-center">
              <NavLink to="/booking" className="text-white-100 font-inconsolata underline mb-6"> Tillbaka</NavLink>
             <h1 className="text-white-100 text-xl mb-8 lg:text-4xl">The Creator | Sön 24 sep</h1>
             
@@ -23,6 +25,7 @@ export default function BookingPartTwo(){
       </div>
       
     </div>
+    
     <div className="text-white-100 text-sm mb-10">
     <h2 className="font-inconsolata">Salong 3</h2>
     <p className="font-inconsolata">Imorgon, Söndag 25/9</p>
@@ -34,8 +37,11 @@ export default function BookingPartTwo(){
         <p>Totalt att betala: 298.00 SEK</p>
     </div>
     <button className={`${styles.buttonStyle} mb-10 md:max-w-xs lg:`}>Boka</button>
-
     </div>
+    
+
+   
+    </>
     )
 }
 
