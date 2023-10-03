@@ -11,7 +11,7 @@ export default function Footer() {
           <h6
             className="pl-1">
             Filmvisarna
-          </a>
+          </h6>
         </div>
       <div className="flex gap-4">
         <img
@@ -87,6 +87,7 @@ export default function Footer() {
               >Nyhetsbrev</a
             >
           </p>
+        </div>
         </div>
   </footer>
   );
