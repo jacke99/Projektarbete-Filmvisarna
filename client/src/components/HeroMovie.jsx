@@ -4,9 +4,10 @@ import { styles } from "../styles";
 export default function MovieImgBlock({ movieImg }) {
   return (
     <section
-      className={`relative flex items-center justify-center bg-primary text-center`}
+      className={`relative mt-20 flex items-center justify-center bg-primary text-center`}
     >
       <img
+        className="w-full object-cover object-center lg:h-[550px]"
         src={movieImg}
         alt="Img with main characters from Killers of the Flower Moon Movie"
       />
