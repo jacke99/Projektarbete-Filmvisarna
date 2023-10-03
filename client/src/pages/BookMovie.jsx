@@ -1,6 +1,7 @@
 import ChooseSeats from "../components/ChooseSeats";
 import TicketCounter from "../components/TicketCounter";
-import { useStates } from "react-easier";
+import {useStates} from "react-easier"
+
 
 export default function BookMovie() {
   //eslint-disable-next-line
