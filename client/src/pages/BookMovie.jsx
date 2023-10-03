@@ -15,7 +15,7 @@ export default function BookMovie() {
         <TicketCounter />
         <ChooseSeats />
 
-        <button className="bg-gold">Boka</button>
+        <button className="bg-gold">Fortsätt</button>
     </section>
   );
 }
