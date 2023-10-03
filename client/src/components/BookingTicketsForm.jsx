@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 
 
 export default function BookingTicketsForm() {
+
   return (
-    <div className="text-white flex flex-col w-4/5 items-center">
+    <div className="text-white flex flex-col w-4/5 items-center m-auto">
         <div className="flex flex-col">
             <h4 className="text-2xl">Är du medlem? (valfritt)</h4>
             <ul className="list-disc mb-10">
@@ -20,7 +21,7 @@ export default function BookingTicketsForm() {
             <label className="font-inconsolata mt-4" htmlFor="re-email">Bekräfta mailadress</label>
             <input className="py-2 px-4 rounded" type="text" />
             <label className="font-inconsolata mt-4" htmlFor="email">Mobiltelefon</label>
-            <input className="py-2 px-4 rounded" type="text" />
+            <input className="py-2 px-4 rounded mb-10" type="text" />
         </form>
     </div>
   )
