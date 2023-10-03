@@ -1,10 +1,22 @@
 import { killersPoster } from "../assets";
 import { NavLink } from "react-router-dom";
 import { styles } from "../styles";
-
+import ConfirmBooking from "./ConfirmBooking";
+import { useState } from "react";
 
 
 export default function BookingPartTwo(){
+    const [bookingConfirmed, setBookingConfirmed] = useState(false);
+
+    const handleCloseConfirmation = () => {
+      setBookingConfirmed(false);
+    };
+
+    function showBookingConfirmation() {
+        setBookingConfirmed(true);
+        return true;
+      }
+   
     return(
         <>
         <div className="lg:px-96 mt-40 px-6 flex flex-col md:items-center">
@@ -36,33 +48,13 @@ export default function BookingPartTwo(){
     <div className="text-white-100 mb-10">
         <p>Totalt att betala: 298.00 SEK</p>
     </div>
-    <button className={`${styles.buttonStyle} mb-10 md:max-w-xs lg:`}>Boka</button>
+    <button onClick={showBookingConfirmation} className={`${styles.buttonStyle} mb-10 md:max-w-xs lg:`}>Boka</button>
     </div>
-    
+    {bookingConfirmed &&(
+        <ConfirmBooking handleCloseConfirmation={handleCloseConfirmation}/>
+    )}
 
    
     </>
     )
 }
-
- {/*  <div className="flex">   
-        <img
-        src={killersPoster}
-        alt="movie poster from Killers of the flower moon"
-        className="w-34 h-48 rounded-lg"
-      />
-      <div className="text-white-100 flex flex-col lg:px-6 md:px-6">
-   
-        <h2 className="text-base font-extra-bold">The Creator</h2>
-        <p className="font-inconsolata text-xs">Sifi, drama</p>
-        <p className="text-xs">1 tim 33min | 11 år</p>
-      </div>
-      </div>
-
-    <div className="text-white-100 text-xs">
-    <h2 className="font-inconsolata">Salong 3</h2>
-    <p className="font-inconsolata">Imorgon, Söndag 25/9</p>
-    <p className="font-inconsolata">kl 20:00</p>
-    <p className="font-inconsolata">2 x Ordinarie/Vuxna</p>
-    </div>
-    */}
