@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { projector } from "../assets";
 import { styles } from "../styles";
 
@@ -25,6 +24,7 @@ export default function ConfirmBooking(props) {
         <p className="font-xs font-inconsolata">Epost: <span>dinmail@mail.com</span></p>
         <p className="font-xs font-inconsolata">Tel: <span>0763399987</span></p>
         <p className="font-xs font-inconsolata">Pris: <span>670 SEK</span></p>
+        {/* eslint-disable-next-line */}
         <button onClick={props.handleCloseConfirmation} className='booking-btn mt-4 text-white-100 py-1 px-2.5 rounded bg-black-100 md:w-1/2 mx-auto'>
           Stäng
         </button>

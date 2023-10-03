@@ -7,9 +7,9 @@ export default function Header() {
   const [toggle, setToggle] = useState(false);
   return (
     <nav
-      className={`${styles.paddingX} fixed top-0 z-20 flex w-full justify-between border-b-2 border-gold bg-primary py-5`}
+      className={`${styles.paddingX} fixed top-0 z-20 flex w-full justify-between items-center border-b-2 border-gold bg-primary py-4`}
     >
-      <div className="flex w-full">
+      <div className="flex w-full items-center">
         <Link
           to="/"
           onClick={() => {
@@ -20,7 +20,7 @@ export default function Header() {
           <img
             src={logo}
             alt="logo"
-            className="mr-2 h-12 w-12 object-contain"
+            className="mr-2 h-12 w-12 md:w-[100px] md:h-[100px] lg:h-12 lg:-w12 object-contain"
           />
         </Link>
         <ul
@@ -92,7 +92,7 @@ export default function Header() {
         <img
           src={account_circle}
           alt="login"
-          className="h-12 w-12 object-contain"
+          className="h-10 w-10 object-contain"
         />
         <p
           className={`${styles.subHeaderText} hidden cursor-pointer hover:text-white lg:flex`}
@@ -102,7 +102,7 @@ export default function Header() {
         <img
           src={toggle ? close : menu}
           alt="menu"
-          className="h-12 w-12 object-contain lg:hidden"
+          className="h-9 w-9 md:h-12 md:w-12 object-contain lg:hidden"
           onClick={() => setToggle(!toggle)}
         />
         <div
