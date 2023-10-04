@@ -19,7 +19,7 @@ import projector from "./projector.jpg";
 import footerIconFB from "../assets/footerIconFB.svg";
 import footerIconGH from "../assets/footerIconGH.svg";
 import fotterIconIG from "../assets/footerIconIG.svg";
-import fotterIconTW from "../assets/footerIconTW.svg";
+import fotterIconIN from "../assets/footerIconIN.svg";
 
 export {
   aLittleLifeImage,
@@ -43,5 +43,5 @@ export {
   footerIconFB,
   footerIconGH,
   fotterIconIG,
-  fotterIconTW,
+  fotterIconIN,
 };

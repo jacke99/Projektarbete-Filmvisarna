@@ -6,7 +6,7 @@ export default function Register() {
  
   let { defaults, formData } = useFormDefaults();
 
-  return <div className= "bg-[url('./assets/chairs.jpg')] bg-cover bg-center " >
+  return <div className= "bg-[url('./assets/chairs.jpg')] bg-cover bg-center min-h-screen" >
     
     <div className="" >
       <h2 className={`${styles.headerText} text-white text-center  pt-40 pb-10  text-4xl`}>
@@ -21,7 +21,7 @@ export default function Register() {
       <h1 className={`${styles.headerText} text-white text-center  pt-20 pb-10  text-4xl`}>Bli medlem</h1>
     </header>
 
-    <form className="flex flex-col items-center  w-screen md:w-2/3 m-auto lg:w-2/4 lg:text-lg max-w-[50rem] "  >
+    <form className="flex flex-col items-center w-screen md:w-2/3 m-auto lg:w-2/4 lg:text-lg max-w-[50rem] "  >
 
     {/* Firstname and lastname */}
       <div className=" flex items-center flex-col lg:w-[100%] md:w-[100%] sm:w-[100%] w-screen md:flex-row md:justify-center ">
@@ -66,7 +66,7 @@ export default function Register() {
 
       {/* Button Submit */}
       <button 
-        className="bg-gold w-40 px-4 rounded-lg py-4 my-5 mb-10 lg:text-lg " 
+        className="bg-gold w-40 px-4 rounded-lg py-4 my-5 lg:text-lg " 
         type="submit" >Registrera</button>
 
     </form >
