@@ -11,13 +11,13 @@ export default function MovieCardForFilmer() {
         <img
           src={killersImage}
           alt="movie poster from Killers of the flower moon"
-          className="w-full "
+          className="h-[250px] w-full object-cover object-center lg:h-[550px]"
         />
         <div>
-          <div className="my-4 flex flex-col text-white-100 md:px-6 lg:px-6">
+          <div className="my-4 flex flex-col text-white-100">
             <h2 className="font-extra-bold text-base">The Creator</h2>
             <p className="font-inconsolata text-xs">Sifi, drama</p>
-            <p className="flex-col pt-1 text-xs">
+            <p className="flex-col pt-1 text-xs md:w-1/2">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam
               facere totam tenetur omnis consequuntur vero ipsum, reprehenderit
               molestiae a quae illum esse quo nulla blanditiis voluptatibus amet
