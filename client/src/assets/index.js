@@ -10,7 +10,9 @@ import smsPoster from "./smsPoster.png";
 import theCreatorImage from "./theCreatorImage.png";
 import theCreatorPoster from "./theCreatorPoster.jpg";
 import menu from "./menu.svg";
+import menu_new from "./menu_new.svg";
 import account_circle from "./account_circle.svg";
+import account_circle_new from "./account_circle_new.svg";
 import close from "./close.svg";
 import openheimerPoster from "./openheimerPoster.jpeg";
 import dumbMoneyPoster from "./dumbMoneyPoster.jpeg";
@@ -26,8 +28,10 @@ export {
   aLittleLifePoster,
   logo,
   menu,
+  menu_new,
   close,
   account_circle,
+  account_circle_new,
   killersImage,
   killersPoster,
   pastLivesImage,
