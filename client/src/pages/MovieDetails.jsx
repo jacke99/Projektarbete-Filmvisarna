@@ -1,6 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import { killersPoster, killersImage } from "../assets/index.js";
 import { styles } from "../styles.js";
+import { useEffect } from "react";
 export default function MovieDetails() {
+  const navigate = useNavigate()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <div className=" mt-20 h-full bg-primary">
       <div className="relative h-96 md:h-[30rem] lg:h-[36rem]">
@@ -33,7 +39,7 @@ export default function MovieDetails() {
           un testo campione. quando un anonimo tipografo prese una cassetta di
           caratteri e li assemblò per preparare un.
         </p>
-        <button className=" m-auto mb-4 rounded-xl bg-gold px-4 py-2 text-xl text-black sm:px-5 sm:text-2xl">
+        <button className=" m-auto mb-4 rounded-xl bg-gold px-4 py-2 text-xl text-black sm:px-5 sm:text-2xl" onClick={() => navigate("/booking/1")}>
           Biljetter
         </button>
         <div className={`${styles.movieDescInfo}`}>
