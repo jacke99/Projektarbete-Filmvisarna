@@ -1,10 +1,3 @@
-import {
-  killersPoster,
-  aLittleLifePoster,
-  pastLivesPoster,
-  smsPoster,
-  theCreatorPoster,
-} from "../assets";
 import MovieCardForFilmer from "../components/MovieCardForFilmer";
 
 export default function Movies() {
