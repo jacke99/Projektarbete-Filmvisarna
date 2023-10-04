@@ -18,7 +18,7 @@ export default function BookMovieHero(){
       </div>
       <button className="bg-gold text-black-100 rounded-md px-4 p-1 md:ml-auto lg:ml-auto"
         onClick={() => {
-          navigate("/movies/1")
+          navigate("/booking/1")
           window.scrollTo(0, 0)}}
       >Boka</button>
     </div>
@@ -37,7 +37,7 @@ export default function BookMovieHero(){
         </div>
         <button className="bg-gold text-black-100 rounded-md px-4 p-1 md:ml-auto lg:ml-auto"
         onClick={() => {
-          navigate("/movies/1")
+          navigate("/booking/1")
           window.scrollTo(0, 0)}}
       >Boka</button>
       </div>
@@ -58,7 +58,7 @@ export default function BookMovieHero(){
         </div>
         <button className="bg-gold text-black-100 rounded-md px-4 p-1 md:ml-auto lg:ml-auto"
             onClick={() => {
-              navigate("/movies/1")
+              navigate("/booking/1")
               window.scrollTo(0, 0)}}
           >Boka
         </button>
