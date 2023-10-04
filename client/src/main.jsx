@@ -7,6 +7,7 @@ import BookMovie from "./pages/BookMovie";
 import Movies from "./pages/Movies";
 import Register from "./pages/Register";
 import MovieDetails from "./pages/MovieDetails";
+import BookingPartTwo from "./components/BookingPartTwo";
 import "./index.css";
 
 
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/booking", element: <Booking /> },
       { path: "/booking/:id", element: <BookMovie /> },
+      { path: "/booking/confirm", element: <BookingPartTwo /> },
       { path: "/movies", element: <Movies /> },
       { path: "/register", element: <Register /> },
       { path: "/movies/:id", element: <MovieDetails /> },
