@@ -1,22 +1,17 @@
 import { killersPoster } from "../assets";
 import { NavLink } from "react-router-dom";
-import { styles } from "../styles";
 import ConfirmBooking from "./ConfirmBooking";
-import { useState } from "react";
+import BookingTicketsForm from "./BookingTicketsForm"
+import { useStates } from "react-easier"
+
+
 
 
 export default function BookingPartTwo(){
-    const [bookingConfirmed, setBookingConfirmed] = useState(false);
-
-    const handleCloseConfirmation = () => {
-      setBookingConfirmed(false);
-    };
-
-    function showBookingConfirmation() {
-        setBookingConfirmed(true);
-        return true;
-      }
-   
+    const toggleConfirmation = useStates("toggleConfirmation", {
+      toggle: false,
+    })
+  
     return(
         <>
         <div className="lg:px-96 mt-40 px-6 flex flex-col md:items-center">
@@ -48,10 +43,11 @@ export default function BookingPartTwo(){
     <div className="text-white-100 mb-10">
         <p>Totalt att betala: 298.00 SEK</p>
     </div>
-    <button onClick={showBookingConfirmation} className={`${styles.buttonStyle} mb-10 md:max-w-xs lg:`}>Boka</button>
+    <BookingTicketsForm />
+    <button onClick={() => toggleConfirmation.toggle = true} className={`bg-gold w-36 text-black px-6 py-2 rounded m-auto mb-10`}>Boka</button>
     </div>
-    {bookingConfirmed &&(
-        <ConfirmBooking handleCloseConfirmation={handleCloseConfirmation}/>
+    {toggleConfirmation.toggle &&(
+        <ConfirmBooking />
     )}
 
    
