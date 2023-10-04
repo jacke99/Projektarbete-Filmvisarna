@@ -2,7 +2,7 @@ import MovieCardForFilmer from "../components/MovieCardForFilmer";
 
 export default function Movies() {
   return (
-    <div className="px-8">
+    <div className="mb-20 px-8">
       <div
         className="
       
