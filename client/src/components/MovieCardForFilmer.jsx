@@ -3,6 +3,8 @@ import { killersImage } from "../assets";
 import { useNavigate } from "react-router-dom";
 
 export default function MovieCardForFilmer() {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="flex flex-col justify-between border-t-[0.5px] border-gold p-6  lg:justify-start lg:px-96">
@@ -23,7 +25,7 @@ export default function MovieCardForFilmer() {
             </p>
           </div>
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/movies/1")}
             className="rounded-md bg-gold p-1 px-4 text-black-100"
           >
             Biljetter
