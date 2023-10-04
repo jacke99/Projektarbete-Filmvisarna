@@ -2,6 +2,7 @@ import { killersPoster, killersImage } from "../assets/index.js";
 import BookMovieHero from "../components/BookMovieHero.jsx";
 import MovieFilterForm from "../components/MovieFilterForm.jsx";
 import { styles } from "../styles.js";
+import { useEffect } from "react";
 export default function MovieDetails() {
   function handleClickScroll() {
     const element = document.getElementById("scrollTo");
@@ -10,6 +11,9 @@ export default function MovieDetails() {
       element.scrollIntoView({behavior: "smooth"})
     }
   }
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <div className=" mt-20 mb-20 h-full bg-primary">
       <div className="relative h-96 md:h-[30rem] lg:h-[36rem]">

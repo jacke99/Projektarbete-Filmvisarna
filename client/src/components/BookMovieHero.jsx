@@ -1,5 +1,5 @@
-import { killersPoster, pastLivesPoster,smsPoster } from "../assets";
 import { useNavigate } from "react-router-dom";
+import { killersPoster, pastLivesPoster,smsPoster } from "../assets";
 export default function BookMovieHero(){
   const navigate = useNavigate();
     return(

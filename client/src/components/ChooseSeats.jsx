@@ -116,9 +116,9 @@ export default function ChooseSeats() {
     </div>
         {DivGenerator()}
         <div className="text-white text-center mt-2 mb-4">
-          <p>Total tickets:  {counters.total}</p>
+          <p>Antal biljetter:  {counters.total}</p>
           <p>
-           Row: {seats.length && seats[0].row + " -"} {seats.length && seats.length > 1 ? "Seats: " : "Seat: "}
+           Rad: {seats.length && seats[0].row + " -"} Plats:{" "}
           {seats.length && seats.map((seat, i) => {
             if(i + 1 === seats.length) {
              return seat.seat
