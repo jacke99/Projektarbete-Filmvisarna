@@ -6,7 +6,7 @@ import BookMovieHero from "../components/BookMovieHero";
 
 export default function Booking() {
   return (
-    <div className="mt-20 min-w-full max-w-full bg-primary font-inconsolata">
+    <div className="mt-16 mb-20 min-w-full max-w-full bg-primary font-inconsolata">
       <div className="relative">
         <img
           src={killersImage}

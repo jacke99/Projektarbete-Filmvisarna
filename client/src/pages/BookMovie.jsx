@@ -14,7 +14,7 @@ export default function BookMovie() {
     total: 2
   });
   return (
-    <section className="mt-2 mb-40 flex flex-col items-center ">
+    <section className="mt-2 flex flex-col items-center min-h-screen">
         <TicketCounter />
         <ChooseSeats />
 
