@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { styles } from "../styles";
 import { Link } from "react-router-dom";
-import { logo, menu, account_circle, close } from "../assets";
+import { logo, account_circle_new, close, menu_new } from "../assets";
+import Login from "./Login";
 export default function Header() {
   const [active, setActive] = useState("");
+  const [toggleLogin, setToggleLogin] = useState(false)
   const [toggle, setToggle] = useState(false);
   return (
     <nav
-      className={`${styles.paddingX} fixed top-0 z-20 flex w-full justify-between items-center border-b-2 border-gold bg-primary py-4`}
+      className={`${styles.paddingX} fixed top-0 z-20 flex w-full justify-between items-center border-b-2 border-gold bg-primary lg:py-2`}
     >
       <div className="flex w-full items-center">
         <Link
@@ -20,7 +22,7 @@ export default function Header() {
           <img
             src={logo}
             alt="logo"
-            className="mr-2 h-12 w-12 md:w-[100px] md:h-[100px] lg:h-12 lg:-w12 object-contain"
+            className="mr-2 h-12 w-12 md:w-[80px] md:h-[80px] lg:h-12 lg:-w12 object-contain"
           />
         </Link>
         <ul
@@ -88,19 +90,21 @@ export default function Header() {
           </Link>
         </ul>
       </div>
-      <div className="flex w-[300px] justify-end gap-1">
+      <div className="flex w-[300px] justify-end gap-1 items-center">
         <img
-          src={account_circle}
+          src={account_circle_new}
           alt="login"
-          className="h-10 w-10 object-contain"
+          className="w-8 sm:w-12 object-contain cursor-pointer mr-2"
+          onClick={() => setToggleLogin(!toggleLogin)}
         />
         <p
-          className={`${styles.subHeaderText} hidden cursor-pointer hover:text-white lg:flex`}
+          className={`${styles.subHeaderText} ${toggleLogin ? "text-white" : "text-gold"} hidden cursor-pointer hover:text-white lg:flex`}
+          onClick={() => setToggleLogin(!toggleLogin)}
         >
           Logga in
         </p>
         <img
-          src={toggle ? close : menu}
+          src={toggle ? close : menu_new}
           alt="menu"
           className="h-9 w-9 md:h-12 md:w-12 object-contain lg:hidden"
           onClick={() => setToggle(!toggle)}
@@ -175,6 +179,7 @@ export default function Header() {
           </ul>
         </div>
       </div>
+      {toggleLogin && <Login setToggleLogin={setToggleLogin} />}
     </nav>
   );
 }

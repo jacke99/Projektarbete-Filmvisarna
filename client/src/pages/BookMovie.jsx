@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import ChooseSeats from "../components/ChooseSeats";
 import TicketCounter from "../components/TicketCounter";
 import {useStates} from "react-easier"
 
 
 export default function BookMovie() {
+  const navigate = useNavigate();
   //eslint-disable-next-line
   const counters = useStates("ticketCounter", {
     adult: 2,
@@ -16,7 +18,7 @@ export default function BookMovie() {
         <TicketCounter />
         <ChooseSeats />
 
-        <button className="bg-gold text-black-100 rounded-md px-4 p-1">Fortsätt</button>
+        <button className="bg-gold text-black-100 rounded-md px-4 p-1" onClick={() => navigate("/booking/confirm")}>Fortsätt</button>
     </section>
   );
 }

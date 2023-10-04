@@ -1,4 +1,3 @@
-import Header from "../components/Header.jsx";
 import {
   killersImage,
   theCreatorImage,
@@ -10,14 +9,11 @@ import MultiCarousel from "../components/multi-carousel.jsx";
 export default function Home() {
   return (
     <>
-      <Header />
-      <main>
         <HeroMovie movieImg={killersImage} />
         <MultiCarousel />
         <HeroMovie movieImg={theCreatorImage} />
         <MultiCarousel />
         <HeroMovie movieImg={pastLivesImage} />
-      </main>
     </>
   );
 }
