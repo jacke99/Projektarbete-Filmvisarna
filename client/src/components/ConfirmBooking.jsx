@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 
-
 //eslint-disable-next-line
 export default function ConfirmBooking() {
   const navigate = useNavigate()
