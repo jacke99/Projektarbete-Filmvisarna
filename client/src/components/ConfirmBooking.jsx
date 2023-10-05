@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { projector } from "../assets";
-import { styles } from "../styles";
+
 
 //eslint-disable-next-line
 export default function ConfirmBooking() {
