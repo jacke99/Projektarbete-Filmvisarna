@@ -11,7 +11,7 @@ export default function MovieDetails() {
     }
   }
   return (
-    <div className=" mt-20 mb-20 h-full bg-primary">
+    <div className=" mt-16 mb-20 h-full bg-primary">
       <div className="relative h-96 md:h-[30rem] lg:h-[36rem] ">
         <img
           src={killersImage}
