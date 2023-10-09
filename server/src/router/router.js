@@ -17,17 +17,21 @@ router.post("/screenings", async (req, res) => {
     // Kontrollera att allting gick bra (kolla i result)
     // if / else error eller response 201?
 })
+
+//for admin to delete one screening
 router.delete("/screenings/:id", async (req, res) => {
-    // hämta ut id (req.params.id)
-   
+  
     if (ObjectId.isValid(req.params.id)) {
         const screening = await fetchCollection('screenings').deleteOne({_id: new ObjectId(req.params.id)})
             if(screening.deletedCount == 0) {
                 res.status(404).send({error: 'Could not find the document'})
             } else {
                 res.status(200).send({message: 'Screening deleted'})
-                //await fetch("http://localhost:5000/channel") // säger åt socketen att emitta till alla som är uppkopplade 
+                
             }}
+    else{
+        res.status(404).send({error: "unvalid screening id"})
+    }       
 })
 
 router.get("/screenings", async (req, res) => {
