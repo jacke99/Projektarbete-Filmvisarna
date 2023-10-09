@@ -19,14 +19,14 @@ router.post("/screenings", async (req, res) => {
 })
 router.delete("/screenings/:id", async (req, res) => {
     // hämta ut id (req.params.id)
-    // EXEMPEL
+   
     if (ObjectId.isValid(req.params.id)) {
-        const channel = await fetchCollection('channels').deleteOne({_id: new ObjectId(req.params.id)})
-            if(channel.deletedCount == 0) {
+        const screening = await fetchCollection('screenings').deleteOne({_id: new ObjectId(req.params.id)})
+            if(screening.deletedCount == 0) {
                 res.status(404).send({error: 'Could not find the document'})
             } else {
-                res.status(200).send({message: 'Channel deleted'})
-                await fetch("http://localhost:5000/channel") // säger åt socketen att emitta till alla som är uppkopplade 
+                res.status(200).send({message: 'Screening deleted'})
+                //await fetch("http://localhost:5000/channel") // säger åt socketen att emitta till alla som är uppkopplade 
             }}
 })
 
