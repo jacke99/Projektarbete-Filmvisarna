@@ -17,17 +17,21 @@ router.post("/screenings", async (req, res) => {
     // Kontrollera att allting gick bra (kolla i result)
     // if / else error eller response 201?
 })
+
+//for admin to delete one screening
 router.delete("/screenings/:id", async (req, res) => {
-    // hämta ut id (req.params.id)
-    // EXEMPEL
+  
     if (ObjectId.isValid(req.params.id)) {
-        const channel = await fetchCollection('channels').deleteOne({_id: new ObjectId(req.params.id)})
-            if(channel.deletedCount == 0) {
+        const screening = await fetchCollection('screenings').deleteOne({_id: new ObjectId(req.params.id)})
+            if(screening.deletedCount == 0) {
                 res.status(404).send({error: 'Could not find the document'})
             } else {
-                res.status(200).send({message: 'Channel deleted'})
-                await fetch("http://localhost:5000/channel") // säger åt socketen att emitta till alla som är uppkopplade 
+                res.status(200).send({message: 'Screening deleted'})
+                
             }}
+    else{
+        res.status(404).send({error: "unvalid screening id"})
+    }       
 })
 
 router.get("/screenings", async (req, res) => {
@@ -63,9 +67,15 @@ router.delete("/movies/:id", async (req, res) => {
 })
 
 router.get("/movies", async (req, res) => {
-    // fetcha våran movies collection,
-    // Kontrollera att allting gick bra (kolla i result)
-    // if / else error eller responsen ska vara våran collection res.status(200).send(result)
+    let movies = []
+    fetchCollection('movies').find().forEach(movie => movies.push(movie))
+    .then(() => {
+        res.status(200).json(movies)
+    })
+    .catch(() => {
+        res.status(500).json({error:"Could not fetch movies collection"})
+    })
+
 })
 
 // USER STORY 5 och 23.5
