@@ -3,6 +3,7 @@
  import bcrypt from "bcrypt";
  import * as dotenv from "dotenv";
  import { ObjectId } from "mongodb";
+ import jwtUtil from "../util/jwtUtil.js"
  dotenv.config()
 
 const router = express.Router();
@@ -135,29 +136,46 @@ router.patch("/bookings", async (req, res) => {
 // USER STORY 16
 
 router.post("/register", async (req, res) => {
-    // Plocka ut all userinfo från req.body
-    // Kolla så allt är med och inget saknas (namn, efternamn, email, lösenord, telefon)
+    const { email, lastname, name, password, phone } = req.body;
+    const user = req.body 
+    // Check if all required properties are present
+    if (!email || !lastname || !name || !password || !phone) {
+        return res.status(400).json({ error: 'Missing required properties' });
+    }
     // hasha lösenord
     //EXEMPEL
     const hash = bcrypt.hashSync(user.password, parseInt(process.env.saltRounds));
     user.password = hash
-    // fetcha våran users collection och kolla så emailen inte redan är registerad och lägg till den nya usern
-    //errorhantering (matchcount?)
-    //Skicka tillbaka respons
+    console.log(user)
+    const result = await fetchCollection("users").updateOne({email: user.email}, {$setOnInsert: user}, {upsert: true})
+
+    if(result.matchedCount !== 0) {
+       return res.status(400).send("User allready exists")
+    } else {
+       return res.status(201).send("Account was created")
+    }
 })
 
 // USER STORY 17
 
 router.put("/login", async (req, res) => {
-    // Hämta email och lösenord ur, const login = req.body
-    // Kolla så ingenting saknades
-    // Fetcha users collection med findOne och sök efter en user med emailen | const user = fetch
-    // Kolla så userns hashade lösenord stämmer med lösenordet ut req.body
-    // EXEMPEL
-    const match = bcrypt.compareSync(login.password, user.password) // true or false
-    // ErrorHantering
-    // Om det gick bra, generera jwt token
-    // Skicka respons med token eller error
+    const login = req.body
+    if(!login.email || !login.password ) {
+      return  res.status(400).send("Bad Request")
+    }
+    const user = await fetchCollection("users").findOne({email: login.email})
+        const match = bcrypt.compareSync(login.password, user.password) // true or false
+
+        if(match == false) {
+        res.status(400).send("Bad Request")
+        } else {
+                if(user != null) {
+                const token = jwtUtil.generate(user)
+                res.send(token)
+                } else {
+                    res.sendStatus(400)
+                }
+            }
 })
 
 // USER STORY 18
