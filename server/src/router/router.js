@@ -9,13 +9,17 @@ const router = express.Router();
 
 // USER STORY 3 och 19 och 23
 router.post("/screenings", async (req, res) => { 
-    // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
-    /*plocka ut data från req.body */
-    // Kolla så inget saknas i bodyn
-    // Om någonting saknas, skicka tillbaka error till exempel (res.status(400))
-    // fetcha våran screenings collection, och uppdatera eller skapa en ny screening (result = fetchcollection("screenings"))
-    // Kontrollera att allting gick bra (kolla i result)
-    // if / else error eller response 201?
+    const body = req.body
+    if(Object.values(body).every(value => value !== "" && value !== undefined)) {
+        try {
+            const result = await fetchCollection('screenings').insertOne(body)
+            res.status(201).send(result)
+        } catch (error){
+            res.status(400).send({error: 'Could not create screening'})
+        }
+    } else {
+        res.status(400).send({error: 'Could not create screening'})
+    }
 })
 router.delete("/screenings/:id", async (req, res) => {
     // hämta ut id (req.params.id)
