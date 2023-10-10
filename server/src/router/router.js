@@ -69,7 +69,6 @@ router.post("/movies", async (req, res) => {
   const {
     title,
     img,
-    name,
     trailer,
     director,
     actors,
@@ -238,14 +237,38 @@ router.get("/screenings", async (req, res) => {
 // USER STORY 15
 
 router.patch("/bookings", async (req, res) => {
-  // Plocka ut id ur req.body eller på det sättet som ni vill
-  // Dubbelkolla så id faktiskt finns i bodyn
-  // fetcha bokningen och kolla vilka stolar som kunden hade bokat och ändra status till avbokad
-  // errorHantering
-  // hämta screening med hjälp av screeningId i bokningen och "lås upp" dom tidigare bokade stolarna.
-  //errorHantering
-  // skicka tillbaka respons, ok eller error
-});
+    const body = req.body
+    if(!body._id) {
+        return res.status(400).send("Bad Request")
+    }
+    const booking = await fetchCollection("bookings").findOne({_id: new ObjectId(body._id)})
+    if(booking == null || !booking.screeningId) {
+        return res.status(404).send("Booking not found")
+    }
+    console.log(booking);
+    try {
+       let currentScreening = await fetchCollection("screenings").findOne({_id: new ObjectId(booking.screeningId)})
+        for(let i = 0; i < booking.seatIndex.length; i++) {
+            currentScreening.seats[booking.rowIndex - 1][booking.seatIndex[i] - 1] = {seat: false}
+        }
+    
+        let result = await fetchCollection("screenings").updateOne({_id: new ObjectId(booking.screeningId)}, {$set: currentScreening})
+        if(result.modifiedCount == 1) {
+            res.status(201).send(currentScreening) 
+        } else {
+            res.status(400).send("Kunde inte avboka, prova igen")
+        }
+        }
+    catch(error) {
+        res.status(500).send("Something went wrong")
+    }
+
+    // fetcha bokningen och kolla vilka stolar som kunden hade bokat och ändra status till avbokad
+    // errorHantering
+    // hämta screening med hjälp av screeningId i bokningen och "lås upp" dom tidigare bokade stolarna.
+    //errorHantering
+    // skicka tillbaka respons, ok eller error
+})
 
 // USER STORY 16
 
