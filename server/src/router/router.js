@@ -132,12 +132,23 @@ router.patch("/bookings", async (req, res) => {
     if(booking == null || !booking.screeningId) {
         return res.status(404).send("Booking not found")
     }
-    const seats = booking.seats
-    console.log(seats.row2);
-    const currentScreening = await fetchCollection("screenings").findOne({_id: new ObjectId(booking.screeningId)})
-    let newScreening = (currentScreening)
-
-    res.send(currentScreening.seats.row2)
+    console.log(booking);
+    try {
+       let currentScreening = await fetchCollection("screenings").findOne({_id: new ObjectId(booking.screeningId)})
+        for(let i = 0; i < booking.seatIndex.length; i++) {
+            currentScreening.seats[booking.rowIndex - 1][booking.seatIndex[i] - 1] = {seat: false}
+        }
+    
+        let result = await fetchCollection("screenings").updateOne({_id: new ObjectId(booking.screeningId)}, {$set: currentScreening})
+        if(result.modifiedCount == 1) {
+            res.status(201).send(currentScreening) 
+        } else {
+            res.status(400).send("Kunde inte avboka, prova igen")
+        }
+        }
+    catch(error) {
+        res.status(500).send("Something went wrong")
+    }
 
     // fetcha bokningen och kolla vilka stolar som kunden hade bokat och ändra status till avbokad
     // errorHantering
