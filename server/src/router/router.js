@@ -25,7 +25,27 @@ router.post("/screenings", async (req, res) => {
   }
 });
 
-//for admin to delete one screening
+router.get("/screenings", async (req, res) => {
+  let screenings = [];
+
+  fetchCollection("screenings")
+    .find()
+    .forEach((oneScreening) => screenings.push(oneScreening))
+    .then(() => {
+      res
+        .status(200)
+        .json({
+          message: "Screenings fetched successfully",
+          screenings: screenings,
+        });
+    })
+    .catch(() => {
+      res
+        .status(400)
+        .json({ error: "Could not fetch documents of Screenings" });
+    });
+});
+
 router.delete("/screenings/:id", async (req, res) => {
   if (ObjectId.isValid(req.params.id)) {
     const screening = await fetchCollection("screenings").deleteOne({
@@ -41,40 +61,77 @@ router.delete("/screenings/:id", async (req, res) => {
   }
 });
 
-router.get("/screenings", async (req, res) => {
-  // fetcha våran screening collection,
-  // Kontrollera att allting gick bra (kolla i result)
-  // if / else error eller responsen ska vara våran collection res.status(200).send(result)
-});
-
 // USER STORY 4 och 23
 
 router.post("/movies", async (req, res) => {
   // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
-  /*plocka ut data från req.body */
-  // Kolla så inget saknas i bodyn
-  // Om någonting saknas, skicka tillbaka error till exempel (res.status(400))
-  // fetcha våran movies collection, och uppdatera eller skapa en ny movie (result = fetchcollection("movies"))
-  // Kontrollera att allting gick bra (kolla i result)
-  // if / else error eller response 201?
-});
-
-router.delete("/movies/:id", async (req, res) => {
-  // hämta ut id (req.params.id)
-  // EXEMPEL
-  if (ObjectId.isValid(req.params.id)) {
-    const channel = await fetchCollection("channels").deleteOne({
-      _id: new ObjectId(req.params.id),
+  const movie = req.body;
+  const {
+    title,
+    img,
+    name,
+    trailer,
+    director,
+    actors,
+    length,
+    genre,
+    speech,
+    subtitles,
+    ageRestriction,
+  } = req.body;
+  if (
+    !title ||
+    !img ||
+    !trailer ||
+    !director ||
+    !actors ||
+    !length ||
+    !genre ||
+    !speech ||
+    !subtitles ||
+    !ageRestriction
+  ) {
+    return res.status(400).json({
+      error: "Missing required properties, pls check your request body",
     });
-    if (channel.deletedCount == 0) {
-      res.status(404).send({ error: "Could not find the document" });
-    } else {
-      res.status(200).send({ message: "Channel deleted" });
-      await fetch("http://localhost:5000/channel"); // säger åt socketen att emitta till alla som är uppkopplade
+  }
+
+  if (
+    Object.values(movie).every((value) => value !== "" && value !== undefined)
+  ) {
+    try {
+      const result = await fetchCollection("movies")
+        .insertOne(movie)
+        .then((result) => {
+          res.status(201).json(result);
+        });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ err: "Could not create a new document in collection movies" });
     }
+  } else {
+    res.status(500).json({ err: "Incorrect movie input" });
   }
 });
 
+//for admin to delete one movie task 23.2
+router.delete("/movies/:id", async (req, res) => {
+  if (ObjectId.isValid(req.params.id)) {
+    const movie = await fetchCollection("movies").deleteOne({
+      _id: new ObjectId(req.params.id),
+    });
+    if (movie.deletedCount == 0) {
+      res.status(404).send({ error: "Could not find the movie" });
+    } else {
+      res.status(200).send({ message: "The movie is deleted" });
+    }
+  } else {
+    res.status(404).send({ error: "unvalid movie id" });
+  }
+});
+
+//get all the documentes from movies collection task 4.2
 router.get("/movies", async (req, res) => {
   let movies = [];
   fetchCollection("movies")
@@ -89,12 +146,8 @@ router.get("/movies", async (req, res) => {
 });
 
 // USER STORY 5 och 23.5
-
 router.get("/bookings", async (req, res) => {
   // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
-  // fetcha våran bookings collection,
-  // Kontrollera att allting gick bra (kolla i result)
-  // if / else error eller responsen ska vara våran collection res.status(200).send(result)
   try {
     const bookingsCollection = fetchCollection("bookings");
     const bookings = await bookingsCollection.find().toArray();
@@ -104,22 +157,6 @@ router.get("/bookings", async (req, res) => {
       error: "An error occurred while fetching bookings collection",
       details: error.message,
     });
-  }
-});
-
-const bookingsData = [
-  { id: 1, movie: "Movie A", date: "2023-10-15", time: "15:00" },
-  { id: 2, movie: "Movie B", date: "2023-10-16", time: "18:30" },
-  { id: 3, movie: "Movie C", date: "2023-10-17", time: "14:00" },
-  { id: 4, movie: "Movie D", date: "2023-10-18", time: "17:30" },
-  { id: 5, movie: "Movie E", date: "2023-10-19", time: "19:00" },
-];
-
-router.get("/bookings", async (req, res) => {
-  try {
-    res.status(200).send(bookingsData);
-  } catch (error) {
-    res.status(500).send(error.message);
   }
 });
 
