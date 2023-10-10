@@ -146,7 +146,7 @@ router.post("/register", async (req, res) => {
     //EXEMPEL
     const hash = bcrypt.hashSync(user.password, parseInt(process.env.saltRounds));
     user.password = hash
-    console.log(user)
+    user.bookings = []
     const result = await fetchCollection("users").updateOne({email: user.email}, {$setOnInsert: user}, {upsert: true})
 
     if(result.matchedCount !== 0) {
