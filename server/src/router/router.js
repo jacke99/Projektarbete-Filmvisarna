@@ -91,6 +91,10 @@ router.get("/movies", async (req, res) => {
 // USER STORY 5 och 23.5
 
 router.get("/bookings", async (req, res) => {
+  // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
+  // fetcha våran bookings collection,
+  // Kontrollera att allting gick bra (kolla i result)
+  // if / else error eller responsen ska vara våran collection res.status(200).send(result)
   try {
     const bookingsCollection = fetchCollection("bookings");
     const bookings = await bookingsCollection.find().toArray();
@@ -112,10 +116,6 @@ const bookingsData = [
 ];
 
 router.get("/bookings", async (req, res) => {
-  // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
-  // fetcha våran bookings collection,
-  // Kontrollera att allting gick bra (kolla i result)
-  // if / else error eller responsen ska vara våran collection res.status(200).send(result)
   try {
     res.status(200).send(bookingsData);
   } catch (error) {
