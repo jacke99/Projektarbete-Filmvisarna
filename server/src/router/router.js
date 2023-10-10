@@ -3,33 +3,41 @@ import { fetchCollection } from '../mongo/mongoClient.js';
 import bcrypt from 'bcrypt';
 import * as dotenv from 'dotenv';
 import { ObjectId } from 'mongodb';
+import jwtUtil from '../util/jwtUtil.js';
 dotenv.config();
 
 const router = express.Router();
 
 // USER STORY 3 och 19 och 23
 router.post('/screenings', async (req, res) => {
-  // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
-  /*plocka ut data från req.body */
-  // Kolla så inget saknas i bodyn
-  // Om någonting saknas, skicka tillbaka error till exempel (res.status(400))
-  // fetcha våran screenings collection, och uppdatera eller skapa en ny screening (result = fetchcollection("screenings"))
-  // Kontrollera att allting gick bra (kolla i result)
-  // if / else error eller response 201?
+  const body = req.body;
+  if (
+    Object.values(body).every((value) => value !== '' && value !== undefined)
+  ) {
+    try {
+      const result = await fetchCollection('screenings').insertOne(body);
+      res.status(201).send(result);
+    } catch (error) {
+      res.status(400).send({ error: 'Could not create screening' });
+    }
+  } else {
+    res.status(400).send({ error: 'Could not create screening' });
+  }
 });
+
+//for admin to delete one screening
 router.delete('/screenings/:id', async (req, res) => {
-  // hämta ut id (req.params.id)
-  // EXEMPEL
   if (ObjectId.isValid(req.params.id)) {
-    const channel = await fetchCollection('channels').deleteOne({
+    const screening = await fetchCollection('screenings').deleteOne({
       _id: new ObjectId(req.params.id),
     });
-    if (channel.deletedCount == 0) {
+    if (screening.deletedCount == 0) {
       res.status(404).send({ error: 'Could not find the document' });
     } else {
-      res.status(200).send({ message: 'Channel deleted' });
-      await fetch('http://localhost:5000/channel'); // säger åt socketen att emitta till alla som är uppkopplade
+      res.status(200).send({ message: 'Screening deleted' });
     }
+  } else {
+    res.status(404).send({ error: 'unvalid screening id' });
   }
 });
 
@@ -115,6 +123,18 @@ router.get('/movies', async (req, res) => {
   // Kontrollera att allting gick bra (kolla i result)
   // if / else error eller responsen ska vara våran collection res.status(200).send(result)
 });
+router.get('/movies', async (req, res) => {
+  let movies = [];
+  fetchCollection('movies')
+    .find()
+    .forEach((movie) => movies.push(movie))
+    .then(() => {
+      res.status(200).json(movies);
+    })
+    .catch(() => {
+      res.status(500).json({ error: 'Could not fetch movies collection' });
+    });
+});
 
 // USER STORY 5 och 23.5
 router.get('/bookings', async (req, res) => {
@@ -165,29 +185,50 @@ router.patch('/bookings', async (req, res) => {
 // USER STORY 16
 
 router.post('/register', async (req, res) => {
-  // Plocka ut all userinfo från req.body
-  // Kolla så allt är med och inget saknas (namn, efternamn, email, lösenord, telefon)
+  const { email, lastname, name, password, phone } = req.body;
+  const user = req.body;
+  // Check if all required properties are present
+  if (!email || !lastname || !name || !password || !phone) {
+    return res.status(400).json({ error: 'Missing required properties' });
+  }
   // hasha lösenord
   //EXEMPEL
   const hash = bcrypt.hashSync(user.password, parseInt(process.env.saltRounds));
   user.password = hash;
-  // fetcha våran users collection och kolla så emailen inte redan är registerad och lägg till den nya usern
-  //errorhantering (matchcount?)
-  //Skicka tillbaka respons
+  console.log(user);
+  const result = await fetchCollection('users').updateOne(
+    { email: user.email },
+    { $setOnInsert: user },
+    { upsert: true }
+  );
+
+  if (result.matchedCount !== 0) {
+    return res.status(400).send('User allready exists');
+  } else {
+    return res.status(201).send('Account was created');
+  }
 });
 
 // USER STORY 17
 
 router.put('/login', async (req, res) => {
-  // Hämta email och lösenord ur, const login = req.body
-  // Kolla så ingenting saknades
-  // Fetcha users collection med findOne och sök efter en user med emailen | const user = fetch
-  // Kolla så userns hashade lösenord stämmer med lösenordet ut req.body
-  // EXEMPEL
+  const login = req.body;
+  if (!login.email || !login.password) {
+    return res.status(400).send('Bad Request');
+  }
+  const user = await fetchCollection('users').findOne({ email: login.email });
   const match = bcrypt.compareSync(login.password, user.password); // true or false
-  // ErrorHantering
-  // Om det gick bra, generera jwt token
-  // Skicka respons med token eller error
+
+  if (match == false) {
+    res.status(400).send('Bad Request');
+  } else {
+    if (user != null) {
+      const token = jwtUtil.generate(user);
+      res.send(token);
+    } else {
+      res.sendStatus(400);
+    }
+  }
 });
 
 // USER STORY 18
