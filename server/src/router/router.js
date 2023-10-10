@@ -161,14 +161,26 @@ router.put('/screenings', async (req, res) => {
 
 // USER STORY 11
 
-router.get('/movies/:id', async (req, res) => {
-  // hämta ut sökord från req.params.id
-  const id = new ObjectId(req.params.id);
-  // fetcha våran movies collection och filtrera med hjälp av sökord (datum, ålder + ev. eget sökord)
-  // Kontrollera att allting gick bra (kolla i result)
-  // if / else error om vi inte fick träffar eller resultatet ska om vi fick träffar
-});
+//task 11.1 
+router.get("/movies/:id", async (req, res) => {
+    try {
+        const ageRestriction = parseInt(req.params.id);
+        const moviesCollection = fetchCollection('movies')
 
+        const movies = await moviesCollection
+        .find( {ageRestriction: ageRestriction} )
+        .toArray()
+    if (movies.length === 0){
+        res.status(500).json({ err: "inga filmer i den åldergränsen hittades" })
+    }else{
+        res.status(200).json(movies)
+    }   
+
+    } catch (err){
+        res.status(500).json( { err: "något gick fel, prova igen"})
+    }
+    
+})
 // USER STORY 15
 
 router.patch('/bookings', async (req, res) => {
