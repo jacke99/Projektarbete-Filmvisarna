@@ -201,22 +201,18 @@ router.patch("/bookings", async (req, res) => {
 // USER STORY 16
 
 router.post("/register", async (req, res) => {
-  const { email, lastname, name, password, phone } = req.body;
-  const user = req.body;
-  // Check if all required properties are present
-  if (!email || !lastname || !name || !password || !phone) {
-    return res.status(400).json({ error: "Missing required properties" });
-  }
-  // hasha lösenord
-  //EXEMPEL
-  const hash = bcrypt.hashSync(user.password, parseInt(process.env.saltRounds));
-  user.password = hash;
-  console.log(user);
-  const result = await fetchCollection("users").updateOne(
-    { email: user.email },
-    { $setOnInsert: user },
-    { upsert: true }
-  );
+    const { email, lastname, name, password, phone } = req.body;
+    const user = req.body 
+    // Check if all required properties are present
+    if (!email || !lastname || !name || !password || !phone) {
+        return res.status(400).json({ error: 'Missing required properties' });
+    }
+    // hasha lösenord
+    //EXEMPEL
+    const hash = bcrypt.hashSync(user.password, parseInt(process.env.saltRounds));
+    user.password = hash
+    user.bookings = []
+    const result = await fetchCollection("users").updateOne({email: user.email}, {$setOnInsert: user}, {upsert: true})
 
   if (result.matchedCount !== 0) {
     return res.status(400).send("User allready exists");
@@ -250,14 +246,26 @@ router.put("/login", async (req, res) => {
 // USER STORY 18
 
 router.get("/user/:id", async (req, res) => {
-  // Plocka ut all userID från req.params.id
-  const id = new ObjectId(req.params.id);
-  // errorHantering
-  // fetcha users collection, findOne med hjälp av id:et du plocka ur queryn
-  //errorHantering
-  // I user.booking finns det bokningsIDn, använd dom för att hämta användaren bokningar
-  //errorHantering
-  //Skicka tillbaka bokningarna eller error
-});
+    try {
+      if (ObjectId.isValid(req.params.id)) {
+        const user = await fetchCollection("users").findOne({ _id: new ObjectId(req.params.id) });
+        
+        if (user == null) {
+          return res.status(404).send({ error: 'Could not fetch the user info' });
+        }
+  
+        const arrayToSearch = user.bookings.map(booking => booking.bookingId);
+  
+        const userBookings = await fetchCollection("bookings").find({ bookingId: { $in: arrayToSearch } }).toArray();
+  
+        return res.send(userBookings);
+      } else {
+        return res.status(404).send({ error: 'Object id is not valid' });
+      }
+    } catch (error) {
+      console.error('Error fetching user bookings:', error);
+      return res.status(500).send({ error: 'Internal server error' });
+    }
+  });
 
 export default router;
