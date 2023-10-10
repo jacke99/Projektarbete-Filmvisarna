@@ -25,26 +25,26 @@ router.post("/screenings", async (req, res) => {
   }
 });
 
-router.get("/screenings", async (req, res) => {
-  let screenings = [];
+// router.get("/screenings", async (req, res) => {
+//   let screenings = [];
 
-  fetchCollection("screenings")
-    .find()
-    .forEach((oneScreening) => screenings.push(oneScreening))
-    .then(() => {
-      res
-        .status(200)
-        .json({
-          message: "Screenings fetched successfully",
-          screenings: screenings,
-        });
-    })
-    .catch(() => {
-      res
-        .status(400)
-        .json({ error: "Could not fetch documents of Screenings" });
-    });
-});
+//   fetchCollection("screenings")
+//     .find()
+//     .forEach((oneScreening) => screenings.push(oneScreening))
+//     .then(() => {
+//       res
+//         .status(200)
+//         .json({
+//           message: "Screenings fetched successfully",
+//           screenings: screenings,
+//         });
+//     })
+//     .catch(() => {
+//       res
+//         .status(400)
+//         .json({ error: "Could not fetch documents of Screenings" });
+//     });
+// });
 
 router.delete("/screenings/:id", async (req, res) => {
   if (ObjectId.isValid(req.params.id)) {
@@ -176,25 +176,43 @@ router.put("/screenings", async (req, res) => {
   // else status dålig expempel 400
 });
 
-// USER STORY 11
+// USER STORY 11 OBS! Måste vara rätt datumformat i mongo DB EJ SLASH
 //task 11.1
-router.get('/screenings/:id', async (req, res) => {
-    try {
-      const date = parseInt(req.query.date);
-      const screeningsCollection = fetchCollection('screenings');
-  
-      const screenings = await screeningsCollection
-        .find({ date:  date  })
-        .toArray();
-      if (screenings.length === 0) {
+router.get('/screenings', async (req, res) => {
+  try {
+    const screeningsCollection = fetchCollection('screenings');
+    
+    // Check if req.query.date is present
+    if (req.query.date) {
+      const filteredScreenings = await screeningsCollection.find({ date: { $eq: req.query.date } }).toArray();
+      
+      if (filteredScreenings.length === 0) {
         res.status(500).json({ err: 'Inga filmer på det datumet hittades' });
       } else {
-        res.status(200).json(screenings);
+        res.status(200).json(filteredScreenings);
       }
-    } catch (err) {
-      res.status(500).json({ err: 'Något gick fel, prova igen' });
+    } else {
+      // If req.query.date is not present, fetch all screenings
+      let screenings = [];
+
+      screeningsCollection
+        .find()
+        .forEach((oneScreening) => screenings.push(oneScreening))
+        .then(() => {
+          res.status(200).json({
+            message: 'Screenings fetched successfully',
+            screenings: screenings,
+          });
+        })
+        .catch(() => {
+          res.status(400).json({ error: 'Could not fetch documents of Screenings' });
+        });
     }
-  });
+  } catch (err) {
+    res.status(500).json({ err: 'Något gick fel, prova igen' });
+  }
+});
+
   
 //task 11.1 
 /*
