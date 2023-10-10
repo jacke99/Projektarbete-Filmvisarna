@@ -9,19 +9,28 @@
 const router = express.Router();
 
 // USER STORY 3 och 19 och 23
-router.post("/screenings", async (req, res) => { 
-    const body = req.body
-    if(Object.values(body).every(value => value !== "" && value !== undefined)) {
-        try {
-            const result = await fetchCollection('screenings').insertOne(body)
-            res.status(201).send(result)
-        } catch (error){
-            res.status(400).send({error: 'Could not create screening'})
-        }
+router.post('/movies', async (req, res) => {
+    // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
+    const movie = req.body;
+    if (
+      Object.values(movie).every((value) => value !== '' && value !== undefined)
+    ) {
+      try {
+        const result = await fetchCollection('movies')
+          .insertOne(movie)
+          .then((result) => {
+            res.status(201).json(result);
+          });
+      } catch (error) {
+        res
+          .status(500)
+          .json({ err: 'Could not create a new document in collection movies' });
+      }
     } else {
-        res.status(400).send({error: 'Could not create screening'})
+      res.status(500).json({ err: 'Incorrect movie input' });
     }
-})
+});
+
 
 //for admin to delete one screening
 router.delete("/screenings/:id", async (req, res) => {
@@ -111,14 +120,34 @@ router.put("/screenings", async (req, res) => {
 })
 
 // USER STORY 11
+//task 11.1 
+router.get("/movies/:id", async (req, res) => {
+    try {
+        const ageRestriction = parseInt(req.params.id);
+        const moviesCollection = fetchCollection('movies')
 
+        const movies = await moviesCollection
+        .find( {ageRestriction: ageRestriction} )
+        .toArray()
+    if (movies.length === 0){
+        res.status(500).json({ err: "inga filmer i den åldergränsen hittades" })
+    }else{
+        res.status(200).json(movies)
+    }   
+
+    } catch (err){
+        res.status(500).json( { err: "något gick fel, prova igen"})
+    }
+    
+})
+/*
 router.get("/movies/:id", async (req, res) => {
     // hämta ut sökord från req.params.id
     const id = new ObjectId(req.params.id) 
     // fetcha våran movies collection och filtrera med hjälp av sökord (datum, ålder + ev. eget sökord)
     // Kontrollera att allting gick bra (kolla i result)
     // if / else error om vi inte fick träffar eller resultatet ska om vi fick träffar
-})
+})*/
 
 // USER STORY 15
 
