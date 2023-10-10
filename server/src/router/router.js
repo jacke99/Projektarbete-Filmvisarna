@@ -162,25 +162,25 @@ router.put('/screenings', async (req, res) => {
 // USER STORY 11
 
 //task 11.1 
-router.get("/movies/:id", async (req, res) => {
+router.get("/screenings", async (req, res) => {
     try {
-        const ageRestriction = parseInt(req.params.id);
-        const moviesCollection = fetchCollection('movies')
+        const ageRestriction = parseInt(req.query);
+        const moviesCollection = fetchCollection('screenings');
 
         const movies = await moviesCollection
-        .find( {ageRestriction: ageRestriction} )
-        .toArray()
-    if (movies.length === 0){
-        res.status(500).json({ err: "inga filmer i den åldergränsen hittades" })
-    }else{
-        res.status(200).json(movies)
-    }   
+            .find({ ageRestriction: ageRestriction })
+            .toArray();
 
-    } catch (err){
-        res.status(500).json( { err: "något gick fel, prova igen"})
+        if (movies.length === 0) {
+            res.status(500).json({ err: "Inga filmer i den åldergränsen hittades" });
+        } else {
+            res.status(200).json(movies);
+        }
+
+    } catch (err) {
+        res.status(500).json({ err: "Något gick fel, prova igen" });
     }
-    
-})
+});
 // USER STORY 15
 
 router.patch('/bookings', async (req, res) => {
