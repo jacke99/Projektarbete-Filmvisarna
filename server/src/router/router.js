@@ -177,8 +177,27 @@ router.put("/screenings", async (req, res) => {
 });
 
 // USER STORY 11
-
+//task 11.1
+router.get('/screenings/:id', async (req, res) => {
+    try {
+      const date = parseInt(req.query.date);
+      const screeningsCollection = fetchCollection('screenings');
+  
+      const screenings = await screeningsCollection
+        .find({ date:  date  })
+        .toArray();
+      if (screenings.length === 0) {
+        res.status(500).json({ err: 'Inga filmer på det datumet hittades' });
+      } else {
+        res.status(200).json(screenings);
+      }
+    } catch (err) {
+      res.status(500).json({ err: 'Något gick fel, prova igen' });
+    }
+  });
+  
 //task 11.1 
+/*
 router.get("/screenings", async (req, res) => {
     try {
         const ageRestriction = parseInt(req.query);
@@ -197,7 +216,7 @@ router.get("/screenings", async (req, res) => {
     } catch (err) {
         res.status(500).json({ err: "Något gick fel, prova igen" });
     }
-});
+});*/
 // USER STORY 15
 
 router.patch("/bookings", async (req, res) => {
