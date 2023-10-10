@@ -65,7 +65,6 @@ router.post('/movies', async (req, res) => {
     subtitles,
     ageRestriction,
   } = req.body;
-
   if (
     !title ||
     !img ||
@@ -102,27 +101,25 @@ router.post('/movies', async (req, res) => {
   }
 });
 
-router.delete('/movies/:id', async (req, res) => {
-  // hämta ut id (req.params.id)
-  // EXEMPEL
-  if (ObjectId.isValid(req.params.id)) {
-    const channel = await fetchCollection('channels').deleteOne({
-      _id: new ObjectId(req.params.id),
-    });
-    if (channel.deletedCount == 0) {
-      res.status(404).send({ error: 'Could not find the document' });
-    } else {
-      res.status(200).send({ message: 'Channel deleted' });
-      await fetch('http://localhost:5000/channel'); // säger åt socketen att emitta till alla som är uppkopplade
-    }
-  }
-});
+//for admin to delete one movie task 23.2
+router.delete("/movies/:id", async (req, res) => {
+  
+    if (ObjectId.isValid(req.params.id)) {
+        const movie = await fetchCollection('movies').deleteOne({_id: new ObjectId(req.params.id)})
+            if(movie.deletedCount == 0) {
+                res.status(404).send({error: 'Could not find the movie'})
+            } else {
+                res.status(200).send({message: 'The movie is deleted'})
+                
+            }}
+    else{
+        res.status(404).send({error: "unvalid movie id"})
+    }       
+})
 
-router.get('/movies', async (req, res) => {
-  // fetcha våran movies collection,
-  // Kontrollera att allting gick bra (kolla i result)
-  // if / else error eller responsen ska vara våran collection res.status(200).send(result)
-});
+
+
+//get all the documentes from movies collection task 4.2
 router.get('/movies', async (req, res) => {
   let movies = [];
   fetchCollection('movies')
@@ -135,6 +132,8 @@ router.get('/movies', async (req, res) => {
       res.status(500).json({ error: 'Could not fetch movies collection' });
     });
 });
+
+
 
 // USER STORY 5 och 23.5
 router.get('/bookings', async (req, res) => {
