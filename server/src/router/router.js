@@ -23,6 +23,7 @@ router.post("/screenings", async (req, res) => {
     }
 })
 
+
 //for admin to delete one screening
 router.delete("/screenings/:id", async (req, res) => {
   
@@ -40,6 +41,18 @@ router.delete("/screenings/:id", async (req, res) => {
 })
 
 router.get("/screenings", async (req, res) => {
+
+    let screenings = [];
+
+    fetchCollection('screenings')
+    .find()
+    .forEach(oneScreening => screenings.push(oneScreening))
+    .then(()=>{
+        res.status(200).json({ message: "Screenings fetched successfully", screenings: screenings });
+    })
+    .catch(()=>{
+        res.status(400).json({error: "Could not fetch documents of Screenings"});
+    })
     // fetcha våran screening collection,
     // Kontrollera att allting gick bra (kolla i result)
     // if / else error eller responsen ska vara våran collection res.status(200).send(result)
