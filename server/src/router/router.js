@@ -124,8 +124,21 @@ router.get("/movies/:id", async (req, res) => {
 
 
 router.patch("/bookings", async (req, res) => {
-    // Plocka ut id ur req.body eller på det sättet som ni vill
-    // Dubbelkolla så id faktiskt finns i bodyn
+    const body = req.body
+    if(!body._id) {
+        return res.status(400).send("Bad Request")
+    }
+    const booking = await fetchCollection("bookings").findOne({_id: new ObjectId(body._id)})
+    if(booking == null || !booking.screeningId) {
+        return res.status(404).send("Booking not found")
+    }
+    const seats = booking.seats
+    console.log(seats.row2);
+    const currentScreening = await fetchCollection("screenings").findOne({_id: new ObjectId(booking.screeningId)})
+    let newScreening = (currentScreening)
+
+    res.send(currentScreening.seats.row2)
+
     // fetcha bokningen och kolla vilka stolar som kunden hade bokat och ändra status till avbokad
     // errorHantering
     // hämta screening med hjälp av screeningId i bokningen och "lås upp" dom tidigare bokade stolarna.
