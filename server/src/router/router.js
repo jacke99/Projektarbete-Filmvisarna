@@ -266,6 +266,6 @@ router.get("/user/:id", async (req, res) => {
       console.error('Error fetching user bookings:', error);
       return res.status(500).send({ error: 'Internal server error' });
     }
-  });
+});
 
 export default router;
