@@ -176,21 +176,38 @@ router.put("/screenings", async (req, res) => {
   // else status dålig expempel 400
 });
 
-// USER STORY 11 OBS! Måste vara rätt datumformat i mongo DB EJ SLASH
+// USER STORY 11 OBS!
 //task 11.1
 router.get('/screenings', async (req, res) => {
   try {
     const screeningsCollection = fetchCollection('screenings');
+    const query = {}
+
+    /*
+To filter by date: /screenings/?date=20
+To filter by movie: /screenings/?title=MovieTitle
+To filter by both date and movie: /screenings/?date=20&title=MovieTitle
+    */
     
     // Check if req.query.date is present
-    if (req.query.date) {
-      const filteredScreenings = await screeningsCollection.find({ date: { $eq: req.query.date } }).toArray();
+    if (req.query.date) { 
+    query.date = req.query.date }
+
+
+    // Check if req.query.movie is present 
+    if (req.query.movie) { 
+    query.movie = req.query.movie}
+
+    // Check the object query
+    if (Object.keys(query).length > 0) {
+    const filteredScreenings = await screeningsCollection.find(query).toArray();
       
       if (filteredScreenings.length === 0) {
         res.status(500).json({ err: 'Inga filmer på det datumet hittades' });
       } else {
         res.status(200).json(filteredScreenings);
       }
+
     } else {
       // If req.query.date is not present, fetch all screenings
       let screenings = [];
