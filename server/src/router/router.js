@@ -11,6 +11,28 @@ const router = express.Router();
 // USER STORY 3 och 19 och 23
 router.post("/screenings", async (req, res) => {
   const body = req.body;
+  const {
+    date,
+    time,
+    theater,
+    movie,
+    ageRestriction,
+  } = req.body;
+  if (!date || !time || !theater || !movie || !ageRestriction) {
+    return res.status(400).json({error: "Missing required properties, pls check your request body"});
+  }
+
+  const rowAmmount = 8
+  const seatPerRow = 12
+  const seats = []
+  for(let i = 0; i < rowAmmount; i++) {
+    seats.push([])
+    for(let j = 0; j < seatPerRow; j++) {
+      seats[i].push({seat: false})
+    }
+  }
+  body.seats = seats
+
   if (
     Object.values(body).every((value) => value !== "" && value !== undefined)
   ) {
@@ -221,14 +243,31 @@ router.get("/screenings", async (req, res) => {
 // USER STORY 15
 
 router.patch("/bookings", async (req, res) => {
-  // Plocka ut id ur req.body eller på det sättet som ni vill
-  // Dubbelkolla så id faktiskt finns i bodyn
-  // fetcha bokningen och kolla vilka stolar som kunden hade bokat och ändra status till avbokad
-  // errorHantering
-  // hämta screening med hjälp av screeningId i bokningen och "lås upp" dom tidigare bokade stolarna.
-  //errorHantering
-  // skicka tillbaka respons, ok eller error
-});
+    const body = req.body
+    if(!body._id) {
+        return res.status(400).send("Bad Request")
+    }
+    const booking = await fetchCollection("bookings").findOne({_id: new ObjectId(body._id)})
+    if(booking == null || !booking.screeningId) {
+        return res.status(404).send("Booking not found")
+    }
+    try {
+       let currentScreening = await fetchCollection("screenings").findOne({_id: new ObjectId(booking.screeningId)})
+        for(let i = 0; i < booking.seat.length; i++) {
+            currentScreening.seats[booking.row - 1][booking.seat[i] - 1] = {seat: false}
+        }
+    
+        let result = await fetchCollection("screenings").updateOne({_id: new ObjectId(booking.screeningId)}, {$set: currentScreening})
+        if(result.modifiedCount == 1) { 
+            res.status(201).send(currentScreening) 
+        } else {
+            res.status(400).send("Kunde inte avboka, prova igen")
+        }
+        }
+    catch(error) {
+        res.status(500).send("Something went wrong")
+    }
+})
 
 // USER STORY 16
 
