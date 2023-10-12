@@ -46,28 +46,15 @@ router.post("/movies", async (req, res) => {
   // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
   const movie = req.body;
   const {
-    title,
-    img,
-    name,
-    trailer,
-    director,
-    actors,
-    length,
-    genre,
-    speech,
-    subtitles,
+    title, img,trailer,
+    director, actors,length,
+    genre, speech, subtitles,
     ageRestriction,
   } = req.body;
   if (
-    !title ||
-    !img ||
-    !trailer ||
-    !director ||
-    !actors ||
-    !length ||
-    !genre ||
-    !speech ||
-    !subtitles ||
+    !title || !img || !trailer ||
+    !director || !actors || !length ||
+    !genre || !speech || !subtitles ||
     !ageRestriction
   ) {
     return res.status(400).json({
@@ -79,11 +66,8 @@ router.post("/movies", async (req, res) => {
     Object.values(movie).every((value) => value !== "" && value !== undefined)
   ) {
     try {
-      const result = await fetchCollection("movies")
-        .insertOne(movie)
-        .then((result) => {
-          res.status(201).json(result);
-        });
+      const result = await fetchCollection("movies").insertOne(movie)
+      res.status(201).json(result);
     } catch (error) {
       res
         .status(500)
@@ -128,7 +112,7 @@ router.get("/movies", async (req, res) => {
 router.get("/bookings", async (req, res) => {
   // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
   try {
-    const bookingsCollection = fetchCollection("bookings");
+    const bookingsCollection = await fetchCollection("bookings");
     const bookings = await bookingsCollection.find().toArray();
     res.status(200).json(bookings);
   } catch (error) {
@@ -204,20 +188,12 @@ router.get('/screenings', async (req, res) => {
 
     } else {
       // If req.query.date is not present, fetch all screenings
-      let screenings = [];
-
-      screeningsCollection
-        .find()
-        .forEach((oneScreening) => screenings.push(oneScreening))
-        .then(() => {
-          res.status(200).json({
-            message: 'Screenings fetched successfully',
-            screenings: screenings,
-          });
-        })
-        .catch(() => {
-          res.status(400).json({ error: 'Could not fetch documents of Screenings' });
-        });
+      try {
+      const screenings = await screeningsCollection.find().toArray()
+        res.status(200).send(screenings);
+      } catch (err) {
+        res.status(500).send({ err: 'Något gick fel' });
+      }
     }
   } catch (err) {
     res.status(500).json({ err: 'Något gick fel, prova igen' });
