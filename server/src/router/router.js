@@ -245,15 +245,14 @@ router.patch("/bookings", async (req, res) => {
     if(booking == null || !booking.screeningId) {
         return res.status(404).send("Booking not found")
     }
-    console.log(booking);
     try {
        let currentScreening = await fetchCollection("screenings").findOne({_id: new ObjectId(booking.screeningId)})
-        for(let i = 0; i < booking.seatIndex.length; i++) {
-            currentScreening.seats[booking.rowIndex - 1][booking.seatIndex[i] - 1] = {seat: false}
+        for(let i = 0; i < booking.seat.length; i++) {
+            currentScreening.seats[booking.row - 1][booking.seat[i] - 1] = {seat: false}
         }
     
         let result = await fetchCollection("screenings").updateOne({_id: new ObjectId(booking.screeningId)}, {$set: currentScreening})
-        if(result.modifiedCount == 1) {
+        if(result.modifiedCount == 1) { 
             res.status(201).send(currentScreening) 
         } else {
             res.status(400).send("Kunde inte avboka, prova igen")
