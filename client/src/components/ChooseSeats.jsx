@@ -22,7 +22,8 @@ export default function ChooseSeats() {
       
         const startSeatIndex = Math.max(0, seatIndex - numberOfSeats);
         const endSeatIndex = Math.min(startSeatIndex + numberOfSeats - 1, 11);
-      
+        
+
         const hoveringSeats = [];
       
         for (let i = startSeatIndex; i <= endSeatIndex; i++) {
