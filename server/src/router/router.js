@@ -96,16 +96,12 @@ router.delete("/movies/:id", async (req, res) => {
 
 //get all the documentes from movies collection task 4.2
 router.get("/movies", async (req, res) => {
-  let movies = [];
-  fetchCollection("movies")
-    .find()
-    .forEach((movie) => movies.push(movie))
-    .then(() => {
-      res.status(200).json(movies);
-    })
-    .catch(() => {
-      res.status(500).json({ error: "Could not fetch movies collection" });
-    });
+  try {
+    const movies = await fetchCollection("movies").find().toArray()
+    res.status(200).send(movies);
+  } catch {
+      res.status(500).send({ error: "Could not fetch movies collection" });
+    }
 });
 
 // USER STORY 5 och 23.5
