@@ -69,7 +69,11 @@ router.delete("/screenings/:id", async (req, res) => {
 router.post("/movies",uploads.array('files'), async (req, res) => {
   // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
 
+   
+  // Här vill  vi ha kod som fångar upp namnet på bilden som vi pushat upp till /client/public/srs/assets.
+  //Därefter vill vi kunna använda namnet på filen och pusha upp filnamet till databasen
 
+  
 
   const movie = req.body;
   const {
