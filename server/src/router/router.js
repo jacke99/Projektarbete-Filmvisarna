@@ -11,12 +11,8 @@ const router = express.Router();
 // USER STORY 3 och 19 och 23
 router.post("/screenings", async (req, res) => {
   const body = req.body;
-  const {
-    date,
-    time,
-    theater,
-    movie,
-    ageRestriction,
+  const {date, time, theater,
+        movie, ageRestriction,
   } = req.body;
   if (!date || !time || !theater || !movie || !ageRestriction) {
     return res.status(400).json({error: "Missing required properties, pls check your request body"});
@@ -27,8 +23,6 @@ router.post("/screenings", async (req, res) => {
   } catch (error) {
     res.status(500).send({ error: "Could not fetch screenings collection" });
   }
-  
-  console.log(body);
   if (
     Object.values(body).every((value) => value !== "" && value !== undefined)
   ) {
@@ -252,10 +246,10 @@ router.patch("/bookings", async (req, res) => {
         for(let i = 0; i < booking.seat.length; i++) {
             currentScreening.seats[booking.row - 1][booking.seat[i] - 1] = {seat: false}
         }
-        booking.status = "Avbokad"
-        await fetchCollection("bookings").updateOne({_id: new ObjectId(body._id)}, {$set: booking})
+        booking.status = false
+        const updateBooking = await fetchCollection("bookings").updateOne({_id: new ObjectId(body._id)}, {$set: booking})
         let result = await fetchCollection("screenings").updateOne({_id: new ObjectId(booking.screeningId)}, {$set: currentScreening})
-        if(result.modifiedCount == 1) { 
+        if(result.matchedCount == 1) { 
             res.status(201).send(currentScreening) 
         } else {
             res.status(400).send("Kunde inte avboka, prova igen")
