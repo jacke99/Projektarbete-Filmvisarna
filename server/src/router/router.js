@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import * as dotenv from "dotenv";
 import { ObjectId } from "mongodb";
 import jwtUtil from "../util/jwtUtil.js";
-import {uploads} from './middleware/fileUpload.js'
+import uploads from './middleware/fileUpload.js'
 dotenv.config();
 
 const router = express.Router();
@@ -66,14 +66,14 @@ router.delete("/screenings/:id", async (req, res) => {
 // USER STORY 4 och 23
 
 // 'files' kommer från front end
-router.post("/movies",uploads.toArray('files'), async (req, res) => {
+router.post("/movies",uploads.array('files'), async (req, res) => {
   // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
 
 
 
   const movie = req.body;
   const {
-    title, img,trailer,
+    title, img,trailer, // här vill vi att "img" ska hämtas från client/srs/assets och följa med posten upp til DB
     director, actors,length,
     genre, speech, subtitles,
     ageRestriction,
@@ -82,8 +82,7 @@ router.post("/movies",uploads.toArray('files'), async (req, res) => {
     !title || !img || !trailer ||
     !director || !actors || !length ||
     !genre || !speech || !subtitles ||
-    !ageRestriction
-  ) {
+    !ageRestriction  ) {
     return res.status(400).json({
       error: "Missing required properties, pls check your request body",
     });
