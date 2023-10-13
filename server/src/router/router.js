@@ -22,16 +22,7 @@ router.post("/screenings", async (req, res) => {
     return res.status(400).json({error: "Missing required properties, pls check your request body"});
   }
 
-  const rowAmmount = 8
-  const seatPerRow = 12
-  const seats = []
-  for(let i = 0; i < rowAmmount; i++) {
-    seats.push([])
-    for(let j = 0; j < seatPerRow; j++) {
-      seats[i].push({seat: false})
-    }
-  }
-  body.seats = seats
+  
 
   if (
     Object.values(body).every((value) => value !== "" && value !== undefined)
@@ -339,5 +330,36 @@ router.get("/user/:id", async (req, res) => {
       return res.status(500).send({ error: 'Internal server error' });
     }
   });
+
+
+  router.post("/theaters", async (req, res) => {
+    const body = req.body;
+    const {theaterNr, rows, seatsPerRow} = req.body;
+    if (!theaterNr || !rows || !seatsPerRow) {
+      return res.status(400).json({error: "Missing required properties, pls check your request body"});
+    }
+    if (
+      Object.values(body).every((value) => value !== "" && value !== undefined)
+    ) {
+      try {
+        const seats = []
+        for(let i = 0; i < rows; i++) {
+          seats.push([])
+          for(let j = 0; j < seatsPerRow; j++) {
+            seats[i].push({seat: false})
+          }
+        }
+        body.seats = seats
+        const result = await fetchCollection("theaters").insertOne(body);
+        res.status(201).send(result);
+      } catch (error) {
+        res.status(400).send({ error: "Could not create theater" });
+      }
+    } else {
+      res.status(400).send({ error: "Could not create theater" });
+    }
+  
+
+  })
 
 export default router;
