@@ -11,6 +11,28 @@ const router = express.Router();
 // USER STORY 3 och 19 och 23
 router.post("/screenings", async (req, res) => {
   const body = req.body;
+  const {
+    date,
+    time,
+    theater,
+    movie,
+    ageRestriction,
+  } = req.body;
+  if (!date || !time || !theater || !movie || !ageRestriction) {
+    return res.status(400).json({error: "Missing required properties, pls check your request body"});
+  }
+
+  const rowAmmount = 8
+  const seatPerRow = 12
+  const seats = []
+  for(let i = 0; i < rowAmmount; i++) {
+    seats.push([])
+    for(let j = 0; j < seatPerRow; j++) {
+      seats[i].push({seat: false})
+    }
+  }
+  body.seats = seats
+
   if (
     Object.values(body).every((value) => value !== "" && value !== undefined)
   ) {
@@ -24,27 +46,6 @@ router.post("/screenings", async (req, res) => {
     res.status(400).send({ error: "Could not create screening" });
   }
 });
-
-// router.get("/screenings", async (req, res) => {
-//   let screenings = [];
-
-//   fetchCollection("screenings")
-//     .find()
-//     .forEach((oneScreening) => screenings.push(oneScreening))
-//     .then(() => {
-//       res
-//         .status(200)
-//         .json({
-//           message: "Screenings fetched successfully",
-//           screenings: screenings,
-//         });
-//     })
-//     .catch(() => {
-//       res
-//         .status(400)
-//         .json({ error: "Could not fetch documents of Screenings" });
-//     });
-// });
 
 router.delete("/screenings/:id", async (req, res) => {
   if (ObjectId.isValid(req.params.id)) {
@@ -67,27 +68,15 @@ router.post("/movies", async (req, res) => {
   // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
   const movie = req.body;
   const {
-    title,
-    img,
-    trailer,
-    director,
-    actors,
-    length,
-    genre,
-    speech,
-    subtitles,
+    title, img,trailer,
+    director, actors,length,
+    genre, speech, subtitles,
     ageRestriction,
   } = req.body;
   if (
-    !title ||
-    !img ||
-    !trailer ||
-    !director ||
-    !actors ||
-    !length ||
-    !genre ||
-    !speech ||
-    !subtitles ||
+    !title || !img || !trailer ||
+    !director || !actors || !length ||
+    !genre || !speech || !subtitles ||
     !ageRestriction
   ) {
     return res.status(400).json({
@@ -99,11 +88,8 @@ router.post("/movies", async (req, res) => {
     Object.values(movie).every((value) => value !== "" && value !== undefined)
   ) {
     try {
-      const result = await fetchCollection("movies")
-        .insertOne(movie)
-        .then((result) => {
-          res.status(201).json(result);
-        });
+      const result = await fetchCollection("movies").insertOne(movie)
+      res.status(201).json(result);
     } catch (error) {
       res
         .status(500)
@@ -132,23 +118,19 @@ router.delete("/movies/:id", async (req, res) => {
 
 //get all the documentes from movies collection task 4.2
 router.get("/movies", async (req, res) => {
-  let movies = [];
-  fetchCollection("movies")
-    .find()
-    .forEach((movie) => movies.push(movie))
-    .then(() => {
-      res.status(200).json(movies);
-    })
-    .catch(() => {
-      res.status(500).json({ error: "Could not fetch movies collection" });
-    });
+  try {
+    const movies = await fetchCollection("movies").find().toArray()
+    res.status(200).send(movies);
+  } catch {
+      res.status(500).send({ error: "Could not fetch movies collection" });
+    }
 });
 
 // USER STORY 5 och 23.5
 router.get("/bookings", async (req, res) => {
   // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
   try {
-    const bookingsCollection = fetchCollection("bookings");
+    const bookingsCollection = await fetchCollection("bookings");
     const bookings = await bookingsCollection.find().toArray();
     res.status(200).json(bookings);
   } catch (error) {
@@ -175,37 +157,61 @@ router.put("/screenings", async (req, res) => {
   // else status dålig expempel 400
 });
 
-// USER STORY 11 OBS! Måste vara rätt datumformat i mongo DB EJ SLASH
+// USER STORY 11 OBS!
 //task 11.1
 router.get('/screenings', async (req, res) => {
   try {
     const screeningsCollection = fetchCollection('screenings');
+    const query = {}
+
+    /*
+    To filter by date: /screenings/?date=20
+    To filter by movie: /screenings/?title=MovieTitle
+    To filter by both date and movie: /screenings/?date=20&title=MovieTitle
+    */
     
     // Check if req.query.date is present
-    if (req.query.date) {
-      const filteredScreenings = await screeningsCollection.find({ date: { $eq: req.query.date } }).toArray();
+    if (req.query.date) { 
+    query.date = req.query.date 
+    }
+
+
+    // Check if req.query.movie is present 
+    if (req.query.movie) { 
+    query.movie = req.query.movie
+    }
+
+    if (req.query.age) { 
+    query.age = req.query.age
+    }
+
+    // Check the object query
+    if (Object.keys(query).length > 0) {
+        
+        let regex = new RegExp(query.movie.split("").join("\\s*"), 'i');
+        const filteredScreenings = await screeningsCollection.find({$and: [
+            query.date ? {date: query.date} : {},
+            query.movie ? {movie: { $regex: regex}} : {}, 
+            query.age ? {ageRestricion: {$lte: parseInt(query.age)}}: {}
+            ]}).toArray();
+        
+    
+        console.log(filteredScreenings, "-----------------------")
       
-      if (filteredScreenings.length === 0) {
-        res.status(500).json({ err: 'Inga filmer på det datumet hittades' });
+      if (filteredScreenings.length == 0) {
+        res.status(500).json({ err: 'Inga filmer på din sökning hittades' });
       } else {
         res.status(200).json(filteredScreenings);
       }
+
     } else {
       // If req.query.date is not present, fetch all screenings
-      let screenings = [];
-
-      screeningsCollection
-        .find()
-        .forEach((oneScreening) => screenings.push(oneScreening))
-        .then(() => {
-          res.status(200).json({
-            message: 'Screenings fetched successfully',
-            screenings: screenings,
-          });
-        })
-        .catch(() => {
-          res.status(400).json({ error: 'Could not fetch documents of Screenings' });
-        });
+      try {
+      const screenings = await screeningsCollection.find().toArray()
+        res.status(200).send(screenings);
+      } catch (err) {
+        res.status(500).send({ err: 'Något gick fel' });
+      }
     }
   } catch (err) {
     res.status(500).json({ err: 'Något gick fel, prova igen' });
@@ -245,15 +251,15 @@ router.patch("/bookings", async (req, res) => {
     if(booking == null || !booking.screeningId) {
         return res.status(404).send("Booking not found")
     }
-    console.log(booking);
     try {
        let currentScreening = await fetchCollection("screenings").findOne({_id: new ObjectId(booking.screeningId)})
-        for(let i = 0; i < booking.seatIndex.length; i++) {
-            currentScreening.seats[booking.rowIndex - 1][booking.seatIndex[i] - 1] = {seat: false}
+        for(let i = 0; i < booking.seat.length; i++) {
+            currentScreening.seats[booking.row - 1][booking.seat[i] - 1] = {seat: false}
         }
-    
+        booking.status = "Avbokad"
+        await fetchCollection("bookings").updateOne({_id: new ObjectId(body._id)}, {$set: booking})
         let result = await fetchCollection("screenings").updateOne({_id: new ObjectId(booking.screeningId)}, {$set: currentScreening})
-        if(result.modifiedCount == 1) {
+        if(result.modifiedCount == 1) { 
             res.status(201).send(currentScreening) 
         } else {
             res.status(400).send("Kunde inte avboka, prova igen")
@@ -262,12 +268,6 @@ router.patch("/bookings", async (req, res) => {
     catch(error) {
         res.status(500).send("Something went wrong")
     }
-
-    // fetcha bokningen och kolla vilka stolar som kunden hade bokat och ändra status till avbokad
-    // errorHantering
-    // hämta screening med hjälp av screeningId i bokningen och "lås upp" dom tidigare bokade stolarna.
-    //errorHantering
-    // skicka tillbaka respons, ok eller error
 })
 
 // USER STORY 16
