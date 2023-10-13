@@ -188,10 +188,10 @@ router.get('/screenings', async (req, res) => {
     // Check the object query
     if (Object.keys(query).length > 0) {
         
-        
+        let regex = new RegExp(query.movie.split("").join("\\s*"), 'i');
         const filteredScreenings = await screeningsCollection.find({$and: [
             query.date ? {date: query.date} : {},
-            query.movie ? {movie: { $regex: query.movie ,$options:"i"}} : {}, 
+            query.movie ? {movie: { $regex: regex}} : {}, 
             query.age ? {ageRestricion: {$lte: parseInt(query.age)}}: {}
             ]}).toArray();
         
@@ -256,7 +256,8 @@ router.patch("/bookings", async (req, res) => {
         for(let i = 0; i < booking.seat.length; i++) {
             currentScreening.seats[booking.row - 1][booking.seat[i] - 1] = {seat: false}
         }
-    
+        booking.status = "Avbokad"
+        await fetchCollection("bookings").updateOne({_id: new ObjectId(body._id)}, {$set: booking})
         let result = await fetchCollection("screenings").updateOne({_id: new ObjectId(booking.screeningId)}, {$set: currentScreening})
         if(result.modifiedCount == 1) { 
             res.status(201).send(currentScreening) 
