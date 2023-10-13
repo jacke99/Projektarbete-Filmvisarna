@@ -141,8 +141,22 @@ router.get("/bookings", async (req, res) => {
   }
 });
 
-router.put("/screenings", async (req, res) => {
+router.post("/booking", async (req, res) => {
   /*plocka ut data från req.body och kolla om användaren är inloggad */
+  try{
+  const authHeader = req.headers['authorization']
+  const authToken = authHeader.replace("Bearer ", "");
+  const decoded = jwtUtil.verify(authToken)
+  const screening = await fetchCollection("screenings").findOne({_id: new ObjectId(req.body.id)})
+  res.send(screening)
+  } catch(err) {
+    const userEmail = req.body.email 
+    if(userEmail) {
+      res.send(userEmail) 
+    } else {
+      res.status(400).send({message: "An email is required to book a movie"})
+    }
+  }
   // Kolla så inget saknas i bodyn
   // fetcha våran screening collection,
   // kollar så sätena som vi plockat från bodyn är lediga (false)
@@ -284,6 +298,7 @@ router.post("/register", async (req, res) => {
     const hash = bcrypt.hashSync(user.password, parseInt(process.env.saltRounds));
     user.password = hash
     user.bookings = []
+    user.role = "USER"
     const result = await fetchCollection("users").updateOne({email: user.email}, {$setOnInsert: user}, {upsert: true})
 
   if (result.matchedCount !== 0) {

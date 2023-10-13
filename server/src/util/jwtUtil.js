@@ -8,13 +8,18 @@ function generate(user) {
   let payloadOptions = {
     issuer: "express-server",
     subject: "user access token",
-    expiresIn: "4h", // 4 hours
+    expiresIn: "20m", // 4 hours
   };
 
   // private claims (custom payload)
   let payload = {
     email: user.email,
     role: user.role,
+    name: user.name,
+    lastname: user.lastname,
+    phone: user.phone,
+    role: user.role,
+    bookings: user.bookings
   };
 
   let token = jwt.sign(payload, process.env.SUPER_SECRET, payloadOptions);
