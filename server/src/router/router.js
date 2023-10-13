@@ -4,6 +4,8 @@ import bcrypt from "bcrypt";
 import * as dotenv from "dotenv";
 import { ObjectId } from "mongodb";
 import jwtUtil from "../util/jwtUtil.js";
+import idUtil from "../util/idUtil.js";
+import calcTotalPrice from "../util/calcTotalPrice.js";
 dotenv.config();
 
 const router = express.Router();
@@ -132,33 +134,56 @@ router.get("/bookings", async (req, res) => {
 });
 
 router.post("/booking", async (req, res) => {
-  /*plocka ut data från req.body och kolla om användaren är inloggad */
-  try{
+  const body = req.body
   const authHeader = req.headers['authorization']
-  const authToken = authHeader.replace("Bearer ", "");
-  const decoded = jwtUtil.verify(authToken)
-  const screening = await fetchCollection("screenings").findOne({_id: new ObjectId(req.body.id)})
-  res.send(screening)
-  } catch(err) {
-    const userEmail = req.body.email 
-    if(userEmail) {
-      res.send(userEmail) 
-    } else {
-      res.status(400).send({message: "An email is required to book a movie"})
-    }
+  let authToken;
+  let user = {}
+  if(authHeader) {
+    authToken = authHeader.replace("Bearer ", "");
+    user = jwtUtil.verify(authToken)
+    console.log(user)
+  }else if(req.body.email) {
+    user.email = req.body.email
+  } else {
+   return res.status(400).send({message: "Bokning kan ej skapas utan en email"})
   }
-  // Kolla så inget saknas i bodyn
-  // fetcha våran screening collection,
-  // kollar så sätena som vi plockat från bodyn är lediga (false)
-  // "bokar" sätena, ändrar false till true (findmany eller toArray för att ändra flera sammtidigt)
-  // errorHantering för booleans, se till att allt blev rätt
-  // räkna ut totala priset adult * 140 | child * 120 | senior * 80 och + ihop
-  // fetch på bookings och skapar en ny bokning (insertOne ?)
-  // mera errorhantering
-  // om allt gick bra och användaren var inloggad, fetch på usern, lägg till bokningsId i user.booking
-  //errorhantering
-  // if result.mathedCount från ny bokning !== 0 skicka tillbka status 201 och result (bokningsinformation)
-  // else status dålig expempel 400
+  
+  try{
+
+  const screening = await fetchCollection("screenings").findOne({_id: new ObjectId(body.id)})
+  for(let i = 0; i < body.seats.length; i++) {
+      if(screening.seats[body.row - 1][body.seats[i] - 1].seat == true) {
+       return res.status(400).send({message: "The seats you are trying to book are allready taken"})
+      }
+      screening.seats[body.row - 1][body.seats[i] - 1] = {seat: true}
+  }
+     await fetchCollection("screenings").updateOne({_id: new ObjectId(body.id)}, {$set: screening})
+ 
+    const bookingID = await idUtil.CreateId(6)
+    const totalPrice = calcTotalPrice(body.adult, body.child, body.senior)
+    
+    const booking = {
+      bookingId: bookingID,
+      customerEmail: user.email, 
+      ticketType: {adult: body.adult, child: body.child, senior: body.senior},
+      screeningID: body.id,
+      row: body.row,
+      seats: body.seats,
+      price: totalPrice,
+      status: true 
+    }
+
+    const newBooking = await fetchCollection("bookings").insertOne(booking)
+
+    if(user.role) {
+      await fetchCollection("users").updateOne({email: user.email}, {$push: {bookings: {bookingId: bookingID}}})
+    }
+    return res.status(201).send(newBooking)
+
+  
+  } catch(err) {
+   res.status(400).send(err)
+  }
 });
 
 // USER STORY 11 OBS!
@@ -167,12 +192,6 @@ router.get('/screenings', async (req, res) => {
   try {
     const screeningsCollection = fetchCollection('screenings');
     const query = {}
-
-    /*
-    To filter by date: /screenings/?date=20
-    To filter by movie: /screenings/?title=MovieTitle
-    To filter by both date and movie: /screenings/?date=20&title=MovieTitle
-    */
     
     // Check if req.query.date is present
     if (req.query.date) { 
@@ -222,28 +241,6 @@ router.get('/screenings', async (req, res) => {
   }
 });
 
-  
-//task 11.1 
-/*
-router.get("/screenings", async (req, res) => {
-    try {
-        const ageRestriction = parseInt(req.query);
-        const moviesCollection = fetchCollection('screenings');
-
-        const movies = await moviesCollection
-            .find({ ageRestriction: ageRestriction })
-            .toArray();
-
-        if (movies.length === 0) {
-            res.status(500).json({ err: "Inga filmer i den åldergränsen hittades" });
-        } else {
-            res.status(200).json(movies);
-        }
-
-    } catch (err) {
-        res.status(500).json({ err: "Något gick fel, prova igen" });
-    }
-});*/
 // USER STORY 15
 
 router.patch("/bookings", async (req, res) => {
@@ -283,8 +280,6 @@ router.post("/register", async (req, res) => {
     if (!email || !lastname || !name || !password || !phone) {
         return res.status(400).json({ error: 'Missing required properties' });
     }
-    // hasha lösenord
-    //EXEMPEL
     const hash = bcrypt.hashSync(user.password, parseInt(process.env.saltRounds));
     user.password = hash
     user.bookings = []

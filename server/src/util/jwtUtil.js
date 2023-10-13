@@ -8,7 +8,7 @@ function generate(user) {
   let payloadOptions = {
     issuer: "express-server",
     subject: "user access token",
-    expiresIn: "20m", // 4 hours
+    expiresIn: "4h", // 4 hours
   };
 
   // private claims (custom payload)
