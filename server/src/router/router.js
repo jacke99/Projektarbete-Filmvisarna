@@ -358,8 +358,15 @@ router.get("/user/:id", async (req, res) => {
     } else {
       res.status(400).send({ error: "Could not create theater" });
     }
-  
+  })
 
+  router.get("/theaters", async (req, res) => {
+    try {
+      const theaters = await fetchCollection("theaters").find().toArray()
+      res.status(200).send(theaters);
+    } catch {
+        res.status(500).send({ error: "Could not fetch theaters collection" });
+      }
   })
 
 export default router;
