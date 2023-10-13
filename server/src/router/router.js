@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import * as dotenv from "dotenv";
 import { ObjectId } from "mongodb";
 import jwtUtil from "../util/jwtUtil.js";
+import {uploads} from './middleware/fileUpload.js'
 dotenv.config();
 
 const router = express.Router();
@@ -64,8 +65,12 @@ router.delete("/screenings/:id", async (req, res) => {
 
 // USER STORY 4 och 23
 
-router.post("/movies", async (req, res) => {
+// 'files' kommer från front end
+router.post("/movies",uploads.toArray('files'), async (req, res) => {
   // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
+
+
+
   const movie = req.body;
   const {
     title, img,trailer,
@@ -82,6 +87,12 @@ router.post("/movies", async (req, res) => {
     return res.status(400).json({
       error: "Missing required properties, pls check your request body",
     });
+  }
+
+  
+  if (!req.file) {
+    // If there's no file in the request, something went wrong.
+    return res.status(400).send('No file uploaded.');
   }
 
   if (
