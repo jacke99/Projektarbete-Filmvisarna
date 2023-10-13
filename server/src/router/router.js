@@ -21,9 +21,14 @@ router.post("/screenings", async (req, res) => {
   if (!date || !time || !theater || !movie || !ageRestriction) {
     return res.status(400).json({error: "Missing required properties, pls check your request body"});
   }
-
+  try {
+    const theaters = await fetchCollection("theaters").findOne({"theaterNr": theater})
+    body.seats = theaters.seats
+  } catch (error) {
+    res.status(500).send({ error: "Could not fetch screenings collection" });
+  }
   
-
+  console.log(body);
   if (
     Object.values(body).every((value) => value !== "" && value !== undefined)
   ) {
