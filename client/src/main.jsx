@@ -8,6 +8,7 @@ import Movies from "./pages/Movies";
 import Register from "./pages/Register";
 import MovieDetails from "./pages/MovieDetails";
 import BookingPartTwo from "./components/BookingPartTwo";
+import Admin from "./pages/Admin";
 import "./index.css";
 
 
@@ -23,6 +24,8 @@ const router = createBrowserRouter([
       { path: "/movies", element: <Movies /> },
       { path: "/register", element: <Register /> },
       { path: "/movies/:id", element: <MovieDetails /> },
+      //Test frontend admin page
+      { path: "/admin", element: <Admin /> },
     ],
   },
 ]);
