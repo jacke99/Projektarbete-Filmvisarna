@@ -247,7 +247,7 @@ router.patch("/bookings", async (req, res) => {
             currentScreening.seats[booking.row - 1][booking.seat[i] - 1] = {seat: false}
         }
         booking.status = false
-        const updateBooking = await fetchCollection("bookings").updateOne({_id: new ObjectId(body._id)}, {$set: booking})
+        await fetchCollection("bookings").updateOne({_id: new ObjectId(body._id)}, {$set: booking})
         let result = await fetchCollection("screenings").updateOne({_id: new ObjectId(booking.screeningId)}, {$set: currentScreening})
         if(result.matchedCount == 1) { 
             res.status(201).send(currentScreening) 
