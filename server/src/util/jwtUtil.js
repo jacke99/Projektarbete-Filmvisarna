@@ -15,6 +15,11 @@ function generate(user) {
   let payload = {
     email: user.email,
     role: user.role,
+    name: user.name,
+    lastname: user.lastname,
+    phone: user.phone,
+    role: user.role,
+    bookings: user.bookings
   };
 
   let token = jwt.sign(payload, process.env.SUPER_SECRET, payloadOptions);
