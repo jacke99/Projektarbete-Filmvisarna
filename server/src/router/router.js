@@ -5,6 +5,8 @@ import * as dotenv from "dotenv";
 import { ObjectId } from "mongodb";
 import jwtUtil from "../util/jwtUtil.js";
 import uploads from '../middleware/fileUpload.js'
+import idUtil from "../util/idUtil.js";
+import calcTotalPrice from "../util/calcTotalPrice.js";
 dotenv.config();
 
 const router = express.Router();
@@ -12,28 +14,18 @@ const router = express.Router();
 // USER STORY 3 och 19 och 23
 router.post("/screenings", async (req, res) => {
   const body = req.body;
-  const {
-    date,
-    time,
-    theater,
-    movie,
-    ageRestriction,
+  const {date, time, theater,
+        movie, ageRestriction,
   } = req.body;
   if (!date || !time || !theater || !movie || !ageRestriction) {
     return res.status(400).json({error: "Missing required properties, pls check your request body"});
   }
-
-  const rowAmmount = 8
-  const seatPerRow = 12
-  const seats = []
-  for(let i = 0; i < rowAmmount; i++) {
-    seats.push([])
-    for(let j = 0; j < seatPerRow; j++) {
-      seats[i].push({seat: false})
-    }
+  try {
+    const theaters = await fetchCollection("theaters").findOne({"theaterNr": theater})
+    body.seats = theaters.seats
+  } catch (error) {
+    res.status(500).send({ error: "Could not fetch screenings collection" });
   }
-  body.seats = seats
-
   if (
     Object.values(body).every((value) => value !== "" && value !== undefined)
   ) {
@@ -157,20 +149,97 @@ router.get("/bookings", async (req, res) => {
   }
 });
 
-router.put("/screenings", async (req, res) => {
-  /*plocka ut data från req.body och kolla om användaren är inloggad */
-  // Kolla så inget saknas i bodyn
-  // fetcha våran screening collection,
-  // kollar så sätena som vi plockat från bodyn är lediga (false)
-  // "bokar" sätena, ändrar false till true (findmany eller toArray för att ändra flera sammtidigt)
-  // errorHantering för booleans, se till att allt blev rätt
-  // räkna ut totala priset adult * 140 | child * 120 | senior * 80 och + ihop
-  // fetch på bookings och skapar en ny bokning (insertOne ?)
-  // mera errorhantering
-  // om allt gick bra och användaren var inloggad, fetch på usern, lägg till bokningsId i user.booking
-  //errorhantering
-  // if result.mathedCount från ny bokning !== 0 skicka tillbka status 201 och result (bokningsinformation)
-  // else status dålig expempel 400
+
+let clients = [];
+router.post("/booking", async (req, res) => {
+  const body = req.body
+  const authHeader = req.headers['authorization']
+  let authToken;
+  let user = {}
+  if(authHeader) {
+    authToken = authHeader.replace("Bearer ", "");
+    user = jwtUtil.verify(authToken)
+    console.log(user)
+  }else if(req.body.email) {
+    user.email = req.body.email
+  } else {
+   return res.status(400).send({message: "Bokning kan ej skapas utan en email"})
+  }
+  
+  try{
+
+  const screening = await fetchCollection("screenings").findOne({_id: new ObjectId(body.id)})
+  for(let i = 0; i < body.seats.length; i++) {
+      if(screening.seats[body.row - 1][body.seats[i] - 1].seat == true) {
+       return res.status(400).send({message: "The seats you are trying to book are allready taken"})
+      }
+      screening.seats[body.row - 1][body.seats[i] - 1] = {seat: true}
+  }
+    await fetchCollection("screenings").updateOne({_id: new ObjectId(body.id)}, {$set: screening})
+    clients.forEach((client) => {
+      client.res.write(`data: ${JSON.stringify(screening)}\n\n`);
+    })
+    const bookingID = await idUtil.CreateId(6)
+    const totalPrice = calcTotalPrice(body.adult, body.child, body.senior)
+    
+    const booking = {
+      bookingId: bookingID,
+      customerEmail: user.email, 
+      ticketType: {adult: body.adult, child: body.child, senior: body.senior},
+      screeningID: body.id,
+      row: body.row,
+      seats: body.seats,
+      price: totalPrice,
+      status: true 
+    }
+
+    const newBooking = await fetchCollection("bookings").insertOne(booking)
+
+    if(user.role) {
+      await fetchCollection("users").updateOne({email: user.email}, {$push: {bookings: {bookingId: bookingID}}})
+    }
+    return res.status(201).send(newBooking)
+
+  
+  } catch(err) {
+   res.status(400).send(err)
+  }
+});
+
+
+
+router.get("/screenings/:id", async (req, res) => {
+    const id = req.params.id
+    const headers = {
+      "content-type": "text/event-stream",
+      "connection": "keep-alive",
+      "cache-control": "no-cache"
+    };
+    
+    const clientId = Date.now();
+    const newClient = {
+      id: clientId,
+      res
+    };
+
+    res.writeHead(200, headers);
+
+    clients.push(newClient);
+    console.log("Client connected");
+
+    req.on("close", () => {
+      console.log(`${clientId} Connection closed`);
+      clients = clients.filter((c) => c.id !== clientId);
+    });
+
+
+    try {
+      const result = await fetchCollection("screenings").findOne({_id: new ObjectId(id)})
+      const data = `data: ${JSON.stringify(result)}\n\n`;
+      res.write(data);
+    } catch (err) {
+      res.status(400).send(err)
+    }
 });
 
 // USER STORY 11 OBS!
@@ -179,12 +248,6 @@ router.get('/screenings', async (req, res) => {
   try {
     const screeningsCollection = fetchCollection('screenings');
     const query = {}
-
-    /*
-    To filter by date: /screenings/?date=20
-    To filter by movie: /screenings/?title=MovieTitle
-    To filter by both date and movie: /screenings/?date=20&title=MovieTitle
-    */
     
     // Check if req.query.date is present
     if (req.query.date) { 
@@ -234,28 +297,6 @@ router.get('/screenings', async (req, res) => {
   }
 });
 
-  
-//task 11.1 
-/*
-router.get("/screenings", async (req, res) => {
-    try {
-        const ageRestriction = parseInt(req.query);
-        const moviesCollection = fetchCollection('screenings');
-
-        const movies = await moviesCollection
-            .find({ ageRestriction: ageRestriction })
-            .toArray();
-
-        if (movies.length === 0) {
-            res.status(500).json({ err: "Inga filmer i den åldergränsen hittades" });
-        } else {
-            res.status(200).json(movies);
-        }
-
-    } catch (err) {
-        res.status(500).json({ err: "Något gick fel, prova igen" });
-    }
-});*/
 // USER STORY 15
 
 router.patch("/bookings", async (req, res) => {
@@ -272,10 +313,10 @@ router.patch("/bookings", async (req, res) => {
         for(let i = 0; i < booking.seat.length; i++) {
             currentScreening.seats[booking.row - 1][booking.seat[i] - 1] = {seat: false}
         }
-        booking.status = "Avbokad"
+        booking.status = false
         await fetchCollection("bookings").updateOne({_id: new ObjectId(body._id)}, {$set: booking})
         let result = await fetchCollection("screenings").updateOne({_id: new ObjectId(booking.screeningId)}, {$set: currentScreening})
-        if(result.modifiedCount == 1) { 
+        if(result.matchedCount == 1) { 
             res.status(201).send(currentScreening) 
         } else {
             res.status(400).send("Kunde inte avboka, prova igen")
@@ -295,11 +336,10 @@ router.post("/register", async (req, res) => {
     if (!email || !lastname || !name || !password || !phone) {
         return res.status(400).json({ error: 'Missing required properties' });
     }
-    // hasha lösenord
-    //EXEMPEL
     const hash = bcrypt.hashSync(user.password, parseInt(process.env.saltRounds));
     user.password = hash
     user.bookings = []
+    user.role = "USER"
     const result = await fetchCollection("users").updateOne({email: user.email}, {$setOnInsert: user}, {upsert: true})
 
   if (result.matchedCount !== 0) {
@@ -354,6 +394,44 @@ router.get("/user/:id", async (req, res) => {
       console.error('Error fetching user bookings:', error);
       return res.status(500).send({ error: 'Internal server error' });
     }
-  });
+});
+
+
+  router.post("/theaters", async (req, res) => {
+    const body = req.body;
+    const {theaterNr, rows, seatsPerRow} = req.body;
+    if (!theaterNr || !rows || !seatsPerRow) {
+      return res.status(400).json({error: "Missing required properties, pls check your request body"});
+    }
+    if (
+      Object.values(body).every((value) => value !== "" && value !== undefined)
+    ) {
+      try {
+        const seats = []
+        for(let i = 0; i < rows; i++) {
+          seats.push([])
+          for(let j = 0; j < seatsPerRow; j++) {
+            seats[i].push({seat: false})
+          }
+        }
+        body.seats = seats
+        const result = await fetchCollection("theaters").insertOne(body);
+        res.status(201).send(result);
+      } catch (error) {
+        res.status(400).send({ error: "Could not create theater" });
+      }
+    } else {
+      res.status(400).send({ error: "Could not create theater" });
+    }
+  })
+
+  router.get("/theaters", async (req, res) => {
+    try {
+      const theaters = await fetchCollection("theaters").find().toArray()
+      res.status(200).send(theaters);
+    } catch {
+        res.status(500).send({ error: "Could not fetch theaters collection" });
+      }
+  })
 
 export default router;
