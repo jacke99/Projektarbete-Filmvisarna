@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import * as dotenv from "dotenv";
 import { ObjectId } from "mongodb";
 import jwtUtil from "../util/jwtUtil.js";
-import uploads from './middleware/fileUpload.js'
+import uploads from '../middleware/fileUpload.js'
 dotenv.config();
 
 const router = express.Router();
@@ -66,13 +66,15 @@ router.delete("/screenings/:id", async (req, res) => {
 // USER STORY 4 och 23
 
 // 'files' kommer från front end
-router.post("/movies",uploads.array('files'), async (req, res) => {
+router.post("/movies",uploads.array('movieImg'), async (req, res) => {
   // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
 
    
   // Här vill  vi ha kod som fångar upp namnet på bilden som vi pushat upp till /client/public/srs/assets.
   //Därefter vill vi kunna använda namnet på filen och pusha upp filnamet till databasen
-
+  // vi vill att file.originalname från fuleUploads.js ska matcha img i body 
+  // img hämtas från /client/public/img
+ 
   
 
   const movie = req.body;
@@ -95,7 +97,7 @@ router.post("/movies",uploads.array('files'), async (req, res) => {
   
   if (!req.file) {
     // If there's no file in the request, something went wrong.
-    return res.status(400).send('No file uploaded.');
+    return res.status(400).send('No IMG uploaded.');
   }
 
   if (
