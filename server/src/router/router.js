@@ -186,6 +186,11 @@ router.post("/booking", async (req, res) => {
   }
 });
 
+router.get("/screenings/:id", async (req, res) => {
+    const id = req.params.id
+    
+});
+
 // USER STORY 11 OBS!
 //task 11.1
 router.get('/screenings', async (req, res) => {
