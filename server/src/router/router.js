@@ -133,6 +133,8 @@ router.get("/bookings", async (req, res) => {
   }
 });
 
+
+let clients = [];
 router.post("/booking", async (req, res) => {
   const body = req.body
   const authHeader = req.headers['authorization']
@@ -157,8 +159,10 @@ router.post("/booking", async (req, res) => {
       }
       screening.seats[body.row - 1][body.seats[i] - 1] = {seat: true}
   }
-     await fetchCollection("screenings").updateOne({_id: new ObjectId(body.id)}, {$set: screening})
- 
+    await fetchCollection("screenings").updateOne({_id: new ObjectId(body.id)}, {$set: screening})
+    clients.forEach((client) => {
+      client.res.write(`data: ${JSON.stringify(screening)}\n\n`);
+    })
     const bookingID = await idUtil.CreateId(6)
     const totalPrice = calcTotalPrice(body.adult, body.child, body.senior)
     
@@ -186,9 +190,40 @@ router.post("/booking", async (req, res) => {
   }
 });
 
+
+
 router.get("/screenings/:id", async (req, res) => {
     const id = req.params.id
+    const headers = {
+      "content-type": "text/event-stream",
+      "connection": "keep-alive",
+      "cache-control": "no-cache"
+    };
     
+    const clientId = Date.now();
+    const newClient = {
+      id: clientId,
+      res
+    };
+
+    res.writeHead(200, headers);
+
+    clients.push(newClient);
+    console.log("Client connected");
+
+    req.on("close", () => {
+      console.log(`${clientId} Connection closed`);
+      clients = clients.filter((c) => c.id !== clientId);
+    });
+
+
+    try {
+      const result = await fetchCollection("screenings").findOne({_id: new ObjectId(id)})
+      const data = `data: ${JSON.stringify(result)}\n\n`;
+      res.write(data);
+    } catch (err) {
+      res.status(400).send(err)
+    }
 });
 
 // USER STORY 11 OBS!

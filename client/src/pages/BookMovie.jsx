@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import ChooseSeats from "../components/ChooseSeats";
 import TicketCounter from "../components/TicketCounter";
 import {useStates} from "react-easier"
+import { useEffect } from "react";
 
 
 export default function BookMovie() {
@@ -13,6 +14,20 @@ export default function BookMovie() {
     senior: 0,
     total: 2
   });
+  const screeningId = "652927575a5dbfd02640097f"
+  useEffect(() => {
+    const eventSource = new EventSource(`/api/screenings/${screeningId}`);
+    eventSource.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      console.log(data); //ska sparas i state så att sidan uppdateras.
+    };
+    eventSource.onerror = (error) => {
+      console.error(error);
+      eventSource.close();
+    };
+
+  },[])
+
   return (
     <section className="mt-2 flex flex-col items-center min-h-screen">
         <TicketCounter />
