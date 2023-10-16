@@ -58,7 +58,7 @@ router.delete("/screenings/:id", async (req, res) => {
 // USER STORY 4 och 23
 
 // 'files' kommer från front end
-router.post("/movies",uploads.array('movieImg'), async (req, res) => {
+router.post("/movies",uploads.single('img-file'), async (req, res) => {
   // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
 
    
@@ -70,14 +70,15 @@ router.post("/movies",uploads.array('movieImg'), async (req, res) => {
   
 
   const movie = req.body;
+  console.log(req.body);
   const {
-    title, img,trailer, // här vill vi att "img" ska hämtas från client/srs/assets och följa med posten upp til DB
+    title, desc , trailer, // här vill vi att "img" ska hämtas från client/srs/assets och följa med posten upp til DB
     director, actors,length,
     genre, speech, subtitles,
     ageRestriction,
   } = req.body;
   if (
-    !title || !img || !trailer ||
+    !title || !desc || !trailer ||
     !director || !actors || !length ||
     !genre || !speech || !subtitles ||
     !ageRestriction  ) {
@@ -85,7 +86,7 @@ router.post("/movies",uploads.array('movieImg'), async (req, res) => {
       error: "Missing required properties, pls check your request body",
     });
   }
-
+  console.log(req.file);
   
   if (!req.file) {
     // If there's no file in the request, something went wrong.
@@ -96,6 +97,7 @@ router.post("/movies",uploads.array('movieImg'), async (req, res) => {
     Object.values(movie).every((value) => value !== "" && value !== undefined)
   ) {
     try {
+      movie.img = req.file.originalname;
       const result = await fetchCollection("movies").insertOne(movie)
       res.status(201).json(result);
     } catch (error) {
