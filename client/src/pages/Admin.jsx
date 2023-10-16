@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { styles } from "../styles.js";
+import { useState } from "react";
+
 
 function Admin() {
     const [showMoviesForm, setShowMoviesForm] = useState(false);
@@ -101,9 +101,18 @@ function Admin() {
                                 {showMoviesForm ? "Hide Form" : "Show Form"}
                             </button>
                             {showMoviesForm && (
-                                <form className=" text-white">
-                                    <input type="text" name="file-name" id="name" />
-                                    <input type="file" name="file" id="files" multiple />
+                                <form className=" text-black" action="/api/movies" method="post" encType="multipart/form-data">
+                                    <input type="text" name="title" placeholder="Title..."/>
+                                    <input type="text" name="desc" placeholder="Description..."/>
+                                    <input type="text" name="trailer" placeholder="Trailer..."/>
+                                    <input type="text" name="director" placeholder="Director..."/>
+                                    <input type="text" name="actors" placeholder="Actors..."/>
+                                    <input type="text" name="length" placeholder="Length..."/>
+                                    <input type="text" name="genre" placeholder="Genre..."/>
+                                    <input type="text" name="speech" placeholder="Speech..."/>
+                                    <input type="text" name="subtitles" placeholder="Subtitles..."/>
+                                    <input type="number" name="ageRestriction" placeholder="Age restriction"/>
+                                    <input type="file" name="img-file" id="files" multiple />
                                     <button className=" mt-2 md:mt-6 md:mb-6 lg:mt-8 lg:mb-8 rounded-xl bg-gold px-4 py-2 text-xl text-black sm:px-5 sm:text-2xl mx-auto" type="submit">Submit</button>
                                 </form>
                             )}
