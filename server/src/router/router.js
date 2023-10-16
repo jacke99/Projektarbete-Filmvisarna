@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import * as dotenv from "dotenv";
 import { ObjectId } from "mongodb";
 import jwtUtil from "../util/jwtUtil.js";
+import uploads from '../middleware/fileUpload.js'
 import idUtil from "../util/idUtil.js";
 import calcTotalPrice from "../util/calcTotalPrice.js";
 dotenv.config();
@@ -56,30 +57,47 @@ router.delete("/screenings/:id", async (req, res) => {
 
 // USER STORY 4 och 23
 
-router.post("/movies", async (req, res) => {
+// 'files' kommer från front end
+router.post("/movies",uploads.single('img-file'), async (req, res) => {
   // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
+
+   
+  // Här vill  vi ha kod som fångar upp namnet på bilden som vi pushat upp till /client/public/srs/assets.
+  //Därefter vill vi kunna använda namnet på filen och pusha upp filnamet till databasen
+  // vi vill att file.originalname från fuleUploads.js ska matcha img i body 
+  // img hämtas från /client/public/img
+ 
+  
+
   const movie = req.body;
+  console.log(req.body);
   const {
-    title, img,trailer,
+    title, desc , trailer, // här vill vi att "img" ska hämtas från client/srs/assets och följa med posten upp til DB
     director, actors,length,
     genre, speech, subtitles,
     ageRestriction,
   } = req.body;
   if (
-    !title || !img || !trailer ||
+    !title || !desc || !trailer ||
     !director || !actors || !length ||
     !genre || !speech || !subtitles ||
-    !ageRestriction
-  ) {
+    !ageRestriction  ) {
     return res.status(400).json({
       error: "Missing required properties, pls check your request body",
     });
+  }
+  console.log(req.file);
+  
+  if (!req.file) {
+    // If there's no file in the request, something went wrong.
+    return res.status(400).send('No IMG uploaded.');
   }
 
   if (
     Object.values(movie).every((value) => value !== "" && value !== undefined)
   ) {
     try {
+      movie.img = req.file.originalname;
       const result = await fetchCollection("movies").insertOne(movie)
       res.status(201).json(result);
     } catch (error) {

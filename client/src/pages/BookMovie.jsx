@@ -25,7 +25,6 @@ export default function BookMovie() {
       console.error(error);
       eventSource.close();
     };
-
   },[])
 
   return (
