@@ -58,25 +58,17 @@ router.delete("/screenings/:id", async (req, res) => {
 // USER STORY 4 och 23
 
 // 'files' kommer från front end
-router.post("/movies",uploads.single('img-file'), async (req, res) => {
-  // Med hjälp av jwt, kontrollera att role === ADMIN eller så gör vi det till en låst route
-
-   
-  // Här vill  vi ha kod som fångar upp namnet på bilden som vi pushat upp till /client/public/srs/assets.
-  //Därefter vill vi kunna använda namnet på filen och pusha upp filnamet till databasen
-  // vi vill att file.originalname från fuleUploads.js ska matcha img i body 
-  // img hämtas från /client/public/img
- 
-  
+router.post("/movies", uploads.fields([{ name: 'img_poster' }, { name: 'img_header' }]), async (req, res) => {
 
   const movie = req.body;
   console.log(req.body);
-  const {
-    title, desc , trailer, // här vill vi att "img" ska hämtas från client/srs/assets och följa med posten upp til DB
+  
+  const { title, desc , trailer, // här vill vi att "img" ska hämtas från client/srs/assets och följa med posten upp til DB
     director, actors,length,
     genre, speech, subtitles,
     ageRestriction,
   } = req.body;
+  
   if (
     !title || !desc || !trailer ||
     !director || !actors || !length ||
@@ -86,9 +78,9 @@ router.post("/movies",uploads.single('img-file'), async (req, res) => {
       error: "Missing required properties, pls check your request body",
     });
   }
-  console.log(req.file);
+  console.log(req.files);
   
-  if (!req.file) {
+  if (!req.files) {
     // If there's no file in the request, something went wrong.
     return res.status(400).send('No IMG uploaded.');
   }
@@ -97,7 +89,9 @@ router.post("/movies",uploads.single('img-file'), async (req, res) => {
     Object.values(movie).every((value) => value !== "" && value !== undefined)
   ) {
     try {
-      movie.img = req.file.originalname;
+      movie.img_poster = req.files.originalname;
+      movie.img_header = req.files.originalname;
+     
       const result = await fetchCollection("movies").insertOne(movie)
       res.status(201).json(result);
     } catch (error) {
@@ -105,6 +99,7 @@ router.post("/movies",uploads.single('img-file'), async (req, res) => {
         .status(500)
         .json({ err: "Could not create a new document in collection movies" });
     }
+
   } else {
     res.status(500).json({ err: "Incorrect movie input" });
   }

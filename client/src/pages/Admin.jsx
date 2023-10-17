@@ -112,7 +112,16 @@ function Admin() {
                                     <input type="text" name="speech" placeholder="Speech..."/>
                                     <input type="text" name="subtitles" placeholder="Subtitles..."/>
                                     <input type="number" name="ageRestriction" placeholder="Age restriction"/>
-                                    <input type="file" name="img-file" id="files" multiple />
+                                   
+
+                                    
+                                    <label htmlFor="img_poster" className="text-white" >Huvudbild</label>
+                                    <input type="file" name="img_poster" id="files" multiple  className="text-white" />
+
+                                    <label htmlFor="img-header" className="text-white" >Bakgrundsbild</label>
+                                    <input type="file" name="img_header" id="files" multiple  className="text-white" />
+
+
                                     <button className=" mt-2 md:mt-6 md:mb-6 lg:mt-8 lg:mb-8 rounded-xl bg-gold px-4 py-2 text-xl text-black sm:px-5 sm:text-2xl mx-auto" type="submit">Submit</button>
                                 </form>
                             )}
