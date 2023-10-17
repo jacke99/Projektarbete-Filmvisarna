@@ -1,18 +1,24 @@
- import jwtUtil from "../util/jwtUtil";
+ import jwtUtil from "../util/jwtUtil.js";
 
- function authorizeAdmin(res, req, next) {
-       const authHeader = req.headers["authorization"]
-       const token = authHeader.replace("Bearer ", "")
-       const decoded = jwtUtil.verify(token)
-       if(authHeader == undefined) {
-        res.status(400).send("Authorization header is missing")
-       } else {
-            if(decoded.role == "ADMIN") {
-                next()
-            } else {
-                res.status(403).send("You are not authorized to access this resource")
-            }
-       }
- }
-
- export default { authorizeAdmin }
+ export default function (request, response, next) {
+    const authHeader = request.headers['authorization'];
+  
+    if (authHeader == undefined) {
+      response.status(400);
+      response.send("Authorization header is missing");
+    } else {
+  
+      const authToken = authHeader.replace("Bearer ", "");
+      try {
+        const payload = jwtUtil.verify(authToken);
+        if(!this.role.includes(payload.role)) {
+          return response.status(401).send({error: "User role is too low for requested action"});
+        } else {
+          response.locals.username = payload.username;
+          next();
+        }
+      } catch (error) { 
+        return response.status(403).send({error: error.clientMessage});
+      }
+    }
+}
