@@ -31,15 +31,17 @@ router.get("/movies", userController.getMovies)
 router.get('/filteredScreenings', userController.getScreenings )
 router.patch("/bookings", userController.cancelBooking)
 
-router.post("/movies",uploads.single('img-file',), async (req, res) => { //Admin route
+router.post("/movies", uploads.fields([{ name: 'img_poster' }, { name: 'img_header' }]), async (req, res) => {
+
   const movie = req.body;
   console.log(req.body);
-  const {
-    title, desc , trailer, // här vill vi att "img" ska hämtas från client/srs/assets och följa med posten upp til DB
+  
+  const { title, desc , trailer, // här vill vi att "img" ska hämtas från client/srs/assets och följa med posten upp til DB
     director, actors,length,
     genre, speech, subtitles,
     ageRestriction,
   } = req.body;
+  
   if (
     !title || !desc || !trailer ||
     !director || !actors || !length ||
@@ -49,8 +51,9 @@ router.post("/movies",uploads.single('img-file',), async (req, res) => { //Admin
       error: "Missing required properties, pls check your request body",
     });
   }
+  console.log(req.files);
   
-  if (!req.file) {
+  if (!req.files) {
     // If there's no file in the request, something went wrong.
     return res.status(400).send('No IMG uploaded.');
   }
@@ -59,7 +62,9 @@ router.post("/movies",uploads.single('img-file',), async (req, res) => { //Admin
     Object.values(movie).every((value) => value !== "" && value !== undefined)
   ) {
     try {
-      movie.img = req.file.originalname;
+      movie.img_poster = req.files.originalname;
+      movie.img_header = req.files.originalname;
+     
       const result = await fetchCollection("movies").insertOne(movie)
       res.status(201).json(result);
     } catch (error) {
@@ -67,10 +72,11 @@ router.post("/movies",uploads.single('img-file',), async (req, res) => { //Admin
         .status(500)
         .json({ err: "Could not create a new document in collection movies" });
     }
+
   } else {
     res.status(500).json({ err: "Incorrect movie input" });
   }
-});
+}); 
 
 
 
