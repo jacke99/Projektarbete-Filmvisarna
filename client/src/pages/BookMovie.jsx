@@ -14,7 +14,7 @@ export default function BookMovie() {
     senior: 0,
     total: 2
   });
-  const screeningId = "652927575a5dbfd02640097f"
+  const screeningId = "652e3215cecb7b86f4da5eb1"
   useEffect(() => {
     const eventSource = new EventSource(`/api/screenings/${screeningId}`);
     eventSource.onmessage = (event) => {

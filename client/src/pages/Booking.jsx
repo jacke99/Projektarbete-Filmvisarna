@@ -23,11 +23,6 @@ export default function Booking() {
           </Link>
         </div>
       </div>
-      <form className="">
-        <input type="text" name="file-name" id="name" />
-        <input type="file" name="file" id="files" multiple />
-        <button type="submit">Submit</button>
-      </form>
       <MovieFilterForm />
       <BookMovieHero />
     </div>
