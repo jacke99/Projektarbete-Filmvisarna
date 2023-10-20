@@ -128,7 +128,7 @@ router.post("/booking", async (req, res) => {
     if(user.role) {
       await fetchCollection("users").updateOne({email: user.email}, {$push: {bookings: {bookingId: bookingID}}})
     }
-    return res.status(201).send(newBooking)
+    return res.status(201).send(booking)
 
   
   } catch(err) {
