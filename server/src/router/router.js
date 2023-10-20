@@ -28,6 +28,7 @@ router.get("/user/:id", accountController.getUserBookings )
 
 //User stuff
 router.get("/movies", userController.getMovies)
+router.get("/movies/:id", userController.getMovie)
 router.get('/filteredScreenings', userController.getScreenings )
 router.patch("/bookings", userController.cancelBooking)
 
