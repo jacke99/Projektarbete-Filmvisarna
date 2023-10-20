@@ -30,18 +30,21 @@ const login = async (req, res) => {
     if (!login.email || !login.password) {
       return res.status(400).send("Bad Request");
     }
+    try{
     const user = await fetchCollection("users").findOne({ email: login.email });
     const match = bcrypt.compareSync(login.password, user.password); // true or false
   
     if (match == false) {
-      res.status(400).send("Bad Request");
+      res.status(400).send({message: "Bad Request"});
     } else {
       if (user != null) {
         const token = jwtUtil.generate(user);
-        res.send(token);
+        res.status(200).send({message: "Succesful login", jwt: token});
       } else {
         res.sendStatus(400);
       }
+    }} catch (error) {
+      return res.status(500).send({ error: 'Internal server error' });
     }
 }
 
