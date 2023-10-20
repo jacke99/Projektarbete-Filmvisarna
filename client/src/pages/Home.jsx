@@ -7,12 +7,13 @@ import HeroMovie from "../components/HeroMovie.jsx";
 import MultiCarousel from "../components/multi-carousel.jsx";
 
 export default function Home() {
+
   return (
     <>
         <HeroMovie movieImg={killersImage} />
         <MultiCarousel />
         <HeroMovie movieImg={theCreatorImage} />
-        <MultiCarousel />
+        {/* <MultiCarousel /> */}
         <HeroMovie movieImg={pastLivesImage} />
     </>
   );
