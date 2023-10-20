@@ -52,27 +52,22 @@ router.post("/movies", uploads.fields([{ name: 'img_poster' }, { name: 'img_head
     });
   }
   console.log(req.files);
-  
+
   if (!req.files) {
     // If there's no file in the request, something went wrong.
     return res.status(400).send('No IMG uploaded.');
   }
 
-  if (
-    Object.values(movie).every((value) => value !== "" && value !== undefined)
-  ) {
+  if (Object.values(movie).every((value) => value !== "" && value !== undefined)) {
     try {
-      movie.img_poster = req.files.originalname;
-      movie.img_header = req.files.originalname;
-     
+      movie.img_poster = req.files['img_poster'][0].originalname; // Use the original file name
+      movie.img_header = req.files['img_header'][0].originalname; // Use the original file name
+
       const result = await fetchCollection("movies").insertOne(movie)
       res.status(201).json(result);
     } catch (error) {
-      res
-        .status(500)
-        .json({ err: "Could not create a new document in collection movies" });
+      res.status(500).json({ err: "Could not create a new document in collection movies" });
     }
-
   } else {
     res.status(500).json({ err: "Incorrect movie input" });
   }
@@ -123,7 +118,7 @@ router.post("/booking", async (req, res) => {
       status: true 
     }
 
-    const newBooking = await fetchCollection("bookings").insertOne(booking)
+    await fetchCollection("bookings").insertOne(booking)
 
     if(user.role) {
       await fetchCollection("users").updateOne({email: user.email}, {$push: {bookings: {bookingId: bookingID}}})
