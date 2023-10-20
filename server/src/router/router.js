@@ -14,7 +14,7 @@ const router = express.Router();
 //Admin routes
 router.post("/screenings", jwtFilter.bind({role: "ADMIN"}) , adminController.addScreening)
 router.delete("/screenings/:id",jwtFilter.bind({role: "ADMIN"}), adminController.deleteScreening)
-router.post("/movies", uploads.fields([{ name: 'img_poster' }, { name: 'img_header' }]), adminController.postMovie); 
+router.post("/movies", jwtFilter.bind({role: "ADMIN"}), uploads.fields([{ name: 'img_poster' }, { name: 'img_header' }]), adminController.postMovie); 
 router.delete("/movies/:id", jwtFilter.bind({role: "ADMIN"}), adminController.deleteMovie)
 router.get("/bookings", jwtFilter.bind({role: "ADMIN"}), adminController.getMovies)
 router.post("/theaters", jwtFilter.bind({role: "ADMIN"}), adminController.addNewTheater)
