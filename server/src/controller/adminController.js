@@ -2,6 +2,7 @@ import { fetchCollection } from "../mongo/mongoClient.js";
 import { ObjectId } from "mongodb";
 
 
+
 const addScreening = async (req, res) => {
     const body = req.body;
     console.log(body)
@@ -74,6 +75,47 @@ const getMovies = async (req, res) => {
       }
 }
 
+const postMovie = async (req, res) => {
+  const movie = req.body;
+  console.log(req.body);
+  
+  const { title, desc , trailer, // här vill vi att "img" ska hämtas från client/srs/assets och följa med posten upp til DB
+    director, actors,length,
+    genre, speech, subtitles,
+    ageRestriction,
+  } = req.body;
+  
+  if (
+    !title || !desc || !trailer ||
+    !director || !actors || !length ||
+    !genre || !speech || !subtitles ||
+    !ageRestriction  ) {
+    return res.status(400).json({
+      error: "Missing required properties, pls check your request body",
+    });
+  }
+  console.log(req.files);
+
+  if (!req.files) {
+    // If there's no file in the request, something went wrong.
+    return res.status(400).send('No IMG uploaded.');
+  }
+
+  if (Object.values(movie).every((value) => value !== "" && value !== undefined)) {
+    try {
+      movie.img_poster = req.files['img_poster'][0].originalname; // Use the original file name
+      movie.img_header = req.files['img_header'][0].originalname; // Use the original file name
+
+      const result = await fetchCollection("movies").insertOne(movie)
+      res.status(201).json(result);
+    } catch (error) {
+      res.status(500).json({ err: "Could not create a new document in collection movies" });
+    }
+  } else {
+    res.status(500).json({ err: "Incorrect movie input" });
+  }
+}
+
 const addNewTheater = async (req, res) => {
     const body = req.body;
     const {theaterNr, rows, seatsPerRow} = req.body;
@@ -112,4 +154,4 @@ const getTheater = async (req, res) => {
 }
 
 
-export default {addScreening, deleteScreening, deleteMovie, getMovies, addNewTheater, getTheater}
+export default {addScreening, deleteScreening, deleteMovie, getMovies, postMovie, addNewTheater, getTheater}
