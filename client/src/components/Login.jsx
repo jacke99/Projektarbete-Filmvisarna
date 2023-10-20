@@ -1,6 +1,7 @@
 import { close } from "../assets"
 import {useState} from "react"
 import { performRequest } from "../service/fetchService";
+import { parseJwt } from "../service/jwtService";
 
  //eslint-disable-next-line
 export default function Login({setToggleLogin}) {
@@ -23,11 +24,13 @@ export default function Login({setToggleLogin}) {
     const resp = await performRequest("/api/login", "PUT", inputValues)
     if(resp.message == "Succesful login") {
       sessionStorage.setItem("AuthToken", resp.jwt)
+      const decoded = parseJwt(resp.jwt)
+      console.log(decoded)
     } else {
       console.log("oh no")
     }
   }
-  
+
   return (
     <div className="absolute right-0 top-20 z-10
     mx-4 my-2 min-w-[140px] rounded-xl bg-gradient-to-r from-footerGrey to-primary p-6 flex flex-col gap-3 text-white max-w-[400px]">
