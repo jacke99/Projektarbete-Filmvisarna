@@ -63,37 +63,5 @@ const getScreenings = async (req, res) => {
       }
 }
 
-const cancelBooking = async (req, res) => {
-    const body = req.body
-    if(!body.id) {
-        return res.status(400).send("Bad Request")
-    }
-    let booking = await fetchCollection("bookings").findOne({_id: new ObjectId(body.id)})
-    
-    if(booking == null || !booking.screeningID) {
-        return res.status(404).send("Booking not found")
-    }
-    try {
-       let currentScreening = await fetchCollection("screenings").findOne({_id: new ObjectId(booking.screeningID)})
-        for(let i = 0; i < booking.seats.length; i++) {
-            if(currentScreening.seats[booking.row - 1][booking.seats[i] - 1].seat == false) {
-                return res.status(400).send({message: "The seats you are trying to cancel are already canceled"})
-               }
-            currentScreening.seats[booking.row - 1][booking.seats[i] - 1] = {seat: false}
-        }
-        booking.status = false
-        await fetchCollection("bookings").updateOne({_id: new ObjectId(body.id)}, {$set: booking})
-        let result = await fetchCollection("screenings").updateOne({_id: new ObjectId(booking.screeningID)}, {$set: currentScreening})
-        
-        if(result.matchedCount == 1) { 
-            res.status(202).send(currentScreening) 
-        } else {
-            res.status(400).send("Kunde inte avboka, prova igen")
-        }
-        }
-    catch(error) {
-        res.status(500).send("Something went wrong")
-    }
-}
 
-export default {getMovies, getScreenings, cancelBooking}
+export default {getMovies, getScreenings}
