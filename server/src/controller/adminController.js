@@ -1,5 +1,6 @@
 import { fetchCollection } from "../mongo/mongoClient.js";
 import { ObjectId } from "mongodb";
+import { calcSeatNumber } from "../util/seatNumberUtil.js";
 
 
 
@@ -130,7 +131,11 @@ const addNewTheater = async (req, res) => {
         for(let i = 0; i < rows; i++) {
           seats.push([])
           for(let j = 0; j < seatsPerRow; j++) {
-            seats[i].push({seat: false})
+            const seatNumber = calcSeatNumber(i, j, seatsPerRow)
+            seats[i].push({
+              seat: false, 
+              seatNumber: seatNumber
+            })
           }
         }
         body.seats = seats
