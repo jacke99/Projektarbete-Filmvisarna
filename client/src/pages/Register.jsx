@@ -6,6 +6,14 @@ export default function Register() {
  
   let { defaults, formData } = useFormDefaults();
 
+
+  // I console log så följer all information som jag skriver med.
+  // Jag vill att varje text i varje input ska sparas i en body.
+  // Alla uppgifter sparas i formData. Jag vill att den informationen ska gå till bodyn
+  // loggen ska stämmer överens med namnen i bodyn
+  // När jag trycker på submit så vill jag att en post method ska skicka med dessa uppgifter till databasen
+
+
   return <div className= "bg-[url('./assets/chairs.jpg')] bg-cover bg-center min-h-screen" >
     
     <div className="" >
@@ -28,12 +36,12 @@ export default function Register() {
         <input 
            className={`${styles.regInputs} w-[85%] md:w-[41%] `} 
            type="text" 
-           {...defaults('Fname', 'Förnamn. . .')} />
+           {...defaults('name', 'Förnamn. . .')} />
         
         <input 
           className={`${styles.regInputs} w-[85%] md:w-[41%] `} 
           type="text" 
-          {...defaults('Lname', 'Efternamn. . .')} />
+          {...defaults('lastname', 'Efternamn. . .')} />
       </div>
       
       {/* Phone number */}
