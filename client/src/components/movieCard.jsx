@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
-
 import { useNavigate } from "react-router-dom";
 
-//MovieCars används som kort för filmer och tillhörande filmtitel i bildkarusellen
+//MovieCard används som kort för filmer och tillhörande filmtitel i bildkarusellen
 export default function MovieCard({ title, img, alt }) {
   const navigate = useNavigate()
   return (

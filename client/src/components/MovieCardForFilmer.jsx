@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+/* DENNA TILLHÖR SIDAN FILMER*/
 import { killersImage } from "../assets";
 import { useNavigate } from "react-router-dom";
 
