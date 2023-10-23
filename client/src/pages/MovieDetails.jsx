@@ -4,12 +4,14 @@ import MovieFilterForm from "../components/MovieFilterForm.jsx";
 import { styles } from "../styles.js";
 import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
+import { performRequest } from "../service/fetchService.js";
 
 export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState({})
  
 useEffect(() => {
+ 
   fetch(`/api/movies/${id}`)
   .then((res) => res.json())
   .then((data) => {
