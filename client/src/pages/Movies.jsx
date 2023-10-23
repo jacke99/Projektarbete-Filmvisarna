@@ -1,24 +1,10 @@
 import MovieCardForFilmer from "../components/MovieCardForFilmer";
-import { useEffect, useState } from "react";
-import { performRequest } from "../service/fetchService";
+import useFetch from "../hooks/useFetch";
 
 export default function Movies() {
-  const [movies, setMovies] = useState([])
  
-  console.log(movies)
-
-  useEffect(() => {
-
-  async function getMovies() {
-    const resp = await performRequest("/api/movies", "GET")
-    
-    setMovies(resp)
-  }
-  
-  getMovies()
-    
-  }, [])
-  
+  const { data, isPending, error } = useFetch("/api/movies");
+  console.log(data, isPending, error);
   return (
     <div className="mb-20 px-8">
       <div
