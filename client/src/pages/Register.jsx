@@ -1,13 +1,17 @@
 import { styles } from "../styles";
 import { useFormDefaults } from '../hooks/formValidation'
+import { performRequest } from "../service/fetchService";
 
 
 export default function Register() {
  
   let { defaults, formData } = useFormDefaults();
 
-
-
+     async function signUp(e){
+      e.preventDefault()
+       const result = await performRequest("/api/register", "POST", formData )
+       console.log(result);
+     }
     
   //  I console log så följer all information som jag skriver med.
   // Jag vill att varje text i varje input ska sparas i en body.
@@ -34,7 +38,7 @@ export default function Register() {
       <h1 className={`${styles.headerText} text-white text-center  pt-20 pb-10  text-4xl`}>Bli medlem</h1>
     </header>
 
-    <form onSubmit={()=>{}} className="flex flex-col items-center w-screen md:w-2/3 m-auto lg:w-2/4 lg:text-lg max-w-[50rem] "  >
+    <form onSubmit={(e)=>signUp(e)} className="flex flex-col items-center w-screen md:w-2/3 m-auto lg:w-2/4 lg:text-lg max-w-[50rem] "  >
 
     {/* Firstname and lastname */}
       <div className=" flex items-center flex-col lg:w-[100%] md:w-[100%] sm:w-[100%] w-screen md:flex-row md:justify-center ">
