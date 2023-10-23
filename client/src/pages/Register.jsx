@@ -6,6 +6,19 @@ export default function Register() {
  
   let { defaults, formData } = useFormDefaults();
 
+
+
+    
+  //  I console log så följer all information som jag skriver med.
+  // Jag vill att varje text i varje input ska sparas i en body.
+  // Alla uppgifter sparas i formData. Jag vill att den informationen ska gå till bodyn
+  // loggen ska stämma överens med samtliga namnen i bodyn
+  // När jag trycker på submit  så vill jag att en function en post method ska skicka med dessa uppgifter till databasen
+
+    // async function signUp() {
+  //   const resp = await performRequest("/api/register", "POST", )
+
+
   return <div className= "bg-[url('./assets/chairs.jpg')] bg-cover bg-center min-h-screen" >
     
     <div className="" >
@@ -21,19 +34,19 @@ export default function Register() {
       <h1 className={`${styles.headerText} text-white text-center  pt-20 pb-10  text-4xl`}>Bli medlem</h1>
     </header>
 
-    <form className="flex flex-col items-center w-screen md:w-2/3 m-auto lg:w-2/4 lg:text-lg max-w-[50rem] "  >
+    <form onSubmit={()=>{}} className="flex flex-col items-center w-screen md:w-2/3 m-auto lg:w-2/4 lg:text-lg max-w-[50rem] "  >
 
     {/* Firstname and lastname */}
       <div className=" flex items-center flex-col lg:w-[100%] md:w-[100%] sm:w-[100%] w-screen md:flex-row md:justify-center ">
         <input 
            className={`${styles.regInputs} w-[85%] md:w-[41%] `} 
            type="text" 
-           {...defaults('Fname', 'Förnamn. . .')} />
+           {...defaults('name', 'Förnamn. . .')} />
         
         <input 
           className={`${styles.regInputs} w-[85%] md:w-[41%] `} 
           type="text" 
-          {...defaults('Lname', 'Efternamn. . .')} />
+          {...defaults('lastname', 'Efternamn. . .')} />
       </div>
       
       {/* Phone number */}
