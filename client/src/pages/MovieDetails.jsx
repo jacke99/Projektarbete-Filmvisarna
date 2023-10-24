@@ -2,7 +2,6 @@
 import BookMovieHero from "../components/BookMovieHero.jsx";
 import MovieFilterForm from "../components/MovieFilterForm.jsx";
 import { styles } from "../styles.js";
-
 import { useParams } from 'react-router-dom';
 import useFetch from "../hooks/useFetch.js";
 
@@ -21,28 +20,23 @@ export default function MovieDetails() {
     <>
     {data &&(
     <div className=" mt-16 mb-20 h-full bg-primary">
-  
-     
       <div className="relative h-96 md:h-[30rem] lg:h-[36rem] ">
-      
         <img
           src={`/img/${data.img_header}`}
           alt="movie poster"
           className=" h-full min-w-full object-cover"
-        />
+        /> 
         <img
           src={`/img/${data.img_poster}`}
           alt="movie poster"
           className="  absolute bottom-28 left-5 block h-44 sm:hidden "
         />
         <div
-          className={`absolute bottom-7 left-5 p-1 lg:left-24 text-shadow`}
-        >
+          className={`absolute bottom-7 left-5 p-1 lg:left-24 text-shadow`} >
           <p className={`${styles.trailerTitle} `}>{data.title}</p>
           <p className={`${styles.trailerSubTitle} `}>{data.genre}</p>
           <p className={`${styles.trailerSubTitle} bold font-inconsolata`}>
-            {data.length} | {data.ageRestriction}
-            
+            {data.length} | {data.ageRestriction} 
           </p>
         </div>
       </div>
@@ -66,13 +60,18 @@ export default function MovieDetails() {
           <span>{data.title}</span>
         </div>
         <div className={`${styles.movieDescInfo} md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}>
-          <span>Premiär:</span>
-          <span>22 sep 2023</span>
+          <span>Längd:</span>
+          <span>{data.length}</span>
         </div>
         <div className={`${styles.movieDescInfo} md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}>
           <span>Originalspråk</span>
           <span>{data.speech}</span>
         </div>
+        <div className={`${styles.movieDescInfo} md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}>
+          <span>Åldersgräns:</span>
+          <span>{data.ageRestriction}</span>
+        </div>
+
         <img
           src={`/img/${data.img_poster}`}
           alt="movie poster"
