@@ -15,14 +15,14 @@ export default function Register() {
       const result = await performRequest("/api/register", "POST", formData);
       console.log(result);
   
-      if (result.success) {
+      if (result.msg === "Account was created") {
         setShowMsgToUser("Ett nytt konto har skapats");
-      } else if (result.status === 400) {
+      } else if (result.msg === "User allready exists") {
         setShowMsgToUser("Ett konto med dessa uppgifter finns redan");
       }
     } catch (err) {
       console.error(err);
-      setShowMsgToUser("Något fel har inträffat när kontot försökte att skapas");
+      setShowMsgToUser("Något oväntat fel har inträffat när kontot försökte att skapas");
     }
   }
     
