@@ -9,7 +9,7 @@ export default function Login({setToggleLogin}) {
     email: "",
     password: "",
   })
-  console.log(inputValues)
+  
   function handleChange(event) {
       const { name, value } = event.target;
       setInputValues((prev) => {
