@@ -3,10 +3,14 @@ import { styles } from "../styles";
 import { Link } from "react-router-dom";
 import { logo, account_circle_new, close, menu_new } from "../assets";
 import Login from "./Login";
+import { parseJwt } from "../service/jwtService";
+import { useNavigate } from "react-router-dom";
 export default function Header() {
   const [active, setActive] = useState("");
   const [toggleLogin, setToggleLogin] = useState(false)
   const [toggle, setToggle] = useState(false);
+  const [currentUser, setCurrentUser] = useState(parseJwt(sessionStorage.getItem("AuthToken")))
+  const navigate = useNavigate()
   return (
     <nav
       className={`${styles.paddingX} fixed top-0 z-20 flex w-full justify-between items-center border-b-2 border-gold bg-primary lg:py-2`}
@@ -95,13 +99,13 @@ export default function Header() {
           src={account_circle_new}
           alt="login"
           className="w-8 sm:w-12 object-contain cursor-pointer mr-2"
-          onClick={() => setToggleLogin(!toggleLogin)}
+          onClick={() => currentUser ? navigate("/mypages") : setToggleLogin(!toggleLogin) }
         />
         <p
           className={`${styles.subHeaderText} ${toggleLogin ? "text-white" : "text-gold"} hidden cursor-pointer hover:text-white lg:flex`}
-          onClick={() => setToggleLogin(!toggleLogin)}
+          onClick={() => currentUser ? navigate("/mypages") : setToggleLogin(!toggleLogin) }
         >
-          Logga in
+          {currentUser ? currentUser.name : "Logga in"}
         </p>
         <img
           src={toggle ? close : menu_new}
@@ -179,7 +183,7 @@ export default function Header() {
           </ul>
         </div>
       </div>
-      {toggleLogin && <Login setToggleLogin={setToggleLogin} />}
+      {toggleLogin && <Login setToggleLogin={setToggleLogin} setCurrentUser={setCurrentUser}/>}
     </nav>
   );
 }

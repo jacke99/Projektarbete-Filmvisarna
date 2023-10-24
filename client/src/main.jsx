@@ -10,6 +10,7 @@ import MovieDetails from "./pages/MovieDetails";
 import BookingPartTwo from "./components/BookingPartTwo";
 import Admin from "./pages/Admin";
 import "./index.css";
+import MyPages from "./pages/MyPages";
 
 
 const router = createBrowserRouter([
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
       { path: "/movies", element: <Movies /> },
       { path: "/register", element: <Register /> },
       { path: "/movies/:id", element: <MovieDetails /> },
-      //Test frontend admin page
+      { path: "/mypages", element: <MyPages />},
       { path: "/admin", element: <Admin /> },
     ],
   },
