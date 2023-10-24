@@ -6,7 +6,7 @@ function Admin() {
     const [showBookingsForm, setShowBookingsForm] = useState(false);
     const [showUsersForm, setShowUsersForm] = useState(false);
     const [showTheatersForm, setShowTheatersForm] = useState(false);
-
+    const authToken = sessionStorage.getItem("AuthToken");
     const toggleMoviesForm = () => {
         setShowMoviesForm(!showMoviesForm);
     };
@@ -42,7 +42,7 @@ function Admin() {
                                 {showMoviesForm ? "Dölj Formulär" : "Visa Formulär"}
                             </button>
                             {showMoviesForm && (
-                                <form className=" text-black" action="/api/movies" method="post" encType="multipart/form-data">
+                                <form className=" text-black" action={`/api/movies/${authToken}`} method="post" encType="multipart/form-data">
                                     <input className="border-2 border-black" type="text" name="title" placeholder="Titel..." />
                                     <input className="border-2 border-black" type="text" name="desc" placeholder="Beskrivning..." />
                                     <input className="border-2 border-black" type="text" name="trailer" placeholder="Trailer..." />
