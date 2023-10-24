@@ -1,10 +1,54 @@
 import { killersImage } from "../assets";
 import { styles } from "../styles.js";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MovieFilterForm from "../components/MovieFilterForm";
 import BookMovieHero from "../components/BookMovieHero";
+import useFetch from "../hooks/useFetch.js";
+import { useStates } from "react-easier";
+import { useState } from "react";
 
 export default function Booking() {
+  const navigate = useNavigate();
+  const [age, setAge] = useState("0");
+  const [date, setDate] = useState("");
+  const [movie, setMovie] = useState("");
+  const [query, setQuery]= useState("");
+
+  
+  const { data, isPending, error } = useFetch(`/api/filteredscreenings?${query}`)
+  console.log(query)
+console.log(data)
+
+
+  // const s = useStates("globalstate",{ ageLimit: "", date: "", filmTitle:""})
+
+  function handleSubmit(e){
+  e.preventDefault();
+   console.log(age, date, movie)
+  // console.log(s)
+  const queryParams = {};
+  if (age !== "0") {
+    queryParams.age = age;
+  }
+  if(date) {
+    queryParams.date = date;
+  }
+  if (movie) {
+    queryParams.movie = movie;
+  }
+  
+  const queryString = new URLSearchParams(queryParams).toString();
+  
+  setQuery(queryString)
+ navigate(`/booking?${queryString}`);
+
+
+ 
+  }
+  
+
+
+
   return (
     <div className="mt-16 mb-20 min-w-full max-w-full bg-primary font-inconsolata">
       <div className="relative">
@@ -23,8 +67,9 @@ export default function Booking() {
           </Link>
         </div>
       </div>
-      <MovieFilterForm />
-      <BookMovieHero />
+      <MovieFilterForm data={data} handleSubmit={handleSubmit}
+       setAge={setAge} setDate={setDate} setMovie={setMovie}  />
+      <BookMovieHero data= {data}/>
     </div>
 
   );
