@@ -2,35 +2,8 @@ import { styles } from "../styles.js";
 import { useState } from "react";
 import {useStates} from "react-easier"
 
-export default function MovieFilterForm({data, handleSubmit, setAge, setDate, setMovie}) {
-  // const [ageLimit, setAgeLimit] = useState("0");
-  // const [date, setDate] = useState("");
-  // const [filmTitle, setFilmTitle] = useState("");
-
-  
+export default function MovieFilterForm({data, handleSubmit, setAge,age, setDate,date, setMovie,movie}) {
   const s = useStates('globalState');
-
-//   const s = useStates({ ageLimit: "", date: "", filmTitle:""})
-
-// function handleFilter(e){
-// e.preventDefault();
-// // console.log(ageLimit, date, filmTitle)
-// console.log(s)
-// const queryParams = {};
-// if (s.ageLimit !== "0") {
-//   queryParams.ageLimit = s.ageLimit;
-// }
-// if(s.date) {
-//   queryParams.date = s.date;
-// }
-// if (s.filmTitle) {
-//   queryParams.movie = s.filmTitle;
-// }
-
-// const queryString = new URLSearchParams(queryParams).toString();
-// console.log(queryString)
-// }
-
 
   return (
     <div className="max-w-full">
@@ -44,6 +17,7 @@ export default function MovieFilterForm({data, handleSubmit, setAge, setDate, se
               Åldersgräns:
             </label>
             <select
+            value={age}
               id="ageLimit"
               name="ageLimit"
               className={`${styles.inputStyle}`}
@@ -66,6 +40,7 @@ export default function MovieFilterForm({data, handleSubmit, setAge, setDate, se
               Datum:
             </label>
             <input
+            value={date}
               type="date"
               id="datePicker"
               name="datePicker"
@@ -78,6 +53,7 @@ export default function MovieFilterForm({data, handleSubmit, setAge, setDate, se
 
         <div className="flex flex-col md:flex-row md:gap-4 md:justify-center">
           <input
+          value={movie}
             placeholder="Sök filmtitel..."
             type="text"
             id="filmTitle"

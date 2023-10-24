@@ -9,7 +9,7 @@ import { useState } from "react";
 
 export default function Booking() {
   const navigate = useNavigate();
-  const [age, setAge] = useState("0");
+  const [age, setAge] = useState("");
   const [date, setDate] = useState("");
   const [movie, setMovie] = useState("");
   const [query, setQuery]= useState("");
@@ -41,6 +41,9 @@ console.log(data)
   
   setQuery(queryString)
  navigate(`/booking?${queryString}`);
+ setAge("");
+ setDate("");
+ setMovie("");
   }
 
   return (
@@ -70,8 +73,8 @@ console.log(data)
         )}
       </div>
       <MovieFilterForm data={data} handleSubmit={handleSubmit}
-       setAge={setAge} setDate={setDate} setMovie={setMovie}  />
-      <BookMovieHero data= {data}/>
+       setAge={setAge} age={age} setDate={setDate} date={date} setMovie={setMovie} movie={movie} />
+      <BookMovieHero data= {data} handleSubmit={handleSubmit}/>
     </div>
     
   );
