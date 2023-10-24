@@ -49,26 +49,28 @@ const login = async (req, res) => {
 }
 
 const getUserBookings = async (req, res) => {
+  const authHeader = req.headers['authorization'];
+  if (authHeader == undefined) {
+    response.status(400);
+    response.send("Authorization header is missing");
+  } else {
+
+    
     try {
-        if (ObjectId.isValid(req.params.id)) {
-          const user = await fetchCollection("users").findOne({ _id: new ObjectId(req.params.id) });
-          
-          if (user == null) {
-            return res.status(404).send({ error: 'Could not fetch the user info' });
-          }
+          const authToken = authHeader.replace("Bearer ", "");
+          const decoded = jwtUtil.verify(authToken)
+          const user = await fetchCollection("users").findOne({email: decoded.email});
     
           const arrayToSearch = user.bookings.map(booking => booking.bookingId);
     
-          const userBookings = await fetchCollection("bookings").find({ bookingId: { $in: arrayToSearch } }).toArray();
-    
+          const userBookings = await fetchCollection("bookingsXscreening").find({ bookingId: { $in: arrayToSearch } }).toArray();
+          console.log(userBookings)
           return res.send(userBookings);
-        } else {
-          return res.status(404).send({ error: 'Object id is not valid' });
-        }
       } catch (error) {
         console.error('Error fetching user bookings:', error);
         return res.status(500).send({ error: 'Internal server error' });
       }
+    }
 }
 
 
