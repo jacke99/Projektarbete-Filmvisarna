@@ -48,7 +48,7 @@ const postBooking = async (req, res) => {
       status: true 
     }
 
-    fetchCollection("bookings").insertOne(booking)
+    await fetchCollection("bookings").insertOne(booking)
     
     if(user.role) {
       await fetchCollection("users").updateOne({email: user.email}, {$push: {bookings: {bookingId: bookingID}}})
