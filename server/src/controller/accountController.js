@@ -63,7 +63,7 @@ const getUserBookings = async (req, res) => {
     
           const arrayToSearch = user.bookings.map(booking => booking.bookingId);
     
-          const userBookings = await fetchCollection("bookings").find({ bookingId: { $in: arrayToSearch } }).toArray();
+          const userBookings = await fetchCollection("bookingsXscreening").find({ bookingId: { $in: arrayToSearch } }).toArray();
           console.log(userBookings)
           return res.send(userBookings);
       } catch (error) {
