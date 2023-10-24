@@ -25,11 +25,13 @@ router.get("/theaters", jwtFilter.bind({role: "ADMIN"}), adminController.getThea
 //Accounts (register, login, get user booking/history)
 router.post("/register", accountController.register)
 router.put("/login", accountController.login)
-router.get("/user/:id", accountController.getUserBookings )
+router.get("/user/bookings", accountController.getUserBookings )
 
 //User stuff
 router.get("/movies", userController.getMovies)
-router.get('/filteredScreenings', userController.getScreenings)
+router.get("/movies/:id", userController.getMovie)
+router.get('/filteredScreenings', userController.getScreenings )
+
 
 //SSE
 router.post("/booking", sseController.postBooking);
