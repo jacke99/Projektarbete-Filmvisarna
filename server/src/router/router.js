@@ -18,7 +18,8 @@ router.post("/movies", jwtFilter.bind({role: "ADMIN"}), uploads.fields([{ name: 
 router.delete("/movies/:id", jwtFilter.bind({role: "ADMIN"}), adminController.deleteMovie)
 router.get("/bookings", jwtFilter.bind({role: "ADMIN"}), adminController.getMovies)
 router.post("/theaters", jwtFilter.bind({role: "ADMIN"}), adminController.addNewTheater)
-router.get("/theaters", jwtFilter.bind({role: "ADMIN"}), adminController.getTheater)
+router.get("/users", adminController.getUsers)
+
 
 
 //Accounts (register, login, get user booking/history)
