@@ -1,17 +1,30 @@
 import { styles } from "../styles";
 import { useFormDefaults } from '../hooks/formValidation'
 import { performRequest } from "../service/fetchService";
+import { useState } from "react";
 
 
 export default function Register() {
  
   let { defaults, formData } = useFormDefaults();
+  const [showMsgToUser, setShowMsgToUser]= useState(" Text till användaren ")
 
-     async function signUp(e){
-      e.preventDefault()
-       const result = await performRequest("/api/register", "POST", formData )
-       console.log(result);
-     }
+  async function SignUp(e) {
+    try {
+      e.preventDefault();
+      const result = await performRequest("/api/register", "POST", formData);
+      console.log(result);
+  
+      if (result.success) {
+        setShowMsgToUser("Ett nytt konto har skapats");
+      } else if (result.status === 400) {
+        setShowMsgToUser("Ett konto med dessa uppgifter finns redan");
+      }
+    } catch (err) {
+      console.error(err);
+      setShowMsgToUser("Något fel har inträffat när kontot försökte att skapas");
+    }
+  }
     
   //  I console log så följer all information som jag skriver med.
   // Jag vill att varje text i varje input ska sparas i en body.
@@ -38,7 +51,7 @@ export default function Register() {
       <h1 className={`${styles.headerText} text-white text-center  pt-20 pb-10  text-4xl`}>Bli medlem</h1>
     </header>
 
-    <form onSubmit={(e)=>signUp(e)} className="flex flex-col items-center w-screen md:w-2/3 m-auto lg:w-2/4 lg:text-lg max-w-[50rem] "  >
+    <form onSubmit={(e)=>SignUp(e)} className="flex flex-col items-center w-screen md:w-2/3 m-auto lg:w-2/4 lg:text-lg max-w-[50rem] "  >
 
     {/* Firstname and lastname */}
       <div className=" flex items-center flex-col lg:w-[100%] md:w-[100%] sm:w-[100%] w-screen md:flex-row md:justify-center ">
@@ -85,6 +98,8 @@ export default function Register() {
       <button 
         className="bg-gold w-40 px-4 rounded-lg py-4 my-5 lg:text-lg " 
         type="submit" >Registrera</button>
+
+      <div className="text-white">{showMsgToUser}</div>   
 
     </form >
 
