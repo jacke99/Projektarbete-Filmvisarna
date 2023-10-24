@@ -61,7 +61,7 @@ const getScreenings = async (req, res) => {
             const filteredScreenings = await screeningsCollection.find({$and: [
                 query.date ? { "date": query.date } : {},
                 query.movie ? { "movie.title": { $regex: regex } } : {}, 
-                query.age ? { "movie.ageRestricion": {$lte: parseInt(query.age) } }: {}
+                query.age ? { "movie.ageRestriction": {$lte: parseInt(query.age) } }: {}
                 ]}).toArray();
 
           
