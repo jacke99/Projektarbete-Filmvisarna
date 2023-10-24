@@ -28,7 +28,9 @@ router.get("/user/:id", accountController.getUserBookings )
 
 //User stuff
 router.get("/movies", userController.getMovies)
-router.get('/filteredScreenings', userController.getScreenings)
+router.get("/movies/:id", userController.getMovie)
+router.get('/filteredScreenings', userController.getScreenings )
+
 
 //SSE
 router.post("/booking", sseController.postBooking);
