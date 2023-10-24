@@ -36,12 +36,12 @@ const postBooking = async (req, res) => {
     })
     const bookingID = await idUtil.CreateId(6)
     const totalPrice = calcTotalPrice(body.adult, body.child, body.senior)
-    
+    console.log(screening)
     const booking = {
       bookingId: bookingID,
       customerEmail: user.email, 
       ticketType: {adult: body.adult, child: body.child, senior: body.senior},
-      screeningID: body.id,
+      screeningID: new ObjectId(body.id),
       row: body.row,
       seats: body.seats,
       price: totalPrice,
