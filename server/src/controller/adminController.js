@@ -64,7 +64,7 @@ const deleteMovie = async (req, res) => {
       }
 }
 
-const getMovies = async (req, res) => {
+const getBookings = async (req, res) => {
     try {
         const bookingsCollection = await fetchCollection("bookings");
         const bookings = await bookingsCollection.find().toArray();
@@ -160,4 +160,4 @@ const getTheater = async (req, res) => {
 }
 
 
-export default {addScreening, deleteScreening, deleteMovie, getMovies, postMovie, addNewTheater, getTheater}
+export default {addScreening, deleteScreening, deleteMovie, getBookings, postMovie, addNewTheater, getTheater}
