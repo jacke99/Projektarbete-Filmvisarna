@@ -7,14 +7,13 @@ import calcTotalPrice from "../util/calcTotalPrice.js";
 let clients = [];
 
 const postBooking = async (req, res) => {
-    const body = req.body
+  const body = req.body
   const authHeader = req.headers['authorization']
   let authToken;
   let user = {}
   if(authHeader) {
     authToken = authHeader.replace("Bearer ", "");
     user = jwtUtil.verify(authToken)
-    console.log(user)
   }else if(req.body.email) {
     user.email = req.body.email
   } else {
@@ -22,13 +21,15 @@ const postBooking = async (req, res) => {
   }
   
   try{
-
+    
   const screening = await fetchCollection("screenings").findOne({_id: new ObjectId(body.id)})
   for(let i = 0; i < body.seats.length; i++) {
-      if(screening.seats[body.row - 1][body.seats[i] - 1].seat == true) {
-       return res.status(400).send({message: "The seats you are trying to book are allready taken"})
+      if(screening.seats[body.row - 1][body.seats[i].seat - 1].seat === true) {
+       return res.status(400).send({message: "The seats you are trying to book are already taken"})
       }
-      screening.seats[body.row - 1][body.seats[i] - 1] = {seat: true}
+
+      screening.seats[body.row - 1][body.seats[i].seat - 1] = {seat: true, seatNumber: screening.seats[body.row - 1][body.seats[i].seat - 1].seatNumber}
+      body.seats[i].seatNumber = screening.seats[body.row - 1][body.seats[i].seat - 1].seatNumber
   }
     await fetchCollection("screenings").updateOne({_id: new ObjectId(body.id)}, {$set: screening})
     clients.forEach((client) => {
@@ -36,7 +37,6 @@ const postBooking = async (req, res) => {
     })
     const bookingID = await idUtil.CreateId(6)
     const totalPrice = calcTotalPrice(body.adult, body.child, body.senior)
-    console.log(screening)
     const booking = {
       bookingId: bookingID,
       customerEmail: user.email, 
@@ -48,8 +48,8 @@ const postBooking = async (req, res) => {
       status: true 
     }
 
-    await fetchCollection("bookings").insertOne(booking)
-
+    let test = await fetchCollection("bookings").insertOne(booking)
+    console.log(test);
     if(user.role) {
       await fetchCollection("users").updateOne({email: user.email}, {$push: {bookings: {bookingId: bookingID}}})
     }
