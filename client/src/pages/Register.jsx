@@ -2,12 +2,19 @@ import { styles } from "../styles";
 import { useFormDefaults } from '../hooks/formValidation'
 import { performRequest } from "../service/fetchService";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+
 
 
 export default function Register() {
+
+  const navigate = useNavigate();
  
   let { defaults, formData } = useFormDefaults();
   const [showMsgToUser, setShowMsgToUser]= useState(" Text till användaren ")
+  const [showSuccessPopupMsg, setShowSuccessPopup] = useState(false); // state för att göra en popup OM status:msg = 
+  const [showUnsuccessfulPopupMsg, setShowUnsuccessfulPopupMsg] = useState(false)
+
 
   async function SignUp(e) {
     try {
@@ -17,14 +24,22 @@ export default function Register() {
   
       if (result.msg === "Account was created") {
         setShowMsgToUser("Ett nytt konto har skapats");
+        setShowSuccessPopup(true) // sätter denna till true då konto skapats
       } else if (result.msg === "User allready exists") {
         setShowMsgToUser("Ett konto med dessa uppgifter finns redan");
+        setShowUnsuccessfulPopupMsg(true)
       }
     } catch (err) {
       console.error(err);
       setShowMsgToUser("Något oväntat fel har inträffat när kontot försökte att skapas");
     }
   }
+
+  const closeSuccessPopup = () => {
+    setShowSuccessPopup(false); // Hide the success popup
+
+    navigate("/");
+  };
     
   //  I console log så följer all information som jag skriver med.
   // Jag vill att varje text i varje input ska sparas i en body.
@@ -51,7 +66,7 @@ export default function Register() {
       <h1 className={`${styles.headerText} text-white text-center  pt-20 pb-10  text-4xl`}>Bli medlem</h1>
     </header>
 
-    <form onSubmit={(e)=>SignUp(e)} className="flex flex-col items-center w-screen md:w-2/3 m-auto lg:w-2/4 lg:text-lg max-w-[50rem] "  >
+    <form onSubmit={(e)=>SignUp(e)} className="flex flex-col items-center w-screen md:w-2/3 m-auto lg:w-2/4 lg:text-lg max-w-[50rem] static"  >
 
     {/* Firstname and lastname */}
       <div className=" flex items-center flex-col lg:w-[100%] md:w-[100%] sm:w-[100%] w-screen md:flex-row md:justify-center ">
@@ -99,7 +114,19 @@ export default function Register() {
         className="bg-gold w-40 px-4 rounded-lg py-4 my-5 lg:text-lg " 
         type="submit" >Registrera</button>
 
-      <div className="text-white">{showMsgToUser}</div>   
+        {showSuccessPopupMsg && (
+              <div className="popup">
+                <div className=" flex items-center justify-center flex-col  text-white bg-gray-600 text-xl p-40 z-50 absolute bottom-40  left-40  " >
+                  <p>{showMsgToUser}</p>
+                  <button onClick={closeSuccessPopup} className="bg-blue-700 w-40 px-4 rounded-lg py-4 my-5 lg:text-lg   ">Stäng</button>
+                </div>
+              </div>
+            )}
+        {showUnsuccessfulPopupMsg &&(
+          <div className="text-white">
+            <p>{showMsgToUser}</p>
+          </div>
+        ) }
 
     </form >
 
