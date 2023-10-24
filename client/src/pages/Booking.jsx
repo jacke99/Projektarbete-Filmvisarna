@@ -27,7 +27,7 @@ console.log(data)
    console.log(age, date, movie)
   // console.log(s)
   const queryParams = {};
-  if (age !== "0") {
+  if (age) {
     queryParams.age = age;
   }
   if(date) {
@@ -41,17 +41,17 @@ console.log(data)
   
   setQuery(queryString)
  navigate(`/booking?${queryString}`);
-
-
- 
   }
-  
-
-
 
   return (
+  
+   
     <div className="mt-16 mb-20 min-w-full max-w-full bg-primary font-inconsolata">
       <div className="relative">
+        <p>Inga visningar tillgängliga just nu</p>
+
+        {data &&(
+     <>
         <img
           src={killersImage}
           alt="photo from the movie Killers"
@@ -66,11 +66,13 @@ console.log(data)
             Se trailer
           </Link>
         </div>
+        </>
+        )}
       </div>
       <MovieFilterForm data={data} handleSubmit={handleSubmit}
        setAge={setAge} setDate={setDate} setMovie={setMovie}  />
       <BookMovieHero data= {data}/>
     </div>
-
+    
   );
 }

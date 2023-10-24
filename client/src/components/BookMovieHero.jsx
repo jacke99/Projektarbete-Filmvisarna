@@ -1,15 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { killersPoster, pastLivesPoster,smsPoster } from "../assets";
-
+import {useAutoKeys} from 'react-easier';
 
 export default function BookMovieHero({data}){
   const navigate = useNavigate();
+  useAutoKeys(); 
 console.log(data)
 if (!data || !Array.isArray(data) || data.length === 0) {
-  // Om det inte finns någon data eller data inte är en array eller är en tom array, kan du visa ett meddelande eller returnera något annat.
+  // Om det inte finns någon data eller data inte är en array
   return (
-    <div>
-      <p className="text-white-100">Ingen data tillgänglig</p>
+    <div className=" max-w-full p-4 flex flex-col justify-center">
+      <p className="text-white-100">Ingen filmvisning matchade din sökning, prova igen!</p>
     </div>
   );
 }
