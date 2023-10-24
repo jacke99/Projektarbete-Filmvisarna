@@ -73,14 +73,16 @@ export default function Register() {
       <div className=" flex items-center flex-col lg:w-[100%] md:w-[100%] sm:w-[100%] w-screen md:flex-row md:justify-center ">
         <input 
            className={`${styles.regInputs} w-[85%] md:w-[41%] `} 
-           type="text" 
            disabled={showSuccessPopupMsg}
+           type="text" 
+          
            {...defaults('name', 'Förnamn. . .')} />
         
         <input 
           className={`${styles.regInputs} w-[85%] md:w-[41%] `} 
-          type="text" 
           disabled={showSuccessPopupMsg}
+          type="text" 
+          
           {...defaults('lastname', 'Efternamn. . .')} />
       </div>
       
@@ -114,29 +116,30 @@ export default function Register() {
         val => val === formData.password, 'OBS - lösenorden måste matcha varandra!'
       )} />
 
+        
+        {/* Text to user if there is something wrong on submit */} 
+        {showUnsuccessfulPopupMsg &&(
+          <div className="text-rose-600 font-extrabold">
+            <p>{showMsgToUser}</p>
+          </div>
+        ) }
+
       {/* Button Submit */}
       <button 
         className="bg-gold w-40 px-4 rounded-lg py-4 my-5 lg:text-lg " 
         disabled={showSuccessPopupMsg}
         type="submit" >Registrera</button>
         
+        
         {/* Popup to user if account is created */}
         {showSuccessPopupMsg && (
-              <div className="popup rounded-md">
-                <div className=" flex items-center justify-center flex-col  text-white bg-gray-600 text-xl p-40 z-50 absolute bottom-40  left-40  " >
+              <div className="popup rounded-md" >
+                <div className=" flex items-center justify-center rounded-md flex-col  text-white  bg-gray-600 text-xxl md:w-[30rem] md:h-[30rem] z-50 md:absolute md:left-[21%] md:top-[50%]  " >
                   <p>{showMsgToUser}</p>
-                  <button onClick={closeSuccessPopup} className="bg-blue-700 w-40 px-4 rounded-lg py-4 my-5 lg:text-lg   ">Stäng</button>
+                  <button onClick={closeSuccessPopup} className="bg-blue-700 w-40 px-4 rounded-lg py-4 my-5 lg:text-lg ">Stäng</button>
                 </div>
               </div>
             )}
-
-            {/* Text to user if there is something wrong on submit */}
-        {showUnsuccessfulPopupMsg &&(
-          <div className="text-white">
-            <p>{showMsgToUser}</p>
-          </div>
-        ) }
-
     </form >
 
   </div>;
