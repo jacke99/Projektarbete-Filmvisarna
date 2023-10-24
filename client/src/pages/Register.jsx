@@ -23,7 +23,7 @@ export default function Register() {
       console.log(result);
   
       if (result.msg === "Account was created") {
-        setShowMsgToUser("Ett nytt konto har skapats");
+        setShowMsgToUser("Grattis du är nu medlem hos oss");
         setShowSuccessPopup(true) // sätter denna till true då konto skapats
       } else if (result.msg === "User allready exists") {
         setShowMsgToUser("Ett konto med dessa uppgifter finns redan");
@@ -57,9 +57,10 @@ export default function Register() {
       <h2 className={`${styles.headerText} text-white text-center  pt-40 pb-10  text-4xl`}>
         Bli en del av familjen!
       </h2>
-      <p className=" text-white text-center sm:w-[70%] px-6 md:-[60%] m-auto lg:text-lg max-w-[60rem]">Välkommen till oss på Filmvisarna. Vi älskar film! Lorem Ipsum è un testo segnaposto utilizzato nel settore della tipografia
-         e della stampa. Lorem Ipsum è considerato il testo segnaposto standard sin dal sedicesimo secolo, quando un anonimo 
-        tipografo prese una cassetta di caratteri e li assemblò per preparare un testo campione. quando.</p>
+      <p className=" text-white text-center sm:w-[70%] px-6 md:-[60%] m-auto lg:text-lg max-w-[60rem]">Välkommen till oss på Filmvisarna. Vi älskar film och det verkar du också göra! 
+      Som medlem hos oss får du unika erbjudanden, och chans till förhandsvisningar på spännande premiärer. Det kostar självklart inget att bli medlem så vad väntar du på, fyll i dina uppgifter nedan och bli en del av familjen redan idag.
+         
+        .</p>
     </div>
     
     <header>
@@ -73,37 +74,41 @@ export default function Register() {
         <input 
            className={`${styles.regInputs} w-[85%] md:w-[41%] `} 
            type="text" 
+           disabled={showSuccessPopupMsg}
            {...defaults('name', 'Förnamn. . .')} />
         
         <input 
           className={`${styles.regInputs} w-[85%] md:w-[41%] `} 
           type="text" 
+          disabled={showSuccessPopupMsg}
           {...defaults('lastname', 'Efternamn. . .')} />
       </div>
       
       {/* Phone number */}
       <input 
         className={`${styles.regInputs} w-[85%]  `}  
-        type="phone" 
+        type="phone"
+        disabled={showSuccessPopupMsg} 
         {...defaults('phone', 'Telefon. . . ',
         { minLength: 8, type: 'tel' },  
         val => /^\d*$/.test(val), 'OBS - Endast nummer är tillåten på denna rad!')} />
       
       {/* Email address */}
       <input 
-        className={`${styles.regInputs} w-[85%]  `} {...defaults('email', 'Epost. . .')}/>
+        className={`${styles.regInputs} w-[85%]  `}  disabled={showSuccessPopupMsg} {...defaults('email', 'Epost. . .')}/>
       
       {/* Password */}
       <input 
-        className={`${styles.regInputs} w-[85%] `} {...defaults('password', 'Lösenord. . .',
+        className={`${styles.regInputs} w-[85%] `}  disabled={showSuccessPopupMsg} {...defaults('password', 'Lösenord. . .',
         { minLength: 8, 
-        type: 'password' }, 
+        type: 'password' }
+        , 
         val => /\d/.test(val) && /[A-Z]/.test(val) && /[a-z]/.test(val),
         'OBS - Lösenordet måste innehålla : 1 stor bokstav, en liten bokstav samt minst 1 siffra' )} /> 
       
       {/* Password Confirm */}
       <input 
-        className={`${styles.regInputs} w-[85%]  `} {...defaults('confirm_password', 'Bekräfta lösenord. . .',  
+        className={`${styles.regInputs} w-[85%]  `}  disabled={showSuccessPopupMsg} {...defaults('confirm_password', 'Bekräfta lösenord. . .',  
         { minLength: 8, 
         type: 'password' }, 
         val => val === formData.password, 'OBS - lösenorden måste matcha varandra!'
@@ -112,16 +117,20 @@ export default function Register() {
       {/* Button Submit */}
       <button 
         className="bg-gold w-40 px-4 rounded-lg py-4 my-5 lg:text-lg " 
+        disabled={showSuccessPopupMsg}
         type="submit" >Registrera</button>
-
+        
+        {/* Popup to user if account is created */}
         {showSuccessPopupMsg && (
-              <div className="popup">
+              <div className="popup rounded-md">
                 <div className=" flex items-center justify-center flex-col  text-white bg-gray-600 text-xl p-40 z-50 absolute bottom-40  left-40  " >
                   <p>{showMsgToUser}</p>
                   <button onClick={closeSuccessPopup} className="bg-blue-700 w-40 px-4 rounded-lg py-4 my-5 lg:text-lg   ">Stäng</button>
                 </div>
               </div>
             )}
+
+            {/* Text to user if there is something wrong on submit */}
         {showUnsuccessfulPopupMsg &&(
           <div className="text-white">
             <p>{showMsgToUser}</p>
