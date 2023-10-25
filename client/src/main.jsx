@@ -7,7 +7,7 @@ import BookMovie from "./pages/BookMovie";
 import Movies from "./pages/Movies";
 import Register from "./pages/Register";
 import MovieDetails from "./pages/MovieDetails";
-import BookingPartTwo from "./components/BookingPartTwo";
+import BookingPartTwo from "./components/bookMovie/BookingPartTwo";
 import Admin from "./pages/Admin";
 import AdminMovies from "./pages/AdminMovies";
 import AdminBookings from "./pages/AdminBookings";

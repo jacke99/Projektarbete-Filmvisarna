@@ -1,14 +1,11 @@
-import {useState, useEffect} from "react"
-import {useStates} from "react-easier"
+import { useEffect } from "react"
+import { useStates } from "react-easier"
 import PropTypes from "prop-types"
 
 
-export default function ChooseSeats({ screening }) {
-    const [seats, setSeats] = useState([])
+export default function ChooseSeats({ screening, seats, setSeats}) {
     const counters = useStates("ticketCounter");
-    console.log(seats);
     useEffect(() => {
-      console.log(screening);
       seats.forEach(seat => {
         document.getElementById(`row${seat.row}seat-${seat.seat}`).classList.add("bg-white")
       });
@@ -83,7 +80,6 @@ export default function ChooseSeats({ screening }) {
           selectedSeats.push({ row: rowIndex, seat: i + 1, seatNumber: screening.seats[rowIndex - 1][i].seatNumber});
         }
         setSeats(selectedSeats)
-        
     }
 
     // eslint-disable-next-line
@@ -98,7 +94,7 @@ export default function ChooseSeats({ screening }) {
     // eslint-disable-next-line
     const Row = ({ rowNumber }) => {
     const seats = Array.from({ length: screening.seats[0].length }, (_, index) => (
-        <Seat key={index} seatNumber={index +1} rowNumber={rowNumber}/>
+        <Seat key={index} seatNumber={index +1} rowNumber={rowNumber} className="test"/>
     ));
       
     return (
@@ -140,4 +136,6 @@ export default function ChooseSeats({ screening }) {
 
 ChooseSeats.propTypes = {
   screening: PropTypes.object,
+  seats: PropTypes.array,
+  setSeats: PropTypes.func
 }
