@@ -29,7 +29,7 @@ export default function BookMovie() {
       eventSource.close();
     };
   },[id])
-  
+
   useEffect(() => {
     (async () => {
       if(screening === null) return;

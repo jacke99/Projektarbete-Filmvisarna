@@ -108,10 +108,10 @@ const cancelBooking = async (req, res) => {
     try {
        let currentScreening = await fetchCollection("screenings").findOne({_id: new ObjectId(booking.screeningID)})
         for(let i = 0; i < booking.seats.length; i++) {
-            if(currentScreening.seats[booking.row - 1][booking.seats[i] - 1].seat == false) {
+            if(currentScreening.seats[booking.row - 1][booking.seats[i].seat - 1] == false) {
                 return res.status(400).send({message: "The seats you are trying to cancel are already canceled"})
                }
-            currentScreening.seats[booking.row - 1][booking.seats[i] - 1] = {seat: false}
+            currentScreening.seats[booking.row - 1][booking.seats[i].seat - 1] = {seat: false, seatNumber: currentScreening.seats[booking.row - 1][booking.seats[i].seat - 1].seatNumber}
         }
         booking.status = false
         await fetchCollection("bookings").updateOne({_id: new ObjectId(body.id)}, {$set: booking})
