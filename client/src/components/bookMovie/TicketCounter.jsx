@@ -1,5 +1,5 @@
 import {useStates} from "react-easier"
-import { theCreatorPoster } from "../assets";
+import { theCreatorPoster } from "../../assets";
 
 export default function TicketCounter() {
   const counters = useStates("ticketCounter");

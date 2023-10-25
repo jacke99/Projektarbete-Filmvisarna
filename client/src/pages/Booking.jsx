@@ -1,10 +1,8 @@
-import { killersImage } from "../assets";
 import { styles } from "../styles.js";
 import { Link, useNavigate } from "react-router-dom";
 import MovieFilterForm from "../components/MovieFilterForm";
 import BookMovieHero from "../components/BookMovieHero";
 import useFetch from "../hooks/useFetch.js";
-import { useStates } from "react-easier";
 import { useState } from "react";
 
 export default function Booking() {
