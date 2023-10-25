@@ -8,18 +8,36 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 export default function Register() {
 
-  const navigate = useNavigate();
- 
-  let { defaults, formData } = useFormDefaults();
   const [showMsgToUser, setShowMsgToUser]= useState(" Text till användaren ")
   const [showSuccessPopupMsg, setShowSuccessPopup] = useState(false); // state för att göra en popup OM status:msg = 
   const [showUnsuccessfulPopupMsg, setShowUnsuccessfulPopupMsg] = useState(false)
+  
 
+  const navigate = useNavigate();
+ 
+  let { defaults, formData } = useFormDefaults();
+
+  // Hela informationen som stoppas in i form sparas i formData ovan. 
+  // Tyvärr så sparas även confirm password i formData, detta vill vi INTE skicka till databasen. 
+  // Därför måste vi bryta ut formData i en ny variabel där INTE confirmPassword ligger med i bodyn
+
+  const formRequestBody = {
+    name: formData.name,
+    lastname: formData.lastname,
+    email: formData.email,
+    phone: formData.phone,
+    password: formData.password
+  }
+
+
+
+ 
+  
 
   async function SignUp(e) {
     try {
       e.preventDefault();
-      const result = await performRequest("/api/register", "POST", formData);
+      const result = await performRequest("/api/register", "POST", formRequestBody);
       console.log(result);
   
       if (result.msg === "Account was created") {
