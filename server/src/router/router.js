@@ -1,7 +1,6 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import uploads from '../middleware/fileUpload.js'
-
 import adminController from "../controller/adminController.js";
 import accountController from "../controller/accountController.js";
 import jwtFilter from "../auth/jwtFilter.js"
@@ -17,7 +16,7 @@ router.post("/screenings", jwtFilter.bind({role: "ADMIN"}) , adminController.add
 router.delete("/screenings/:id",jwtFilter.bind({role: "ADMIN"}), adminController.deleteScreening)
 router.post("/movies/:token", jwtFilterForm.bind({role: "ADMIN"}), uploads.fields([{ name: 'img_poster' }, { name: 'img_header' }]), adminController.postMovie); 
 router.delete("/movies/:id", jwtFilter.bind({role: "ADMIN"}), adminController.deleteMovie)
-router.get("/bookings", jwtFilter.bind({role: "ADMIN"}), adminController.getMovies)
+router.get("/bookings", jwtFilter.bind({role: "ADMIN"}), adminController.getBookings)
 router.post("/theaters", jwtFilter.bind({role: "ADMIN"}), adminController.addNewTheater)
 router.get("/users", adminController.getUsers)
 
