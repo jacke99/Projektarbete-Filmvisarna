@@ -1,6 +1,5 @@
 import MovieCardForFilmer from "../components/MovieCardForFilmer";
-import useFetch from "../hooks/useFetch"; // Import the useFetch hook
-
+import useFetch from "../hooks/useFetch";
 export default function Movies() {
   const { data, isPending, error } = useFetch("/api/movies");
   console.log(data, isPending, error);

@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 
 export default function MovieCardForFilmer({ movie }) {
-  console.log(movie);
   const navigate = useNavigate();
 
   const handleReadMoreClick = () => {
