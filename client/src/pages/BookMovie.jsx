@@ -9,8 +9,8 @@ import { performRequest } from "../service/fetchService";
 export default function BookMovie() {
   const navigate = useNavigate();
   const { id } = useParams()
-  const [screening, setScreening] = useState({});
-  const [movie, setMovie] = useState({});
+  const [screening, setScreening] = useState(null);
+  const [movie, setMovie] = useState(null);
   //eslint-disable-next-line
   const counters = useStates("ticketCounter", {
     adult: 2,
@@ -32,17 +32,20 @@ export default function BookMovie() {
   
   useEffect(() => {
     (async () => {
+      if(screening === null) return;
       const data = await performRequest(`/api/movies/${screening.movieID}`, "GET");
       setMovie(data);
     })() 
   }, [screening])
-
+  
   return (
-    <section className="mt-2 flex flex-col items-center min-h-screen">
-        <TicketCounter />
-        <ChooseSeats screening={screening} movie={movie}/>
+    <>    
+    {screening && movie && <section className="mt-2 flex flex-col items-center min-h-screen">
+        <TicketCounter screening={screening} movie={movie}/>
+        <ChooseSeats screening={screening}/>
 
         <button className="bg-gold text-black-100 rounded-md px-4 p-1" onClick={() => navigate("/booking/confirm")}>Fortsätt</button>
-    </section>
+    </section>}
+    </>
   );
 }
