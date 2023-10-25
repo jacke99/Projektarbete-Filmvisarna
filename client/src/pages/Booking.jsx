@@ -49,23 +49,24 @@ console.log(data)
   return (
   
    
-    <div className="mt-16 mb-20 min-w-full max-w-full bg-primary font-inconsolata">
+    <div className="mt-6 mb-20 min-w-full max-w-full bg-primary font-inconsolata">
       <div className="relative">
         <p>Inga visningar tillgängliga just nu</p>
 
-        {data &&(
+        {data && data.length > 0 &&(
      <>
         <img
-          src={killersImage}
-          alt="photo from the movie Killers"
+         src={`/img/${data[0].movie.img_header}`}
+         alt={`photo from the movie ${data[0].movie.title}`}
           className="w-full object-cover object-center lg:h-[550px]"
         />
         <div
           className={`${styles.centerAbsolutePos} top-1/2 flex flex-col text-center text-gold`}
         >
-          <h1 className={`lg:text-4xl`}>26/9 18:00</h1>{" "}
-          <h2 className={`lg:text-4xl`}>Killers of the Flower Moon</h2>
-          <Link to="/movies/:id" className={`text-4-xl underline`}>
+          <h1 className={`lg:text-4xl`}>{`${data[0].date} ${data[0].time}`}</h1>
+         
+          <h2 className={`lg:text-4xl`}>{`${data[0].movie.title}`}</h2>
+          <Link to={`/movies/${data[0].movie._id}`} className={`text-4-xl underline`}>
             Se trailer
           </Link>
         </div>

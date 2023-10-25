@@ -23,7 +23,7 @@ if (!data || !Array.isArray(data) || data.length === 0) {
      
       <img
         src={`/img/${screening.movie.img_poster}`}
-        alt="movie poster from Killers of the flower moon"
+        alt={`poster from the movie: ${screening.movie.title}`}
         className="w-34 h-48 rounded-lg"
       />
       <div className="text-white-100 flex flex-col lg:px-6 md:px-6 ml-4">
@@ -35,7 +35,7 @@ if (!data || !Array.isArray(data) || data.length === 0) {
       </div>
       <button className="bg-gold text-black-100 rounded-md px-4 p-1 sm:ml-auto md:px-6 md:py-2"
         onClick={() => {
-          navigate("/booking/1")
+          navigate(`/booking/${screening._id}`)
           window.scrollTo(0, 0)}}
       >Boka</button>
     
