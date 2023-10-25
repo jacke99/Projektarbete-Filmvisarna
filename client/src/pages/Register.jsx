@@ -2,20 +2,25 @@ import { styles } from "../styles";
 import { useFormDefaults } from '../hooks/formValidation'
 import { performRequest } from "../service/fetchService";
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-
+import { useNavigate } from 'react-router-dom'; 
 
 
 export default function Register() {
 
-  const [showMsgToUser, setShowMsgToUser]= useState(" Text till användaren ")
-  const [showSuccessPopupMsg, setShowSuccessPopup] = useState(false); // state för att göra en popup OM status:msg = 
-  const [showUnsuccessfulPopupMsg, setShowUnsuccessfulPopupMsg] = useState(false)
+  const [showMsgToUser, setShowMsgToUser]= useState(" Text till användaren ") // state för att visa upp ett meddelande till användaren
+  const [showSuccessPopupMsg, setShowSuccessPopup] = useState(false); // state för att göra en popup OM status:msg=Account was created - alltså om allt gick bra 
+  const [showUnsuccessfulPopupMsg, setShowUnsuccessfulPopupMsg] = useState(false) // state för att visa meddelande om något gått fel vi skapande av medlemskap
   
+  
+    // använder useNavigate när man trycker på "stäng" 
+  // så att man kommer till startsidan efter man blivit medlem
+  const navigate = useNavigate(); 
 
-  const navigate = useNavigate();
  
+     // Alla inputs man skriver i formen för att bli medlem 
+  // sparas i formData som kom från formValidation.js
   let { defaults, formData } = useFormDefaults();
+
 
   // Hela informationen som stoppas in i form sparas i formData ovan. 
   // Tyvärr så sparas även confirm password i formData, detta vill vi INTE skicka till databasen. 
@@ -29,10 +34,11 @@ export default function Register() {
     password: formData.password
   }
 
-
-
- 
-  
+  // /  I console log så följer all information som jag skriver med.
+  // Jag vill att varje text i varje input ska sparas i en body.
+  // Alla uppgifter sparas i formData. Jag vill att den informationen ska gå till bodyn
+  // loggen ska stämma överens med samtliga namnen i bodyn
+  // När jag trycker på submit  så vill jag att en function en post method ska skicka med dessa uppgifter till databasen
 
   async function SignUp(e) {
     try {
@@ -52,25 +58,19 @@ export default function Register() {
       setShowMsgToUser("Något oväntat fel har inträffat när kontot försökte att skapas");
     }
   }
+ 
 
+   // Funktion för att stänga poppup rutan när medlemskap är skapat. När man trycker på "stäng" slussas man till startsidan
   const closeSuccessPopup = () => {
     setShowSuccessPopup(false); // Hide the success popup
 
     navigate("/");
   };
     
-  //  I console log så följer all information som jag skriver med.
-  // Jag vill att varje text i varje input ska sparas i en body.
-  // Alla uppgifter sparas i formData. Jag vill att den informationen ska gå till bodyn
-  // loggen ska stämma överens med samtliga namnen i bodyn
-  // När jag trycker på submit  så vill jag att en function en post method ska skicka med dessa uppgifter till databasen
-
-    // async function signUp() {
-  //   const resp = await performRequest("/api/register", "POST", )
-
-
+  
   return <div className= "bg-[url('./assets/chairs.jpg')] bg-cover bg-center min-h-screen" >
     
+  
     <div className="" >
       <h2 className={`${styles.headerText} text-white text-center  pt-40 pb-10  text-4xl`}>
         Bli en del av familjen!
@@ -85,6 +85,7 @@ export default function Register() {
       <h1 className={`${styles.headerText} text-white text-center  pt-20 pb-10  text-4xl`}>Bli medlem</h1>
     </header>
 
+     {/* form starts here  */}
     <form onSubmit={(e)=>SignUp(e)} className="flex flex-col items-center w-screen md:w-2/3 m-auto lg:w-2/4 lg:text-lg max-w-[50rem] static"  >
 
     {/* Firstname and lastname */}
