@@ -169,4 +169,4 @@ const getUsers = async (req, res) => {
 }
 
 
-export default {addScreening, deleteScreening, deleteMovie, getBookings, postMovie, addNewTheater, getTheater}
+export default {addScreening, deleteScreening, deleteMovie, getBookings, postMovie, addNewTheater, getTheater, getUsers }
