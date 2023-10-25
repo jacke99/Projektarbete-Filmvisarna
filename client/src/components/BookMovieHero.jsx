@@ -22,16 +22,16 @@ if (!data || !Array.isArray(data) || data.length === 0) {
 <div className="max-w-full p-4 flex items-center justify-between md:justify-start lg:justify-start sm:w-[35rem] md:w-[40rem] lg:w-[54rem] sm:m-auto sm:px-12">
      
       <img
-        src={pastLivesPoster}
+        src={`/img/${screening.movie.img_poster}`}
         alt="movie poster from Killers of the flower moon"
         className="w-34 h-48 rounded-lg"
       />
       <div className="text-white-100 flex flex-col lg:px-6 md:px-6 ml-4">
         <p className="text-xs md:text-base lg:text-lg">{screening.date}</p>
-        <h2 className="text-base font-extra-bold md:text-base lg:text-lg">{screening.movie}</h2>
-        <p className="font-inconsolata text-xs md:text-base lg:text-lg">Sifi, drama</p>
-        <p className="text-xs md:text-base lg:text-lg">{}</p>
-        <p className="font-inconsolata text-xs md:text-base lg:text-lg">{}</p>
+        <h2 className="text-base font-extra-bold md:text-base lg:text-lg">{screening.movie.title}</h2>
+        <p className="font-inconsolata text-xs md:text-base lg:text-lg">{screening.movie.genre}</p>
+        <p className="text-xs md:text-base lg:text-lg">{screening.movie.length} | {screening.movie.ageRestriction}år</p>
+        <p className="font-inconsolata text-xs md:text-base lg:text-lg">{screening.time}</p>
       </div>
       <button className="bg-gold text-black-100 rounded-md px-4 p-1 sm:ml-auto md:px-6 md:py-2"
         onClick={() => {
