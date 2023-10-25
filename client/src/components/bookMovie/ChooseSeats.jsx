@@ -110,7 +110,6 @@ export default function ChooseSeats() {
     
     return <div>{rows}</div>;
     };
-  console.log(seats)
   return (
     <div className="lg:w-80 md:w-[70%] w-[80%] container mt-5">
     <div className="screen mb-7 mt-4">
