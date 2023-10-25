@@ -1,14 +1,18 @@
 import {useState, useEffect} from "react"
 import {useStates} from "react-easier"
-export default function ChooseSeats() {
+import PropTypes from "prop-types"
+
+
+export default function ChooseSeats({ screening }) {
     const [seats, setSeats] = useState([])
     const counters = useStates("ticketCounter");
-
+    console.log(seats);
     useEffect(() => {
+      console.log(screening);
       seats.forEach(seat => {
         document.getElementById(`row${seat.row}seat-${seat.seat}`).classList.add("bg-white")
       });
-    }, [seats])
+    }, [seats, screening])
 
     function handleMouseEnter(event, numberOfSeats) {
         const target = event.target 
@@ -75,7 +79,7 @@ export default function ChooseSeats() {
         const selectedSeats = [];
       
         for (let i = startSeatIndex; i <= endSeatIndex; i++) {
-          selectedSeats.push({ row: rowIndex, seat: i + 1});
+          selectedSeats.push({ row: rowIndex, seat: i + 1, seatNumber: screening.seats[rowIndex][i].seat.seatNumber});
         }
         setSeats(selectedSeats)
         
@@ -92,7 +96,7 @@ export default function ChooseSeats() {
       );
     // eslint-disable-next-line
     const Row = ({ rowNumber }) => {
-    const seats = Array.from({ length: 12 }, (_, index) => (
+    const seats = Array.from({ length: screening.seats[0].length }, (_, index) => (
         <Seat key={index} seatNumber={index +1} rowNumber={rowNumber}/>
     ));
       
@@ -104,13 +108,12 @@ export default function ChooseSeats() {
     };
       
     const DivGenerator = () => {
-    const rows = Array.from({ length: 8 }, (_, index) => (
+    const rows = Array.from({ length: screening.seats.length }, (_, index) => (
         <Row key={index} rowNumber={index + 1} />
     ));
     
     return <div>{rows}</div>;
     };
-  console.log(seats)
   return (
     <div className="lg:w-80 md:w-[70%] w-[80%] container mt-5">
     <div className="screen mb-7 mt-4">
@@ -120,15 +123,22 @@ export default function ChooseSeats() {
           <p>Antal biljetter:  {counters.total}</p>
           <p>
            Rad: {seats.length && seats[0].row + " -"} Plats:{" "}
-          {seats.length && seats.map((seat, i) => {
-            if(i + 1 === seats.length) {
-             return seat.seat
+          {seats && screening.seats[seats.row]?.map((seat, i) => {
+            if(i + 1 === screening.seats[i].length) {
+              console.log(seat);
+             return screening.seats[seats.row][i].seat.seatNumber
             } else {
-             return seat.seat + ", "
+              console.log(seat);
+             return screening.seats[seats.row][i].seat.seatNumber + ", "
             }
             })}
           </p>
         </div>
     </div>
   )
+}
+
+
+ChooseSeats.propTypes = {
+  screening: PropTypes.object,
 }

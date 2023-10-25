@@ -1,7 +1,7 @@
 import {useStates} from "react-easier"
-import { theCreatorPoster } from "../assets";
+import PropTypes from "prop-types"
 
-export default function TicketCounter() {
+export default function TicketCounter({ screening, movie }) {
   const counters = useStates("ticketCounter");
 
   function increaseCounters(e) {
@@ -59,16 +59,21 @@ export default function TicketCounter() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center gap-6 mt-6">
-        <img className="h-44 sm:h-60 sm:mt-auto" src={theCreatorPoster} alt="movie poster" />
+      {screening && movie && <div className="flex justify-center gap-6 mt-6">
+        <img className="h-44 sm:h-60 sm:mt-auto" src={`/img/${movie.img_poster}`} alt="movie poster" />
         <div className="flex flex-col justify-end">
-          <p>The Creator</p>
-          <p>26/9 18:00</p>
-          <p>Sifi Drama</p>
-          <p>1h 33min | 11 år</p>
+          <p>{movie.title}</p>
+          <p>{`${screening.date.slice(5)} | ${screening.time}`}</p>
+          <p>{movie.genre}</p>
+          <p>{`${movie.length} | ${movie.ageRestriction} år`}</p>
         </div>
-      </div>
+      </div>}
     </div>
   );
 }
 
+
+TicketCounter.propTypes = {
+  screening: PropTypes.object,
+  movie: PropTypes.object,
+}
