@@ -19,9 +19,9 @@ const register = async (req, res) => {
     const result = await fetchCollection("users").updateOne({email: user.email}, {$setOnInsert: user}, {upsert: true})
 
   if (result.matchedCount !== 0) {
-    return res.status(400).send("User allready exists");
+    return res.status(400).send({msg: "User allready exists"});
   } else {
-    return res.status(201).send("Account was created");
+    return res.status(201).send({msg: "Account was created"});
   }
 }
 

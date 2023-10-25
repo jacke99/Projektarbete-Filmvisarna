@@ -39,3 +39,16 @@ body {
 .text-shadow {
   text-shadow: 1px 1px black;
 }
+
+#table_users tr:nth-child(even){background-color: #f2f2f2;}
+
+#table_users tr:hover {background-color: #ddd;}
+
+#table_users td, #table_users th{
+  padding: 1rem;
+}
+
+#table_users th {
+  text-align: left;
+  background-color: rgb(218 202 136);
+}

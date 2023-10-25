@@ -159,5 +159,14 @@ const getTheater = async (req, res) => {
         }
 }
 
+const getUsers = async (req, res) => {
+    try {
+        const users = await fetchCollection("users").find().toArray()
+        res.status(200).send(users);
+      } catch {
+          res.status(500).send({ error: "Could not fetch user collection" });
+        }
+}
 
-export default {addScreening, deleteScreening, deleteMovie, getBookings, postMovie, addNewTheater, getTheater}
+
+export default {addScreening, deleteScreening, deleteMovie, getBookings, postMovie, addNewTheater, getTheater, getUsers }
