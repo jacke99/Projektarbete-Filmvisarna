@@ -77,9 +77,10 @@ export default function ChooseSeats({ screening }) {
         const endSeatIndex = Math.min(startSeatIndex + numberOfSeats - 1, 11);
       
         const selectedSeats = [];
-      
+        
         for (let i = startSeatIndex; i <= endSeatIndex; i++) {
-          selectedSeats.push({ row: rowIndex, seat: i + 1, seatNumber: screening.seats[rowIndex][i].seat.seatNumber});
+          console.log(screening.seats[rowIndex - 1][i]);
+          selectedSeats.push({ row: rowIndex, seat: i + 1, seatNumber: screening.seats[rowIndex - 1][i].seatNumber});
         }
         setSeats(selectedSeats)
         
@@ -123,13 +124,11 @@ export default function ChooseSeats({ screening }) {
           <p>Antal biljetter:  {counters.total}</p>
           <p>
            Rad: {seats.length && seats[0].row + " -"} Plats:{" "}
-          {seats && screening.seats[seats.row]?.map((seat, i) => {
-            if(i + 1 === screening.seats[i].length) {
-              console.log(seat);
-             return screening.seats[seats.row][i].seat.seatNumber
+          {seats && seats?.map((seat, i) => {
+            if(i + 1 === seats.length) {
+             return seat.seatNumber
             } else {
-              console.log(seat);
-             return screening.seats[seats.row][i].seat.seatNumber + ", "
+             return seat.seatNumber + ", "
             }
             })}
           </p>

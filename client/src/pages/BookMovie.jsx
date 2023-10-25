@@ -19,8 +19,8 @@ export default function BookMovie() {
     total: 2
   });
   useEffect(() => {
-    const eventSource = new EventSource(`/api/screenings/${id}`);
-    eventSource.onmessage = (event) => {
+      const eventSource = new EventSource(`/api/screenings/${id}`);
+      eventSource.onmessage = (event) => {
       const data = JSON.parse(event.data);
       setScreening(data);
     };
