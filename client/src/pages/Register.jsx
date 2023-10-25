@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom'; 
 
 
+
 export default function Register() {
 
   const [showMsgToUser, setShowMsgToUser]= useState(" Text till användaren ") // state för att visa upp ett meddelande till användaren
@@ -47,10 +48,10 @@ export default function Register() {
       console.log(result);
   
       if (result.msg === "Account was created") {
-        setShowMsgToUser("Grattis du är nu medlem hos oss");
+        setShowMsgToUser("GRATTIS! Du är nu medlem hos oss");
         setShowSuccessPopup(true) // sätter denna till true då konto skapats
       } else if (result.msg === "User allready exists") {
-        setShowMsgToUser("Ett konto med dessa uppgifter finns redan");
+        setShowMsgToUser("Ett konto med denna epost finns redan");
         setShowUnsuccessfulPopupMsg(true)
       }
     } catch (err) {
@@ -75,10 +76,11 @@ export default function Register() {
       <h2 className={`${styles.headerText} text-white text-center  pt-40 pb-10  text-4xl`}>
         Bli en del av familjen!
       </h2>
-      <p className=" text-white text-center sm:w-[70%] px-6 md:-[60%] m-auto lg:text-lg max-w-[60rem]">Välkommen till oss på Filmvisarna. Vi älskar film och det verkar du också göra! 
-      Som medlem hos oss får du unika erbjudanden, och chans till förhandsvisningar på spännande premiärer. Det kostar självklart inget att bli medlem så vad väntar du på, fyll i dina uppgifter nedan och bli en del av familjen redan idag.
-         
-        .</p>
+      <p className=" text-white text-center sm:w-[70%] px-6 md:-[60%] m-auto lg:text-lg max-w-[60rem]">
+        Välkommen till oss på Filmvisarna. Vi älskar film och det verkar du också göra! 
+        Som medlem hos oss får du unika erbjudanden och chans till förhandsvisningar på spännande premiärer. 
+        Det kostar självklart inget att bli medlem så vad väntar du på, fyll i dina uppgifter nedan och bli en del av familjen redan idag..
+        </p>
     </div>
     
     <header>
@@ -138,7 +140,7 @@ export default function Register() {
         
         {/* Text to user if there is something wrong on submit */} 
         {showUnsuccessfulPopupMsg &&(
-          <div className="text-rose-600 font-extrabold">
+          <div className="text-rose-400 font-extrabold bg-black  p-0.5 rounded-md bg-opacity-80">
             <p>{showMsgToUser}</p>
           </div>
         ) }
@@ -152,10 +154,13 @@ export default function Register() {
         
         {/* Popup to user if account is created */}
         {showSuccessPopupMsg && (
-              <div className="popup rounded-md" >
-                <div className=" flex items-center justify-center rounded-md flex-col  text-white  bg-gray-600 text-xxl md:w-[30rem] md:h-[30rem] z-50 md:absolute md:left-[21%] md:top-[50%]  " >
-                  <p>{showMsgToUser}</p>
-                  <button onClick={closeSuccessPopup} className="bg-blue-700 w-40 px-4 rounded-lg py-4 my-5 lg:text-lg ">Stäng</button>
+              <div className="popup rounded-md  bg-primary  " >
+                <div className=" flex items-center justify-center rounded-md flex-col
+                 lg:left-73 lg:top-[30rem] lg:h-[70rem] lg:w-[50rem]
+                 bg-primary  text-white  md:w-[30rem] md:h-[30rem] z-50 absolute md:left-[21%] md:top-[50%] md:mt-8 
+                  sm:absolute left-9 top-[50rem] h-[30rem] w-[20rem] "  >
+                  <p className="md:text-[25px] lg:text-[30px]">{showMsgToUser}</p>
+                  <button onClick={closeSuccessPopup} className={`${styles.buttonStyle}mt-7 px-10 p-2 lg:p-7 lg:px-16 lg:text-[30px]`}>Stäng</button>
                 </div>
               </div>
             )}
