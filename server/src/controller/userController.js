@@ -12,9 +12,30 @@ const getMovies = async (req, res) => {
         }
 }
 
+const getMovie = async (req, res) => {
+   
+    try {
+      if (ObjectId.isValid(req.params.id)){
+      const movieId = req.params.id; 
+      console.log(movieId)
+      const movie = await fetchCollection("movies").findOne({ _id: new ObjectId(req.params.id) });
+      console.log(movie)
+      res.status(200).json(movie); 
+    }else{
+      res.status(404).send({error: "objectId is not valid"})
+
+    }} catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Ett fel inträffade' });
+    }
+  
+};
+
+
 const getScreenings = async (req, res) => {
     try {
-        const screeningsCollection = fetchCollection('screenings');
+        const screeningsCollection = await fetchCollection('screeningXmovie');
+        console.log(screeningsCollection);
         const query = {}
 
         if (req.query.date) { 
@@ -38,9 +59,9 @@ const getScreenings = async (req, res) => {
             }
             
             const filteredScreenings = await screeningsCollection.find({$and: [
-                query.date ? {date: query.date} : {},
-                query.movie ? {movie: { $regex: regex}} : {}, 
-                query.age ? {ageRestricion: {$lte: parseInt(query.age)}}: {}
+                query.date ? { "date": query.date } : {},
+                query.movie ? { "movie.title": { $regex: regex } } : {}, 
+                query.age ? { "movie.ageRestriction": {$lte: parseInt(query.age) } }: {}
                 ]}).toArray();
 
           
@@ -64,4 +85,5 @@ const getScreenings = async (req, res) => {
 }
 
 
-export default {getMovies, getScreenings}
+
+export default {getMovies, getScreenings, getMovie}
