@@ -2,12 +2,15 @@ import { useEffect, useState } from "react"
 import { performRequest } from "../service/fetchService";
 import { parseJwt } from "../service/jwtService";
 import { styles } from "../styles";
+import CancelBooking from "../components/CancelBooking";
 
 export default function MyPages() {
     // eslint-disable-next-line
     const [currentUser, setCurrentUser] = useState(parseJwt(sessionStorage.getItem("AuthToken")))
+    const [toggle, setToggle] = useState(false)
+    const [cancelBooking, setCancelBooking] = useState(undefined)
     const [userData, setuserData] = useState([])
-    console.log(userData)
+    console.log(cancelBooking)
     useEffect(() => {
         (async () => {
                 const data = await performRequest("/api/user/bookings")
@@ -21,8 +24,13 @@ export default function MyPages() {
           })();
     }, [])
 
+    function cancel(booking) {
+        setCancelBooking(booking)
+        setToggle(true)
+    }
+
     const userBookings = userData?.map((booking, index) => (
-        <div key={index} className={`${styles.subHeaderText} text-white border-2 border-gold p-2 w-[400px]`} >
+        <div key={index} className={`${styles.subHeaderText} text-white border-2 border-gold p-2 w-[350px]`} >
             <ul className="flex flex-col">
                 <li className="flex justify-between"> <p className="text-gold">Boknings nr:</p> <p>{booking.bookingId}</p></li>
                 <li className="flex justify-between"> <p className="text-gold">Datum:</p> <p>{booking.screening.date}</p></li>
@@ -35,10 +43,13 @@ export default function MyPages() {
                     if(i + 1 === booking.seats.length) {
                         return seat.seatNumber
                     } else {
-                        return seat.seatNumber + ","
+                        return seat.seatNumber + ", "
                     }
                 })}</p></li>
+                <li className="flex justify-between"> <p className="text-gold">Giltig:</p> <p>{booking.status ? "Bokad" : "Avbokad"}</p></li>
+                <li className="flex justify-between"> <p className="text-gold">Vill du avboka?</p><button className="bg-red-400 px-2" onClick={() => cancel(booking)}>Avboka</button> </li>
             </ul>
+            
         </div>
     ))
     
@@ -52,9 +63,10 @@ export default function MyPages() {
             <li>Telefon: {currentUser.phone}</li>
         </ul>
         <h4 className={`${styles.headerText} mb-2`}>Bokningar</h4>
-        <div className="flex flex-wrap md:justify-between gap-4 items-start mb-2 justify-center">
+        {!toggle && <div className="flex flex-wrap md:justify-between gap-4 items-start mb-2 justify-center">
         {userBookings}
-        </div>
+        </div>}
+        {toggle && <CancelBooking booking={cancelBooking} setToggle={setToggle} />}
     </div>
   )
 }
