@@ -2,10 +2,11 @@ import { useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 
 export default function MovieCardForFilmer({ movie }) {
+  console.log(movie);
   const navigate = useNavigate();
 
   const handleReadMoreClick = () => {
-    navigate(`/movies/${movie.id}`);
+    navigate(`/movies/${movie._id}`);
   };
 
 
@@ -26,7 +27,7 @@ export default function MovieCardForFilmer({ movie }) {
             <p className="flex-col pt-1 text-sm lg:text-lg">{movie.description}</p>
           </div>
           <button
-            onClick={() => navigate(`/movies/${movie.id}`)}
+            onClick={handleReadMoreClick}
             className="self-start rounded-md bg-gold px-4 py-2 text-black-100 lg:px-6 lg:py-3 lg:text-lg"
           >
             Läs mer!
