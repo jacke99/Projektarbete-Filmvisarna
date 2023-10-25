@@ -8,11 +8,12 @@ const addScreening = async (req, res) => {
     const body = req.body;
     console.log(body)
   const {date, time, theater,
-        movie, ageRestriction,
+        movieID
   } = req.body;
-  if (!date || !time || !theater || !movie || !ageRestriction) {
+  if (!date || !time || !theater || !movieID) {
     return res.status(400).json({error: "Missing required properties, pls check your request body"});
   }
+  body.movieID = new ObjectId(body.movieID)
   try {
     const theaters = await fetchCollection("theaters").findOne({"theaterNr": theater})
     body.seats = theaters.seats
@@ -63,7 +64,7 @@ const deleteMovie = async (req, res) => {
       }
 }
 
-const getMovies = async (req, res) => {
+const getBookings = async (req, res) => {
     try {
         const bookingsCollection = await fetchCollection("bookings");
         const bookings = await bookingsCollection.find().toArray();
@@ -159,4 +160,4 @@ const getTheater = async (req, res) => {
 }
 
 
-export default {addScreening, deleteScreening, deleteMovie, getMovies, postMovie, addNewTheater, getTheater}
+export default {addScreening, deleteScreening, deleteMovie, getBookings, postMovie, addNewTheater, getTheater}
