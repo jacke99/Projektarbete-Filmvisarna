@@ -11,6 +11,7 @@ export default function MyPages() {
     const [cancelBooking, setCancelBooking] = useState(undefined)
     const [userData, setuserData] = useState([])
     console.log(cancelBooking)
+    
     useEffect(() => {
         (async () => {
                 const data = await performRequest("/api/user/bookings")
@@ -47,7 +48,7 @@ export default function MyPages() {
                     }
                 })}</p></li>
                 <li className="flex justify-between"> <p className="text-gold">Giltig:</p> <p>{booking.status ? "Bokad" : "Avbokad"}</p></li>
-                <li className="flex justify-between"> <p className="text-gold">Vill du avboka?</p><button className="bg-red-400 px-2" onClick={() => cancel(booking)}>Avboka</button> </li>
+                <li className="flex justify-between"> <p className="text-gold">{booking.status ? "Vill du avboka?" : ""}</p><button disabled={!booking.status} className="bg-red-400 px-2" onClick={() => cancel(booking)}>Avboka</button> </li>
             </ul>
             
         </div>
