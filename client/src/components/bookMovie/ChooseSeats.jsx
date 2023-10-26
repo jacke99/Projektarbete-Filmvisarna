@@ -91,7 +91,7 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
 
     // eslint-disable-next-line
     const Seat = ({ seatNumber, rowNumber, booked }) => (
-        <button className={`${booked ? "bg-red-600" : "bg-footerGrey"} seat lg:w-10 lg:h-7 md:w-8 md:h-8 w-5 h-5 cursor-pointer`} 
+        <button className={`${booked ? "bg-red-600" : "bg-footerGrey cursor-pointer"} seat lg:w-10 lg:h-7 md:w-8 md:h-8 w-5 h-5 `} 
         key={seatNumber} id={`row${rowNumber}seat-${seatNumber}`} onClick={(event) => booked ? undefined : bookSeats(event, counters.total)}
         onMouseEnter={(event => handleMouseEnter(event, counters.total))}
         onMouseLeave={(event) => handleMouseLeave(event, counters.total)}
