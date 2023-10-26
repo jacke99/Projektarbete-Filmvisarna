@@ -15,7 +15,6 @@ export default function AdminUsers() {
   getUsers()
   }, [])
 
-  console.log(users)
 
     return (
     <div className="mt-20 mx-1">

@@ -15,7 +15,6 @@ export default function AdminBookings() {
     getBookings()
     }, [])
 
-    console.log(bookings)
 
 /////////////////////////////CANCEL BOOKING/////////////////////////////
 
