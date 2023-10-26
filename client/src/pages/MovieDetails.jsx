@@ -90,9 +90,12 @@ export default function MovieDetails() {
         />
         <p id="scrollTo"></p>
      
-            <BookMovieHero data={movie} /> 
+            
       </div>
+      <BookMovieHero data={movie} />
     </div>
+   
+    
     )}
     </>
     )

@@ -1,5 +1,4 @@
 import { useNavigate, Link } from "react-router-dom";
-import { killersPoster, pastLivesPoster,smsPoster } from "../assets";
 import {useAutoKeys} from 'react-easier';
 import { styles } from "../styles";
 
