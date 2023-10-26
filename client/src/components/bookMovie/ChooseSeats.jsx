@@ -91,7 +91,7 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
 
     // eslint-disable-next-line
     const Seat = ({ seatNumber, rowNumber, booked }) => (
-        <button className={`${booked ? "bg-red-600" : "bg-footerGrey"} seat lg:w-5 lg:h-5 md:w-8 md:h-8 w-5 h-5 cursor-pointer`} 
+        <button className={`${booked ? "bg-red-600" : "bg-footerGrey"} seat lg:w-10 lg:h-7 md:w-8 md:h-8 w-5 h-5 cursor-pointer`} 
         key={seatNumber} id={`row${rowNumber}seat-${seatNumber}`} onClick={(event) => booked ? undefined : bookSeats(event, counters.total)}
         onMouseEnter={(event => handleMouseEnter(event, counters.total))}
         onMouseLeave={(event) => handleMouseLeave(event, counters.total)}
@@ -105,7 +105,7 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
         <Seat key={index} seatNumber={index +1} rowNumber={rowNumber} booked={seat.seat} className="test"/>
     ));
     return (
-        <div className="flex justify-between w-full" key={rowNumber} id={`row-${rowNumber}`}>
+        <div className="flex justify-center w-full sm:gap-2 mb-2" key={rowNumber} id={`row-${rowNumber}`}>
         {seats}
         </div>
     );
@@ -118,7 +118,7 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
     return <div>{rows}</div>;
     };
   return (
-    <div className="lg:w-80 md:w-[70%] w-[80%] container mt-5">
+    <div className="lg:w-[700px] md:w-[70%] w-[80%] container mt-5">
     <div className="screen mb-7 mt-4">
     </div>
         {DivGenerator()}
