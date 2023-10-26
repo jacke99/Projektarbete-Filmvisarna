@@ -6,6 +6,7 @@ import useFetch from "../hooks/useFetch.js";
 import { useEffect, useState } from "react";
 import { performRequest } from "../service/fetchService.js";
 
+
 export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie]= useState("")
@@ -92,7 +93,12 @@ export default function MovieDetails() {
      
             
       </div>
-      <BookMovieHero data={movie} />
+      {movie.length > 0 ? (
+  <BookMovieHero data={movie}/>
+) : (
+  <p className="text-white-100">Tyvärr finns inga visningar tillgängliga just nu</p>
+)}
+
     </div>
    
     

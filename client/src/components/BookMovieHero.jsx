@@ -2,9 +2,11 @@ import { useNavigate, Link } from "react-router-dom";
 import {useAutoKeys} from 'react-easier';
 import { styles } from "../styles";
 
+
 export default function BookMovieHero({data, handleSubmit}){
   const navigate = useNavigate();
   useAutoKeys(); 
+
 console.log(data)
 if (!data || !Array.isArray(data) || data.length === 0) {
   // Om det inte finns någon data eller data inte är en array
@@ -15,6 +17,7 @@ if (!data || !Array.isArray(data) || data.length === 0) {
     </div>
   );
 }
+
     return(
 <>
 {data.map((screening) =>
