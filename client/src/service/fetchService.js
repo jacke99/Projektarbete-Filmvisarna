@@ -7,7 +7,7 @@ const fetchOptions = (body, method) => ({
     }
 });
 
-export const performRequest = async (url, method, body) => {
+export const performRequest = async (url, method, body) => { 
     const options = fetchOptions(body, method);
     let resp = await fetch(url, options);
     let data = await resp.json()

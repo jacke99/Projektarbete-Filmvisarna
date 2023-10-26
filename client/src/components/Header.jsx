@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { styles } from "../styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logo, account_circle_new, close, menu_new } from "../assets";
 import Login from "./Login";
 import { parseJwt } from "../service/jwtService";
@@ -9,6 +9,13 @@ export default function Header() {
   const [toggleLogin, setToggleLogin] = useState(false)
   const [toggle, setToggle] = useState(false);
   const [currentUser, setCurrentUser] = useState(parseJwt(sessionStorage.getItem("AuthToken")))
+  const navigate = useNavigate()
+
+  function logout() {
+    sessionStorage.removeItem("AuthToken")
+    setCurrentUser(undefined)
+    navigate("/")
+  }
   return (
     <nav
       className={`${styles.paddingX} fixed top-0 z-20 flex w-full justify-between items-center border-b-2 border-gold bg-primary lg:py-2`}
@@ -99,15 +106,33 @@ export default function Header() {
           >
             <li
               className={`${
-                active === "register" ? "text-white" : "text-gold"
+                active === "mypages" ? "text-white" : "text-gold"
               } cursor-pointer hover:text-white`}
             >
               Mina Sidor
             </li>
           </Link>}
+          {currentUser && currentUser.role === "ADMIN" && <Link
+            to="/admin"
+            onClick={() => {
+              setActive("admin");
+              window.scrollTo(0, 0);
+            }}
+          >
+            <li
+              className={`${
+                active === "admin" ? "text-white" : "text-gold"
+              } cursor-pointer hover:text-white`}
+            >
+              Admin
+            </li>
+          </Link>}
         </ul>
       </div>
       <div className="flex w-[300px] justify-end gap-1 items-center">
+        <p  className={`${styles.subHeaderText} mr-2 hidden cursor-pointer hover:text-white lg:flex`}>
+        {currentUser ? currentUser.name : ""}
+        </p>
         <img
           src={account_circle_new}
           alt="login"
@@ -116,9 +141,9 @@ export default function Header() {
         />
         <p
           className={`${styles.subHeaderText} ${toggleLogin ? "text-white" : "text-gold"} hidden cursor-pointer hover:text-white lg:flex`}
-          onClick={() => setToggleLogin(!toggleLogin) }
+          onClick={() => currentUser ? logout()  : setToggleLogin(!toggleLogin) }
         >
-          {currentUser ? currentUser.name : "Logga in"}
+          {currentUser ? "Logga ut" : "Logga in"}
         </p>
         <img
           src={toggle ? close : menu_new}
@@ -193,6 +218,36 @@ export default function Header() {
                 Bli medlem
               </li>
             </Link>
+            {currentUser && <Link
+            to="/mypages"
+            onClick={() => {
+              setActive("mypages");
+              window.scrollTo(0, 0);
+            }}
+          >
+            <li
+              className={`${
+                active === "mypages" ? "text-white" : "text-gold"
+              } cursor-pointer hover:text-white`}
+            >
+              Mina Sidor
+            </li>
+          </Link>}
+          {currentUser && currentUser.role === "ADMIN" && <Link
+            to="/admin"
+            onClick={() => {
+              setActive("admin");
+              window.scrollTo(0, 0);
+            }}
+          >
+            <li
+              className={`${
+                active === "admin" ? "text-white" : "text-gold"
+              } cursor-pointer hover:text-white`}
+            >
+              Admin
+            </li>
+          </Link>}
           </ul>
         </div>
       </div>
