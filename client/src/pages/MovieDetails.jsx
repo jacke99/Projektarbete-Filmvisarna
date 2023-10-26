@@ -33,7 +33,7 @@ export default function MovieDetails() {
       <div className="relative h-96 md:h-[30rem] lg:h-[36rem] ">
 
         
-      {/* // impelemterar en embedded youtubevideo */}
+      {/* // impelemterar en embedded youtubevideo med react-youtube */}
       <YouTube
         videoId={data.trailer} opts={opts} className="trailer-container flex items-center justify-center md:mt-32 sm:mt-8  md:w-full md:h-[60%] lg:w-full xl:full sx:w-1/5 xl:w-[110%]"  // Use the YouTube video ID from your data
       />
