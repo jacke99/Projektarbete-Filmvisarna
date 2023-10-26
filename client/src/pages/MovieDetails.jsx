@@ -1,4 +1,3 @@
-
 import BookMovieHero from "../components/BookMovieHero.jsx";
 import { styles } from "../styles.js";
 import { useParams } from 'react-router-dom';
@@ -9,6 +8,7 @@ import { performRequest } from "../service/fetchService.js";
 export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie]= useState("")
+  //eslint-disable-next-line
   const { data, isPending, error } = useFetch(`/api/movies/${id}`)
   console.log(data)
 
