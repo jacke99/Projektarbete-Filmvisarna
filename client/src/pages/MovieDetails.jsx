@@ -1,10 +1,11 @@
 
 import BookMovieHero from "../components/BookMovieHero.jsx";
 import { styles } from "../styles.js";
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import useFetch from "../hooks/useFetch.js";
 import { useEffect, useState } from "react";
 import { performRequest } from "../service/fetchService.js";
+
 
 export default function MovieDetails() {
   const { id } = useParams();
@@ -92,7 +93,18 @@ export default function MovieDetails() {
      
             
       </div>
-      <BookMovieHero data={movie} />
+      {movie.length > 0 ? (
+  <BookMovieHero data={movie}/>
+) : (
+  <div className="p-4 text-center">
+  <p className="text-white-100">Tyvärr finns inga visningar tillgängliga just nu
+  för {`${data.title}`}</p>
+  <Link to={"/booking"} className={`text-4-xl underline text-white-100`}>
+            Andra filmer som visas
+          </Link>
+  </div>
+)}
+
     </div>
    
     
