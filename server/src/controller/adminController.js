@@ -141,7 +141,7 @@ const addNewTheater = async (req, res) => {
         }
         body.seats = seats
         const result = await fetchCollection("theaters").insertOne(body);
-        res.status(201).send(result);
+        res.status(201).send({data: result, status: 201});
       } catch (error) {
         res.status(400).send({ error: "Could not create theater" });
       }
