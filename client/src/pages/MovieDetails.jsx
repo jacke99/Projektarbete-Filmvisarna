@@ -1,22 +1,16 @@
 
 import BookMovieHero from "../components/BookMovieHero.jsx";
-import MovieFilterForm from "../components/MovieFilterForm.jsx";
 import { styles } from "../styles.js";
 import { useParams } from 'react-router-dom';
 import useFetch from "../hooks/useFetch.js";
-import MovieDetailsForm from "../components/MovieDetailsForm.jsx";
 import { useEffect, useState } from "react";
 import { performRequest } from "../service/fetchService.js";
 
 export default function MovieDetails() {
   const { id } = useParams();
-  const [query, setQuery]= useState("");
-  const [date, setDate] = useState("");
   const [movie, setMovie]= useState("")
-  
-
   const { data, isPending, error } = useFetch(`/api/movies/${id}`)
- console.log(data)
+  console.log(data)
 
  useEffect(()=>{
   (async ()=>{
@@ -25,9 +19,6 @@ export default function MovieDetails() {
     setMovie(resp)}
   })()
  },[data])
-//  const res = useFetch(`/api/filteredscreenings?movie=${data.title}`)
-//  console.log(res.data)
- console.log(movie)
 
   function handleClickScroll() {
     const element = document.getElementById("scrollTo");
@@ -36,27 +27,6 @@ export default function MovieDetails() {
       element.scrollIntoView({behavior: "smooth"})
     }
   }
-  function handleSubmit(e){
-    e.preventDefault();
-     console.log(date, movie)
-    // console.log(s)
-    const queryParams = {};
-    if(date) {
-      queryParams.date = date;
-    }
-    if (movie) {
-      queryParams.movie = movie;
-    }
-    
-    const queryString = new URLSearchParams(queryParams).toString();
-    
-   setQuery(queryString)
-  //  navigate(`/booking?${queryString}`);
-  console.log(query)
-  
-   setDate("");
-   setMovie("");
-    }
   return (
     <>
     {data &&(
@@ -119,13 +89,9 @@ export default function MovieDetails() {
           className=" absolute top-[22rem] right-[6rem] hidden h-56 sm:block lg:h-72 lg:top[22rem] lg:right-[19rem]"
         />
         <p id="scrollTo"></p>
-      <MovieDetailsForm data= {data} handleSubmit={handleSubmit} 
-      setDate={setDate} setMovie={setMovie}/>
-    
-         {/* <MovieFilterForm />
-        <BookMovieHero />  */}
+     
+            <BookMovieHero data={movie} /> 
       </div>
-   
     </div>
     )}
     </>

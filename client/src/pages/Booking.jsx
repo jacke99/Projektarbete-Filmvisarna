@@ -12,18 +12,14 @@ export default function Booking() {
   const [movie, setMovie] = useState("");
   const [query, setQuery]= useState("");
 
-  
   const { data, isPending, error } = useFetch(`/api/filteredscreenings?${query}`)
   console.log(query)
-console.log(data)
-
-
-  // const s = useStates("globalstate",{ ageLimit: "", date: "", filmTitle:""})
+  console.log(data)
 
   function handleSubmit(e){
   e.preventDefault();
    console.log(age, date, movie)
-  // console.log(s)
+ 
   const queryParams = {};
   if (age) {
     queryParams.age = age;
@@ -34,10 +30,9 @@ console.log(data)
   if (movie) {
     queryParams.movie = movie;
   }
-  
   const queryString = new URLSearchParams(queryParams).toString();
   
-  setQuery(queryString)
+ setQuery(queryString)
  navigate(`/booking?${queryString}`);
  setAge("");
  setDate("");
@@ -45,8 +40,6 @@ console.log(data)
   }
 
   return (
-  
-   
     <div className="mt-6 mb-20 min-w-full max-w-full bg-primary font-inconsolata">
       <div className="relative">
         <p>Inga visningar tillgängliga just nu</p>
