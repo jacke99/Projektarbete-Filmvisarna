@@ -22,7 +22,7 @@ export default function CancelBooking({booking, setToggle}) {
         {booking && 
             <div className={`${styles.subHeaderText} text-white border-2 border-gold p-2 w-[500px]`}>
             <ul className="flex flex-col">
-                <li className="flex justify-between"> <p className="text-gold">Boknings nr:</p> <p>{booking.bookingId}</p></li>
+                <li className="flex justify-between"> <p className="text-gold">BokningsNr:</p> <p>{booking.bookingId}</p></li>
                 <li className="flex justify-between"> <p className="text-gold">Datum:</p> <p>{booking.screening.date}</p></li>
                 <li className="flex justify-between"> <p className="text-gold">Tid:</p> <p>{booking.screening.time}</p></li>
                 <li className="flex justify-between"> <p className="text-gold">Film:</p> <p>{booking.movie.title}</p></li>

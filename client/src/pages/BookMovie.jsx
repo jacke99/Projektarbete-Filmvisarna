@@ -44,7 +44,7 @@ export default function BookMovie() {
       id: screening._id,
       row: seats[0].row,
       seats: seats.map(seat => {
-        return {seat: seat.seat}
+        return {seat: seat.seat, seatNumber: seat.seatNumber}
       }),
       adult: counters.adult,
       child: counters.child,

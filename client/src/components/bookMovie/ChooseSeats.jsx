@@ -1,10 +1,12 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useStates } from "react-easier"
 import PropTypes from "prop-types"
 
 
 export default function ChooseSeats({ screening, seats, setSeats}) {
+    const [toggle, setToggle] = useState(false)
     const counters = useStates("ticketCounter");
+    console.log(seats)
     useEffect(() => {
       seats.forEach(seat => {
         document.getElementById(`row${seat.row}seat-${seat.seat}`).classList.add("bg-white")
@@ -60,7 +62,8 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
     }
     
     function bookSeats(event, numberOfSeats) {
-        
+        setSeats([])
+        setToggle(false)
         const target = event.target 
         const parent = event.target.parentElement
         // eslint-disable-next-line
@@ -76,27 +79,31 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
         const selectedSeats = [];
         
         for (let i = startSeatIndex; i <= endSeatIndex; i++) {
-          console.log(screening.seats[rowIndex - 1][i]);
-          selectedSeats.push({ row: rowIndex, seat: i + 1, seatNumber: screening.seats[rowIndex - 1][i].seatNumber});
+          if(screening.seats[rowIndex - 1][i].seat) {
+            return setToggle(true)
+          } else {
+            selectedSeats.push({ row: rowIndex, seat: i + 1, seatNumber: screening.seats[rowIndex - 1][i].seatNumber, booked: screening.seats[rowIndex - 1][i].seat});
+          }
+          
         }
         setSeats(selectedSeats)
     }
 
     // eslint-disable-next-line
-    const Seat = ({ seatNumber, rowNumber }) => (
-        <div className={"bg-footerGrey seat lg:w-5 lg:h-5 md:w-8 md:h-8 w-5 h-5 cursor-pointer"} 
-        key={seatNumber} id={`row${rowNumber}seat-${seatNumber}`} onClick={(event) => bookSeats(event, counters.total)}
+    const Seat = ({ seatNumber, rowNumber, booked }) => (
+        <button className={`${booked ? "bg-red-600" : "bg-footerGrey"} seat lg:w-5 lg:h-5 md:w-8 md:h-8 w-5 h-5 cursor-pointer`} 
+        key={seatNumber} id={`row${rowNumber}seat-${seatNumber}`} onClick={(event) => booked ? undefined : bookSeats(event, counters.total)}
         onMouseEnter={(event => handleMouseEnter(event, counters.total))}
         onMouseLeave={(event) => handleMouseLeave(event, counters.total)}
+        disabled={booked}
         >
-        </div>
+        </button>
       );
     // eslint-disable-next-line
     const Row = ({ rowNumber }) => {
-    const seats = Array.from({ length: screening.seats[0].length }, (_, index) => (
-        <Seat key={index} seatNumber={index +1} rowNumber={rowNumber} className="test"/>
+    const seats = screening.seats[rowNumber - 1].map((seat, index) => (
+        <Seat key={index} seatNumber={index +1} rowNumber={rowNumber} booked={seat.seat} className="test"/>
     ));
-      
     return (
         <div className="flex justify-between w-full" key={rowNumber} id={`row-${rowNumber}`}>
         {seats}
@@ -105,10 +112,9 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
     };
       
     const DivGenerator = () => {
-    const rows = Array.from({ length: screening.seats.length }, (_, index) => (
+    const rows = screening.seats.map((row, index) => (
         <Row key={index} rowNumber={index + 1} />
     ));
-    
     return <div>{rows}</div>;
     };
   return (
@@ -118,7 +124,7 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
         {DivGenerator()}
         <div className="text-white text-center mt-2 mb-4">
           <p>Antal biljetter:  {counters.total}</p>
-          <p>
+          {seats.length > 0 && <p>
            Rad: {seats.length && seats[0].row + " -"} Plats:{" "}
           {seats && seats?.map((seat, i) => {
             if(i + 1 === seats.length) {
@@ -127,7 +133,8 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
              return seat.seatNumber + ", "
             }
             })}
-          </p>
+          </p>}
+          {toggle && <p className="text-red-500">Välj andra säten, ett eller flera säten av dom du försökte välja är redan bokade</p>}
         </div>
     </div>
   )
