@@ -2,29 +2,18 @@ import { useState, useEffect } from "react"
 import AdminHeader from "../../components/adminPage/AdminHeader"
 import { performRequest } from "../../service/fetchService"
 import { styles } from "../../styles.js";
+import { resolvePath } from "react-router-dom";
 
 
 
 export default function AdminBookings() {
-
-
-/////////////////////////////PARAMS/////////////////////////////
-
-    //Location search plockas ut och läggs in i userSearch
-    const userSearch = window.location.search; 
-    console.log(userSearch);
-
-    //Vi använder URLSearchParams för att plocka ut användarens sökning
-    const urlParams = new URLSearchParams(userSearch);
-    
-    //Vi kan plocka ut stringen ur sökningen genom urlParams.get
-    const param = urlParams.get("bokningsnummer");
-    console.log(param);
-
     const [bookings, setBookings] = useState(undefined)
+    const [searchInput, setSearchInput] = useState("")
+    const [filteredBookings, setFilteredBookings] = useState("")
 
-    useEffect(() => {
-        
+
+    //get bookings
+    useEffect(() => {  
     async function getBookings() {
         const resp = await performRequest("/api/bookings", "GET")
         setBookings(resp)
@@ -32,12 +21,7 @@ export default function AdminBookings() {
     getBookings()
     }, [])
 
-/////////////////////////////PARAMS/////////////////////////////
-
-
-
-/////////////////////////////CANCEL BOOKING/////////////////////////////
-
+    //Cancel booking
     async function cancelBooking(cancelID, bookingId ) {
         const resp = await performRequest("/api/bookings", "PATCH", {id: cancelID})
         alert(`${resp.message} ${bookingId} är nu avbokad.`)
@@ -45,10 +29,39 @@ export default function AdminBookings() {
         setBookings(updatedBookingsResp)
     }
 
-/////////////////////////////CANCEL BOOKING/////////////////////////////
+    /* 
+    //Location searchInput plockas ut och läggs in i userSearch
+    const theUserSearch = window.location.searchInput; 
+    console.log(theUserSearch);
 
- 
+    //Vi använder URLSearchParams för att plocka ut användarens sökning
+    const urlParams = new URLSearchParams(theUserSearch);
+    
+    //Vi kan plocka ut stringen ur sökningen genom urlParams.get
+    const param = urlParams.get("bokningsnummer");
+    console.log(param);
 
+*/
+
+    //hanterar förändringar i sökfältet
+    const handleChange = (event) => {
+        event.preventDefault();
+        setSearchInput(event.target.value);
+        console.log(searchInput);
+        setBookings(filterList(bookings, searchInput));
+    };
+
+    function filterList(list, Input) {
+    return list.filter((item) => item.bookingId.toLowerCase().includes(Input.toLowerCase()));
+    }
+
+    //filtrerar listan med bokningar if condition is met LOOOOP never ending what to do
+    // if (searchInput.length > 0) {
+    //     }
+
+
+    console.log(searchInput);
+    
     return (
         <div className="mt-20 mx-12">
             <AdminHeader/>
@@ -57,9 +70,9 @@ export default function AdminBookings() {
             <div id="UserListHeader" className="flex justify-between items-end p-4">            
                 <h1 className="text-2xl text-white">BOKNINGAR</h1>
                 <div className="flex gap-3">
-                        <input placeholder="Sök..." type="text" id="filmTitle" name="filmTitle" className={`${styles.inputStyle}`}/>
-                        <button type="submit" className={`rounded-md bg-gold p-1 px-4 text-black-100 w-16 self-center`}>Sök
-                        </button>
+                        <input placeholder="Sök..." type="text" value={searchInput} onChange={handleChange} id="filmTitle" name="filmTitle" className={`${styles.inputStyle}`}/>
+                        {/* <button type="submit" className={`rounded-md bg-gold p-1 px-4 text-black-100 w-16 self-center`}>Sök
+                        </button> */}
                 </div>
             </div>
 
