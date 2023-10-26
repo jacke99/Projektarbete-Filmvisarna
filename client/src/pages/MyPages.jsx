@@ -11,7 +11,7 @@ export default function MyPages() {
     const [cancelBooking, setCancelBooking] = useState(undefined)
     const [userData, setuserData] = useState([])
     console.log(cancelBooking)
-    
+
     useEffect(() => {
         (async () => {
                 const data = await performRequest("/api/user/bookings")
@@ -33,7 +33,7 @@ export default function MyPages() {
     const userBookings = userData?.map((booking, index) => (
         <div key={index} className={`${styles.subHeaderText} text-white border-2 border-gold p-2 w-[350px]`} >
             <ul className="flex flex-col">
-                <li className="flex justify-between"> <p className="text-gold">Boknings nr:</p> <p>{booking.bookingId}</p></li>
+                <li className="flex justify-between"> <p className="text-gold">BokningsNr:</p> <p>{booking.bookingId}</p></li>
                 <li className="flex justify-between"> <p className="text-gold">Datum:</p> <p>{booking.screening.date}</p></li>
                 <li className="flex justify-between"> <p className="text-gold">Tid:</p> <p>{booking.screening.time}</p></li>
                 <li className="flex justify-between"> <p className="text-gold">Film:</p> <p>{booking.movie.title}</p></li>
