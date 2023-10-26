@@ -4,6 +4,7 @@ import MovieFilterForm from "../components/MovieFilterForm.jsx";
 import { styles } from "../styles.js";
 import { useParams } from 'react-router-dom';
 import useFetch from "../hooks/useFetch.js";
+// import YouTube from 'react-youtube'; // Import the YouTube component
 
 export default function MovieDetails() {
   const { id } = useParams();
@@ -21,11 +22,11 @@ export default function MovieDetails() {
     {data &&(
     <div className=" mt-10 mb-20 h-full bg-primary">
       <div className="relative h-96 md:h-[30rem] lg:h-[36rem] ">
-        <img
-          src={`/img/${data.img_header}`}
-          alt="movie poster"
-          className=" h-full min-w-full object-cover"
-        /> 
+        
+      <div className="trailer-container flex items-center justify-center mt-20 sm:w-[50%] md:w-full lg:w-full">
+        <div dangerouslySetInnerHTML={{ __html: data.trailer }} />
+      </div>
+      
         <img
           src={`/img/${data.img_poster}`}
           alt="movie poster"
