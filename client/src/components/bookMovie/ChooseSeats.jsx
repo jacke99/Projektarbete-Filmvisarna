@@ -1,14 +1,11 @@
-import {useState, useEffect} from "react"
-import {useStates} from "react-easier"
+import { useEffect } from "react"
+import { useStates } from "react-easier"
 import PropTypes from "prop-types"
 
 
-export default function ChooseSeats({ screening }) {
-    const [seats, setSeats] = useState([])
+export default function ChooseSeats({ screening, seats, setSeats}) {
     const counters = useStates("ticketCounter");
-    console.log(seats);
     useEffect(() => {
-      console.log(screening);
       seats.forEach(seat => {
         document.getElementById(`row${seat.row}seat-${seat.seat}`).classList.add("bg-white")
       });
@@ -77,12 +74,12 @@ export default function ChooseSeats({ screening }) {
         const endSeatIndex = Math.min(startSeatIndex + numberOfSeats - 1, 11);
       
         const selectedSeats = [];
-      
+        
         for (let i = startSeatIndex; i <= endSeatIndex; i++) {
-          selectedSeats.push({ row: rowIndex, seat: i + 1, seatNumber: screening.seats[rowIndex][i].seat.seatNumber});
+          console.log(screening.seats[rowIndex - 1][i]);
+          selectedSeats.push({ row: rowIndex, seat: i + 1, seatNumber: screening.seats[rowIndex - 1][i].seatNumber});
         }
         setSeats(selectedSeats)
-        
     }
 
     // eslint-disable-next-line
@@ -97,7 +94,7 @@ export default function ChooseSeats({ screening }) {
     // eslint-disable-next-line
     const Row = ({ rowNumber }) => {
     const seats = Array.from({ length: screening.seats[0].length }, (_, index) => (
-        <Seat key={index} seatNumber={index +1} rowNumber={rowNumber}/>
+        <Seat key={index} seatNumber={index +1} rowNumber={rowNumber} className="test"/>
     ));
       
     return (
@@ -123,13 +120,11 @@ export default function ChooseSeats({ screening }) {
           <p>Antal biljetter:  {counters.total}</p>
           <p>
            Rad: {seats.length && seats[0].row + " -"} Plats:{" "}
-          {seats && screening.seats[seats.row]?.map((seat, i) => {
-            if(i + 1 === screening.seats[i].length) {
-              console.log(seat);
-             return screening.seats[seats.row][i].seat.seatNumber
+          {seats && seats?.map((seat, i) => {
+            if(i + 1 === seats.length) {
+             return seat.seatNumber
             } else {
-              console.log(seat);
-             return screening.seats[seats.row][i].seat.seatNumber + ", "
+             return seat.seatNumber + ", "
             }
             })}
           </p>
@@ -141,4 +136,6 @@ export default function ChooseSeats({ screening }) {
 
 ChooseSeats.propTypes = {
   screening: PropTypes.object,
+  seats: PropTypes.array,
+  setSeats: PropTypes.func
 }
