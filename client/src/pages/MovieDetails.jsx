@@ -4,7 +4,7 @@ import MovieFilterForm from "../components/MovieFilterForm.jsx";
 import { styles } from "../styles.js";
 import { useParams } from 'react-router-dom';
 import useFetch from "../hooks/useFetch.js";
-// import YouTube from 'react-youtube'; // Import the YouTube component
+import YouTube from 'react-youtube';
 
 export default function MovieDetails() {
   const { id } = useParams();
@@ -17,15 +17,31 @@ export default function MovieDetails() {
       element.scrollIntoView({behavior: "smooth"})
     }
   }
+
+
+  // Options för att ändra storlek på videon
+  const opts = {
+    height: '400',
+    width: '1100',
+   
+  };
+
   return (
     <>
     {data &&(
     <div className=" mt-10 mb-20 h-full bg-primary">
       <div className="relative h-96 md:h-[30rem] lg:h-[36rem] ">
+
         
-      <div className="trailer-container flex items-center justify-center mt-20 sm:w-[50%] md:w-full lg:w-full">
+      {/* // impelemterar en embedded youtubevideo */}
+      <YouTube
+        videoId={data.trailer} opts={opts} className="trailer-container flex items-center justify-center md:mt-32 sm:mt-8  md:w-full md:h-[60%] lg:w-full xl:full sx:w-1/5 xl:w-[110%]"  // Use the YouTube video ID from your data
+      />
+        
+       {/* Alternativ 1 = kopierar hela "bädda in" från dela på youtube
+      <div className="trailer-container flex items-center justify-center mt-24  md:w-full lg:w-full">
         <div dangerouslySetInnerHTML={{ __html: data.trailer }} />
-      </div>
+      </div> */}
       
         <img
           src={`/img/${data.img_poster}`}
