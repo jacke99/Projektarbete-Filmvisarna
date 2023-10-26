@@ -1,19 +1,39 @@
 import { useState, useEffect } from "react"
 import AdminHeader from "../../components/adminPage/AdminHeader"
 import { performRequest } from "../../service/fetchService"
+import { styles } from "../../styles.js";
+
 
 
 export default function AdminBookings() {
 
+
+/////////////////////////////PARAMS/////////////////////////////
+
+    //Location search plockas ut och läggs in i userSearch
+    const userSearch = window.location.search; 
+    console.log(userSearch);
+
+    //Vi använder URLSearchParams för att plocka ut användarens sökning
+    const urlParams = new URLSearchParams(userSearch);
+    
+    //Vi kan plocka ut stringen ur sökningen genom urlParams.get
+    const param = urlParams.get("bokningsnummer");
+    console.log(param);
+
     const [bookings, setBookings] = useState(undefined)
 
     useEffect(() => {
+        
     async function getBookings() {
         const resp = await performRequest("/api/bookings", "GET")
         setBookings(resp)
     }
     getBookings()
     }, [])
+
+/////////////////////////////PARAMS/////////////////////////////
+
 
 
 /////////////////////////////CANCEL BOOKING/////////////////////////////
@@ -24,6 +44,9 @@ export default function AdminBookings() {
         const updatedBookingsResp = await performRequest("/api/bookings", "GET")
         setBookings(updatedBookingsResp)
     }
+
+/////////////////////////////CANCEL BOOKING/////////////////////////////
+
  
 
     return (
@@ -31,7 +54,14 @@ export default function AdminBookings() {
             <AdminHeader/>
             <div className="max-w-fit flex flex-col justify-center m-auto">
 
-            <h1 className="text-2xl text-white p-4">BOKNINGAR</h1>
+            <div id="UserListHeader" className="flex justify-between items-end p-4">            
+                <h1 className="text-2xl text-white">BOKNINGAR</h1>
+                <div className="flex gap-3">
+                        <input placeholder="Sök..." type="text" id="filmTitle" name="filmTitle" className={`${styles.inputStyle}`}/>
+                        <button type="submit" className={`rounded-md bg-gold p-1 px-4 text-black-100 w-16 self-center`}>Sök
+                        </button>
+                </div>
+            </div>
 
             <table id="table_users" className="w-full table-auto bg-white">
                 <tbody>
