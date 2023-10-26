@@ -58,11 +58,11 @@ export default function BookMovie() {
   
   return (
     <>    
-    {screening && movie && <section className="mt-2 flex flex-col items-center min-h-screen">
+    {screening && movie && <section className="mt-2 flex flex-col items-center min-h-screen mb-20">
         <TicketCounter screening={screening} movie={movie}/>
         <ChooseSeats screening={screening} seats={seats} setSeats={setSeats}/>
 
-        <button className="bg-gold text-black-100 rounded-md px-4 p-1" onClick={navToBookingP2}>Fortsätt</button>
+        <button className="bg-gold text-black-100 rounded-md px-6 p-2" onClick={navToBookingP2}>Fortsätt</button>
     </section>}
     </>
   );

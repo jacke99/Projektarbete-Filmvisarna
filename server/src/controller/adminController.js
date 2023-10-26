@@ -120,8 +120,8 @@ const postMovie = async (req, res) => {
 
 const addNewTheater = async (req, res) => {
     const body = req.body;
-    const {theaterNr, rows, seatsPerRow} = req.body;
-    if (!theaterNr || !rows || !seatsPerRow) {
+    const {theaterNr, rows} = req.body;
+    if (!theaterNr || !rows) {
       return res.status(400).json({error: "Missing required properties, pls check your request body"});
     }
     if (
@@ -129,16 +129,27 @@ const addNewTheater = async (req, res) => {
     ) {
       try {
         const seats = []
-        for(let i = 0; i < rows; i++) {
+        for(let i = 0; i < rows.length; i++) {
           seats.push([])
-          for(let j = 0; j < seatsPerRow; j++) {
-            const seatNumber = calcSeatNumber(i, j, seatsPerRow)
-            seats[i].push({
-              seat: false, 
-              seatNumber: seatNumber
-            })
+          
+          for(let j = 0; j < rows[i].seats; j++) {
+            if(i !== 0) {
+              // console.log(seats[i - 1][seats[i - 1].length - 1].seatNumber);
+              console.log(j);
+              const seatNumber = calcSeatNumber(i, j, seats[i - 1][seats[i - 1].length - 1].seatNumber)
+                seats[i].push({
+                  seat: false, 
+                  seatNumber: seatNumber
+                })
+              } else {
+                seats[i].push({
+                  seat: false, 
+                  seatNumber: j + 1
+                })
+            }
           }
         }
+        body.rows = rows.length
         body.seats = seats
         const result = await fetchCollection("theaters").insertOne(body);
         res.status(201).send({data: result, status: 201});
