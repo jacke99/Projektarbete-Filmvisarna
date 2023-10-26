@@ -1,14 +1,25 @@
 
 import BookMovieHero from "../components/BookMovieHero.jsx";
-import MovieFilterForm from "../components/MovieFilterForm.jsx";
 import { styles } from "../styles.js";
 import { useParams } from 'react-router-dom';
 import useFetch from "../hooks/useFetch.js";
+import { useEffect, useState } from "react";
+import { performRequest } from "../service/fetchService.js";
 
 export default function MovieDetails() {
   const { id } = useParams();
+  const [movie, setMovie]= useState("")
   const { data, isPending, error } = useFetch(`/api/movies/${id}`)
- console.log(data)
+  console.log(data)
+
+ useEffect(()=>{
+  (async ()=>{
+    if(data){
+    const resp = await performRequest(`/api/filteredscreenings?movie=${data.title}`, "GET")
+    setMovie(resp)}
+  })()
+ },[data])
+
   function handleClickScroll() {
     const element = document.getElementById("scrollTo");
     console.log(element);
@@ -78,12 +89,13 @@ export default function MovieDetails() {
           className=" absolute top-[22rem] right-[6rem] hidden h-56 sm:block lg:h-72 lg:top[22rem] lg:right-[19rem]"
         />
         <p id="scrollTo"></p>
-
-         <MovieFilterForm />
-        <BookMovieHero /> 
+     
+            
       </div>
-   
+      <BookMovieHero data={movie} />
     </div>
+   
+    
     )}
     </>
     )

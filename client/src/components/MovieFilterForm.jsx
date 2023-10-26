@@ -1,5 +1,4 @@
 import { styles } from "../styles.js";
-import { useState } from "react";
 import {useStates} from "react-easier"
 
 export default function MovieFilterForm({data, handleSubmit, setAge,age, setDate,date, setMovie,movie}) {
