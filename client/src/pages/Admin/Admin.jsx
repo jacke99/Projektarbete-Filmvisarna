@@ -1,4 +1,4 @@
-import AdminHeader from "../components/adminPage/AdminHeader";
+import AdminHeader from "../../components/adminPage/AdminHeader";
 
 function Admin() {
 

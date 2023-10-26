@@ -40,6 +40,14 @@ body {
   text-shadow: 1px 1px black;
 }
 
+
+#table_users {
+  /* margin: 0 auto; */
+  min-width: 80vh;
+  max-width: 900px;
+}
+
+
 #table_users tr:nth-child(even){background-color: #f2f2f2;}
 
 #table_users tr:hover {background-color: #ddd;}

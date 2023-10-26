@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
-import AdminHeader from "../components/adminPage/AdminHeader"
-import { performRequest } from "../service/fetchService"
-import { styles } from "../styles.js";
+import AdminHeader from "../../components/adminPage/AdminHeader"
+import { performRequest } from "../../service/fetchService"
+import { styles } from "../../styles.js";
 
 
 export default function AdminUsers() {
@@ -21,9 +21,9 @@ export default function AdminUsers() {
     <div className="mt-20 mx-1">
         <AdminHeader/>
 
-        <div className="max-w-5xl m-auto my-6">
+        <div className="max-w-fit flex flex-col justify-center m-auto">
             <div id="UserListHeader" className="flex justify-between items-end p-4">            
-                <h1 className="text-2xl text-white align-bottom">ANVÄNDARE</h1>
+                <h1 className="text-2xl text-white">ANVÄNDARE</h1>
                 <div className="flex gap-3">
                         <input placeholder="Sök..." type="text" id="filmTitle" name="filmTitle" className={`${styles.inputStyle}`}/>
                         <button type="submit" className={`rounded-md bg-gold p-1 px-4 text-black-100 w-16 self-center`}>Sök
