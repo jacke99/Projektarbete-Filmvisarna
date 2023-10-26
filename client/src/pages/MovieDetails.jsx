@@ -1,15 +1,27 @@
 
 import BookMovieHero from "../components/BookMovieHero.jsx";
-import MovieFilterForm from "../components/MovieFilterForm.jsx";
 import { styles } from "../styles.js";
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import useFetch from "../hooks/useFetch.js";
 import YouTube from 'react-youtube';
+import { useEffect, useState } from "react";
+import { performRequest } from "../service/fetchService.js";
 
 export default function MovieDetails() {
   const { id } = useParams();
+  const [movie, setMovie]= useState("")
+  // eslint-disable-next-line
   const { data, isPending, error } = useFetch(`/api/movies/${id}`)
- console.log(data)
+  console.log(data)
+
+ useEffect(()=>{
+  (async ()=>{
+    if(data){
+    const resp = await performRequest(`/api/filteredscreenings?movie=${data.title}`, "GET")
+    setMovie(resp)}
+  })()
+ },[data])
+
   function handleClickScroll() {
     const element = document.getElementById("scrollTo");
     console.log(element);
@@ -95,12 +107,24 @@ export default function MovieDetails() {
           className=" absolute top-[22rem] right-[6rem] hidden h-56 sm:block lg:h-72 lg:top[22rem] lg:right-[19rem]"
         />
         <p id="scrollTo"></p>
-
-         <MovieFilterForm />
-        <BookMovieHero /> 
+     
+            
       </div>
-   
+      {movie.length > 0 ? (
+  <BookMovieHero data={movie}/>
+) : (
+  <div className="p-4 text-center">
+  <p className="text-white-100">Tyvärr finns inga visningar tillgängliga just nu
+  för {`${data.title}`}</p>
+  <Link to={"/booking"} className={`text-4-xl underline text-white-100`}>
+            Andra filmer som visas
+          </Link>
+  </div>
+)}
+
     </div>
+   
+    
     )}
     </>
     )

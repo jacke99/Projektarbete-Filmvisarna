@@ -46,7 +46,7 @@ export default function BookingPartTwo(){
         console.log(res.error);
       }
     }
-    console.log(bookingResult);
+    console.log(booking);
     return(
         <>
       {movie && screening &&
@@ -76,8 +76,10 @@ export default function BookingPartTwo(){
               {booking.adult !== 0 ? <p className="font-inconsolata">{booking.adult} x Ordinarie/Vuxna</p> : null}
               {booking.child !== 0 ? <p className="font-inconsolata">{booking.child} x Barn</p> : null}
               {booking.senior !== 0 ? <p className="font-inconsolata">{booking.senior} x Pensionär</p> : null}
+              <p>Rad: <span>{`${booking.row}`}</span></p>
+              <p>Plats: <span>{`${booking.seats?.map((seat) => seat.seatNumber)}`}</span></p>
             </div>
-        
+
             <div className="text-white-100 mb-10">
               <p>{`Totalt att betala: ${calcTotalPrice(booking.adult, booking.child, booking.senior)}kr`}</p>
             </div>
