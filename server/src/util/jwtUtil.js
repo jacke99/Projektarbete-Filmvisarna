@@ -19,7 +19,6 @@ function generate(user) {
     lastname: user.lastname,
     phone: user.phone,
     role: user.role,
-    bookings: user.bookings
   };
 
   let token = jwt.sign(payload, process.env.SUPER_SECRET, payloadOptions);
