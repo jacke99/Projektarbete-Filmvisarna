@@ -1,8 +1,13 @@
+/* eslint-disable */
 import { Link, useNavigate } from "react-router-dom";
 
 
-export default function BookingTicketsForm() {
+export default function BookingTicketsForm({inputValues, setInputValues}) {
     const navigate = useNavigate()
+    function handleChange(e) {
+        setInputValues({...inputValues, [e.target.name]: e.target.value})
+        console.log(inputValues);
+    }
   return (
     <div className="text-white flex flex-col w-4/5 items-center m-auto">
         <div className="flex flex-col">
@@ -15,14 +20,14 @@ export default function BookingTicketsForm() {
             <button className="bg-gold w-36 text-black px-6 py-2 rounded m-auto" onClick={() => navigate("/register")}>Bli medlem</button>
             <p className="text-center mb-8 mt-1">eller <Link className="underline" to="/register">logga in!</Link></p>
         </div>
-        <form className="flex flex-col">
+        <div className="flex flex-col">
             <label className="font-inconsolata" htmlFor="email">Fyll i mailadress</label>
-            <input className="py-2 px-4 rounded w-[16em]" type="text" />
+            <input onChange={handleChange} name="email" value={inputValues.email} className="py-2 px-4 rounded w-[16em] text-black" type="text" />
             <label className="font-inconsolata mt-4" htmlFor="re-email">Bekräfta mailadress</label>
-            <input className="py-2 px-4 rounded" type="text" />
+            <input onChange={handleChange} name="reEmail" value={inputValues.reEmail} className="py-2 px-4 rounded text-black" type="text" />
             <label className="font-inconsolata mt-4" htmlFor="email">Mobiltelefon</label>
-            <input className="py-2 px-4 rounded mb-10" type="text" />
-        </form>
+            <input onChange={handleChange} name="phone" value={inputValues.phone} className="py-2 px-4 rounded mb-10 text-black" type="text" />
+        </div>
     </div>
   )
 }

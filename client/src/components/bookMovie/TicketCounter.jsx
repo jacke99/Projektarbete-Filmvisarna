@@ -64,8 +64,11 @@ export default function TicketCounter({ screening, movie }) {
         <div className="flex flex-col justify-end">
           <p>{movie.title}</p>
           <p>{`${screening.date.replaceAll("/", "-")} | ${screening.time}`}</p>
+          <p>{screening.theaterName}</p>
           <p>{movie.genre}</p>
-          <p>{`${movie.length} | ${movie.ageRestriction} år`}</p>
+          <p>{movie.length} </p>
+          <p>{movie.ageRestriction === 0 ?  " Ingen åldersgräns" :  ` ${movie.ageRestriction} år`}</p>
+          
         </div>
       </div>}
     </div>
