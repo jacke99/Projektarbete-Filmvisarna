@@ -4,7 +4,8 @@ import jwtUtil from "../util/jwtUtil.js";
 import idUtil from "../util/idUtil.js";
 import calcTotalPrice from "../util/calcTotalPrice.js";
 import nodemailer from 'nodemailer';
-
+import * as dotenv from "dotenv";
+dotenv.config();
 import {dirname, join as pathJoin} from "path";
 import { fileURLToPath } from "url";
 
@@ -56,12 +57,12 @@ const postBooking = async (req, res) => {
       status: true 
     }
     const transporter = nodemailer.createTransport({
-      host: 'smtp-mail.outlook.com',
+      host: process.env.host,
       port: 587,
       secure: false,
       auth: {
-        user: 'fvbio2023@outlook.com',
-        pass: 'Yves123#', // Om du använder tvåfaktorsautentisering (2FA), använd ett appspecifikt lösenord här
+        user: process.env.email,
+        pass: process.env.emailPassword, // Om du använder tvåfaktorsautentisering (2FA), använd ett appspecifikt lösenord här
       },
       tls: {
           rejectUnauthorized: false,
@@ -70,7 +71,7 @@ const postBooking = async (req, res) => {
 
 
 const mailOptions = {
-  from: 'fvbio2023@outlook.com',
+  from: process.env.email,
   to: booking.customerEmail, 
   subject: 'Bokningsbekräftelse',
   text:`Din bokningsbekräftelse. Ditt bokningsnummer är ${booking.bookingId}. Välkommen på en fantastisk bioupplevelse hos oss på Filmvisarna.  `,
@@ -82,14 +83,14 @@ const mailOptions = {
   <br>
   <br>
   Välkommen på en fantastisk bioupplevelse hos oss på </p> 
-  <br><img width="50px" src="cid:fvbio2023@outlook.com">
+  <br><img width="50px" src="cid:${process.env.email}">
   <br>
   </div>`,
   attachments: [
     {   // utf-8 string as an attachment
       filename: 'logo.png',
         path: `${logoPath}/logo.png`,
-        cid: 'fvbio2023@outlook.com' //same cid value as in the html img src
+        cid: process.env.email //same cid value as in the html img src
     }
   ]
 };
