@@ -6,12 +6,34 @@ import PropTypes from "prop-types"
 export default function ChooseSeats({ screening, seats, setSeats}) {
     const [toggle, setToggle] = useState(false)
     const counters = useStates("ticketCounter");
-    console.log(seats)
+    
     useEffect(() => {
       seats.forEach(seat => {
         document.getElementById(`row${seat.row}seat-${seat.seat}`).classList.add("bg-white")
       });
-    }, [seats, screening])
+    }, [seats])
+    useEffect(() => {
+      const selectedSeats = [];
+      const middleRow = Math.ceil(screening.seats.length / 2)
+      const middleSeat = Math.ceil(screening.seats[middleRow].length / 2)
+      if(!screening.seats[middleRow][middleSeat].seat) {
+        selectedSeats.push({ row: middleRow + 1, seat: middleSeat, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
+        selectedSeats.push({ row: middleRow + 1, seat: middleSeat + 1, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
+        return setSeats(selectedSeats)
+      } 
+      if (!screening.seats[middleRow - 1][middleSeat].seat) {
+        selectedSeats.push({ row: middleRow, seat: middleSeat, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
+        selectedSeats.push({ row: middleRow, seat: middleSeat + 1, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
+        return setSeats(selectedSeats)
+      }
+      if (!screening.seats[middleRow + 1][middleSeat].seat) {
+        selectedSeats.push({ row: middleRow + 2, seat: middleSeat, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
+        selectedSeats.push({ row: middleRow + 2, seat: middleSeat + 1, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
+        return setSeats(selectedSeats)
+      }
+     
+      
+    }, [screening, setSeats])
 
     function handleMouseEnter(event, numberOfSeats) {
         const target = event.target 
