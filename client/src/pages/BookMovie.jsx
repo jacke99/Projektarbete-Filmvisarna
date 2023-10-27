@@ -20,11 +20,19 @@ export default function BookMovie() {
     total: 2
   });
   useEffect(() => {
+    let screeningId = ""
       const eventSource = new EventSource(`/api/screenings/${id}`);
       eventSource.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log(data);
-      setScreening(data);
+      if(screeningId === "") {
+        console.log(screeningId, data._id)
+        screeningId = data._id
+        setScreening(data);
+      } else if (screeningId === data._id) {
+        console.log(screeningId, data._id)
+        setScreening(data)
+      }
+      
     };
     eventSource.onerror = (error) => {
       console.error(error);
@@ -51,8 +59,6 @@ export default function BookMovie() {
       child: counters.child,
       senior: counters.senior,
     }
-    console.log(booking);
-    // const res = await performRequest("/api/booking", "POST", booking);
 
     navigate("/booking/confirm", {state: {booking: booking, movie: movie, screening: screening}})
   }
