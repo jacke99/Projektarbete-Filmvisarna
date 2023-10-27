@@ -65,15 +65,15 @@ const deleteMovie = async (req, res) => {
       }
 }
 
-const getBookings = async (req, res) => {
+const getBookingsXuser = async (req, res) => {
     try {
-        const bookingsCollection = await fetchCollection("bookings");
-        const bookings = await bookingsCollection.find().toArray();
-        res.status(200).json(bookings);
+        const bookingsCollection = await fetchCollection("bookingsXuser");
+        const bookingsXUser = await bookingsCollection.find().toArray();
+        res.status(200).json(bookingsXUser);
       } catch (error) {
         res.status(500).json({
-          error: "An error occurred while fetching bookings collection",
-          details: error.message,
+          error: "An error occurred while fetching bookingsXuser collection",
+          details: error.message, 
         });
       }
 }
@@ -178,4 +178,4 @@ const getUsers = async (req, res) => {
 }
 
 
-export default {addScreening, deleteScreening, deleteMovie, getBookings, postMovie, addNewTheater, getTheater, getUsers }
+export default {addScreening, deleteScreening, deleteMovie, getBookingsXuser, postMovie, addNewTheater, getTheater, getUsers }
