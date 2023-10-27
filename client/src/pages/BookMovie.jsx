@@ -23,6 +23,7 @@ export default function BookMovie() {
       const eventSource = new EventSource(`/api/screenings/${id}`);
       eventSource.onmessage = (event) => {
       const data = JSON.parse(event.data);
+      console.log(data);
       setScreening(data);
     };
     eventSource.onerror = (error) => {
