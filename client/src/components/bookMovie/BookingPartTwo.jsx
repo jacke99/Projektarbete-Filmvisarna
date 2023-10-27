@@ -13,6 +13,11 @@ import { performRequest } from "../../service/fetchService";
 export default function BookingPartTwo(){
   const [loggedIn, setLoggedIn] = useState(null)
   const [bookingResult, setBookingResult] = useState(null)
+  const [inputValues, setInputValues] = useState({
+    email: "",
+    reEmail: "",
+    phone: ""
+  })
   const location = useLocation()
   const movie = location.state.movie;
   const screening = location.state.screening;
@@ -34,8 +39,16 @@ export default function BookingPartTwo(){
   }
 
     async function handleBooking() {
+      if(!loggedIn) {
+        if(inputValues.email === inputValues.reEmail) {
+          booking.email = inputValues.email
+          booking.phone = inputValues.phone
+        } else {
+          alert("Emails matchar inte")
+          return
+        }
+      }
       const res = await performRequest("/api/booking", "POST", booking);
-      console.log(res);
       if(res.bookingId) {
         setBookingResult(res)
       
@@ -46,14 +59,16 @@ export default function BookingPartTwo(){
         console.log(res.error);
       }
     }
-    console.log(booking);
     return(
         <>
       {movie && screening &&
             <div className="mt-40 px-6 flex flex-col md:items-center">
               <NavLink to="/booking" className="text-white-100 font-inconsolata underline mb-6"> Tillbaka</NavLink>
-              <h1 className="text-white-100 text-xl mb-8 lg:text-4xl">{`${movie.title} | ${screening.date}`}</h1>
               
+              
+            {!toggleConfirmation.toggle && 
+            <>
+            <h1 className="text-white-100 text-xl mb-8 lg:text-4xl">{`${movie.title} | ${screening.date}`}</h1>
             <div className="mb-10 max-w-full flex items-end justify-start md:justify-start lg:justify-start">
               <img
                 src={`/img/${movie.img_poster}`}
@@ -61,15 +76,15 @@ export default function BookingPartTwo(){
                 className="w-34 h-48 rounded-lg"
               />
               <div className="text-white-100 ml-4 flex flex-col lg:px-6 md:px-6">
-                <p className="text-xs">{}</p>
-                <h2 className="text-base font-extra-bold">{movie.title}</h2>
-                <p className="font-inconsolata text-xs">{movie.genre}</p>
-                <p className="text-xs">{`${screening.time} | ${movie.ageRestriction}`}</p>
+                <p className="text-base">{}</p>
+                <h2 className="text-xl font-extra-bold">{movie.title}</h2>
+                <p className="font-inconsolata text-base">{movie.genre}</p>
+                <p className="text-base">{`${screening.time} | ${movie.ageRestriction === 0 ? "Ingen åldersgräns" : movie.ageRestriction} år`}</p>
               </div>
         
             </div>
       
-            <div className="text-white-100 text-sm mb-10">
+            <div className="text-white-100 text-base mb-10">
               <h2 className="font-inconsolata">{`Salong: ${screening.theater}`}</h2>
               <p className="font-inconsolata">{screening.date}</p>
               <p className="font-inconsolata">{`Klockan: ${screening.time}`}</p>
@@ -83,12 +98,15 @@ export default function BookingPartTwo(){
             <div className="text-white-100 mb-10">
               <p>{`Totalt att betala: ${calcTotalPrice(booking.adult, booking.child, booking.senior)}kr`}</p>
             </div>
-            {!loggedIn && <BookingTicketsForm />}
+            {!loggedIn && <BookingTicketsForm inputValues={inputValues} setInputValues={setInputValues}/>}
             <button onClick={handleBooking} className={`bg-gold w-36 text-black px-6 py-2 rounded m-auto mb-10`}>Boka</button>
-            {toggleConfirmation.toggle && bookingResult &&(
+            </>}
+            
+            
+          </div>}
+          {toggleConfirmation.toggle && bookingResult &&(
             <ConfirmBooking bookingResult={bookingResult} movie={movie} screening={screening}/>
             )}
-          </div>}
         </>
     )
 }

@@ -12,6 +12,7 @@ export default function Booking() {
   const [movie, setMovie] = useState("");
   const [query, setQuery]= useState("");
 
+  //eslint-disable-next-line
   const { data, isPending, error } = useFetch(`/api/filteredscreenings?${query}`)
   console.log(query)
   console.log(data)
