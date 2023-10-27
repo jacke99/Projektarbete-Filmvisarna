@@ -3,11 +3,20 @@ import { fetchCollection } from "../mongo/mongoClient.js";
 import jwtUtil from "../util/jwtUtil.js";
 import idUtil from "../util/idUtil.js";
 import calcTotalPrice from "../util/calcTotalPrice.js";
+import nodemailer from 'nodemailer';
+import * as dotenv from "dotenv";
+dotenv.config();
+import {dirname, join as pathJoin} from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const logoPath = pathJoin(__dirname, "..", "assets"  );
+
 
 let clients = [];
 
 const postBooking = async (req, res) => {
-  const body = req.body
+  const body = req.body  
   const authHeader = req.headers['authorization']
   let authToken;
   let user = {}
@@ -47,7 +56,55 @@ const postBooking = async (req, res) => {
       price: totalPrice,
       status: true 
     }
+    const transporter = nodemailer.createTransport({
+      host: process.env.host,
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.email,
+        pass: process.env.emailPassword, // Om du använder tvåfaktorsautentisering (2FA), använd ett appspecifikt lösenord här
+      },
+      tls: {
+          rejectUnauthorized: false,
+      }
+    });
 
+
+const mailOptions = {
+  from: process.env.email,
+  to: booking.customerEmail, 
+  subject: 'Bokningsbekräftelse',
+  text:`Din bokningsbekräftelse. Ditt bokningsnummer är ${booking.bookingId}. Välkommen på en fantastisk bioupplevelse hos oss på Filmvisarna.  `,
+  html: `  <div style="border:black; border-width:2px; border-style:solid; padding:10px; text-align:center; width:400px; border-radius:15px; font-size:16px;">
+  <h2 style="color:purple;">Din bokningsbekräftelse</h2> 
+  <p>Ditt bokningsnummer är ${booking.bookingId} 
+  <br><h1></h1> 
+  Ta med ditt bokningsnummer till biografen för att kunna betala och få biljetterna till din valda visning.
+  <br>
+  <br>
+  Välkommen på en fantastisk bioupplevelse hos oss på </p> 
+  <br><img width="50px" src="cid:${process.env.email}">
+  <br>
+  </div>`,
+  attachments: [
+    {   // utf-8 string as an attachment
+      filename: 'logo.png',
+        path: `${logoPath}/logo.png`,
+        cid: process.env.email //same cid value as in the html img src
+    }
+  ]
+};
+
+  transporter.sendMail(mailOptions)
+//      function (error, info) {
+//   if (error) {
+//       console.log('Något gick fel: ' + error);
+//       res.status(500).json({ message: 'Något gick fel', error: error.message }); 
+//     } else {
+//     console.log('E-postmeddelandet har skickats: ' + info.response);
+//     res.status(200).json({ message: 'Bokningsbekräftelse skickad' });
+//   }
+// }); 
     await fetchCollection("bookings").insertOne(booking)
     
     if(user.role) {
@@ -59,6 +116,7 @@ const postBooking = async (req, res) => {
   } catch(err) {
    res.status(400).send(err)
   }
+
 };
 
 const getScreeningById = async (req, res) => {
