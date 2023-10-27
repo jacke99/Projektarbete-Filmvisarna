@@ -15,7 +15,7 @@ export default function MovieCardForFilmer({ movie }) {
         <img
           src={`/img/${movie.img_poster}`}
           alt={`movie poster for ${movie.title}`}
-          className="border-[0.5px] border-gold [250px] w-full object-cover object-center lg:h-[450px] lg:w-1/2"
+          className="border-[0.5px] border-gold object-cover object-center sm:h-56 lg:h-72"
         />
         <div className="md: flex flex-col justify-center md:justify-around lg:justify-around">
           <div className="my-4 flex flex-col text-white-100 md:my-0 lg:my-0">
