@@ -4,22 +4,29 @@ import jwtUtil from "../util/jwtUtil.js";
 import idUtil from "../util/idUtil.js";
 import calcTotalPrice from "../util/calcTotalPrice.js";
 import nodemailer from 'nodemailer';
+
+import {dirname, join as pathJoin} from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const logoPath = pathJoin(__dirname, "..", "assets"  );
+
 //import mailToUser from "../email.js/mailToUser"
 
-const mailToUser =
- `Din bokningsbekräftelse. Ditt bokningsnummer är $. Välkommen på en fantastisk bioupplevelse hos oss på Filmvisarna.`;
-  const html = `
-  <div style="border:purple; border-width:2px; border-style:solid; padding:10px; text-align:center; width:400px; border-radius:15px; font-size:16px;">
-  <h2 style="color:purple;">Din bokningsbekräftelse</h2> 
-  <p>Ditt bokningsnummer är 
-  <br><h1></h1> 
-  Ta med ditt bokningsnummer till biografen för att kunna betala och få biljetterna till din valda visning.
-  <br>
-  <br>
-  Välkommen på en fantastisk bioupplevelse hos oss på </p> 
-  <br><img src="cid:logo.ee">
-  <br>
-  </div>`
+// const mailToUser =
+//  `Din bokningsbekräftelse. Ditt bokningsnummer är ${}. Välkommen på en fantastisk bioupplevelse hos oss på Filmvisarna.`;
+//   const html = `
+//   <div style="border:purple; border-width:2px; border-style:solid; padding:10px; text-align:center; width:400px; border-radius:15px; font-size:16px;">
+//   <h2 style="color:purple;">Din bokningsbekräftelse</h2> 
+//   <p>Ditt bokningsnummer är 
+//   <br><h1></h1> 
+//   Ta med ditt bokningsnummer till biografen för att kunna betala och få biljetterna till din valda visning.
+//   <br>
+//   <br>
+//   Välkommen på en fantastisk bioupplevelse hos oss på </p> 
+//   <br><img src="cid:logo.ee">
+//   <br>
+//   </div>`
 
 
 
@@ -80,23 +87,42 @@ const postBooking = async (req, res) => {
       }
     });
 
+
 const mailOptions = {
   from: 'fvbio2023@outlook.com',
   to: booking.customerEmail, 
   subject: 'Bokningsbekräftelse',
-  text: mailToUser, 
-  html: mailToUser.html,
+  text:`Din bokningsbekräftelse. Ditt bokningsnummer är ${booking.bookingId}. Välkommen på en fantastisk bioupplevelse hos oss på Filmvisarna.  `,
+  html: `  <div style="border:black; border-width:2px; border-style:solid; padding:10px; text-align:center; width:400px; border-radius:15px; font-size:16px;">
+  <h2 style="color:purple;">Din bokningsbekräftelse</h2> 
+  <p>Ditt bokningsnummer är ${booking.bookingId} 
+  <br><h1></h1> 
+  Ta med ditt bokningsnummer till biografen för att kunna betala och få biljetterna till din valda visning.
+  <br>
+  <br>
+  Välkommen på en fantastisk bioupplevelse hos oss på </p> 
+  <br><img width="50px" src="cid:fvbio2023@outlook.com">
+  <br>
+  </div>`,
+  attachments: [
+    {   // utf-8 string as an attachment
+      filename: 'logo.png',
+        path: `${logoPath}/logo.png`,
+        cid: 'fvbio2023@outlook.com' //same cid value as in the html img src
+    }
+  ]
 };
 
- transporter.sendMail(mailOptions, function (error, info) {
-  if (error) {
-      console.log('Något gick fel: ' + error);
-      res.status(500).json({ message: 'Något gick fel', error: error.message }); 
-    } else {
-    console.log('E-postmeddelandet har skickats: ' + info.response);
-    res.status(200).json({ message: 'Bokningsbekräftelse skickad' });
-  }
-});
+  transporter.sendMail(mailOptions)
+//      function (error, info) {
+//   if (error) {
+//       console.log('Något gick fel: ' + error);
+//       res.status(500).json({ message: 'Något gick fel', error: error.message }); 
+//     } else {
+//     console.log('E-postmeddelandet har skickats: ' + info.response);
+//     res.status(200).json({ message: 'Bokningsbekräftelse skickad' });
+//   }
+// }); 
     await fetchCollection("bookings").insertOne(booking)
     
     if(user.role) {
