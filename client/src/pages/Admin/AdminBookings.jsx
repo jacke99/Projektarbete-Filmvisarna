@@ -9,7 +9,7 @@ import { resolvePath } from "react-router-dom";
 export default function AdminBookings() {
     const [bookings, setBookings] = useState(undefined)
     const [searchInput, setSearchInput] = useState("")
-    const [filteredBookings, setFilteredBookings] = useState("")
+    // const [filteredBookings, setFilteredBookings] = useState("")
 
 
     //get bookings
