@@ -1,5 +1,5 @@
-import AdminHeader from "../components/adminPage/AdminHeader";
-import AdminForm from "../components/adminPage/AdminForm";
+import AdminHeader from "../../components/adminPage/AdminHeader";
+import AdminForm from "../../components/adminPage/AdminForm";
 import { Link } from "react-router-dom";
 
 
