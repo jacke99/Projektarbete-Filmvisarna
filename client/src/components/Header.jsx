@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styles } from "../styles";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { logo, account_circle_new, close, menu_new } from "../assets";
 import Login from "./Login";
 import { parseJwt } from "../service/jwtService";
@@ -10,12 +10,18 @@ export default function Header() {
   const [toggle, setToggle] = useState(false);
   const [currentUser, setCurrentUser] = useState(parseJwt(sessionStorage.getItem("AuthToken")))
   const navigate = useNavigate()
-
+  let location = useLocation()
+  console.log(location)
   function logout() {
     sessionStorage.removeItem("AuthToken")
     setCurrentUser(undefined)
     navigate("/")
   }
+
+  useEffect(() => {
+    const pathParts = location.pathname.split('/');
+    setActive(pathParts[1])
+  },[location])
   return (
     <nav
       className={`${styles.paddingX} fixed top-0 z-20 flex w-full justify-between items-center border-b-2 border-gold bg-primary lg:py-2`}
@@ -24,7 +30,6 @@ export default function Header() {
         <Link
           to="/"
           onClick={() => {
-            setActive("");
             window.scrollTo(0, 0);
           }}
         >
@@ -40,7 +45,6 @@ export default function Header() {
           <Link
             to="/"
             onClick={() => {
-              setActive("");
               window.scrollTo(0, 0);
             }}
           >
@@ -55,7 +59,6 @@ export default function Header() {
           <Link
             to="/movies"
             onClick={() => {
-              setActive("movies");
               window.scrollTo(0, 0);
             }}
           >
@@ -70,7 +73,6 @@ export default function Header() {
           <Link
             to="/booking"
             onClick={() => {
-              setActive("booking");
               window.scrollTo(0, 0);
             }}
           >
@@ -85,7 +87,6 @@ export default function Header() {
           <Link
             to="/register"
             onClick={() => {
-              setActive("register");
               window.scrollTo(0, 0);
             }}
           >
@@ -100,7 +101,6 @@ export default function Header() {
           {currentUser && <Link
             to="/mypages"
             onClick={() => {
-              setActive("mypages");
               window.scrollTo(0, 0);
             }}
           >
@@ -115,7 +115,6 @@ export default function Header() {
           {currentUser && currentUser.role === "ADMIN" && <Link
             to="/admin"
             onClick={() => {
-              setActive("admin");
               window.scrollTo(0, 0);
             }}
           >
@@ -161,7 +160,6 @@ export default function Header() {
             <Link
               to="/"
               onClick={() => {
-                setActive("");
                 window.scrollTo(0, 0);
               }}
             >
@@ -176,7 +174,6 @@ export default function Header() {
             <Link
               to="/movies"
               onClick={() => {
-                setActive("movies");
                 window.scrollTo(0, 0);
               }}
             >
@@ -191,7 +188,6 @@ export default function Header() {
             <Link
               to="/booking"
               onClick={() => {
-                setActive("booking");
                 window.scrollTo(0, 0);
               }}
             >
@@ -206,7 +202,6 @@ export default function Header() {
             <Link
               to="/register"
               onClick={() => {
-                setActive("register");
                 window.scrollTo(0, 0);
               }}
             >
@@ -221,7 +216,6 @@ export default function Header() {
             {currentUser && <Link
             to="/mypages"
             onClick={() => {
-              setActive("mypages");
               window.scrollTo(0, 0);
             }}
           >
@@ -236,7 +230,6 @@ export default function Header() {
           {currentUser && currentUser.role === "ADMIN" && <Link
             to="/admin"
             onClick={() => {
-              setActive("admin");
               window.scrollTo(0, 0);
             }}
           >
