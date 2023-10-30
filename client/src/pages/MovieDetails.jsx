@@ -1,4 +1,3 @@
-
 import BookMovieHero from "../components/BookMovieHero.jsx";
 import { styles } from "../styles.js";
 import { useParams, Link } from 'react-router-dom';
@@ -10,7 +9,7 @@ import { performRequest } from "../service/fetchService.js";
 export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie]= useState("")
-  // eslint-disable-next-line
+  //eslint-disable-next-line
   const { data, isPending, error } = useFetch(`/api/movies/${id}`)
   console.log(data)
 
@@ -33,8 +32,8 @@ export default function MovieDetails() {
 
   // Options för att ändra storlek på videon
   const opts = {
-    height: '400',
-    width: '1100',
+    height: '500',
+    width: '1000',
    
   };
 

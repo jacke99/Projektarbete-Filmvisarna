@@ -6,7 +6,7 @@ export default function TicketCounter({ screening, movie }) {
 
   function increaseCounters(e) {
     const {name} = e.target;
-    if(eval(counters.adult + counters.child + counters.senior) < 8) {
+    if(eval(counters.adult + counters.child + counters.senior) < 6) {
       counters[name]++
       counters.total++
     }
@@ -63,9 +63,12 @@ export default function TicketCounter({ screening, movie }) {
         <img className="h-44 sm:h-60 sm:mt-auto" src={`/img/${movie.img_poster}`} alt="movie poster" />
         <div className="flex flex-col justify-end">
           <p>{movie.title}</p>
-          <p>{`${screening.date.slice(5)} | ${screening.time}`}</p>
+          <p>{`${screening.date.replaceAll("/", "-")} | ${screening.time}`}</p>
+          <p>{screening.theaterName}</p>
           <p>{movie.genre}</p>
-          <p>{`${movie.length} | ${movie.ageRestriction} år`}</p>
+          <p>{movie.length} </p>
+          <p>{movie.ageRestriction === 0 ?  " Ingen åldersgräns" :  ` ${movie.ageRestriction} år`}</p>
+          
         </div>
       </div>}
     </div>

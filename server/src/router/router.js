@@ -16,7 +16,7 @@ router.post("/screenings", jwtFilter.bind({role: "ADMIN"}) , adminController.add
 router.delete("/screenings/:id",jwtFilter.bind({role: "ADMIN"}), adminController.deleteScreening)
 router.post("/movies/:token", jwtFilterForm.bind({role: "ADMIN"}), uploads.fields([{ name: 'img_poster' }, { name: 'img_header' }]), adminController.postMovie); 
 router.delete("/movies/:id", jwtFilter.bind({role: "ADMIN"}), adminController.deleteMovie)
-router.get("/bookings", jwtFilter.bind({role: "ADMIN"}), adminController.getBookings)
+router.get("/bookings", jwtFilter.bind({role: "ADMIN"}), adminController.getBookingsXuser)
 router.post("/theaters", jwtFilter.bind({role: "ADMIN"}), adminController.addNewTheater)
 router.get("/users", adminController.getUsers)
 
