@@ -1,7 +1,8 @@
 import { styles } from "../styles.js";
-import {useStates} from "react-easier"
-
-export default function MovieFilterForm({data, handleSubmit, setAge,age, setDate,date, setMovie,movie}) {
+import { useStates } from "react-easier"
+// eslint-disable-next-line
+export default function MovieFilterForm({ data, handleSubmit, setAge, age, setDate, date, setMovie, movie }) {
+  // eslint-disable-next-line
   const s = useStates('globalState');
 
   return (
@@ -16,12 +17,12 @@ export default function MovieFilterForm({data, handleSubmit, setAge,age, setDate
               Åldersgräns:
             </label>
             <select
-            value={age}
+              value={age}
               id="ageLimit"
               name="ageLimit"
               className={`${styles.inputStyle}`}
-               onChange={(e) => setAge(e.target.value)}
-              // {...s.bind("ageLimit")}
+              onChange={(e) => setAge(e.target.value)}
+            // {...s.bind("ageLimit")}
             >
               <option value="0">Alla åldrar</option>
               <option value="12">12 år</option>
@@ -39,34 +40,34 @@ export default function MovieFilterForm({data, handleSubmit, setAge,age, setDate
               Datum:
             </label>
             <input
-            value={date}
+              value={date}
               type="date"
               id="datePicker"
               name="datePicker"
               className={`${styles.inputStyle}`}
               onChange={(e) => setDate(e.target.value)}
-              // {...s.bind("date")}
+            // {...s.bind("date")}
             />
           </div>
         </div>
 
         <div className="flex flex-col md:flex-row md:gap-4 md:justify-center">
           <input
-          value={movie}
+            value={movie}
             placeholder="Sök filmtitel..."
             type="text"
             id="filmTitle"
             name="filmTitle"
             className={`${styles.inputStyle} md:mt-5 lg:mt-6`}
             onChange={(e) => setMovie(e.target.value)}
-            // {...s.bind("filmTitle")}
+          // {...s.bind("filmTitle")}
           />
           <button
             type="submit"
             className={`rounded-md bg-gold p-1 px-4 text-black-100 w-16 self-center md:mt-3 lg:mt-4`}
           >Sök
           </button>
-        </div>  
+        </div>
       </form>
     </div>
   );
