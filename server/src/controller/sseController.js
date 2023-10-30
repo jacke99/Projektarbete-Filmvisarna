@@ -56,6 +56,8 @@ const postBooking = async (req, res) => {
       price: totalPrice,
       status: true 
     }
+
+    // Nodemailer börjar här
     const transporter = nodemailer.createTransport({
       host: process.env.host,
       port: 587,
@@ -97,6 +99,8 @@ const mailOptions = {
 };
 
   transporter.sendMail(mailOptions)
+
+  // Nodemailer slutar ---------------------------------------------------------------
 
     await fetchCollection("bookings").insertOne(booking)
     
