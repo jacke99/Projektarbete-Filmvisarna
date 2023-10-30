@@ -13,7 +13,7 @@ export default function Booking() {
   const [query, setQuery]= useState("");
 
   //eslint-disable-next-line
-  const { data, isPending, error } = useFetch(`/api/filteredscreenings?${query}`)
+  const { data, isPending, error } = useFetch(`/api/filteredscreenings${query?"?":""}${query}`)
   console.log(query)
   console.log(data)
 
@@ -41,7 +41,7 @@ export default function Booking() {
   }
 
   return (
-    <div className="mt-6 mb-20 min-w-full max-w-full bg-primary font-inconsolata">
+    <div className="mt-6 mb-20 min-w-screen bg-primary font-inconsolata">
       <div className="relative">
         <p>Inga visningar tillgängliga just nu</p>
 
