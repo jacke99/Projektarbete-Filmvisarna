@@ -97,15 +97,7 @@ const mailOptions = {
 };
 
   transporter.sendMail(mailOptions)
-//      function (error, info) {
-//   if (error) {
-//       console.log('Något gick fel: ' + error);
-//       res.status(500).json({ message: 'Något gick fel', error: error.message }); 
-//     } else {
-//     console.log('E-postmeddelandet har skickats: ' + info.response);
-//     res.status(200).json({ message: 'Bokningsbekräftelse skickad' });
-//   }
-// }); 
+
     await fetchCollection("bookings").insertOne(booking)
     
     if(user.role) {
