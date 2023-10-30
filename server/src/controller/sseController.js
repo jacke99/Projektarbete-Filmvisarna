@@ -71,19 +71,20 @@ const postBooking = async (req, res) => {
 
 
 const mailOptions = {
-  from: process.env.email,
+  from: `"Filmvisarna 🎥🍿 ${process.env.email}` ,
   to: booking.customerEmail, 
   subject: 'Bokningsbekräftelse',
-  text:`Din bokningsbekräftelse. Ditt bokningsnummer är ${booking.bookingId}. Välkommen på en fantastisk bioupplevelse hos oss på Filmvisarna.  `,
-  html: `  <div style="border:black; border-width:2px; border-style:solid; padding:10px; text-align:center; width:400px; border-radius:15px; font-size:16px;">
-  <h2 style="color:purple;">Din bokningsbekräftelse</h2> 
-  <p>Ditt bokningsnummer är ${booking.bookingId} 
+  text:`  `,
+  html: `  <div style="border:#DACA88; border-width:2px; border-style:solid; padding:10px; text-align:center; width:400px; border-radius:8px; font-size:16px;">
+  <h2 style="color:black;">Tack för din bokning.</h2> 
+  <p>Ditt bokningsnummer är: <span style="font-weight:800">${booking.bookingId}</span> 
   <br><h1></h1> 
-  Ta med ditt bokningsnummer till biografen för att kunna betala och få biljetterna till din valda visning.
+  Vi på Filmvisarna önskar en underbar biostund.
+  Bokningsnummret visar du upp i kassan i samband <br> med betalning.
   <br>
   <br>
-  Välkommen på en fantastisk bioupplevelse hos oss på </p> 
-  <br><img width="50px" src="cid:${process.env.email}">
+  Välkommen!</p> 
+  <br><img width="40px" src="cid:${process.env.email}">
   <br>
   </div>`,
   attachments: [
