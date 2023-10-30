@@ -19,19 +19,6 @@ export default function AdminBookings() {
     getBookings()
     }, [])
 
-    console.log(bookings)
-
-    const filteredBookings = useMemo(() => {
-        
-        return bookings?.filter(booking => { 
-            return booking.bookingId.toLowerCase().includes(query.toLowerCase()) || booking.customerEmail.toLowerCase().includes(query.toLowerCase()) || booking.customer?.name.toLowerCase().includes(query.toLowerCase()) || booking.customer?.lastname.toLowerCase().includes(query.toLowerCase())
-    }) 
-    }, [bookings, query])
-
-    // const filteredBookings = bookings.filter(booking => {
-    //    return booking.toLowerCase().includes(query.toLowerCase())
-    // })
-
     //Cancel booking
     async function cancelBooking(cancelID, bookingId ) {
         const resp = await performRequest("/api/bookings", "PATCH", {id: cancelID})
@@ -41,7 +28,12 @@ export default function AdminBookings() {
     }
 
     //Search
-
+    const filteredBookings = useMemo(() => {
+        
+        return bookings?.filter(booking => { 
+            return booking.bookingId.toLowerCase().includes(query.toLowerCase()) || booking.customerEmail.toLowerCase().includes(query.toLowerCase()) || booking.customer?.name.toLowerCase().includes(query.toLowerCase()) || booking.customer?.lastname.toLowerCase().includes(query.toLowerCase())
+    }) 
+    }, [bookings, query])
     
     return (
         <div className="mt-20 mx-12">
@@ -52,8 +44,6 @@ export default function AdminBookings() {
                 <h1 className="text-2xl text-white">BOKNINGAR</h1>
                 <div className="flex gap-3">
                         <input placeholder="Sök..." type="text" value={query} onChange={e => setQuery(e.target.value)} id="filmTitle" name="filmTitle" className={`${styles.inputStyle}`}/>
-                        {/* <button type="submit" className={`rounded-md bg-gold p-1 px-4 text-black-100 w-16 self-center`}>Sök
-                        </button> */}
                 </div>
             </div>
 
@@ -74,7 +64,7 @@ export default function AdminBookings() {
                     if (booking.status)  {     
                     return (
                     <tr key={key} className="">
-                        <td>{ booking.customer?.name ?  `${booking.customer?.name} ${booking.customer?.lastname}` : "Icke medlem"}</td>
+                        <td>{ booking.customer?.name ?  `${booking.customer?.name} ${booking.customer?.lastname}` : "Gäst"}</td>
                         <td>{booking.bookingId}</td>
                         <td>{booking.seats.map((seat, key)=> {
                             if(key + 1 === booking.seats.length) {
