@@ -5,6 +5,7 @@ import { styles } from "../../styles.js";
 
 
 
+
 export default function AdminBookings() {
     const [bookings, setBookings] = useState(undefined)
     const [query, setQuery] = useState("")
@@ -21,10 +22,10 @@ export default function AdminBookings() {
     console.log(bookings)
 
     const filteredBookings = useMemo(() => {
-        if (!query) {
+        
         return bookings?.filter(booking => { 
-            return booking.bookingId.toLowerCase().includes(query.toLowerCase())
-    })} 
+            return booking.bookingId.toLowerCase().includes(query.toLowerCase()) || booking.customerEmail.toLowerCase().includes(query.toLowerCase()) || booking.customer?.name.toLowerCase().includes(query.toLowerCase()) || booking.customer?.lastname.toLowerCase().includes(query.toLowerCase())
+    }) 
     }, [bookings, query])
 
     // const filteredBookings = bookings.filter(booking => {
@@ -63,14 +64,17 @@ export default function AdminBookings() {
                         <th>Bokningsnr</th>
                         <th>Sittplatser</th>
                         <th>Biljetter</th>
+                        <th>Email</th>
                         <th></th>
+                        
+
                     </tr>
                 {filteredBookings && filteredBookings.map((booking, key) => {
 
-                    if (booking.status && booking.customer?.name && booking.customer?.lastname)  {     
+                    if (booking.status)  {     
                     return (
                     <tr key={key} className="">
-                        <td>{`${booking.customer?.name} ${booking.customer?.lastname}`}</td>
+                        <td>{ booking.customer?.name ?  `${booking.customer?.name} ${booking.customer?.lastname}` : "Icke medlem"}</td>
                         <td>{booking.bookingId}</td>
                         <td>{booking.seats.map((seat, key)=> {
                             if(key + 1 === booking.seats.length) {
@@ -87,6 +91,8 @@ export default function AdminBookings() {
                             <p>{booking.ticketType.senior >= 1 ? `Pensionär: ${booking.ticketType.senior}` : null}</p>
                         </td>
 
+                        <td>{booking.customerEmail}</td>    
+
                         <td className="p-4 text-center">
                             <button
                                 className={`rounded-md bg-red-200 p-1 px-4 text-black-100 self-center`}
@@ -94,7 +100,8 @@ export default function AdminBookings() {
                             >
                                 Avboka
                             </button>
-                        </td>            
+                        </td>   
+                            
                     </tr> )  
                         }
                     })
