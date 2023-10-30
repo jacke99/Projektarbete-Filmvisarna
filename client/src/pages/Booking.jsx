@@ -10,16 +10,10 @@ export default function Booking() {
   const [age, setAge] = useState("");
   const [date, setDate] = useState("");
   const [movie, setMovie] = useState("");
-<<<<<<< HEAD
-  const [query, setQuery] = useState("");
-  // eslint-disable-next-line
-  const { data, isPending, error } = useFetch(`/api/filteredscreenings?${query}`)
-=======
   const [query, setQuery]= useState("");
 
   //eslint-disable-next-line
   const { data, isPending, error } = useFetch(`/api/filteredscreenings${query?"?":""}${query}`)
->>>>>>> 6618adab408f7fbc94d550151dce95443e17b7ce
   console.log(query)
   console.log(data)
 
