@@ -6,39 +6,55 @@ export default function ConfirmBooking({ bookingResult, movie, screening }) {
   console.log(bookingResult);
   const navigate = useNavigate()
   return (
-    <>
-<div className="bg-white-100 w-3/4 md:w-5/12 lg:w-96 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 rounded-md">
+<div className="w-3/4 md:w-7/12 lg:w-96 rounded-md text-white m-auto">
   
   <div className="text-center mt-4 w-full h-full">
   
-    <h1 className={` top-1/4 text-xl font-bold`}>
+    <h1 className={` top-1/4 font-bold mb-10 text-4xl`}>
       Tack för din bokning!
     </h1>
     {bookingResult && movie && screening && 
-    <div className="flex-grow p-5 flex flex-col items-start justify-between">
+    <>
+    <div className="mb-10 max-w-full flex justify-center items-center">
+        <img
+          src={`/img/${movie.img_poster}`}
+          alt="movie poster"
+          className="w-34 h-48 rounded-lg"
+        />
+        <div className="text-white-100 ml-4 flex flex-col lg:px-6 md:px-6">
+          <p className="text-xl">{}</p>
+          <h2 className="text-xl font-extra-bold">{movie.title}</h2>
+          <p className="font-inconsolata text-xl">{movie.genre}</p>
+          <p className="text-xl">{`${movie.ageRestriction === 0 ? "Ingen åldersgräns" : movie.ageRestriction} år`}</p>
+        </div>
+        
+      </div>
+    <ul className="flex flex-col sm:text-2xl ">
       <p className="text-left mb-2">Bokningsbekräftelse har nu skickats till din email!</p>
-      <p>Bokningsnummer: <span>{bookingResult.bookingId}</span> </p>
-      <p>Film: <span>{movie.title}</span></p>
-      <p>Biljetter: 
-        { bookingResult.ticketType.adult !== 0 ? <span> {bookingResult.ticketType.adult} Vuxen</span> : null}
-        { bookingResult.ticketType.child !== 0 ? <span> {bookingResult.ticketType.child} Barn</span> : null}
-        {bookingResult.ticketType.senior !== 0 ? <span> {bookingResult.ticketType.senior} Pensionär</span> : null}
-      </p>
-      <p>Rad: <span>{` Rad: ${bookingResult.row}`}</span></p>
-      <p>Plats: <span>{`${bookingResult.seats?.map((seat) => seat.seatNumber)}`}</span></p>
-      <p>datum: <span> {screening.date}</span></p>
-      <p>Epost: <span>{bookingResult.customerEmail}</span></p>
-      <p>Pris: <span>{`${bookingResult.price}kr`}</span></p>
+      <li className="flex justify-between"><p>Bokningsnummer:</p> <p>{bookingResult.bookingId}</p> </li>
+      <li className="flex justify-between"><p>Film:</p> <p>{movie.title}</p></li>
+      <li className="flex justify-between"> <p>Biljetter:</p> 
+        { bookingResult.ticketType.adult !== 0 ? <p> {bookingResult.ticketType.adult} Vuxen</p> : null}
+        { bookingResult.ticketType.child !== 0 ? <p> {bookingResult.ticketType.child} Barn</p> : null}
+        {bookingResult.ticketType.senior !== 0 ? <p> {bookingResult.ticketType.senior} Pensionär</p> : null}
+      </li>
+      <li className="flex justify-between"> <p>Rad: </p><p>{`${bookingResult.row}`}</p></li>
+      <li className="flex justify-between"> <p>Plats:</p> <p>{`${bookingResult.seats?.map((seat) => seat.seatNumber)}`}</p></li>
+      <li className="flex justify-between"> <p>Salong: </p>{screening.theaterName}</li>
+      <li className="flex justify-between"> <p>datum:</p> <p> {screening.date}</p></li>
+      <li className="flex justify-between"> <p>Epost:</p> <p>{bookingResult.customerEmail}</p></li>
+      <li className="flex justify-between"> <p>Pris:</p> <p>{`${bookingResult.price}kr`}</p></li>
      
-    </div>}
-    <button onClick={() => navigate("/")} className='bg-gold text-black-100 rounded-md px-4 p-1 mb-4'>
-        Stäng
+    </ul>
+    </>}
+    <button onClick={() => navigate("/")} className='bg-gold w-36 text-black px-6 py-2 rounded m-auto text-xl mt-12'>
+        Hem
       </button>
   </div>
 
  </div>
 
-</>
+
 
   );
 }
