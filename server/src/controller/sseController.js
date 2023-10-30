@@ -16,7 +16,12 @@ const logoPath = pathJoin(__dirname, "..", "assets"  );
 let clients = [];
 
 const postBooking = async (req, res) => {
-  const body = req.body  
+  const body = req.body
+  const totalTickets = body.adult + body.child + body.senior
+
+  if(body.seats.length !== totalTickets) {
+    return res.status(400).send({message: "Number of seats does not match number of ticketTypes"})
+  }
   const authHeader = req.headers['authorization']
   let authToken;
   let user = {}
@@ -71,19 +76,20 @@ const postBooking = async (req, res) => {
 
 
 const mailOptions = {
-  from: process.env.email,
+  from: `"Filmvisarna 🎥🍿 ${process.env.email}` ,
   to: booking.customerEmail, 
   subject: 'Bokningsbekräftelse',
-  text:`Din bokningsbekräftelse. Ditt bokningsnummer är ${booking.bookingId}. Välkommen på en fantastisk bioupplevelse hos oss på Filmvisarna.  `,
-  html: `  <div style="border:black; border-width:2px; border-style:solid; padding:10px; text-align:center; width:400px; border-radius:15px; font-size:16px;">
-  <h2 style="color:purple;">Din bokningsbekräftelse</h2> 
-  <p>Ditt bokningsnummer är ${booking.bookingId} 
+  text:`  `,
+  html: `  <div style="border:#DACA88; border-width:2px; border-style:solid; padding:10px; text-align:center; width:400px; border-radius:8px; font-size:16px;">
+  <h2 style="color:black;">Tack för din bokning.</h2> 
+  <p>Ditt bokningsnummer är: <span style="font-weight:800">${booking.bookingId}</span> 
   <br><h1></h1> 
-  Ta med ditt bokningsnummer till biografen för att kunna betala och få biljetterna till din valda visning.
+  Vi på Filmvisarna önskar en underbar biostund.
+  Bokningsnummret visar du upp i kassan i samband <br> med betalning.
   <br>
   <br>
-  Välkommen på en fantastisk bioupplevelse hos oss på </p> 
-  <br><img width="50px" src="cid:${process.env.email}">
+  Välkommen!</p> 
+  <br><img width="40px" src="cid:${process.env.email}">
   <br>
   </div>`,
   attachments: [
@@ -96,15 +102,7 @@ const mailOptions = {
 };
 
   transporter.sendMail(mailOptions)
-//      function (error, info) {
-//   if (error) {
-//       console.log('Något gick fel: ' + error);
-//       res.status(500).json({ message: 'Något gick fel', error: error.message }); 
-//     } else {
-//     console.log('E-postmeddelandet har skickats: ' + info.response);
-//     res.status(200).json({ message: 'Bokningsbekräftelse skickad' });
-//   }
-// }); 
+
     await fetchCollection("bookings").insertOne(booking)
     
     if(user.role) {
@@ -165,14 +163,12 @@ const cancelBooking = async (req, res) => {
     }
     try {
        let currentScreening = await fetchCollection("screenings").findOne({_id: new ObjectId(booking.screeningID)})
-       console.log(currentScreening)
         for(let i = 0; i < booking.seats.length; i++) {
             if(currentScreening.seats[booking.row - 1][booking.seats[i].seat - 1] == false) {
                 return res.status(400).send({message: "The seats you are trying to cancel are already canceled"})
                }
             currentScreening.seats[booking.row - 1][booking.seats[i].seat - 1] = {seat: false, seatNumber: currentScreening.seats[booking.row - 1][booking.seats[i].seat - 1].seatNumber}
         }
-        console.log(currentScreening)
         booking.status = false
         await fetchCollection("bookings").updateOne({_id: new ObjectId(body.id)}, {$set: booking})
         let result = await fetchCollection("screenings").updateOne({_id: new ObjectId(booking.screeningID)}, {$set: currentScreening})

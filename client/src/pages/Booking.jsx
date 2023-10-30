@@ -13,62 +13,62 @@ export default function Booking() {
   const [query, setQuery]= useState("");
 
   //eslint-disable-next-line
-  const { data, isPending, error } = useFetch(`/api/filteredscreenings?${query}`)
+  const { data, isPending, error } = useFetch(`/api/filteredscreenings${query?"?":""}${query}`)
   console.log(query)
   console.log(data)
 
-  function handleSubmit(e){
-  e.preventDefault();
-   console.log(age, date, movie)
- 
-  const queryParams = {};
-  if (age) {
-    queryParams.age = age;
-  }
-  if(date) {
-    queryParams.date = date;
-  }
-  if (movie) {
-    queryParams.movie = movie;
-  }
-  const queryString = new URLSearchParams(queryParams).toString();
-  
- setQuery(queryString)
- navigate(`/booking?${queryString}`);
- setAge("");
- setDate("");
- setMovie("");
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log(age, date, movie)
+
+    const queryParams = {};
+    if (age) {
+      queryParams.age = age;
+    }
+    if (date) {
+      queryParams.date = date;
+    }
+    if (movie) {
+      queryParams.movie = movie;
+    }
+    const queryString = new URLSearchParams(queryParams).toString();
+
+    setQuery(queryString)
+    navigate(`/booking?${queryString}`);
+    setAge("");
+    setDate("");
+    setMovie("");
   }
 
   return (
-    <div className="mt-6 mb-20 min-w-full max-w-full bg-primary font-inconsolata">
+    <div className="mt-6 mb-20 min-w-screen bg-primary font-inconsolata">
       <div className="relative">
         <p>Inga visningar tillgängliga just nu</p>
 
-        {data && data.length > 0 &&(
-     <>
-        <img
-         src={`/img/${data[0].movie.img_header}`}
-         alt={`photo from the movie ${data[0].movie.title}`}
-          className="w-full object-cover object-center lg:h-[550px]"
-        />
-        <div
-          className={`${styles.centerAbsolutePos} top-1/2 flex flex-col text-center text-gold`}
-        >
-          <h1 className={`lg:text-4xl`}>{`${data[0].date} ${data[0].time}`}</h1>
-         
-          <h2 className={`lg:text-4xl`}>{`${data[0].movie.title}`}</h2>
-          <Link to={`/movies/${data[0].movie._id}`} className={`text-4-xl underline`}>
-            Se trailer
-          </Link>
-        </div>
-        </>
+        {data && data.length > 0 && (
+          <>
+            <img
+              src={`/img/${data[0].movie.img_header}`}
+              alt={`photo from the movie ${data[0].movie.title}`}
+              className="w-full object-cover object-center lg:h-[550px]"
+            />
+            <div
+              className={`${styles.centerAbsolutePos} top-1/2 flex flex-col text-center text-gold`}
+            >
+              <h1 className={`lg:text-4xl`}>{`${data[0].date} ${data[0].time}`}</h1>
+
+              <h2 className={`lg:text-4xl`}>{`${data[0].movie.title}`}</h2>
+              <Link to={`/movies/${data[0].movie._id}`} className={`text-4-xl underline`}>
+                Se trailer
+              </Link>
+            </div>
+          </>
         )}
       </div>
       <MovieFilterForm data={data} handleSubmit={handleSubmit}
-       setAge={setAge} age={age} setDate={setDate} date={date} setMovie={setMovie} movie={movie} />
-      <BookMovieHero data= {data} handleSubmit={handleSubmit}/>
+        setAge={setAge} age={age} setDate={setDate} date={date} setMovie={setMovie} movie={movie} />
+      <BookMovieHero data={data} handleSubmit={handleSubmit} />
     </div>
-    
+
   );
 }

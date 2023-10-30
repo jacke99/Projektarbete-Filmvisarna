@@ -32,8 +32,8 @@ export default function MovieDetails() {
 
   // Options för att ändra storlek på videon
   const opts = {
-    height: '400',
-    width: '1100',
+    height: '500',
+    width: '1000',
    
   };
 
