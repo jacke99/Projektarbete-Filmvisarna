@@ -4,6 +4,10 @@ package-lock.json
 *.log
 *.gz
 
+#mac
+.DS_Store
+
+
 # Coveralls
 .nyc_output
 coverage

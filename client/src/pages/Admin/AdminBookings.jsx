@@ -1,16 +1,14 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import AdminHeader from "../../components/adminPage/AdminHeader"
 import { performRequest } from "../../service/fetchService"
 import { styles } from "../../styles.js";
-import { resolvePath } from "react-router-dom";
+
 
 
 
 export default function AdminBookings() {
     const [bookings, setBookings] = useState(undefined)
-    const [searchInput, setSearchInput] = useState("")
-    // const [filteredBookings, setFilteredBookings] = useState("")
-
+    const [query, setQuery] = useState("")
 
     //get bookings
     useEffect(() => {  
@@ -29,38 +27,13 @@ export default function AdminBookings() {
         setBookings(updatedBookingsResp)
     }
 
-    /* 
-    //Location searchInput plockas ut och läggs in i userSearch
-    const theUserSearch = window.location.searchInput; 
-    console.log(theUserSearch);
-
-    //Vi använder URLSearchParams för att plocka ut användarens sökning
-    const urlParams = new URLSearchParams(theUserSearch);
-    
-    //Vi kan plocka ut stringen ur sökningen genom urlParams.get
-    const param = urlParams.get("bokningsnummer");
-    console.log(param);
-
-*/
-
-    //hanterar förändringar i sökfältet
-    const handleChange = (event) => {
-        event.preventDefault();
-        setSearchInput(event.target.value);
-        console.log(searchInput);
-        setBookings(filterList(bookings, searchInput));
-    };
-
-    function filterList(list, Input) {
-    return list.filter((item) => item.bookingId.toLowerCase().includes(Input.toLowerCase()));
-    }
-
-    //filtrerar listan med bokningar if condition is met LOOOOP never ending what to do
-    // if (searchInput.length > 0) {
-    //     }
-
-
-    console.log(searchInput);
+    //Search
+    const filteredBookings = useMemo(() => {
+        
+        return bookings?.filter(booking => { 
+            return booking.bookingId.toLowerCase().includes(query.toLowerCase()) || booking.customerEmail.toLowerCase().includes(query.toLowerCase()) || booking.customer?.name.toLowerCase().includes(query.toLowerCase()) || booking.customer?.lastname.toLowerCase().includes(query.toLowerCase())
+    }) 
+    }, [bookings, query])
     
     return (
         <div className="mt-20 mx-12">
@@ -70,9 +43,7 @@ export default function AdminBookings() {
             <div id="UserListHeader" className="flex justify-between items-end p-4">            
                 <h1 className="text-2xl text-white">BOKNINGAR</h1>
                 <div className="flex gap-3">
-                        <input placeholder="Sök..." type="text" value={searchInput} onChange={handleChange} id="filmTitle" name="filmTitle" className={`${styles.inputStyle}`}/>
-                        {/* <button type="submit" className={`rounded-md bg-gold p-1 px-4 text-black-100 w-16 self-center`}>Sök
-                        </button> */}
+                        <input placeholder="Sök..." type="text" value={query} onChange={e => setQuery(e.target.value)} id="filmTitle" name="filmTitle" className={`${styles.inputStyle}`}/>
                 </div>
             </div>
 
@@ -83,14 +54,17 @@ export default function AdminBookings() {
                         <th>Bokningsnr</th>
                         <th>Sittplatser</th>
                         <th>Biljetter</th>
+                        <th>Email</th>
                         <th></th>
+                        
+
                     </tr>
-                {bookings && bookings.map((booking, key) => {
+                {filteredBookings && filteredBookings.map((booking, key) => {
 
                     if (booking.status)  {     
                     return (
                     <tr key={key} className="">
-                        <td>{`${booking.customer.name} ${booking.customer.lastname}`}</td>
+                        <td>{ booking.customer?.name ?  `${booking.customer?.name} ${booking.customer?.lastname}` : "Gäst"}</td>
                         <td>{booking.bookingId}</td>
                         <td>{booking.seats.map((seat, key)=> {
                             if(key + 1 === booking.seats.length) {
@@ -107,6 +81,8 @@ export default function AdminBookings() {
                             <p>{booking.ticketType.senior >= 1 ? `Pensionär: ${booking.ticketType.senior}` : null}</p>
                         </td>
 
+                        <td>{booking.customerEmail}</td>    
+
                         <td className="p-4 text-center">
                             <button
                                 className={`rounded-md bg-red-200 p-1 px-4 text-black-100 self-center`}
@@ -114,7 +90,8 @@ export default function AdminBookings() {
                             >
                                 Avboka
                             </button>
-                        </td>            
+                        </td>   
+                            
                     </tr> )  
                         }
                     })
