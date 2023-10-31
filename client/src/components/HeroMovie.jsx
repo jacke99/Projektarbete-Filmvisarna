@@ -1,16 +1,16 @@
+
 import { styles } from "../styles";
 
 // eslint-disable-next-line react/prop-types
-export default function MovieImgBlock({ movieImg}) {
- const path = `/img${movieImg}`
-console.log(path)
+export default function MovieImgBlock({movie}) {
+ 
   return (
     <section
       className={`relative mt-2 flex items-center justify-center bg-primary text-center`}
     >
       <img
         className="w-full object-cover object-center lg:h-[550px]"
-        src={movieImg}
+        src={`/img/${movie.img_header}`}
         alt="Img with main characters from Killers of the Flower Moon Movie"
       />
       <div className="translate-50-50 absolute left-1/2 top-1/2">
