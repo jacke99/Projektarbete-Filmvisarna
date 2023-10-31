@@ -1,8 +1,9 @@
 /* eslint-disable */
 import { Link, useNavigate } from "react-router-dom";
-
+import { useStates } from 'react-easier';
 
 export default function BookingTicketsForm({inputValues, setInputValues}) {
+    const t = useStates("globalToggle")
     const navigate = useNavigate()
     function handleChange(e) {
         setInputValues({...inputValues, [e.target.name]: e.target.value})
@@ -18,7 +19,7 @@ export default function BookingTicketsForm({inputValues, setInputValues}) {
             </ul>
 
             <button className="bg-gold w-36 text-black px-6 py-2 rounded m-auto" onClick={() => navigate("/register")}>Bli medlem</button>
-            <p className="text-center mb-8 mt-1">eller <Link className="underline" to="/register">logga in!</Link></p>
+            <p className="text-center mb-8 mt-1">eller <span className="underline cursor-pointer" onClick={() => t.toggle = true}>logga in!</span></p>
         </div>
         <div className="flex flex-col">
             <label className="font-inconsolata" htmlFor="email">Fyll i mailadress</label>
