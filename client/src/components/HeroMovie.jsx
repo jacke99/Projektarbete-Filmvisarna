@@ -1,7 +1,9 @@
 import { styles } from "../styles";
 
 // eslint-disable-next-line react/prop-types
-export default function MovieImgBlock({ movieImg }) {
+export default function MovieImgBlock({ movieImg}) {
+ const path = `/img${movieImg}`
+console.log(path)
   return (
     <section
       className={`relative mt-2 flex items-center justify-center bg-primary text-center`}
