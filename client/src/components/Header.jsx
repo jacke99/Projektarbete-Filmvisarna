@@ -4,14 +4,14 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { logo, account_circle_new, close, menu_new } from "../assets";
 import Login from "./Login";
 import { parseJwt } from "../service/jwtService";
+import { useStates } from 'react-easier';
 export default function Header() {
   const [active, setActive] = useState("");
-  const [toggleLogin, setToggleLogin] = useState(false)
+  const t = useStates("globalToggle", {toggle: false})
   const [toggle, setToggle] = useState(false);
   const [currentUser, setCurrentUser] = useState(parseJwt(sessionStorage.getItem("AuthToken")))
   const navigate = useNavigate()
   let location = useLocation()
-  console.log(location)
   function logout() {
     sessionStorage.removeItem("AuthToken")
     setCurrentUser(undefined)
@@ -136,11 +136,11 @@ export default function Header() {
           src={account_circle_new}
           alt="login"
           className="w-8 sm:w-12 object-contain cursor-pointer mr-2"
-          onClick={() => setToggleLogin(!toggleLogin) }
+          onClick={() => t.toggle = true }
         />
         <p
-          className={`${styles.subHeaderText} ${toggleLogin ? "text-white" : "text-gold"} hidden cursor-pointer hover:text-white lg:flex`}
-          onClick={() => currentUser ? logout()  : setToggleLogin(!toggleLogin) }
+          className={`${styles.subHeaderText} ${t.toggle ? "text-white" : "text-gold"} hidden cursor-pointer hover:text-white lg:flex`}
+          onClick={() => currentUser ? logout()  : t.toggle = true }
         >
           {currentUser ? "Logga ut" : "Logga in"}
         </p>
@@ -244,7 +244,7 @@ export default function Header() {
           </ul>
         </div>
       </div>
-      {toggleLogin && <Login setToggleLogin={setToggleLogin} setCurrentUser={setCurrentUser}/>}
+      {t.toggle && <Login setCurrentUser={setCurrentUser}/>}
     </nav>
   );
 }

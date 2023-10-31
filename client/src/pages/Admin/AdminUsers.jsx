@@ -17,7 +17,7 @@ export default function AdminUsers() {
 
 
     return (
-    <div className="mt-20 mx-1">
+    <div className="mt-20">
         <AdminHeader/>
 
         <div className="max-w-fit flex flex-col justify-center m-auto">

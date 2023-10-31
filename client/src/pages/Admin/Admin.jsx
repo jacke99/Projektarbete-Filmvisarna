@@ -4,9 +4,9 @@ function Admin() {
 
 
     return (
-        <div className="mt-20 mx-12">
+        <div className="mt-20">
           <AdminHeader/>
-          <h1 className="text-2xl font-semibold text-white">ADMIN STARTSIDA</h1>
+          <h1 className="text-2xl font-semibold text-white text-center">ADMIN STARTSIDA</h1>
         </div>
     );
 }

@@ -36,7 +36,7 @@ export default function AdminBookings() {
     }, [bookings, query])
     
     return (
-        <div className="mt-20 mx-12">
+        <div className="mt-20">
             <AdminHeader/>
             <div className="max-w-fit flex flex-col justify-center m-auto">
 

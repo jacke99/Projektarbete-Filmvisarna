@@ -79,24 +79,23 @@ const getBookingsXuser = async (req, res) => {
 
 const postMovie = async (req, res) => {
   const movie = req.body;
-  console.log(req.body);
   
   const { title, desc , trailer, // här vill vi att "img" ska hämtas från client/srs/assets och följa med posten upp til DB
     director, actors,length,
     genre, speech, subtitles,
-    ageRestriction,
+    ageRestriction
   } = req.body;
   
+
   if (
     !title || !desc || !trailer ||
     !director || !actors || !length ||
     !genre || !speech || !subtitles ||
-    !ageRestriction  ) {
+    !ageRestriction ) {
     return res.status(400).json({
       error: "Missing required properties, pls check your request body",
     });
   }
-  console.log(req.files);
 
   if (!req.files) {
     // If there's no file in the request, something went wrong.
