@@ -17,7 +17,7 @@ export default function MovieImgBlock({ movieImg }) {
           Killers of the Flower Moon
         </h2>
         <p className="underline-offset-3 font-inconsolata text-gold underline  underline-offset-4 sm:text-[12px] md:text-[20px] lg:text-[25px]">
-          Se trailer {">"}
+          Mer info {">"}
         </p>
       </div>
     </section>
