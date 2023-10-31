@@ -22,7 +22,6 @@ export default function BookingPartTwo(){
   const movie = location.state.movie;
   const screening = location.state.screening;
   const booking = location.state.booking;
-  
   useEffect(() => {
     const user = parseJwt(sessionStorage.getItem("AuthToken"))
     if(user) {
@@ -63,7 +62,7 @@ export default function BookingPartTwo(){
         <>
       {movie && screening &&
             <div className="mt-40 px-6 flex flex-col md:items-center">
-              <NavLink to="/booking" className="text-white-100 font-inconsolata underline mb-6"> Tillbaka</NavLink>
+              <NavLink to={`/booking/${screening._id}`} className="text-white-100 font-inconsolata underline mb-6"> Tillbaka</NavLink>
               
               
             {!toggleConfirmation.toggle && 
