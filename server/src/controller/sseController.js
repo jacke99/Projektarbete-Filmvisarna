@@ -16,7 +16,12 @@ const logoPath = pathJoin(__dirname, "..", "assets"  );
 let clients = [];
 
 const postBooking = async (req, res) => {
-  const body = req.body  
+  const body = req.body
+  const totalTickets = body.adult + body.child + body.senior
+
+  if(body.seats.length !== totalTickets) {
+    return res.status(400).send({message: "Number of seats does not match number of ticketTypes"})
+  }
   const authHeader = req.headers['authorization']
   let authToken;
   let user = {}
