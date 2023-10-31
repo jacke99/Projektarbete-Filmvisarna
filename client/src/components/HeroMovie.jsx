@@ -4,7 +4,7 @@ import { styles } from "../styles";
 export default function MovieImgBlock({ movieImg }) {
   return (
     <section
-      className={`relative mt-16 flex items-center justify-center bg-primary text-center`}
+      className={`relative mt-2 flex items-center justify-center bg-primary text-center`}
     >
       <img
         className="w-full object-cover object-center lg:h-[550px]"
