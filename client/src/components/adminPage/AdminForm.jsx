@@ -2,10 +2,15 @@
 
 
 export default function AdminForm() {
+
+    const authToken = sessionStorage.getItem("AuthToken");
+    console.log(authToken)
+
+//lägg till required på alla inputs och gör röd på alla inputs som inte är ifyllda
     return (
         <div className="mt-20 mx-auto w-60">
-            <h3 className="text-lg font-medium text-white">Lägg till en ny film</h3>    
-            <form className="flex flex-col" action="/api/movies" method="post" encType="multipart/form-data">
+            <h3 className="text-lg font-medium text-white">Redigera Filmer</h3>    
+            <form className=" text-black" action={`/api/movies/${authToken}`} method="post" encType="multipart/form-data">
                 <input className="border-2 border-black" type="text" name="title" placeholder="Titel..." />
                 <input className="border-2 border-black" type="text" name="desc" placeholder="Beskrivning..." />
                 <input className="border-2 border-black" type="text" name="trailer" placeholder="Trailer..." />
@@ -16,6 +21,7 @@ export default function AdminForm() {
                 <input className="border-2 border-black" type="text" name="speech" placeholder="Språk..." />
                 <input className="border-2 border-black" type="text" name="subtitles" placeholder="Undertext..." />
                 <input className="border-2 border-black mb-6" type="number" name="ageRestriction" placeholder="Åldersgräns" />
+        
                     
                 <label htmlFor="img_poster" className="text-white" >Huvudbild</label>
                 <input type="file" name="img_poster" id="files" multiple className="text-white" />

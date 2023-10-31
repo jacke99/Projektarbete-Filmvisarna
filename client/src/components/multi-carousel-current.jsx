@@ -6,15 +6,14 @@ import { useEffect, useState } from "react";
 import { performRequest } from "../service/fetchService.js";
 
 
-export default function MultiCarousel() {
+export default function MultiCarouselCurrent() {
   const pathToFolder = '/img/';
 
   const [movies, setMovies] = useState([])
 
   useEffect(() => {
   async function getMovies() {
-    const resp = await performRequest("/api/movies", "GET")
-    
+    const resp = await performRequest("/api/movies/current", "GET")
     setMovies(resp)
   }
   getMovies()
@@ -28,17 +27,21 @@ export default function MultiCarousel() {
       title={movie.title}
       img={`${pathToFolder}${movie.img_poster}`} 
       alt={movie.title}
+      link={`/movies/${movie._id}`}
     />
   ));
 
   return (
     // Karusell från React-multi-carousel med movie från ovan.
+    <>
+    <h1 className="text-white text-[18px] md:text-[20px] lg:text-[22px] text-center my-10 md:mt-12">Aktuella filmer</h1>
     <Carousel
-      className={`mx-2 my-12 md:m-20`}
+      className={`mx-2 my-10 md:my-12`}
       responsive={responsive}
       renderArrowsWhenDisabled={true}
     >
       {movie}
     </Carousel>
+    </>
   );
 }
