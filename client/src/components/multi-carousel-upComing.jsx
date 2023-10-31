@@ -36,7 +36,7 @@ export default function MultiCarouselUpcoming() {
     <>
     <h1 className="text-white text-[18px] md:text-[20px] lg:text-[22px] text-center my-10 md:mt-12">Kommande filmer</h1>
     <Carousel
-      className={`mx-2 my-12 md:m-20`}
+      className={`mx-2 my-10 md:my-12`}
       responsive={responsive}
       renderArrowsWhenDisabled={true}
     >
