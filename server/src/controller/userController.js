@@ -12,6 +12,28 @@ const getMovies = async (req, res) => {
         }
 }
 
+const getMoviesUpComing = async (req, res) => {
+
+    try {
+        const movies = await fetchCollection("moviesXscreenings").find({screenings:{$size: 0}}).toArray()
+        res.status(200).send(movies);
+
+      } catch {
+          res.status(500).send({ error: "Could not fetch upcoming movies from moviesXscreening collection" });
+        }
+}
+
+const getMoviescurrent = async (req, res) => {
+
+    try {
+        const movies = await fetchCollection("moviesXscreenings").find({"screenings.0":{$exists: true} }).toArray()
+        res.status(200).send(movies);
+
+      } catch {
+          res.status(500).send({ error: "Could not fetch current movies from moviesXscreening collection" });
+        }
+}
+
 const getMovie = async (req, res) => {
    
     try {
@@ -86,4 +108,4 @@ const getScreenings = async (req, res) => {
 
 
 
-export default {getMovies, getScreenings, getMovie}
+export default {getMovies, getScreenings, getMovie, getMoviesUpComing, getMoviescurrent}

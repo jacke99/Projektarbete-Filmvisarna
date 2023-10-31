@@ -21,13 +21,15 @@ router.post("/theaters", jwtFilter.bind({role: "ADMIN"}), adminController.addNew
 router.get("/users", adminController.getUsers)
 
 
-
 //Accounts (register, login, get user booking/history)
 router.post("/register", accountController.register)
 router.put("/login", accountController.login)
 router.get("/user/bookings", accountController.getUserBookings )
 
 //User stuff
+router.get("/movies/upcoming", userController.getMoviesUpComing)
+router.get("/movies/current", userController.getMoviescurrent)
+
 router.get("/movies", userController.getMovies)
 router.get("/movies/:id", userController.getMovie)
 router.get('/filteredScreenings', userController.getScreenings )
