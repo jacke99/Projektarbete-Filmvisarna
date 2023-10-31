@@ -3,10 +3,9 @@
 
 export default function AdminForm() {
     return (
-        <div className="min-h-screen">
-            <h3 className="text-lg font-medium text-white">Redigera Filmer</h3>    
-            <div className="max-w-xl">
-            <form className="flex flex-col " action="/api/movies" method="post" encType="multipart/form-data">
+        <div className="mt-20 mx-auto w-60">
+            <h3 className="text-lg font-medium text-white">Lägg till en ny film</h3>    
+            <form className="flex flex-col" action="/api/movies" method="post" encType="multipart/form-data">
                 <input className="border-2 border-black" type="text" name="title" placeholder="Titel..." />
                 <input className="border-2 border-black" type="text" name="desc" placeholder="Beskrivning..." />
                 <input className="border-2 border-black" type="text" name="trailer" placeholder="Trailer..." />
@@ -27,7 +26,6 @@ export default function AdminForm() {
 
                 <button className=" mt-2 md:mt-6 md:mb-6 lg:mt-8 lg:mb-8 rounded-xl bg-gold px-4 py-2 text-xl text-black sm:px-5 sm:text-2xl mx-auto" type="submit">Skicka in</button>
             </form>
-            </div>
 
         </div>
         );
