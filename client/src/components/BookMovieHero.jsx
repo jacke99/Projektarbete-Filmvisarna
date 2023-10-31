@@ -20,10 +20,11 @@ export default function BookMovieHero({ data, handleSubmit }) {
   }
 
   return (
-    <>
+    <>  
       {data.map((screening) =>
+        
         <div className="max-w-full p-4 flex items-center justify-between md:justify-start lg:justify-start sm:w-[35rem] md:w-[40rem] lg:w-[54rem] sm:m-auto sm:px-12">
-
+          
           <img
             src={`/img/${screening.movie.img_poster}`}
             alt={`poster from the movie: ${screening.movie.title}`}
