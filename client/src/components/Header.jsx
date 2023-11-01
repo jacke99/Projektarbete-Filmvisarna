@@ -40,7 +40,7 @@ export default function Header() {
           />
         </Link>
         <ul
-          className={`${styles.subHeaderText} hidden list-none flex-row gap-10 lg:flex `}
+          className={`${styles.subHeaderText} hidden list-none flex-row gap-10 xl:flex`}
         >
           <Link
             to="/"
@@ -84,7 +84,7 @@ export default function Header() {
               Biljetter
             </li>
           </Link>
-          <Link
+          {!currentUser && <Link
             to="/register"
             onClick={() => {
               window.scrollTo(0, 0);
@@ -97,7 +97,7 @@ export default function Header() {
             >
               Bli medlem
             </li>
-          </Link>
+          </Link>}
           {currentUser && <Link
             to="/mypages"
             onClick={() => {
@@ -129,7 +129,7 @@ export default function Header() {
         </ul>
       </div>
       <div className="flex w-[300px] justify-end gap-1 items-center">
-        <p  className={`${styles.subHeaderText} mr-2 hidden cursor-pointer hover:text-white lg:flex`}>
+        <p  className={`${styles.subHeaderText} mr-2 hidden cursor-pointer hover:text-white xl:flex`}>
         {currentUser ? currentUser.name : ""}
         </p>
         <img
@@ -139,7 +139,7 @@ export default function Header() {
           onClick={() => t.toggle = true }
         />
         <p
-          className={`${styles.subHeaderText} ${t.toggle ? "text-white" : "text-gold"} hidden cursor-pointer hover:text-white lg:flex`}
+          className={`${styles.subHeaderText} ${t.toggle ? "text-white" : "text-gold"} hidden cursor-pointer hover:text-white xl:flex`}
           onClick={() => currentUser ? logout()  : t.toggle = true }
         >
           {currentUser ? "Logga ut" : "Logga in"}
@@ -147,7 +147,7 @@ export default function Header() {
         <img
           src={toggle ? close : menu_new}
           alt="menu"
-          className="h-9 w-9 md:h-12 md:w-12 object-contain lg:hidden"
+          className="h-9 w-9 md:h-12 md:w-12 object-contain xl:hidden"
           onClick={() => setToggle(!toggle)}
         />
         <div
@@ -199,7 +199,7 @@ export default function Header() {
                 Biljetter
               </li>
             </Link>
-            <Link
+            {!currentUser && <Link
               to="/register"
               onClick={() => {
                 window.scrollTo(0, 0);
@@ -212,7 +212,7 @@ export default function Header() {
               >
                 Bli medlem
               </li>
-            </Link>
+            </Link>}
             {currentUser && <Link
             to="/mypages"
             onClick={() => {
@@ -241,6 +241,9 @@ export default function Header() {
               Admin
             </li>
           </Link>}
+          {currentUser && <li className="text-red-500" onClick={logout}>
+            Logga ut
+          </li>}
           </ul>
         </div>
       </div>
