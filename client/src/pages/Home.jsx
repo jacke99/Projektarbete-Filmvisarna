@@ -8,7 +8,8 @@ import { performRequest } from "../service/fetchService.js";
 
 export default function Home() {
 
-const [movies, setMovies] = useState([])
+const [movies, setMovies] = useState(undefined)
+console.log(movies)
 useEffect(() => {
 async function getMovies() {
   const resp = await performRequest("api/movies/current", "GET")
@@ -17,19 +18,13 @@ async function getMovies() {
 getMovies()
 }, [])
 
-function findMovie(searchValue) {
-  const movie = movies.find((movie) => movie.title == searchValue)
-  return movie
-}
-
   return (
     <> 
-        {movies && <HeroMovie movie={movies[0]} />}
+        {movies && <HeroMovie movie={movies[2]} />}
         <MultiCarouselCurrent />
-        {/* <HeroMovie movieImg={theCreatorImage} /> */}
+        {movies && <HeroMovie movie={movies[0]} />}
         <MultiCarouselUpcoming />
-        {/* {movies && <HeroMovie movieImg={pastLivesImage} />} */}
-        <button className="h-20 w-20 mt-20 bg-white" onClick={() => findMovie("The Creator")}>X</button>
+        {movies && <HeroMovie movie={movies[4]} />}
     </>
   );
 }

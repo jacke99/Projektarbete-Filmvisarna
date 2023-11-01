@@ -12,7 +12,7 @@ export default function MovieDetails() {
   const [movie, setMovie] = useState("");
   //eslint-disable-next-line
   const { data, isPending, error } = useFetch(`/api/movies/${id}`);
-  console.log(data);
+
 
   const getWindowWidth = () => window.innerWidth;
 
@@ -27,7 +27,7 @@ export default function MovieDetails() {
 
   function handleClickScroll() {
     const element = document.getElementById("scrollTo");
-    console.log(element);
+    
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
