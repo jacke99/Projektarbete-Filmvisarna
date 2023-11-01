@@ -53,10 +53,10 @@ export default function Booking() {
             <div
               className={`${styles.centerAbsolutePos} top-1/2 flex flex-col text-center text-gold`}
             >
-              <h1 className={`lg:text-4xl`}>{`${data[0].date} ${data[0].time}`}</h1>
+              <h1 className={`lg:text-4xl [text-shadow:1px_1px_2px_var(--tw-shadow-color)] shadow-black`}>{`${data[0].date} ${data[0].time}`}</h1>
 
-              <h2 className={`lg:text-4xl`}>{`${data[0].movie.title}`}</h2>
-              <Link to={`/movies/${data[0].movie._id}`} className={`text-4-xl underline`}>
+              <h2 className={`lg:text-4xl [text-shadow:1px_1px_2px_var(--tw-shadow-color)] shadow-black`}>{`${data[0].movie.title}`}</h2>
+              <Link to={`/movies/${data[0].movie._id}`} className={`text-4-xl underline [text-shadow:1px_1px_2px_var(--tw-shadow-color)] shadow-black`}>
                 Se trailer
               </Link>
             </div>
