@@ -128,7 +128,7 @@ export default function Header() {
           </Link>}
         </ul>
       </div>
-      <div className="flex w-[300px] justify-end gap-1 items-center">
+      <div className="flex w-[25rem] justify-end gap-1 items-center">
         <p  className={`${styles.subHeaderText} mr-2 hidden cursor-pointer hover:text-white xl:flex`}>
         {currentUser ? currentUser.name : ""}
         </p>
