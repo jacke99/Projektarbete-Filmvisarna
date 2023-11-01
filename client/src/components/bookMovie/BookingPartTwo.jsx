@@ -78,13 +78,13 @@ export default function BookingPartTwo(){
                 <p className="text-base">{}</p>
                 <h2 className="text-xl font-extra-bold">{movie.title}</h2>
                 <p className="font-inconsolata text-base">{movie.genre}</p>
-                <p className="text-base">{`${screening.time} | ${movie.ageRestriction === 0 ? "Ingen åldersgräns" : movie.ageRestriction} år`}</p>
+                <p className="text-base">{`${screening.time} | ${movie.ageRestriction === 0 ? "Ingen åldersgräns" : movie.ageRestriction + " år"}`}</p>
               </div>
         
             </div>
       
             <div className="text-white-100 text-base mb-10">
-              <h2 className="font-inconsolata">{`Salong: ${screening.theater}`}</h2>
+              <h2 className="font-inconsolata">{`${screening.theaterName}`}</h2>
               <p className="font-inconsolata">{screening.date}</p>
               <p className="font-inconsolata">{`Klockan: ${screening.time}`}</p>
               {booking.adult !== 0 ? <p className="font-inconsolata">{booking.adult} x Ordinarie/Vuxna</p> : null}

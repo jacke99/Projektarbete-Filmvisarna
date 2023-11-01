@@ -19,7 +19,7 @@ export default function MovieImgBlock({movie}) {
           {movie.title}
         </h2>
         <Link to={`movies/${movie._id}`}>
-        <p className="underline-offset-3 font-inconsolata text-gold underline  underline-offset-4 sm:text-[12px] md:text-[20px] lg:text-[25px] 
+        <p className="underline-offset-3 font-inconsolata text-gold underline underline-offset-4 sm:text-[12px] md:text-[20px] lg:text-[25px] 
         [text-shadow:1px_1px_2px_var(--tw-shadow-color)] shadow-black">
           Mer info {">"}
         </p> 
