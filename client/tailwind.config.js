@@ -17,6 +17,11 @@ export default {
       fontFamily: {
         inconsolata: ["Inconsolata", "monospace"],
       },
+      gridTemplateColumns: {
+        "auto-fit-lg": "repeat(auto-fit, minmax(30rem, 1fr))",
+        "auto-fit-mobile": "repeat(auto-fit, minmax(20rem, 1fr))",
+        "auto-fit-sm": "repeat(auto-fit, minmax(25rem, 1fr))",
+      },
     },
   },
   plugins: [],

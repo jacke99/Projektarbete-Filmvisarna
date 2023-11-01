@@ -31,7 +31,7 @@ export default function MyPages() {
     }
 
     const userBookings = userData?.map((booking, index) => (
-        <div key={index} className={`${styles.subHeaderText} text-white border-2 border-gold p-2 w-[28rem]`} >
+        <div key={index} className={`${styles.subHeaderText} text-white border-2 border-gold p-4 rounded-lg`} >
             <ul className="flex flex-col">
                 <li className="flex justify-between"> <p className="text-gold">BokningsNr:</p> <p>{booking.bookingId}</p></li>
                 <li className="flex justify-between"> <p className="text-gold">Datum:</p> <p>{booking.screening.date}</p></li>
@@ -55,16 +55,22 @@ export default function MyPages() {
     ))
     
   return (
-    <div className="mt-20 text-white px-4">
+    <div className="my-20 text-white px-8">
+        <div className="">
         <h3 className={`${styles.headerText}`} >Dina kontaktuppgifter</h3>
         <ul className={`${styles.subHeaderText} text-white mb-10`}>
             <li>Epostadress: {currentUser.email}</li>
             <li>Namn: {currentUser.name}</li>
             <li>Efternamn: {currentUser.lastname}</li>
             <li>Telefon: {currentUser.phone}</li>
-        </ul>
+        </ul>    
         <h4 className={`${styles.headerText} mb-2`}>Bokningar</h4>
-        {!toggle && <div className="flex flex-wrap gap-6 items-start mb-2 p-8">
+        </div>
+        
+        
+        {/* {!toggle && <div className="flex flex-wrap gap-6 items-start mb-2 p-8"> */}
+        {/* {!toggle && <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit, minmax(20rem, 1fr))] auto-rows-auto"> */}
+        {!toggle && <div className="grid grid-cols-auto-fit-mobile sm:grid-cols-auto-fit-sm lg:grid-cols-auto-fit-lg gap-8">
         {userBookings}
         </div>}
         {toggle && <CancelBooking booking={cancelBooking} setToggle={setToggle} />}
