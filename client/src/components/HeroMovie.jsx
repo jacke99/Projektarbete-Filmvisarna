@@ -6,7 +6,7 @@ export default function MovieImgBlock({movie}) {
  
   return (
     <section
-      className={`relative mt-20 flex items-center justify-center bg-primary text-center`}
+      className={`relative mt-16 flex items-center justify-center bg-primary text-center`}
     >
       <img
         className="w-full object-cover object-center lg:h-[550px]"
