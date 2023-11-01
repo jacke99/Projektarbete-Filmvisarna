@@ -16,6 +16,7 @@ const addScreening = async (req, res) => {
   body.movieID = new ObjectId(body.movieID)
   try {
     const theaters = await fetchCollection("theaters").findOne({"theaterNr": theater})
+    body.theaterName = theaters.name
     body.seats = theaters.seats
   } catch (error) {
     res.status(500).send({ error: "Could not fetch screenings collection" });
@@ -130,11 +131,8 @@ const addNewTheater = async (req, res) => {
         const seats = []
         for(let i = 0; i < rows.length; i++) {
           seats.push([])
-          
           for(let j = 0; j < rows[i].seats; j++) {
             if(i !== 0) {
-              // console.log(seats[i - 1][seats[i - 1].length - 1].seatNumber);
-              console.log(j);
               const seatNumber = calcSeatNumber(i, j, seats[i - 1][seats[i - 1].length - 1].seatNumber)
                 seats[i].push({
                   seat: false, 

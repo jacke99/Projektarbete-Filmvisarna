@@ -95,7 +95,7 @@ export default function BookingPartTwo(){
             </div>
 
             <div className="text-white-100 mb-10">
-              <p>{`Totalt att betala: ${calcTotalPrice(booking.adult, booking.child, booking.senior)}kr`}</p>
+              <p>{`Totalt att betala: ${calcTotalPrice(booking.adult, booking.child, booking.senior)} kr`}</p>
             </div>
             {!loggedIn && <BookingTicketsForm inputValues={inputValues} setInputValues={setInputValues}/>}
             <button onClick={handleBooking} className={`bg-gold w-36 text-black px-6 py-2 rounded m-auto mb-10`}>Boka</button>

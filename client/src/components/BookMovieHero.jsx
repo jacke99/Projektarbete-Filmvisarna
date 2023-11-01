@@ -4,25 +4,30 @@ import { useAutoKeys } from 'react-easier';
 import { styles } from "../styles";
 
 
-export default function BookMovieHero({ data, handleSubmit }) {
+export default function BookMovieHero({ data, isPending, error, handleSubmit }) {
   const navigate = useNavigate();
   useAutoKeys();
-
- 
-  if (!data || !Array.isArray(data) || data.length === 0) {
-    // Om det inte finns någon data eller data inte är en array
+  if(data && data.err || error) {
     return (
-      <div className="p-4 text-white-100 lg:text-4xl max-w-full h-screen flex flex-col items-center">
-        <h1 className="py-6">Ingen filmvisning matchade din sökning, prova igen!</h1>
+      <>
+        <div className="text-white text-center sm:text-xl md:text-2xl">Kunde inte hitta något på din sökning</div>
         <button className={`${styles.buttonStyle}`} onClick={handleSubmit}>se alla filmer</button>
-      </div>
-    );
+      </>
+    )
   }
-
   return (
-    <>  
-      {data.map((screening) =>
-        
+    <>
+      {isPending && 
+      <div className="pending">
+          Laddar
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>}
+
+      
+
+      {data && !data.err && data?.map((screening) =>
         <div className="max-w-full p-4 flex items-center justify-between md:justify-start lg:justify-start sm:w-[35rem] md:w-[40rem] lg:w-[54rem] sm:m-auto sm:px-12">
           
           <img

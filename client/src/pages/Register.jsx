@@ -3,6 +3,8 @@ import { useFormDefaults } from '../hooks/formValidation'
 import { performRequest } from "../service/fetchService";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { projektor } from "../assets/index.js";
+
 
 
 
@@ -85,8 +87,6 @@ export default function Register() {
 
 
   return <div className="bg-[url('./assets/chairs.jpg')] bg-cover bg-center min-h-screen" >
-
-
     <div className="" >
       <h2 className={`${styles.headerText} text-white text-center  pt-40 pb-10  text-4xl`}>
         Bli en del av familjen!
@@ -101,12 +101,17 @@ export default function Register() {
     <header>
       <h1 className={`${styles.headerText} text-white text-center  pt-20 pb-10  text-4xl`}>Bli medlem</h1>
     </header>
-
+    
     {/* form starts here  */}
-    <form onSubmit={(e) => SignUp(e)} className="flex flex-col items-center w-screen md:w-2/3 m-auto lg:w-2/4 lg:text-lg max-w-[50rem] static"  >
-
+    <form onSubmit={(e) => SignUp(e)} className="flex flex-col items-center w-screen md:w-2/3 m-auto lg:w-2/4 lg:text-lg max-w-[50rem] relative"  >
+    {showSuccessPopupMsg &&
+      <>
+        <div className="firework"></div>
+        <div className="firework"></div>
+        <div className="firework"></div>
+      </>}
       {/* Firstname and lastname */}
-      <div className=" flex items-center flex-col lg:w-[100%] md:w-[100%] sm:w-[100%] w-screen md:flex-row md:justify-center ">
+      <div className=" flex items-center flex-col sm:w-[100%] w-screen md:flex-row md:justify-center ">
         <input
           className={`${styles.regInputs} w-[85%] md:w-[41%] `}
           disabled={showSuccessPopupMsg}
@@ -121,7 +126,7 @@ export default function Register() {
 
           {...defaults('lastname', 'Efternamn. . .')} />
       </div>
-
+      
       {/* Phone number */}
       <input
         className={`${styles.regInputs} w-[85%]  `}
@@ -166,23 +171,24 @@ export default function Register() {
 
       {/* Button Submit */}
       <button
-        className="bg-gold w-40 px-4 rounded-lg py-4 my-5 lg:text-lg "
+        className="bg-gold w-40 px-4 rounded-lg py-4 my-5 lg:text-lg mb-10"
         disabled={showSuccessPopupMsg}
         type="submit" >Registrera</button>
 
 
       {/* Popup to user if account is created */}
       {showSuccessPopupMsg && (
-        <div className="popup rounded-md  bg-primary  " >
-          <div className=" flex items-center justify-center rounded-md flex-col
-                 lg:left-73 lg:top-[30rem] lg:h-[70rem] lg:w-[50rem]
-                 bg-primary  text-white  md:w-[30rem] md:h-[30rem] z-50 absolute md:left-[21%] md:top-[50%] md:mt-8 
-                  sm:absolute left-9 top-[50rem] h-[30rem] w-[20rem] "  >
-            <p className="md:text-[25px] lg:text-[30px]">{showMsgToUser}</p>
-            <button onClick={closeSuccessPopup} className={`${styles.buttonStyle}mt-7 px-10 p-2 lg:p-7 lg:px-16 lg:text-[30px]`}>Stäng</button>
+        <div className="popup absolute w-60 h-44 md:w-[17rem] md:h-[14rem] right-0 left-0 m-auto z-10 top-[-5rem]" >
+          <img src={projektor} alt="projektor" className="w-full h-2/3 rounded-t-md" />
+          <div className="flex-col bg-primary flex items-center justify-evenly
+            text-white p-8 h-full text-center rounded-b-md">
+            <p className="md:text-[1.2rem] lg:text-[1.5rem]">{showMsgToUser}</p>
+            <button onClick={closeSuccessPopup} className={`${styles.buttonStyle} mt-6 p-2 lg:p-2 lg:px-8 lg:text-[1.5rem]`}>Stäng</button>
           </div>
         </div>
       )}
+      
+          
     </form >
 
   </div>;
