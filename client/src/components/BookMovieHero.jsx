@@ -8,7 +8,7 @@ export default function BookMovieHero({ data, handleSubmit }) {
   const navigate = useNavigate();
   useAutoKeys();
 
-  console.log(data)
+ 
   if (!data || !Array.isArray(data) || data.length === 0) {
     // Om det inte finns någon data eller data inte är en array
     return (

@@ -1,8 +1,9 @@
 import MovieCardForFilmer from "../components/MovieCardForFilmer";
 import useFetch from "../hooks/useFetch";
+
 export default function Movies() {
+  //eslint-disable-next-line
   const { data, isPending, error } = useFetch("/api/movies");
-  console.log(data, isPending, error);
 
   return (
     <div className="mb-20 px-8">
