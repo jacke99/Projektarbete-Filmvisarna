@@ -1,17 +1,15 @@
 /* eslint-disable */
 
-import { useNavigate } from "react-router-dom";
+
 import { performRequest } from "../service/fetchService";
 import { styles } from "../styles";
 
 export default function CancelBooking({booking, setToggle}) {
-    const navigate = useNavigate()
     async function cancelBooking(ID) {
         console.log(ID)
         const resp = await performRequest("/api/bookings", "PATCH", {id: ID})
         if(resp.message === "Din bokning är nu avbokad!") {
-            alert(`${resp.message}`)
-            navigate("/")
+            window.location.reload();
         } else {
             alert("Något gick fel")
         }
