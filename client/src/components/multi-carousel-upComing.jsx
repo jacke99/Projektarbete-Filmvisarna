@@ -4,6 +4,7 @@ import MovieCard from "./movieCard.jsx";
 import { responsive } from "../assets/carouselData.js";
 import { useEffect, useState } from "react";
 import { performRequest } from "../service/fetchService.js";
+import { styles } from "../styles.js";
 
 
 export default function MultiCarouselUpcoming() {
@@ -34,7 +35,7 @@ export default function MultiCarouselUpcoming() {
   return (
     // Karusell från React-multi-carousel med movie från ovan.
     <>
-    <h1 className="text-white text-[18px] md:text-[20px] lg:text-[22px] text-center my-10 md:mt-12">Kommande filmer</h1>
+    <h1 className={`${styles.headerText}text-gold text-center mt-20`}>Kommande filmer</h1>
     <Carousel
       className={`mx-2 my-10 md:my-12`}
       responsive={responsive}

@@ -20,9 +20,9 @@ import prinsessanMononokePoster from "./prinsessanMononokePoster.png";
 import projector from "./projector.jpg";
 import footerIconFB from "../assets/footerIconFB.svg";
 import footerIconGH from "../assets/footerIconGH.svg";
-import fotterIconIG from "../assets/footerIconIG.svg";
-import fotterIconIN from "../assets/footerIconIN.svg";
 import projektor from "./projektor.jpg";
+import footerIconIG from "../assets/footerIconIG.svg";
+import footerIconIN from "../assets/footerIconIN.svg";
 
 export {
   aLittleLifeImage,
@@ -47,7 +47,7 @@ export {
   projector,
   footerIconFB,
   footerIconGH,
-  fotterIconIG,
-  fotterIconIN,
-  projektor
+  projektor,
+  footerIconIG,
+  footerIconIN,
 };
