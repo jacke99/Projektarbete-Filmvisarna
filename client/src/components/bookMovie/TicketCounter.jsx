@@ -59,10 +59,10 @@ export default function TicketCounter({ screening, movie }) {
           </div>
         </div>
       </div>
-      {screening && movie && <div className="flex justify-center gap-6 mt-6">
+      {screening && movie && <div className="flex gap-6 mt-6">
         <img className="h-44 sm:h-60 sm:mt-auto" src={`/img/${movie.img_poster}`} alt="movie poster" />
-        <div className="flex flex-col justify-end">
-          <p>{movie.title}</p>
+        <div className="flex flex-col justify-end text-start text-base">
+          <p className="text-xl">{movie.title}</p>
           <p>{`${screening.date.replaceAll("/", "-")} | ${screening.time}`}</p>
           <p>{screening.theaterName}</p>
           <p>{movie.genre}</p>
