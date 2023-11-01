@@ -41,10 +41,8 @@ export default function Booking() {
   }
 
   return (
-    <div className="mt-6 mb-20 min-w-screen bg-primary font-inconsolata">
+    <div className="mt-16 mb-20 bg-primary font-inconsolata">
       <div className="relative">
-        <p>Inga visningar tillgängliga just nu</p>
-
         {data && data.length > 0 && (
           <>
             <img
@@ -65,9 +63,9 @@ export default function Booking() {
           </>
         )}
       </div>
-      <MovieFilterForm data={data} handleSubmit={handleSubmit}
-        setAge={setAge} age={age} setDate={setDate} date={date} setMovie={setMovie} movie={movie} />
-      <BookMovieHero data={data} handleSubmit={handleSubmit} />
+      {data && !isPending && <MovieFilterForm data={data} handleSubmit={handleSubmit}
+        setAge={setAge} age={age} setDate={setDate} date={date} setMovie={setMovie} movie={movie} />}
+      <BookMovieHero data={data} isPending={isPending} error={error} handleSubmit={handleSubmit} />
     </div>
 
   );
