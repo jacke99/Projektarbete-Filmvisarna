@@ -31,7 +31,7 @@ export default function MyPages() {
     }
 
     const userBookings = userData?.map((booking, index) => (
-        <div key={index} className={`${styles.subHeaderText} text-white border-2 border-gold p-2 w-[350px]`} >
+        <div key={index} className={`${styles.subHeaderText} text-white border-2 border-gold p-2 w-[28rem]`} >
             <ul className="flex flex-col">
                 <li className="flex justify-between"> <p className="text-gold">BokningsNr:</p> <p>{booking.bookingId}</p></li>
                 <li className="flex justify-between"> <p className="text-gold">Datum:</p> <p>{booking.screening.date}</p></li>
@@ -64,7 +64,7 @@ export default function MyPages() {
             <li>Telefon: {currentUser.phone}</li>
         </ul>
         <h4 className={`${styles.headerText} mb-2`}>Bokningar</h4>
-        {!toggle && <div className="flex flex-wrap md:justify-between gap-4 items-start mb-2 justify-center">
+        {!toggle && <div className="flex flex-wrap gap-6 items-start mb-2 p-8">
         {userBookings}
         </div>}
         {toggle && <CancelBooking booking={cancelBooking} setToggle={setToggle} />}

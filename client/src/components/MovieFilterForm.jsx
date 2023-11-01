@@ -5,7 +5,6 @@ import { useStates } from "react-easier"
 export default function MovieFilterForm({ data, handleSubmit, setAge, age, setDate, date, setMovie, movie }) {
   
   const s = useStates('globalState');
-  console.log(data);
   return (
     <div className={data.err ? `max-w-full mt-24` : "max-w-full"}>
       <form onSubmit={handleSubmit} className="md:flex-row my-10 flex flex-col items-center space-y-4 md:justify-center md:gap-4">

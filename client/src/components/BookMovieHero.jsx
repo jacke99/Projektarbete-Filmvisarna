@@ -36,13 +36,13 @@ export default function BookMovieHero({ data, isPending, error, handleSubmit }) 
             className="w-34 h-48 rounded-lg"
           />
           <div className="text-white-100 flex flex-col lg:px-6 md:px-6 ml-4">
-            <p className="text-xs md:text-base lg:text-lg">{screening.date}</p>
+            <p className="text-xs md:text-base lg:text-lg">{`${screening.date} | ${screening.time}`}</p>
             <h2 className="text-base font-extra-bold md:text-base lg:text-lg">{screening.movie.title}</h2>
             <p className="font-inconsolata text-xs md:text-base lg:text-lg">{screening.movie.genre}</p>
             <p className="font-inconsolata text-xs md:text-base lg:text-lg">{screening.theaterName}</p>
             <p className="text-xs md:text-base lg:text-lg">{screening.movie.length}</p>
             <p className="text-xs md:text-base lg:text-lg">{`${screening.movie.ageRestriction === 0 ? "Ingen åldersgräns" : screening.movie.ageRestriction + " år"}`}</p>
-            <p className="font-inconsolata text-xs md:text-base lg:text-lg">{screening.time}</p>
+            
           </div>
           <button className="bg-gold text-black-100 rounded-md px-4 p-1 sm:ml-auto md:px-6 md:py-2"
             onClick={() => {
