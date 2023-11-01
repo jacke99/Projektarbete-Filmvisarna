@@ -67,9 +67,6 @@ export default function MyPages() {
         <h4 className={`${styles.headerText} mb-2`}>Bokningar</h4>
         </div>
         
-        
-        {/* {!toggle && <div className="flex flex-wrap gap-6 items-start mb-2 p-8"> */}
-        {/* {!toggle && <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit, minmax(20rem, 1fr))] auto-rows-auto"> */}
         {!toggle && <div className="grid grid-cols-auto-fit-mobile sm:grid-cols-auto-fit-sm lg:grid-cols-auto-fit-lg gap-8">
         {userBookings}
         </div>}
