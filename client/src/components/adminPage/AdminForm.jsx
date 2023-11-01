@@ -8,7 +8,7 @@ export default function AdminForm() {
 
 //lägg till required på alla inputs och gör röd på alla inputs som inte är ifyllda
     return (
-        <div className="mt-20 mx-auto w-60 " >
+        <div className="mt-32 mx-auto w-60 " >
             <h3 className="text-lg font-medium text-white">Redigera Filmer</h3>    
             <form className=" text-black" action={`/api/movies/${authToken}`} method="post" encType="multipart/form-data">
                 <input className={`${styles.inputStyle}`} type="text" name="title" placeholder="Titel..." />
@@ -24,7 +24,7 @@ export default function AdminForm() {
         
                     
                 <label htmlFor="img_poster" className="text-white" >Huvudbild</label>
-                <input type="file" name="img_poster" id="files" multiple className="text-white  " />
+                <input type="file" name="img_poster" id="files" multiple className="text-white mb-10" />
 
                 <label htmlFor="img-header" className="text-white" >Bakgrundsbild</label>
                 <input type="file" name="img_header" id="files" multiple className="text-white " />
