@@ -128,7 +128,7 @@ export default function Header() {
           </Link>}
         </ul>
       </div>
-      <div className="flex w-[25rem] justify-end gap-1 items-center">
+      <div className="flex w-fit justify-end gap-1 items-center">
         <p  className={`${styles.subHeaderText} mr-2 hidden cursor-pointer hover:text-white xl:flex`}>
         {currentUser ? currentUser.name : ""}
         </p>
@@ -139,7 +139,7 @@ export default function Header() {
           onClick={() => t.toggle = true }
         />
         <p
-          className={`${styles.subHeaderText} ${t.toggle ? "text-white" : "text-gold"} hidden cursor-pointer hover:text-white xl:flex`}
+          className={`${styles.subHeaderText} ${t.toggle ? "text-white" : "text-gold"} hidden cursor-pointer hover:text-white xl:flex min-w-[10rem]`}
           onClick={() => currentUser ? logout()  : t.toggle = true }
         >
           {currentUser ? "Logga ut" : "Logga in"}

@@ -18,9 +18,9 @@ export default {
         inconsolata: ["Inconsolata", "monospace"],
       },
       gridTemplateColumns: {
-        "auto-fit-lg": "repeat(auto-fit, minmax(30rem, 1fr))",
-        "auto-fit-mobile": "repeat(auto-fit, minmax(20rem, 1fr))",
-        "auto-fit-sm": "repeat(auto-fit, minmax(25rem, 1fr))",
+        "auto-fit-mobile": "repeat(auto-fill, minmax(max(15rem, 20rem), 1fr))",
+        "auto-fit-sm": "repeat(auto-fill, minmax(max(15rem, 20rem), 1fr))",
+        "auto-fit-lg": "repeat(auto-fill, minmax(max(25rem, 28rem), 1fr))",
       },
     },
   },
