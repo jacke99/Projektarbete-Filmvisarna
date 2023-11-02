@@ -64,6 +64,7 @@ export default function Register() {
         setShowMsgToUser("GRATTIS! Du är nu medlem hos oss");
         setShowSuccessPopup(true);
         resetForm();
+        window.scrollTo(0, 0);
         console.log("Form data after successful submission:", formData); // Log the formData
       } else if (result.msg === "User already exists") {
         setShowMsgToUser("Ett konto med denna epost finns redan");
@@ -178,7 +179,7 @@ export default function Register() {
 
       {/* Popup to user if account is created */}
       {showSuccessPopupMsg && (
-        <div className="popup absolute w-60 h-44 md:w-[17rem] md:h-[14rem] right-0 left-0 m-auto z-10 top-[-5rem]" >
+        <div className="popup absolute w-[15rem] h-[12rem] md:w-[17rem] md:h-[14rem] lg:w-[22rem] lg:h-[18rem] right-0 left-0 m-auto z-10 top-[-8rem]" >
           <img src={projektor} alt="projektor" className="w-full h-2/3 rounded-t-md" />
           <div className="flex-col bg-primary flex items-center justify-evenly
             text-white p-8 h-full text-center rounded-b-md">
