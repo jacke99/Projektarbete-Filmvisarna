@@ -1,11 +1,11 @@
 import { styles } from "../styles.js";
 import { Link, useNavigate } from "react-router-dom";
-import MovieFilterForm from "../components/MovieFilterForm";
-import BookMovieHero from "../components/BookMovieHero";
+import MovieFilterForm from "../components/ticketPage/MovieFilterForm.jsx";
+import BookMovieHero from "../components/BookMovieHero.jsx";
 import useFetch from "../hooks/useFetch.js";
 import { useState } from "react";
 
-export default function Booking() {
+export default function Tickets() {
   const navigate = useNavigate();
   const [age, setAge] = useState("");
   const [date, setDate] = useState("");
