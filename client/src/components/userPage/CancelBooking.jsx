@@ -1,8 +1,8 @@
 /* eslint-disable */
 
+import { performRequest } from "../../service/fetchService";
 
-import { performRequest } from "../service/fetchService";
-import { styles } from "../styles";
+import { styles } from "../../styles";
 
 export default function CancelBooking({booking, setToggle}) {
     async function cancelBooking(ID) {

@@ -2,7 +2,7 @@ import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import Home from "./pages/Home";
-import Booking from "./pages/Booking";
+import Tickets from "./pages/Tickets";
 import BookMovie from "./pages/BookMovie";
 import Movies from "./pages/Movies";
 import Register from "./pages/Register";
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/", element: <Home /> },
-      { path: "/booking", element: <Booking /> },
+      { path: "/booking", element: <Tickets /> },
       { path: "/booking/:id", element: <BookMovie /> },
       { path: "/booking/confirm", element: <BookingPartTwo /> },
       { path: "/movies", element: <Movies /> },

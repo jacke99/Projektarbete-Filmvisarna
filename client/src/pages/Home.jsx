@@ -1,8 +1,8 @@
 import {
 } from "../assets/index.js";
-import HeroMovie from "../components/HeroMovie.jsx";
-import MultiCarouselCurrent from "../components/multi-carousel-current.jsx";
-import MultiCarouselUpcoming from "../components/multi-carousel-upComing.jsx";
+import HeroMovie from "../components/homePage/HeroMovie.jsx";
+import MultiCarouselCurrent from "../components/homePage/multi-carousel-current.jsx";
+import MultiCarouselUpcoming from "../components/homePage/multi-carousel-upComing.jsx";
 import { useEffect, useState } from "react";
 import { performRequest } from "../service/fetchService.js";
 

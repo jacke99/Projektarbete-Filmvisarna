@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom";
 import ConfirmBooking from "./ConfirmBooking";
-import BookingTicketsForm from "../BookingTicketsForm"
+import BookingTicketsForm from "./BookingTicketsForm"
 import { useStates } from "react-easier"
 import { useEffect, useState } from "react";
 import { parseJwt } from "../../service/jwtService";

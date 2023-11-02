@@ -1,4 +1,4 @@
-import MovieCardForFilmer from "../components/MovieCardForFilmer";
+import MovieCardForFilmer from "../components/moviesPage/MovieCardForFilmer";
 import useFetch from "../hooks/useFetch";
 
 export default function Movies() {

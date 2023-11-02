@@ -1,10 +1,10 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import MovieCard from "./movieCard.jsx";
-import { responsive } from "../assets/carouselData.js";
+import { responsive } from "../../assets/carouselData.js";
 import { useEffect, useState } from "react";
-import { performRequest } from "../service/fetchService.js";
-import { styles } from "../styles.js";
+import { performRequest } from "../../service/fetchService.js";
+import { styles } from "../../styles.js";
 
 
 export default function MultiCarouselUpcoming() {

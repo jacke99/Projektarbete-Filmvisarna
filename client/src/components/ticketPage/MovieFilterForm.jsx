@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { styles } from "../styles.js";
+import { styles } from "../../styles.js";
 import { useStates } from "react-easier"
 
 export default function MovieFilterForm({ data, handleSubmit, setAge, age, setDate, date, setMovie, movie }) {

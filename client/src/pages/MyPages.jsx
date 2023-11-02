@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { performRequest } from "../service/fetchService";
 import { parseJwt } from "../service/jwtService";
 import { styles } from "../styles";
-import CancelBooking from "../components/CancelBooking";
+import CancelBooking from "../components/userPage/CancelBooking";
 
 export default function MyPages() {
     // eslint-disable-next-line
