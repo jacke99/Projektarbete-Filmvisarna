@@ -31,7 +31,7 @@ export default function AdminUsers() {
 
 
     return (
-    <div className="mt-20">
+    <div className="mt-12">
         <AdminNavigation/>
 
         <div className="max-w-fit flex flex-col justify-center m-auto">

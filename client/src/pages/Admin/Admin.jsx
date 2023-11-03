@@ -18,7 +18,7 @@ useEffect(() => {
   }
 }, [navigate])
     return (
-        <div className="mt-20">
+        <div className="mt-12 h-screen">
           <AdminNavigation/>
           <h1 className="text-2xl font-semibold text-white text-center">ADMIN STARTSIDA</h1>
         </div>

@@ -20,7 +20,7 @@ export default function AdminAddMovies() {
         }
       }, [navigate])
     return (
-        <div className="mt-20">
+        <div className="mt-12">
         <AdminNavigation/>
             <AddMovieForm/>
             <Link to="/admin/movies" className={`text-4-xl underline`}>
