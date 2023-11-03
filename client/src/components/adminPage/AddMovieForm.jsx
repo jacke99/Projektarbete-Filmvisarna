@@ -1,7 +1,7 @@
 // import { useState } from "react";
 import { styles } from "../../styles";
 
-export default function AdminForm() {
+export default function AddMovieForm() {
 
     const authToken = sessionStorage.getItem("AuthToken");
     console.log(authToken)

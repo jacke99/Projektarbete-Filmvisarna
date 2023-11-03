@@ -1,4 +1,4 @@
-import BookMovieHero from "../components/BookMovieHero.jsx";
+import BookMovieHero from "../components/ScreeningCard.jsx";
 import { styles } from "../styles.js";
 import { useParams, Link } from 'react-router-dom';
 import useFetch from "../hooks/useFetch.js";

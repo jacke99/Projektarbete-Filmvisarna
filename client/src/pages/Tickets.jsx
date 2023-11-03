@@ -1,7 +1,7 @@
 import { styles } from "../styles.js";
 import { Link, useNavigate } from "react-router-dom";
 import MovieFilterForm from "../components/ticketPage/MovieFilterForm.jsx";
-import BookMovieHero from "../components/BookMovieHero.jsx";
+import BookMovieHero from "../components/ScreeningCard.jsx";
 import useFetch from "../hooks/useFetch.js";
 import { useState } from "react";
 

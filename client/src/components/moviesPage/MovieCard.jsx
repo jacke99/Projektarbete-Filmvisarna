@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 
-export default function MovieCardForFilmer({ movie }) {
+export default function MovieCard({ movie }) {
   const navigate = useNavigate();
 
   const handleReadMoreClick = () => {
@@ -36,7 +36,7 @@ export default function MovieCardForFilmer({ movie }) {
     </div>
   );
 }
-MovieCardForFilmer.propTypes = {
+MovieCard.propTypes = {
   movie: PropTypes.object.isRequired,
 };
 
