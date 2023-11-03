@@ -1,6 +1,6 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import MovieCard from "./movieCard.jsx";
+import MovieCard from "./CarouselCard.jsx";
 import { responsive } from "../../assets/carouselData.js";
 import { useEffect, useState } from "react";
 import { performRequest } from "../../service/fetchService.js";

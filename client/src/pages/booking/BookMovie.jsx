@@ -1,9 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
-import ChooseSeats from "../components/bookMovie/ChooseSeats";
-import TicketCounter from "../components/bookMovie/TicketCounter";
+import ChooseSeats from "../../components/bookMovie/ChooseSeats";
+import TicketCounter from "../../components/bookMovie/TicketCounter";
 import {useStates} from "react-easier"
 import { useEffect, useState } from "react";
-import { performRequest } from "../service/fetchService";
+import { performRequest } from "../../service/fetchService";
 
 
 export default function BookMovie() {

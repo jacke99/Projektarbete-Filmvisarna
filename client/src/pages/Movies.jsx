@@ -1,4 +1,5 @@
-import MovieCardForFilmer from "../components/moviesPage/MovieCardForFilmer";
+
+import MovieCard from "../components/moviesPage/MovieCard";
 import useFetch from "../hooks/useFetch";
 
 export default function Movies() {
@@ -21,7 +22,7 @@ export default function Movies() {
       {data && (
         <div className="">
           {data.map((movie, index) => (
-            <MovieCardForFilmer key={index} movie={movie} />
+            <MovieCard key={index} movie={movie} />
           ))}
         </div>
       )}

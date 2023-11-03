@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import {useState, useEffect} from "react"
 
-export default function AdminHeader() {
+export default function AdminNavigation() {
   const [active, setActive] = useState("");
   let location = useLocation()
 
