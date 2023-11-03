@@ -63,6 +63,11 @@ export default function Register() {
       if (result.msg === "Account was created") {
         setShowMsgToUser("GRATTIS! Du är nu medlem hos oss");
         setShowSuccessPopup(true);
+        const resp = await performRequest("/api/login", "PUT", { email: formData.email, password: formData.password })
+
+        if (resp.message == "Succesful login") {
+          sessionStorage.setItem("AuthToken", resp.jwt)
+        }
         resetForm();
         window.scrollTo(0, 0);
         console.log("Form data after successful submission:", formData); // Log the formData
@@ -84,6 +89,7 @@ export default function Register() {
     setShowSuccessPopup(false); // Hide the success popup
 
     navigate("/");
+    window.location.reload();
   };
 
 
@@ -102,15 +108,15 @@ export default function Register() {
     <header>
       <h1 className={`${styles.headerText} text-white text-center  pt-20 pb-10  text-4xl`}>Bli medlem</h1>
     </header>
-    
+
     {/* form starts here  */}
     <form onSubmit={(e) => SignUp(e)} className="flex flex-col items-center w-screen md:w-2/3 m-auto lg:w-2/4 lg:text-lg max-w-[50rem] relative"  >
-    {showSuccessPopupMsg &&
-      <>
-        <div className="firework"></div>
-        <div className="firework"></div>
-        <div className="firework"></div>
-      </>}
+      {showSuccessPopupMsg &&
+        <>
+          <div className="firework"></div>
+          <div className="firework"></div>
+          <div className="firework"></div>
+        </>}
       {/* Firstname and lastname */}
       <div className=" flex items-center flex-col sm:w-[100%] w-screen md:flex-row md:justify-center ">
         <input
@@ -127,7 +133,7 @@ export default function Register() {
 
           {...defaults('lastname', 'Efternamn. . .')} />
       </div>
-      
+
       {/* Phone number */}
       <input
         className={`${styles.regInputs} w-[85%]  `}
@@ -188,8 +194,8 @@ export default function Register() {
           </div>
         </div>
       )}
-      
-          
+
+
     </form >
 
   </div>;
