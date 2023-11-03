@@ -31,8 +31,9 @@ export default function Login({setCurrentUser}) {
       sessionStorage.setItem("AuthToken", resp.jwt)
       const decoded = parseJwt(resp.jwt)
       setCurrentUser(decoded)
+      console.log(decoded)
       t.toggle = false
-      window.location.reload();
+     /*  window.location.reload(); */
     } else {
       setToggleError(true)
     }
