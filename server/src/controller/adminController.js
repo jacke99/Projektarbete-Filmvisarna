@@ -8,12 +8,13 @@ const addScreening = async (req, res) => {
     const body = req.body;
     console.log(body)
   const {date, time, theater,
-        movieID
+        title
   } = req.body;
-  if (!date || !time || !theater || !movieID) {
+  if (!date || !time || !theater || !title) {
     return res.status(400).json({error: "Missing required properties, pls check your request body"});
   }
-  body.movieID = new ObjectId(body.movieID)
+  const movie = await fetchCollection("movies").findOne({"title": title})
+  body.movieID = movie._id
   try {
     const theaters = await fetchCollection("theaters").findOne({"theaterNr": theater})
     body.theaterName = theaters.name
