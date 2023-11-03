@@ -58,7 +58,7 @@ export default function Register() {
     try {
       e.preventDefault();
       const result = await performRequest("/api/register", "POST", formRequestBody);
-      console.log(result);
+
 
       if (result.msg === "Account was created") {
         setShowMsgToUser("GRATTIS! Du är nu medlem hos oss");
