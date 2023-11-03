@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react"
-import AdminHeader from "../../components/adminPage/AdminHeader"
+import AdminNavigation from "../../components/adminPage/AdminNavigation";
 import { performRequest } from "../../service/fetchService"
 import { styles } from "../../styles.js";
 
@@ -37,7 +37,7 @@ export default function AdminBookings() {
     
     return (
         <div className="mt-20">
-            <AdminHeader/>
+            <AdminNavigation/>
             <div className="max-w-fit flex flex-col justify-center m-auto">
 
             <div id="UserListHeader" className="flex justify-between items-end p-4">            

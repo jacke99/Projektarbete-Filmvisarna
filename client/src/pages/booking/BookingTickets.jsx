@@ -1,16 +1,12 @@
 import { NavLink, useLocation } from "react-router-dom";
-import ConfirmBooking from "./ConfirmBooking";
-import BookingTicketsForm from "../BookingTicketsForm"
+import ConfirmBooking from "../../components/bookMovie/ConfirmBooking";
+import BookingTicketsForm from "../../components/bookMovie/BookingTicketsForm"
 import { useStates } from "react-easier"
 import { useEffect, useState } from "react";
 import { parseJwt } from "../../service/jwtService";
 import { performRequest } from "../../service/fetchService";
 
-
-
-
-
-export default function BookingPartTwo(){
+export default function BookingTickets(){
   const [loggedIn, setLoggedIn] = useState(null)
   const [bookingResult, setBookingResult] = useState(null)
   const [inputValues, setInputValues] = useState({

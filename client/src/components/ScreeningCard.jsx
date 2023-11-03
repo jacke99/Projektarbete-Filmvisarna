@@ -4,7 +4,7 @@ import { useAutoKeys } from 'react-easier';
 import { styles } from "../styles";
 
 
-export default function BookMovieHero({ data, isPending, error, handleSubmit }) {
+export default function ScreeningCard({ data, isPending, error, handleSubmit }) {
   const navigate = useNavigate();
   useAutoKeys();
   if(data && data.err || error) {

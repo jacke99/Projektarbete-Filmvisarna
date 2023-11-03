@@ -1,8 +1,8 @@
 /* eslint-disable */
-import { styles } from "../styles";
+import { styles } from "../../styles";
 import { Link } from "react-router-dom";
 
-export default function MovieImgBlock({movie}) {
+export default function HeroMovie({movie}) {
  
   return (
     <section

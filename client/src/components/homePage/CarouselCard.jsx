@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 
 //MovieCard används som kort för filmer och tillhörande filmtitel i bildkarusellen
-export default function MovieCard({ title, img, alt, link}) {
+export default function CarouselCard({ title, img, alt, link}) {
   const navigate = useNavigate()
   return (
     <div className="flex flex-col items-center justify-center gap-3 self-end">
