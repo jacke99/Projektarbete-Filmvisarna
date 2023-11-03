@@ -5,7 +5,7 @@ export function useFormDefaults() {
 
   const [formData, setFormData] = useState({});
 
-  console.log(formData);
+
 
   function defaults(
     name,
