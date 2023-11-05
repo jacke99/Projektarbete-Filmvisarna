@@ -17,5 +17,9 @@ benchmarks/graphs
 
 .env
 
+config
+config/public.pem
+config/private.pem
+
 # ignore additional files using core.excludesFile
 # https://git-scm.com/docs/gitignore
