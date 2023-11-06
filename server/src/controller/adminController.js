@@ -1,6 +1,7 @@
 import { fetchCollection } from "../mongo/mongoClient.js";
 import { ObjectId } from "mongodb";
 import { calcSeatNumber } from "../util/seatNumberUtil.js";
+import newDateFormate from "../util/newDateFormate.js";
 
 
 
@@ -10,9 +11,13 @@ const addScreening = async (req, res) => {
   const {date, time, theater,
         title
   } = req.body;
+
   if (!date || !time || !theater || !title) {
     return res.status(400).json({error: "Missing required properties, pls check your request body"});
   }
+
+   //ändra datum till rätt format "Måndag 6 november"
+  body.date = newDateFormate(date)
  
   try {
     const movie = await fetchCollection("movies").findOne({"title": title})
