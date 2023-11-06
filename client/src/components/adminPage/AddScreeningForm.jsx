@@ -3,7 +3,7 @@
 import { styles } from "../../styles";
 
 
-export default function AddScreeningForm( { handleSubmit, setTheater,setDate, setTime, setTitle } ){
+export default function AddScreeningForm( { handleSubmit, setTheater,setDate,date, setTime, setTitle } ){
    
 
     return(
@@ -11,7 +11,7 @@ export default function AddScreeningForm( { handleSubmit, setTheater,setDate, se
         <h3 className="text-lg font-medium text-white mb-2">Lägg till ny filmvisning</h3>    
         <form onSubmit= {handleSubmit} className=" text-black" method="POST">
             <label className="text-white-100" htmlFor="date">Datum:</label>
-            <input onChange={(e) => setDate(e.target.value)} className={`${styles.inputStyle}`} type="date" name="date" placeholder="Datum" />
+            <input onChange={(e) => setDate(e.target.value)} value={date} className={`${styles.inputStyle}`} type="date" name="date" placeholder="Datum" />
             <label className="text-white-100" htmlFor="time">Tid:</label>
             <input onChange={(e) => setTime(e.target.value)} className={`${styles.inputStyle}`} type="time" name="time" placeholder="Tid" />
             <label className="text-white-100" htmlFor="theater">Salong:</label>
