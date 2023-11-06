@@ -1,14 +1,23 @@
+/* eslint-disable */
 import {useStates} from "react-easier"
 import PropTypes from "prop-types"
 
-export default function TicketCounter({ screening, movie }) {
+export default function TicketCounter({ screening, movie, seats, setSeats }) {
   const counters = useStates("ticketCounter");
-
+  console.log(seats)
   function increaseCounters(e) {
     const {name} = e.target;
     if(eval(counters.adult + counters.child + counters.senior) < 6) {
       counters[name]++
       counters.total++
+      const array = [...seats]
+      
+      if(array.length > 0 && !screening.seats[seats[0].row - 1][seats[seats.length - 1].seat].seat ) {
+        array.push({row: seats[seats.length - 1].row, seat: seats[seats.length - 1].seat + 1, seatNumber: screening.seats[seats[0].row - 1][seats[seats.length - 1].seat].seatNumber, booked: screening.seats[seats[0].row][seats[seats.length - 1].seat + 1].seat})
+        console.log(array)
+        setSeats(array)
+      }
+      
     }
   }
   function decreaseCounters(e) {
@@ -16,6 +25,9 @@ export default function TicketCounter({ screening, movie }) {
     if (counters[name] > 0) {
       counters[name]--
       counters.total--
+      const array = [...seats]
+      array.pop()
+      setSeats(array)
     }
   }
   return (
