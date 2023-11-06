@@ -19,7 +19,7 @@ export default function AddScreeningForm( { handleSubmit, setTheater,setDate, se
             className={`${styles.inputStyle}`}
             type="number"
             onChange={(e) => setTheater(e.target.value)}
-            min="1"
+            min= "1"
             max="2"/>
 
             <label className="text-white-100" htmlFor="title">Filmtitel:</label>

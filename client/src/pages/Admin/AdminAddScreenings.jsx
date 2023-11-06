@@ -8,11 +8,9 @@ import { useState } from "react";
 export default function AdminAddScreenings(){
 
     const authToken = sessionStorage.getItem("AuthToken");
-    console.log(authToken)
-    
     const [date, setDate] = useState("");
     const [time, setTime] = useState("")
-    const [theater, setTheater] = useState("")
+    const [theater, setTheater] = useState(0)
     const [title, setTitle] = useState("")
 
     async function handleSubmit(e) {
@@ -23,9 +21,18 @@ export default function AdminAddScreenings(){
         try {
             const response = await performRequest("/api/screenings", "post", formData);
             console.log(response)
-            // Hantera responsen här
-        } catch (error) {
-            // Hantera fel här
+            if(response.insertedId){
+            alert("Filmvisningen är nu tillagd i systemet!")
+            setDate("")
+            setTime("")
+            setTheater(0)
+            setTitle("")}
+        else if(response.error){
+            alert("Du har angivit felaktig filmtitel, prova igen!")
+        }
+            
+        } catch (error) {   
+            alert("något gick fel, prova igen")
         }
       }
       
@@ -35,9 +42,7 @@ export default function AdminAddScreenings(){
         <AdminNavigation />
             <AddScreeningForm handleSubmit= {handleSubmit} setTime= {setTime} setDate={setDate} setTitle = {setTitle}
             setTheater={setTheater}/>
-            <Link to="/admin/movies" className={`text-4-xl underline`}>
-            ADMIN screenings
-            </Link>
+           
         </div>
     )
 
