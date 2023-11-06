@@ -15,18 +15,16 @@ const addScreening = async (req, res) => {
   if (!date || !time || !theater || !title) {
     return res.status(400).json({error: "Missing required properties, pls check your request body"});
   }
-  
-  //ändra datum till rätt format "Måndag 6 november"
-  body.date = newDateFormate(date)
-
-  const movie = await fetchCollection("movies").findOne({"title": title})
-  body.movieID = movie._id
+ 
   try {
+    const movie = await fetchCollection("movies").findOne({"title": title})
+    console.log(movie)
+    body.movieID = movie._id
     const theaters = await fetchCollection("theaters").findOne({"theaterNr": theater})
     body.theaterName = theaters.name
     body.seats = theaters.seats
   } catch (error) {
-    res.status(500).send({ error: "Could not fetch screenings collection" });
+    return res.status(500).send({ error: "Could not fetch screenings collection" });
   }
   if (
     Object.values(body).every((value) => value !== "" && value !== undefined)

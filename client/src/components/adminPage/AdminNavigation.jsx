@@ -20,6 +20,13 @@ export default function AdminNavigation() {
             </Link>
           </li>
           <li className="">
+            <Link to="/admin/screenings" className={`${
+                active === "screenings" ? "text-white" : "text-gold"
+              } cursor-pointer hover:text-white`}>
+               Screenings
+            </Link>
+          </li>
+          <li className="">
             <Link to="/admin/users" className={`${
                 active === "users" ? "text-white" : "text-gold"
               } cursor-pointer hover:text-white`}>
