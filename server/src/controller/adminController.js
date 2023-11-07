@@ -16,12 +16,8 @@ const addScreening = async (req, res) => {
     return res.status(400).json({error: "Missing required properties, pls check your request body"});
   }
 
-  //Ny property uxDate får värdet av date
-  const regularDate = body.date
-  
-  //date får ett nytt värde av newDateFormate-funktionen "måndag 1 december"
-  body.regularDate = regularDate
-  body.date = newDateFormate(date)
+  //ny property uxDate får värdet av newDateFormate(date)
+  body.uxDate = newDateFormate(date)
  
   try {
     const movie = await fetchCollection("movies").findOne({"title": title})
