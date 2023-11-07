@@ -2,9 +2,9 @@ import BookMovieHero from "../components/ScreeningCard.jsx";
 import { styles } from "../styles.js";
 import { useParams, Link } from 'react-router-dom';
 import useFetch from "../hooks/useFetch.js";
-import YouTube from 'react-youtube';
 import { useEffect, useState } from "react";
 import { performRequest } from "../service/fetchService.js";
+import MovieTrailer from "../components/moviesPage/MovieTrailer.jsx";
 
 
 export default function MovieDetails() {
@@ -12,9 +12,6 @@ export default function MovieDetails() {
   const [movie, setMovie] = useState("");
   //eslint-disable-next-line
   const { data, isPending, error } = useFetch(`/api/movies/${id}`);
-
-
-  const getWindowWidth = () => window.innerWidth;
 
   useEffect(() => {
     (async () => {
@@ -27,55 +24,18 @@ export default function MovieDetails() {
 
   function handleClickScroll() {
     const element = document.getElementById("scrollTo");
-    
+
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
   }
 
-  // Funktion som ändrar storleken på youtubeframen beroende på storlek. Dock måste man uppdatera sidan innan den nya storlkene visas
-   // Dock är inte det ett problem om man inte är en person som byter från desktop till mobil 
-
-  const getWindowSpecificOpts = () => {
-    const windowWidth = getWindowWidth();
-    if (windowWidth >= 1200) {
-      return {
-        height: '500',
-        width: '1200',
-      };
-    } else if (windowWidth >= 1024) {
-      return {
-        height: '400',
-        width: '1000',
-      };
-    } else if (windowWidth >= 768) {
-      return {
-        height: '300',
-        width: '800',
-      };
-    } else {
-      return {
-        height: '200',
-        width: '400',
-      };
-    }
-  };
-
-   // Kallar på funktionen som ändra storlek 
-  const opts = getWindowSpecificOpts();
-
   return (
     <>
       {data && (
-        <div className="mb-20 h-full bg-primary w-1/10">
-          <div className="md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto w-1/10">
-{/*             
-            Importerar embedded youtube med bilbioteket react-youtube */}
-            <YouTube
-              videoId={data.trailer}
-              opts={opts}
-              className="trailer-container flex md:mt-20 mt-10 lg:w-full"
-            />
+        <div className="mb-20 h-full bg-primary">
+          <div className=" md:m-auto ">
+            <MovieTrailer id={id} /> {data.trailer}
           </div>
           <div className="m-auto flex flex-col p-8 sm:p-12 lg:pb-8">
             <div
@@ -125,13 +85,13 @@ export default function MovieDetails() {
               <span>{data.ageRestriction}</span>
             </div>
             <div className="text-white text-[25px] sm:text-[25px] md:text-[30px] lg:text-[35px] md:mt-32 lg:mt-32 mt-20 md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto">
-             
+
             </div>
             {movie.length > 0 ? (
               <div className="md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto">
                 <h2 className="text-white text-[25px] text-center m-auto mb-16 lg:mb-20">Aktuell visningar</h2>
                 <BookMovieHero data={movie} />
-                
+
               </div>
             ) : (
               <div className="p-4 text-center">
