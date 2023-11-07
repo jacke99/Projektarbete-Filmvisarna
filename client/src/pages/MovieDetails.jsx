@@ -2,7 +2,6 @@ import BookMovieHero from "../components/ScreeningCard.jsx";
 import { styles } from "../styles.js";
 import { useParams, Link } from 'react-router-dom';
 import useFetch from "../hooks/useFetch.js";
-// import YouTube from 'react-youtube';
 import { useEffect, useState } from "react";
 import { performRequest } from "../service/fetchService.js";
 import MovieTrailer from "../components/moviesPage/MovieTrailer.jsx";
@@ -13,9 +12,6 @@ export default function MovieDetails() {
   const [movie, setMovie] = useState("");
   //eslint-disable-next-line
   const { data, isPending, error } = useFetch(`/api/movies/${id}`);
-
-
-  // const getWindowWidth = () => window.innerWidth;
 
   useEffect(() => {
     (async () => {
@@ -34,44 +30,11 @@ export default function MovieDetails() {
     }
   }
 
-  // Funktion som ändrar storleken på youtubeframen beroende på storlek. Dock måste man uppdatera sidan innan den nya storlkene visas
-  // Dock är inte det ett problem om man inte är en person som byter från desktop till mobil 
-
-  // const getWindowSpecificOpts = () => {
-  //   const windowWidth = getWindowWidth();
-  //   if (windowWidth >= 1200) {
-  //     return {
-  //       height: '500',
-  //       width: '1200',
-  //     };
-  //   } else if (windowWidth >= 1024) {
-  //     return {
-  //       height: '400',
-  //       width: '1000',
-  //     };
-  //   } else if (windowWidth >= 768) {
-  //     return {
-  //       height: '300',
-  //       width: '800',
-  //     };
-  //   } else {
-  //     return {
-  //       height: '200',
-  //       width: '400',
-  //     };
-  //   }
-  // };
-
-  // Kallar på funktionen som ändra storlek 
-  // const opts = getWindowSpecificOpts();
-
   return (
     <>
       {data && (
         <div className="mb-20 h-full bg-primary">
           <div className=" md:m-auto ">
-            {/*             
-            Importerar embedded youtube med bilbioteket react-youtube */}
             <MovieTrailer id={id} /> {data.trailer}
           </div>
           <div className="m-auto flex flex-col p-8 sm:p-12 lg:pb-8">
