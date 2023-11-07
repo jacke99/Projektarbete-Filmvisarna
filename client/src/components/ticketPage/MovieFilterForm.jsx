@@ -2,7 +2,7 @@
 import { styles } from "../../styles.js";
 import { useStates } from "react-easier"
 
-export default function MovieFilterForm({ data, handleSubmit, setAge, age, setDate, date, setMovie, movie }) {
+export default function MovieFilterForm({ data, handleSubmit, inputValues, setInputValues }) {
   
   const s = useStates('globalState');
   return (
@@ -11,41 +11,41 @@ export default function MovieFilterForm({ data, handleSubmit, setAge, age, setDa
         <div className="md:flex md:space-x-4">
           <div className="w-full md:w-1/2">
             <label
-              htmlFor="ageLimit"
+              // htmlFor="ageLimit"
               className={`block ${styles.paddingX} text-sm text-white-100 md:text-xl lg:text-2xl`}
             >
               Åldersgräns:
             </label>
             <select
-              value={age}
-              id="ageLimit"
-              name="ageLimit"
+              value={inputValues.age}
+              id="age"
+              name="age"
               className={`${styles.inputStyle}`}
-              onChange={(e) => setAge(e.target.value)}
+              onChange={(e) => setInputValues({...inputValues, age: e.target.value})}
             // {...s.bind("ageLimit")}
             >
-              <option value="0">Alla åldrar</option>
-              <option value="12">12 år</option>
-              <option value="15">15 år</option>
-              <option value="18">18 år</option>
+              <option value="0">Alla filmer</option>
+              <option value="7">0-7 år</option>
+              <option value="11">0-11 år</option>
+              <option value="15">0-15 år</option>
             </select>
           </div>
 
           <div className="w-full md:w-1/2">
             <label
-              htmlFor="datePicker"
+              // htmlFor="datePicker"
               className={`block ${styles.paddingX} text-center text-sm text-white-100 md:text-xl lg:text-2xl`}
 
             >
               Datum:
             </label>
             <input
-              value={date}
+              value={inputValues.date}
               type="date"
-              id="datePicker"
-              name="datePicker"
+              id="date"
+              name="date"
               className={`${styles.inputStyle}`}
-              onChange={(e) => setDate(e.target.value)}
+              onChange={(e) => setInputValues({...inputValues, date: e.target.value})}
             // {...s.bind("date")}
             />
           </div>
@@ -53,13 +53,13 @@ export default function MovieFilterForm({ data, handleSubmit, setAge, age, setDa
 
         <div className="flex flex-col md:flex-row md:gap-4 md:justify-center">
           <input
-            value={movie}
+            value={inputValues.movie}
             placeholder="Sök filmtitel..."
             type="text"
-            id="filmTitle"
-            name="filmTitle"
+            id="movie"
+            name="movie"
             className={`${styles.inputStyle} md:mt-5 lg:mt-6`}
-            onChange={(e) => setMovie(e.target.value)}
+            onChange={(e) => setInputValues({...inputValues, movie: e.target.value})}
           // {...s.bind("filmTitle")}
           />
           <button

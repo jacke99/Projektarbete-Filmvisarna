@@ -1,45 +1,70 @@
 import { styles } from "../styles.js";
 import { Link,  } from "react-router-dom";
 import MovieFilterForm from "../components/ticketPage/MovieFilterForm.jsx";
+// import MovieFilterFormVersion2 from "../components/ticketPage/MovieFilterFormVersion2.jsx";
 import ScreeningCard from "../components/ScreeningCard.jsx";
 import useFetch from "../hooks/useFetch.js";
 import { useState } from "react";
 
 export default function Tickets() {
   // const navigate = useNavigate();
-  const [age, setAge] = useState("");
-  const [date, setDate] = useState("");
-  const [movie, setMovie] = useState("");
   const [query, setQuery]= useState("");
+
+  const [inputValues, setInputValues]= useState({
+    age: "",
+    date:"",
+    movie:"",
+    
+  })
 
   //eslint-disable-next-line
   const { data, isPending, error } = useFetch(`/api/filteredscreenings${query?"?":""}${query}`)
   console.log(query)
   console.log(data)
 
-
-
+  // const handleOnChange = (e) => {
+  //   e.preventDefault()
+  //   const { name, value } = e.target;
+    
+  //   console.log("Input förändring:", name, value);
+  //   setInputValues((prevInputValues) => ({
+  //     ...prevInputValues,
+  //     [name]: value,
+  //   }));
+  
+  //   // Skapa en ny söksträng med de aktuella värdena.
+  //   const queryParams = new URLSearchParams({
+  //     age: inputValues.age,
+  //     date: inputValues.date,
+  //     movie: inputValues.movie,
+  //   }).toString();
+    
+  //   // Uppdatera söksträngen genom att anropa setQuery.
+  //   setQuery(queryParams);
+  // };
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(age, date, movie)
+    console.log(inputValues)
 
     const queryParams = {};
-    if (age) {
-      queryParams.age = age;
+    if (inputValues.age) {
+      queryParams.age = inputValues.age;
     }
-    if (date) {
-      queryParams.date = date;
+    if (inputValues.date) {
+      queryParams.date = inputValues.date;
     }
-    if (movie) {
-      queryParams.movie = movie;
+    if (inputValues.movie) {
+      queryParams.movie = inputValues.movie;
     }
     const queryString = new URLSearchParams(queryParams).toString();
 
     setQuery(queryString)
     // navigate(`/booking?${queryString}`);
-    setAge("");
-    setDate("");
-    setMovie("");
+    setInputValues({
+      age:"",
+      date:"",
+      movie:"",
+    })
   }
 
   return (
@@ -65,10 +90,15 @@ export default function Tickets() {
           </>
         )}
       </div>
-      {data && !isPending && <MovieFilterForm data={data} handleSubmit={handleSubmit}
-        setAge={setAge} age={age} setDate={setDate} date={date} setMovie={setMovie} movie={movie} />}
+        {data && !isPending && <MovieFilterForm data={data} handleSubmit={handleSubmit}
+        inputValues={inputValues} setInputValues={setInputValues} />}
       <ScreeningCard data={data} isPending={isPending} error={error} handleSubmit={handleSubmit} />
-    </div>
+      </div>
 
-  );
+);
 }
+
+
+    //   {data && !isPending && <MovieFilterFormVersion2 data={data} handleOnChange={handleOnChange}
+    //   inputValues={inputValues} setInputValues={setInputValues} />}
+    // <ScreeningCard data={data} isPending={isPending} error={error} handleSubmit={handleSubmit} />
