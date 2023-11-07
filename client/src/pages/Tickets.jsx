@@ -1,7 +1,7 @@
 import { styles } from "../styles.js";
 import { Link, useNavigate } from "react-router-dom";
 import MovieFilterForm from "../components/ticketPage/MovieFilterForm.jsx";
-import BookMovieHero from "../components/ScreeningCard.jsx";
+import ScreeningCard from "../components/ScreeningCard.jsx";
 import useFetch from "../hooks/useFetch.js";
 import { useState } from "react";
 
@@ -65,7 +65,7 @@ export default function Tickets() {
       </div>
       {data && !isPending && <MovieFilterForm data={data} handleSubmit={handleSubmit}
         setAge={setAge} age={age} setDate={setDate} date={date} setMovie={setMovie} movie={movie} />}
-      <BookMovieHero data={data} isPending={isPending} error={error} handleSubmit={handleSubmit} />
+      <ScreeningCard data={data} isPending={isPending} error={error} handleSubmit={handleSubmit} />
     </div>
 
   );

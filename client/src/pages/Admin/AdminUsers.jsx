@@ -2,10 +2,24 @@ import { useState, useEffect } from "react"
 import AdminNavigation from "../../components/adminPage/AdminNavigation";
 import { performRequest } from "../../service/fetchService"
 import { styles } from "../../styles.js";
+import { useNavigate } from "react-router-dom";
+import { parseJwt } from "../../service/jwtService";
 
 
 export default function AdminUsers() {
     const [users, setUsers] = useState(undefined)
+    const navigate = useNavigate()
+    useEffect(() => {
+        const authToken = sessionStorage.getItem("AuthToken");
+        if(!authToken || authToken === "") {
+          navigate("/")
+        } else if(authToken) {
+          const decoded = parseJwt(authToken)
+          if(decoded.role !== "ADMIN") {
+            navigate("/")
+          }
+        }
+      }, [navigate])
 
   useEffect(() => {
   async function getUsers() {
@@ -17,7 +31,7 @@ export default function AdminUsers() {
 
 
     return (
-    <div className="mt-20">
+    <div className="mt-12">
         <AdminNavigation/>
 
         <div className="max-w-fit flex flex-col justify-center m-auto">
