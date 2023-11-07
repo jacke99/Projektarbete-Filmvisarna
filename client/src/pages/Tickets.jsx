@@ -1,7 +1,7 @@
 import { styles } from "../styles.js";
 import { Link } from "react-router-dom";
-import MovieFilterForm from "../components/ticketPage/MovieFilterForm.jsx";
-// import MovieFilterFormVersion2 from "../components/ticketPage/MovieFilterFormVersion2.jsx";
+// import MovieFilterForm from "../components/ticketPage/MovieFilterForm.jsx";
+import MovieFilterFormVersion2 from "../components/ticketPage/MovieFilterFormVersion2.jsx";
 import ScreeningCard from "../components/ScreeningCard.jsx";
 import useFetch from "../hooks/useFetch.js";
 import { useEffect, useState } from "react";
@@ -29,30 +29,36 @@ export default function Tickets() {
   useEffect(() => {
     if(inputValues.age === "" && inputValues.date === "" && inputValues.movie === "") {
       handleSubmit()
+   
     }
     //eslint-disable-next-line
   }, [inputValues])
 
-  // const handleOnChange = (e) => {
-  //   e.preventDefault()
-  //   const { name, value } = e.target;
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (inputValues.age || inputValues.date || inputValues.movie) {
+        const queryParams = {};
+        if (inputValues.age) {
+          queryParams.age = inputValues.age;
+        }
+        if (inputValues.date) {
+          queryParams.date = inputValues.date;
+        }
+        if (inputValues.movie) {
+          queryParams.movie = inputValues.movie;
+        }
+        const queryString = new URLSearchParams(queryParams).toString();
     
-  //   console.log("Input förändring:", name, value);
-  //   setInputValues((prevInputValues) => ({
-  //     ...prevInputValues,
-  //     [name]: value,
-  //   }));
+        setQuery(queryString);
+        window.history.replaceState(null, null, `?${queryString}`);
+      }
+    }, 1000); 
+    return () => clearTimeout(timeoutId);
+  }, [inputValues.age, inputValues.date, inputValues.movie]);
   
-  //   // Skapa en ny söksträng med de aktuella värdena.
-  //   const queryParams = new URLSearchParams({
-  //     age: inputValues.age,
-  //     date: inputValues.date,
-  //     movie: inputValues.movie,
-  //   }).toString();
-    
-  //   // Uppdatera söksträngen genom att anropa setQuery.
-  //   setQuery(queryParams);
-  // };
+  
+  
+
   function handleSubmit(e) {
     if(e) {
       e.preventDefault();
@@ -97,15 +103,17 @@ export default function Tickets() {
           </>
         )}
       </div>
-        {data && !isPending && <MovieFilterForm data={data} handleSubmit={handleSubmit}
-        inputValues={inputValues} setInputValues={setInputValues} />}
-        <ScreeningCard data={data} isPending={isPending} setInputValues={setInputValues} error={error} handleSubmit={handleSubmit} />
+     
+      {data && !isPending && <MovieFilterFormVersion2 data={data} 
+      inputValues={inputValues} setInputValues={setInputValues} />}
+    <ScreeningCard data={data} isPending={isPending} error={error} handleSubmit={handleSubmit} />
       </div>
 
 );
 }
 
 
-    //   {data && !isPending && <MovieFilterFormVersion2 data={data} handleOnChange={handleOnChange}
-    //   inputValues={inputValues} setInputValues={setInputValues} />}
-    // <ScreeningCard data={data} isPending={isPending} error={error} handleSubmit={handleSubmit} />
+
+    // {data && !isPending && <MovieFilterForm data={data} handleSubmit={handleSubmit}
+    // inputValues={inputValues} setInputValues={setInputValues} />}
+    // <ScreeningCard data={data} isPending={isPending} setInputValues={setInputValues} error={error} handleSubmit={handleSubmit} />
