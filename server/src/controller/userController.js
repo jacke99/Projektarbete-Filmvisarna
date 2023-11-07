@@ -84,7 +84,7 @@ const getScreenings = async (req, res) => {
                 query.date ? { "date": query.date } : {},
                 query.movie ? { "movie.title": { $regex: regex } } : {}, 
                 query.age ? { "movie.ageRestriction": {$lte: parseInt(query.age) } }: {}
-                ]}).toArray();
+                ]}).sort({"date": 1, "time": 1}).toArray();
 
           
           if (filteredScreenings.length == 0) {
