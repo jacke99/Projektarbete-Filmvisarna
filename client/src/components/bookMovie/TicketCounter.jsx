@@ -13,7 +13,13 @@ export default function TicketCounter({ screening, movie, seats, setSeats }) {
       const array = [...seats]
       
       if(array.length > 0 && !screening.seats[seats[0].row - 1][seats[seats.length - 1].seat].seat ) {
-        array.push({row: seats[seats.length - 1].row, seat: seats[seats.length - 1].seat + 1, seatNumber: screening.seats[seats[0].row - 1][seats[seats.length - 1].seat].seatNumber, booked: screening.seats[seats[0].row][seats[seats.length - 1].seat + 1].seat})
+        if(array.length % 2 == 0) {
+          array.push({row: seats[seats.length - 1].row, seat: seats[seats.length - 1].seat + 1, seatNumber: screening.seats[seats[0].row - 1][seats[seats.length - 1].seat].seatNumber, booked: screening.seats[seats[0].row][seats[seats.length - 1].seat + 1].seat})
+        } else {
+          console.log(seats[0].seat - 1)
+          array.unshift({row: seats[seats.length - 1].row, seat: seats[0].seat - 1, seatNumber: screening.seats[seats[0].row - 1][seats[0].seat - 1].seatNumber, booked: screening.seats[seats[0].row][seats[0].seat - 1].seat})
+        }
+       
         console.log(array)
         setSeats(array)
       }
