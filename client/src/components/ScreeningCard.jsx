@@ -4,14 +4,23 @@ import { useAutoKeys } from 'react-easier';
 import { styles } from "../styles";
 
 
-export default function ScreeningCard({ data, isPending, error, handleSubmit }) {
+export default function ScreeningCard({ data, isPending, error, handleSubmit, setInputValues}) {
   const navigate = useNavigate();
   useAutoKeys();
+
+  function resetSearch() {
+    setInputValues({
+      age: "",
+      date:"",
+      movie:"",
+    })
+    // navigate("/booking")
+  }
   if(data && data.err || error) {
     return (
       <div className="flex flex-col">
         <div className="text-white text-center sm:text-xl md:text-2xl">Kunde inte hitta något på din sökning</div>
-        <button className={`${styles.buttonStyle}m-auto mt-6`} onClick={handleSubmit}>Se alla visningar</button>
+        <button className={`${styles.buttonStyle}m-auto mt-6`} onClick={resetSearch}>Se alla visningar</button>
       </div>
     )
   }
