@@ -4,6 +4,11 @@ import PropTypes from 'prop-types';
 import useFetch from '../../hooks/useFetch';
 import { useParams } from 'react-router-dom';
 
+/**
+ * @author Hipnosic (Daniel Rotaru)
+ * @description The MovieTrailer component retrieves movie details based on a provided id and then presents an interactive poster image. Clicking on the image triggers the display of a video overlay, allowing users to watch the movie trailer fetched from YouTube.
+ */
+
 export default function MovieTrailer() {
     const { id } = useParams();
     const { data, isPending, error } = useFetch(`/api/movies/${id}`);
