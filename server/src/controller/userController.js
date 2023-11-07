@@ -57,7 +57,6 @@ const getMovie = async (req, res) => {
 const getScreenings = async (req, res) => {
     try {
         const screeningsCollection = await fetchCollection('screeningXmovie');
-        console.log(screeningsCollection);
         const query = {}
 
         if (req.query.date) { 
