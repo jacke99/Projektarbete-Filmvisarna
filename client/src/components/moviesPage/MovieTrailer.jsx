@@ -3,6 +3,7 @@ import { BsPlayCircleFill } from 'react-icons/bs';
 import PropTypes from 'prop-types';
 import useFetch from '../../hooks/useFetch';
 import { useParams } from 'react-router-dom';
+import './MovieTrailer.css';
 
 /**
  * @author Hipnosic (Daniel Rotaru)
@@ -41,10 +42,10 @@ export default function MovieTrailer() {
     return (
         <div className="relative w-full">
             <div className="w-full" style={{ paddingBottom: '56.25%' }}>
-                <div className="absolute inset-0">
-                    <img src={`/img/${data.img_header}`} alt="movie header" className="w-full h-full cursor-pointer" onClick={openVideo} />
-                    <div className="absolute inset-0 flex justify-center items-center">
-                        <BsPlayCircleFill className="text-5xl text-white cursor-pointer" onClick={openVideo} />
+                <div className="relative inset-0">
+                    <img src={`/img/${data.img_header}`} alt="movie header" className="w-full object-cover object-center lg:h-[550px] cursor-pointer" onClick={openVideo} />
+                    <div className="translate-50-50 absolute left-1/2 top-1/2">
+                        <BsPlayCircleFill className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl  text-white cursor-pointer play-button" onClick={openVideo} />
                     </div>
                 </div>
             </div>

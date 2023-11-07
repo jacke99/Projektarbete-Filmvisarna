@@ -1,0 +1,13 @@
+.play-button {
+    /* width: 6rem; */
+    /* height: auto; */
+    position: relative;
+    /* top: -10%; */
+    fill: #DACA88;
+}
+
+.play-button:hover {
+    transform: scale(1.4);
+    transition: transform 0.3s, height 0.3s, fill 0.3s;
+    fill: #ffffff;
+}
