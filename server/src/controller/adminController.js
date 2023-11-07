@@ -156,11 +156,10 @@ const addNewTheater = async (req, res) => {
           }
         }
       
-        let test = calcSeatRating(rows, seats)
-        console.log(test);
+        let seatsWithRating = calcSeatRating(rows, seats)
 
         body.rows = rows.length
-        body.seats = seats
+        body.seats = seatsWithRating
         const result = await fetchCollection("theaters").insertOne(body);
         res.status(201).send({data: result, status: 201});
       } catch (error) {
