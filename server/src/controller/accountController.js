@@ -44,15 +44,16 @@ const login = async (req, res) => {
         res.sendStatus(400);
       }
     }} catch (error) {
+      console.log(error);
       return res.status(500).send({ error: 'Internal server error' });
     }
 }
 
 const getUserBookings = async (req, res) => {
   const authHeader = req.headers['authorization'];
+  console.log(req);
   if (authHeader == undefined) {
-    response.status(400);
-    response.send("Authorization header is missing");
+    res.status(400).send("Authorization header is missing");
   } else {
 
     
