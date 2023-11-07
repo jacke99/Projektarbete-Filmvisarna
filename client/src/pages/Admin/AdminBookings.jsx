@@ -2,6 +2,8 @@ import { useState, useEffect, useMemo } from "react"
 import AdminNavigation from "../../components/adminPage/AdminNavigation";
 import { performRequest } from "../../service/fetchService"
 import { styles } from "../../styles.js";
+import { useNavigate } from "react-router-dom";
+import { parseJwt } from "../../service/jwtService";
 
 
 
@@ -9,6 +11,18 @@ import { styles } from "../../styles.js";
 export default function AdminBookings() {
     const [bookings, setBookings] = useState(undefined)
     const [query, setQuery] = useState("")
+    const navigate = useNavigate()
+    useEffect(() => {
+        const authToken = sessionStorage.getItem("AuthToken");
+        if(!authToken || authToken === "") {
+          navigate("/")
+        } else if(authToken) {
+          const decoded = parseJwt(authToken)
+          if(decoded.role !== "ADMIN") {
+            navigate("/")
+          }
+        }
+      }, [navigate])
 
     //get bookings
     useEffect(() => {  
@@ -36,7 +50,7 @@ export default function AdminBookings() {
     }, [bookings, query])
     
     return (
-        <div className="mt-20">
+        <div className="mt-12">
             <AdminNavigation/>
             <div className="max-w-fit flex flex-col justify-center m-auto">
 

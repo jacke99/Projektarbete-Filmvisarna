@@ -24,7 +24,7 @@ export default function Header() {
   },[location])
   return (
     <nav
-      className={`${styles.paddingX} fixed top-0 z-20 flex w-full justify-between items-center border-b-2 border-gold bg-primary lg:py-2`}
+      className={`${styles.paddingX} sticky top-0 z-20 flex w-full border-b-2 border-gold bg-primary lg:py-2`}
     >
       <div className="flex w-full items-center">
         <Link
@@ -36,7 +36,7 @@ export default function Header() {
           <img
             src={logo}
             alt="logo"
-            className="mr-2 h-12 w-12 md:w-[80px] md:h-[80px] lg:h-12 lg:-w12 object-contain"
+            className="mr-6 h-12 w-12 md:w-[80px] md:h-[80px] lg:h-12 lg:-w12 object-contain"
           />
         </Link>
         <ul
@@ -130,12 +130,12 @@ export default function Header() {
       </div>
       <div className="flex w-fit justify-end gap-1 items-center">
         <p  className={`${styles.subHeaderText} mr-2 hidden cursor-pointer hover:text-white xl:flex`}>
-        {currentUser ? currentUser.name : ""}
+        {currentUser ? currentUser.name.toString() : ""}
         </p>
         <img
           src={account_circle_new}
           alt="login"
-          className="w-8 sm:w-12 object-contain cursor-pointer mr-2"
+          className="w-8 h-8 sm:w-12 sm:h-12 object-contain cursor-pointer mr-2"
           onClick={() => t.toggle = true }
         />
         <p

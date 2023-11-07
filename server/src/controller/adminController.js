@@ -1,6 +1,7 @@
 import { fetchCollection } from "../mongo/mongoClient.js";
 import { ObjectId } from "mongodb";
 import { calcSeatNumber } from "../util/seatNumberUtil.js";
+import newDateFormate from "../util/newDateFormate.js";
 
 
 
@@ -8,18 +9,25 @@ const addScreening = async (req, res) => {
     const body = req.body;
     console.log(body)
   const {date, time, theater,
-        movieID
+        title
   } = req.body;
-  if (!date || !time || !theater || !movieID) {
+
+  if (!date || !time || !theater || !title) {
     return res.status(400).json({error: "Missing required properties, pls check your request body"});
   }
-  body.movieID = new ObjectId(body.movieID)
+
+   //ändra datum till rätt format "Måndag 6 november"
+  body.date = newDateFormate(date)
+ 
   try {
+    const movie = await fetchCollection("movies").findOne({"title": title})
+    console.log(movie)
+    body.movieID = movie._id
     const theaters = await fetchCollection("theaters").findOne({"theaterNr": theater})
     body.theaterName = theaters.name
     body.seats = theaters.seats
   } catch (error) {
-    res.status(500).send({ error: "Could not fetch screenings collection" });
+    return res.status(500).send({ error: "Could not fetch screenings collection" });
   }
   if (
     Object.values(body).every((value) => value !== "" && value !== undefined)
