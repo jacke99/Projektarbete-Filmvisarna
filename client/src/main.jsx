@@ -14,6 +14,7 @@ import AdminBookings from "./pages/Admin/AdminBookings";
 import AdminUsers from "./pages/Admin/AdminUsers";
 import "./index.css";
 import MyPages from "./pages/MyPages";
+import AdminAddScreenings from "./pages/Admin/AdminAddScreenings";
 
 
 const router = createBrowserRouter([
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
       { path: "/admin/movies", element: <AdminAddMovies/> },
       { path: "/admin/bookings", element: <AdminBookings/> },
       { path: "/admin/users", element: <AdminUsers/> },
+      {path: "/admin/screenings", element: <AdminAddScreenings/>},
     ],
   },
 ]);
