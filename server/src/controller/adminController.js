@@ -1,6 +1,7 @@
 import { fetchCollection } from "../mongo/mongoClient.js";
 import { ObjectId } from "mongodb";
 import { calcSeatNumber } from "../util/seatNumberUtil.js";
+import { calcSeatRating } from "../util/calcSeatRating.js";
 import newDateFormate from "../util/newDateFormate.js";
 
 
@@ -154,6 +155,10 @@ const addNewTheater = async (req, res) => {
             }
           }
         }
+      
+        let test = calcSeatRating(rows, seats)
+        console.log(test);
+
         body.rows = rows.length
         body.seats = seats
         const result = await fetchCollection("theaters").insertOne(body);
