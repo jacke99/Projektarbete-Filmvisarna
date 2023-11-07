@@ -3,6 +3,7 @@ import { performRequest } from "../service/fetchService";
 import { parseJwt } from "../service/jwtService";
 import { styles } from "../styles";
 import CancelBooking from "../components/userPage/CancelBooking";
+import { useNavigate } from "react-router-dom";
 
 export default function MyPages() {
     // eslint-disable-next-line
@@ -10,12 +11,23 @@ export default function MyPages() {
     const [toggle, setToggle] = useState(false)
     const [cancelBooking, setCancelBooking] = useState(undefined)
     const [userData, setuserData] = useState([])
-    console.log(cancelBooking)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const authToken = sessionStorage.getItem("AuthToken");
+        if(!authToken || authToken === "") {
+          navigate("/")
+        } else if(authToken) {
+            const decoded = parseJwt(authToken)
+            if(decoded.role !== "ADMIN" && decoded.role !== "USER") {
+                navigate("/")
+            }
+  }     
+    }, [navigate])
 
     useEffect(() => {
         (async () => {
                 const data = await performRequest("/api/user/bookings")
-                console.log(data.error)
                 if(data.error) {
                     alert("Du måste logga in först")
                 } else {
@@ -24,6 +36,7 @@ export default function MyPages() {
                 
           })();
     }, [])
+   
 
     function cancel(booking) {
         setCancelBooking(booking)
@@ -55,7 +68,8 @@ export default function MyPages() {
     ))
     
   return (
-    <div className="my-20 text-white px-8">
+    <>
+    {currentUser && userData && <div className="my-20 text-white px-8">
         <div className="">
         <h3 className={`${styles.headerText}`} >Dina kontaktuppgifter</h3>
         <ul className={`${styles.subHeaderText} text-white mb-10`}>
@@ -71,6 +85,7 @@ export default function MyPages() {
         {userBookings}
         </div>}
         {toggle && <CancelBooking booking={cancelBooking} setToggle={setToggle} />}
-    </div>
+    </div>}
+    </>
   )
 }
