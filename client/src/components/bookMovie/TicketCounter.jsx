@@ -4,24 +4,26 @@ import PropTypes from "prop-types"
 
 export default function TicketCounter({ screening, movie, seats, setSeats }) {
   const counters = useStates("ticketCounter");
-  console.log(seats)
+  
   function increaseCounters(e) {
     const {name} = e.target;
     if(eval(counters.adult + counters.child + counters.senior) < 6) {
       counters[name]++
       counters.total++
       const array = [...seats]
-      
-      if(array.length > 0 && !screening.seats[seats[0].row - 1][seats[seats.length - 1].seat].seat ) {
-        if(array.length % 2 == 0) {
-          array.push({row: seats[seats.length - 1].row, seat: seats[seats.length - 1].seat + 1, seatNumber: screening.seats[seats[0].row - 1][seats[seats.length - 1].seat].seatNumber, booked: screening.seats[seats[0].row][seats[seats.length - 1].seat + 1].seat})
-        } else {
-          console.log(seats[0].seat - 1)
-          array.unshift({row: seats[seats.length - 1].row, seat: seats[0].seat - 1, seatNumber: screening.seats[seats[0].row - 1][seats[0].seat - 1].seatNumber, booked: screening.seats[seats[0].row][seats[0].seat - 1].seat})
+      setSeats([])
+      if(array.length > 0 ) {
+        console.log(screening.seats[seats[0].row - 1][seats[0].seat - 2].seat)
+        if(array.length % 2 == 0 && seats[seats.length - 1].seat + 1 <= screening.seats[seats[0].row - 1].length  && !screening.seats[seats[0].row - 1][seats[seats.length - 1].seat].seat) {
+          array.push({row: seats[seats.length - 1].row, seat: seats[seats.length - 1].seat + 1, seatNumber: screening.seats[seats[0].row - 1][seats[seats.length - 1].seat].seatNumber, booked: screening.seats[seats[0].row - 1][seats[seats.length - 1].seat].seat})
+          setSeats(array)
+        } else if(seats[0].seat - 1 !== 0 && !screening.seats[seats[0].row - 1][seats[0].seat - 2].seat) {
+          array.unshift({row: seats[seats.length - 1].row, seat: seats[0].seat - 1, seatNumber: screening.seats[seats[0].row - 1][seats[0].seat - 1].seatNumber, booked: screening.seats[seats[0].row - 1][seats[0].seat - 1].seat})
+          setSeats(array)
+        } else if (!screening.seats[seats[0].row - 1][seats[seats.length - 1].seat].seat) {
+          array.push({row: seats[seats.length - 1].row, seat: seats[seats.length - 1].seat + 1, seatNumber: screening.seats[seats[0].row - 1][seats[seats.length - 1].seat].seatNumber, booked: screening.seats[seats[0].row - 1][seats[seats.length - 1].seat].seat})
+          setSeats(array)
         }
-       
-        console.log(array)
-        setSeats(array)
       }
       
     }
@@ -32,7 +34,11 @@ export default function TicketCounter({ screening, movie, seats, setSeats }) {
       counters[name]--
       counters.total--
       const array = [...seats]
-      array.pop()
+      if(array.length % 2 == 0 ) {
+        array.pop()
+      } else {
+        array.shift()
+      }
       setSeats(array)
     }
   }
