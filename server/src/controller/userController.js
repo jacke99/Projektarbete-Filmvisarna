@@ -94,7 +94,6 @@ const getScreenings = async (req, res) => {
     
         } else {
           try {
-            //Testar sort här Casandra
           const screenings = await screeningsCollection.find().sort({"date": 1, "time": 1}).toArray()
             res.status(200).send(screenings);
           } catch (err) {
