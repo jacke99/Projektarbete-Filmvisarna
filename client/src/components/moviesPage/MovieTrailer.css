@@ -11,3 +11,17 @@
     transition: transform 0.3s, height 0.3s, fill 0.3s;
     fill: #ffffff;
 }
+
+.close-button-container {
+    background-color: transparent;
+}
+
+.close-button {
+    fill: #DACA88;
+}
+
+.close-button:hover {
+    transform: scale(1.4);
+    transition: transform 0.3s, color 0.3s;
+    fill: #ffffff;
+}

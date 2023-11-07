@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BsPlayCircleFill } from 'react-icons/bs';
+import { BsXCircle } from 'react-icons/bs';
 import PropTypes from 'prop-types';
 import useFetch from '../../hooks/useFetch';
 import { useParams } from 'react-router-dom';
@@ -58,7 +59,13 @@ export default function MovieTrailer() {
                             className="w-full absolute top-0 left-0"
                             style={{ height: '80vh' }}
                         ></iframe>
-                    </div>
+                        <div
+                            className="absolute bottom-20 left-0 w-full flex justify-center"
+                            style={{ zIndex: 2 }}
+                        >
+                            <BsXCircle className="text-4xl md:text-4xl lg:text-5xl xl:text-6xl text-white cursor-pointer close-button" onClick={closeVideo} />
+                        </div>
+                    </div >
                 </div>
             )}
         </div>
