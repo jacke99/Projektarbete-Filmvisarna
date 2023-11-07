@@ -27,7 +27,7 @@ export default function AdminAddScreenings(){
             title: ""
           });
         } else if (response.error) {
-          alert("Du har angivit felaktig filmtitel, prova igen!");
+          alert("Du har angivit felaktig information, prova igen!");
         } else {
           alert("Något gick fel, prova igen.");
         }
