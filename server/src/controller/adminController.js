@@ -16,7 +16,11 @@ const addScreening = async (req, res) => {
     return res.status(400).json({error: "Missing required properties, pls check your request body"});
   }
 
-   //ändra datum till rätt format "Måndag 6 november"
+  //Ny property uxDate får värdet av date
+  const regularDate = body.date
+  
+  //date får ett nytt värde av newDateFormate-funktionen "måndag 1 december"
+  body.regularDate = regularDate
   body.date = newDateFormate(date)
  
   try {
