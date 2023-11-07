@@ -1,12 +1,12 @@
 import { styles } from "../styles.js";
-import { Link, useNavigate } from "react-router-dom";
+import { Link,  } from "react-router-dom";
 import MovieFilterForm from "../components/ticketPage/MovieFilterForm.jsx";
 import ScreeningCard from "../components/ScreeningCard.jsx";
 import useFetch from "../hooks/useFetch.js";
 import { useState } from "react";
 
 export default function Tickets() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [age, setAge] = useState("");
   const [date, setDate] = useState("");
   const [movie, setMovie] = useState("");
@@ -16,6 +16,8 @@ export default function Tickets() {
   const { data, isPending, error } = useFetch(`/api/filteredscreenings${query?"?":""}${query}`)
   console.log(query)
   console.log(data)
+
+
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -34,7 +36,7 @@ export default function Tickets() {
     const queryString = new URLSearchParams(queryParams).toString();
 
     setQuery(queryString)
-    navigate(`/booking?${queryString}`);
+    // navigate(`/booking?${queryString}`);
     setAge("");
     setDate("");
     setMovie("");

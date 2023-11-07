@@ -7,7 +7,7 @@ export default function MovieFilterForm({ data, handleSubmit, setAge, age, setDa
   const s = useStates('globalState');
   return (
     <div className={data.err ? `max-w-full mt-24` : "max-w-full"}>
-      <form onSubmit={handleSubmit} className="md:flex-row my-10 flex flex-col items-center space-y-4 md:justify-center md:gap-4">
+      <form onSubmit={(e) =>handleSubmit(e)} className="md:flex-row my-10 flex flex-col items-center space-y-4 md:justify-center md:gap-4">
         <div className="md:flex md:space-x-4">
           <div className="w-full md:w-1/2">
             <label
