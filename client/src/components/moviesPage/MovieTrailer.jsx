@@ -41,7 +41,7 @@ export default function MovieTrailer() {
 
     return (
         <div className="relative w-full">
-            <div className="w-full" style={{ paddingBottom: '56.25%' }}>
+            <div className="w-full" style={{ paddingBottom: '4.25%' }}>
                 <div className="relative inset-0">
                     <img src={`/img/${data.img_header}`} alt="movie header" className="w-full object-cover object-center lg:h-[550px] cursor-pointer" onClick={openVideo} />
                     <div className="translate-50-50 absolute left-1/2 top-1/2">
