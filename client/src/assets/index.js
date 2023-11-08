@@ -10,7 +10,7 @@ import footerIconGH from "../assets/footerIconGH.svg";
 import projektor from "./projektor.jpg";
 import footerIconIG from "../assets/footerIconIG.svg";
 import footerIconIN from "../assets/footerIconIN.svg";
-
+import refresh from "./refresh.svg"
 export {
  
   logo,
@@ -24,4 +24,5 @@ export {
   projektor,
   footerIconIG,
   footerIconIN,
+  refresh,
 };
