@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 // import MovieFilterForm from "../components/ticketPage/MovieFilterForm.jsx";
 import MovieFilterFormVersion2 from "../components/ticketPage/MovieFilterFormVersion2.jsx";
 import ScreeningCard from "../components/ScreeningCard.jsx";
-import useFetch from "../hooks/useFetch.js";
-import { useEffect, useState, useMemo } from "react";
+
+import { useEffect, useState } from "react";
 
 export default function Tickets() {
   const [query, setQuery]= useState("");
@@ -16,8 +16,7 @@ export default function Tickets() {
   })
   
   
-  const { data, isPending, error } = useFetch(`/api/filteredscreenings${query?"?":""}${query}`);
-
+ 
   useEffect(() => {
     (async () => {
       const data = await fetch("/api/filteredscreenings");
@@ -55,14 +54,6 @@ export default function Tickets() {
     }, 1000); 
     return () => clearTimeout(timeoutId);
   }, [inputValues]);
-  
-  //kod från adminbooking för inspo
-//   const filteredData = useMemo(() => {
-        
-//     return data?.filter(screening => { 
-//         return screening.age.toLowerCase().includes(query.toLowerCase()) || booking.customerEmail.toLowerCase().includes(query.toLowerCase()) || booking.customer?.name.toLowerCase().includes(query.toLowerCase()) || booking.customer?.lastname.toLowerCase().includes(query.toLowerCase())
-// }) 
-// }, [data, query])
   
 
   function handleSubmit(e) {
@@ -110,10 +101,13 @@ export default function Tickets() {
         )}
       </div>
      
-      {data && !isPending && <MovieFilterFormVersion2 data={data} 
-      inputValues={inputValues} setInputValues={setInputValues} />}
-    <ScreeningCard data={data} isPending={isPending} error={error} handleSubmit={handleSubmit} />
-      </div>
+      
+      <MovieFilterFormVersion2 
+    
+      inputValues={inputValues} setInputValues={setInputValues} />
+
+    <ScreeningCard setInputValues={setInputValues} query={query} />
+        </div>
 
 );
 }

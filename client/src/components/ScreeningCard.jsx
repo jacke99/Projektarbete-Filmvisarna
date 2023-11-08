@@ -2,11 +2,15 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useAutoKeys } from 'react-easier';
 import { styles } from "../styles";
+import useFetch from "../hooks/useFetch";
 
 
-export default function ScreeningCard({ data, isPending, error, handleSubmit, setInputValues}) {
+export default function ScreeningCard({  query, setInputValues}) {
   const navigate = useNavigate();
   useAutoKeys();
+
+  const { data, isPending, error } = useFetch(`/api/filteredscreenings${query?"?":""}${query}`);
+
 
   function resetSearch() {
     setInputValues({

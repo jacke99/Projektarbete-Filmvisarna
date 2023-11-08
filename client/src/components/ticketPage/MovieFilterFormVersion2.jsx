@@ -6,7 +6,7 @@ export default function MovieFilterFormVersion2({ data, inputValues, setInputVal
   
   const s = useStates('globalState');
   return (
-    <div className={data.err ? `max-w-full mt-24` : "max-w-full"}>
+    <div className={"max-w-full"}>
       <form className="md:flex-row my-10 flex flex-col items-center space-y-4 md:justify-center md:gap-4">
         <div className="md:flex md:space-x-4">
           <div className="w-full md:w-1/2">
@@ -62,11 +62,10 @@ export default function MovieFilterFormVersion2({ data, inputValues, setInputVal
             onChange={(e)=> setInputValues({...inputValues, movie: e.target.value})}
           // {...s.bind("filmTitle")}
           />
-          <button
-            type="submit"
-            className={`rounded-md bg-gold p-1 px-4 text-black-100 w-16 self-center md:mt-3 lg:mt-4`}
-          >Sök
-          </button>
+              
+        </div>
+        <div className="">
+        <button onClick={()=> setInputValues({age:"", date:"", movie:""})} className={`${styles.buttonStyle} `}>Rensa filtrering</button>
         </div>
       </form>
     </div>
