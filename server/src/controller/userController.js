@@ -83,7 +83,7 @@ const getScreenings = async (req, res) => {
                 query.date ? { "date": query.date } : {},
                 query.movie ? { "movie.title": { $regex: regex } } : {}, 
                 query.age ? { "movie.ageRestriction": {$lte: parseInt(query.age) } }: {}
-                ]}).toArray();
+                ]}).sort({"date": 1, "time": 1}).toArray();
 
           
           if (filteredScreenings.length == 0) {
@@ -94,7 +94,7 @@ const getScreenings = async (req, res) => {
     
         } else {
           try {
-          const screenings = await screeningsCollection.find().toArray()
+          const screenings = await screeningsCollection.find().sort({"date": 1, "time": 1}).toArray()
             res.status(200).send(screenings);
           } catch (err) {
             res.status(500).send({ err: 'Något gick fel' });
