@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import MovieFilterFormVersion2 from "../components/ticketPage/MovieFilterFormVersion2.jsx";
 import ScreeningCard from "../components/ScreeningCard.jsx";
 import useFetch from "../hooks/useFetch.js";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 export default function Tickets() {
   const [query, setQuery]= useState("");
@@ -54,9 +54,15 @@ export default function Tickets() {
       }
     }, 1000); 
     return () => clearTimeout(timeoutId);
-  }, [inputValues.age, inputValues.date, inputValues.movie]);
+  }, [inputValues]);
   
-  
+  //kod från adminbooking för inspo
+//   const filteredData = useMemo(() => {
+        
+//     return data?.filter(screening => { 
+//         return screening.age.toLowerCase().includes(query.toLowerCase()) || booking.customerEmail.toLowerCase().includes(query.toLowerCase()) || booking.customer?.name.toLowerCase().includes(query.toLowerCase()) || booking.customer?.lastname.toLowerCase().includes(query.toLowerCase())
+// }) 
+// }, [data, query])
   
 
   function handleSubmit(e) {
