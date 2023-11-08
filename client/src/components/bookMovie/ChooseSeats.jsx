@@ -6,29 +6,29 @@ import PropTypes from "prop-types"
 export default function ChooseSeats({ screening, seats, setSeats}) {
     const [toggle, setToggle] = useState(false)
     const counters = useStates("ticketCounter");
-    
     useEffect(() => {
       seats.forEach(seat => {
         document.getElementById(`row${seat.row}seat-${seat.seat}`).classList.add("bg-white")
       });
     }, [seats])
+    
     useEffect(() => {
       const selectedSeats = [];
       const middleRow = Math.ceil(screening.seats.length / 2)
       const middleSeat = Math.ceil(screening.seats[middleRow].length / 2)
       if(!screening.seats[middleRow][middleSeat].seat) {
-        selectedSeats.push({ row: middleRow + 1, seat: middleSeat, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
-        selectedSeats.push({ row: middleRow + 1, seat: middleSeat + 1, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
+        selectedSeats.push({ row: middleRow + 1, seat: middleSeat, seatNumber: screening.seats[middleRow][middleSeat - 1].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
+        selectedSeats.push({ row: middleRow + 1, seat: middleSeat + 1, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat + 1].seat});
         return setSeats(selectedSeats)
       } 
       if (!screening.seats[middleRow - 1][middleSeat].seat) {
-        selectedSeats.push({ row: middleRow, seat: middleSeat, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
-        selectedSeats.push({ row: middleRow, seat: middleSeat + 1, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
+        selectedSeats.push({ row: middleRow, seat: middleSeat, seatNumber: screening.seats[middleRow - 1][middleSeat - 1].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
+        selectedSeats.push({ row: middleRow, seat: middleSeat + 1, seatNumber: screening.seats[middleRow - 1][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat + 1].seat});
         return setSeats(selectedSeats)
       }
       if (!screening.seats[middleRow + 1][middleSeat].seat) {
-        selectedSeats.push({ row: middleRow + 2, seat: middleSeat, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
-        selectedSeats.push({ row: middleRow + 2, seat: middleSeat + 1, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
+        selectedSeats.push({ row: middleRow + 2, seat: middleSeat, seatNumber: screening.seats[middleRow + 1][middleSeat - 1].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
+        selectedSeats.push({ row: middleRow + 2, seat: middleSeat + 1, seatNumber: screening.seats[middleRow + 1][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat + 1].seat});
         return setSeats(selectedSeats)
       }
      
@@ -133,7 +133,7 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
     );
     };
       
-    const DivGenerator = () => {
+    const SeatGenerator = () => {
     const rows = screening.seats.map((row, index) => (
         <Row key={index} rowNumber={index + 1} />
     ));
@@ -143,7 +143,7 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
     <div className="lg:w-[700px] md:w-[70%] w-[80%] container mt-5">
     <div className="screen mb-7 mt-4">
     </div>
-        {DivGenerator()}
+        {SeatGenerator()}
         <div className="text-white text-center mt-2 mb-4">
           <p>Antal biljetter:  {counters.total}</p>
           {seats.length > 0 && <p>

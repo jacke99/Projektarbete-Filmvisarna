@@ -67,7 +67,7 @@ export default function BookMovie() {
   return (
     <>    
     {screening && movie && <section className="mt-2 flex flex-col items-center min-h-screen mb-20">
-        <TicketCounter screening={screening} movie={movie}/>
+        <TicketCounter screening={screening} movie={movie} seats={seats} setSeats={setSeats}/>
         <ChooseSeats screening={screening} seats={seats} setSeats={setSeats}/>
 
         <button className="bg-gold text-black-100 rounded-md px-6 p-2" onClick={navToBookingP2}>Fortsätt</button>
