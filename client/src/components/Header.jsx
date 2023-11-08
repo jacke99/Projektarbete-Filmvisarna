@@ -129,14 +129,14 @@ export default function Header() {
         </ul>
       </div>
       <div className="flex w-fit justify-end gap-1 items-center">
-        <p  className={`${styles.subHeaderText} mr-2 hidden cursor-pointer hover:text-white xl:flex`}>
-        {currentUser ? currentUser.name.toString() : ""}
+        <p onClick={() => navigate("/mypages")}  className={`${styles.subHeaderText} mr-2 hidden cursor-pointer hover:text-white xl:flex`}>
+        {currentUser ? currentUser.name : ""}
         </p>
         <img
           src={account_circle_new}
           alt="login"
           className="w-8 h-8 sm:w-12 sm:h-12 object-contain cursor-pointer mr-2"
-          onClick={() => t.toggle = true }
+          onClick={() => currentUser ? navigate("/mypages"): t.toggle = true }
         />
         <p
           className={`${styles.subHeaderText} ${t.toggle ? "text-white" : "text-gold"} hidden cursor-pointer hover:text-white xl:flex min-w-[10rem]`}
