@@ -1,4 +1,4 @@
-import BookMovieHero from "../components/ScreeningCard.jsx";
+import ScreeningCard from "../components/ScreeningCard.jsx";
 import { styles } from "../styles.js";
 import { useParams, Link } from 'react-router-dom';
 import useFetch from "../hooks/useFetch.js";
@@ -10,13 +10,18 @@ import MovieTrailer from "../components/moviesPage/MovieTrailer.jsx";
 export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState("");
+
   //eslint-disable-next-line
   const { data, isPending, error } = useFetch(`/api/movies/${id}`);
+
+ 
+
 
   useEffect(() => {
     (async () => {
       if (data) {
         const resp = await performRequest(`/api/filteredscreenings?movie=${data.title}`, "GET");
+        // console.log(data.title)
         setMovie(resp);
       }
     })();
@@ -29,7 +34,7 @@ export default function MovieDetails() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   }
-
+ 
   return (
     <>
       {data && (
@@ -90,7 +95,7 @@ export default function MovieDetails() {
             {movie.length > 0 ? (
               <div className="md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto">
                 <h2 className="text-white text-[25px] text-center m-auto mb-16 lg:mb-20">Aktuell visningar</h2>
-                <BookMovieHero data={movie} />
+                <ScreeningCard query={`movie=${data.title}`} />
 
               </div>
             ) : (
