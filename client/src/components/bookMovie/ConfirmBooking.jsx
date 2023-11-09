@@ -33,15 +33,21 @@ export default function ConfirmBooking({ bookingResult, movie, screening }) {
       <p className="text-xl sm:text-2xl lg:text-3xl text-left mb-6">En bokningsbekräftelse har nu skickats till din email!</p>
       <li className="flex justify-between"><p>Bokningsnummer:</p> <p>{bookingResult.bookingId}</p> </li>
       <li className="flex justify-between"><p>Film:</p> <p>{movie.title}</p></li>
-      <li className="flex justify-between"> <p>Biljetter:</p> 
-        { bookingResult.ticketType.adult !== 0 ? <p> {bookingResult.ticketType.adult} Vuxen</p> : null}
+      <li className="flex justify-between"> <p>Biljettyp:</p> 
+      
+      { bookingResult.ticketType.adult ===1 ? <p> {bookingResult.ticketType.adult} Vuxen</p> : null}
+        { bookingResult.ticketType.adult >1 ? <p> {bookingResult.ticketType.adult} Vuxna</p> : null}
+
         { bookingResult.ticketType.child !== 0 ? <p> {bookingResult.ticketType.child} Barn</p> : null}
-        {bookingResult.ticketType.senior !== 0 ? <p> {bookingResult.ticketType.senior} Pensionär</p> : null}
+       
+        {bookingResult.ticketType.senior ===1 ? <p> {bookingResult.ticketType.senior} Pensionär</p> : null}
+        {bookingResult.ticketType.senior >1 ? <p> {bookingResult.ticketType.senior} Pensionärer</p> : null}
+
       </li>
       <li className="flex justify-between"> <p>Rad: </p><p>{`${bookingResult.row}`}</p></li>
       <li className="flex justify-between"> <p>Plats:</p> <p>{`${bookingResult.seats?.map((seat) => seat.seatNumber)}`}</p></li>
       <li className="flex justify-between"> <p>Salong: </p>{screening.theaterName}</li>
-      <li className="flex justify-between"> <p>datum:</p> <p> {screening.date}</p></li>
+      <li className="flex justify-between"> <p>Datum:</p> <p> {screening.date}</p></li>
       <li className="flex justify-between"> <p>Epost:</p> <p>{bookingResult.customerEmail}</p></li>
       <li className="flex justify-between"> <p>Pris:</p> <p>{`${bookingResult.price} kr`}</p></li>
      

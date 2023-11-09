@@ -75,19 +75,29 @@ const deleteMovie = async (req, res) => {
         res.status(404).send({ error: "unvalid movie id" });
       }
 }
-
+//Get bookings collection
 const getBookingsXuser = async (req, res) => {
-    try {
-        const bookingsCollection = await fetchCollection("bookingsXuser");
-        const bookingsXUser = await bookingsCollection.find().toArray();
-        res.status(200).json(bookingsXUser);
-      } catch (error) {
-        res.status(500).json({
-          error: "An error occurred while fetching bookingsXuser collection",
-          details: error.message, 
-        });
-      }
-}
+  try {
+    const bookingsCollection = await fetchCollection("bookingsXuser");
+
+    const today = new Date().toISOString().split("T")[0];
+
+    const bookingsXUser = await bookingsCollection
+      .find({ "screening.date": { $gte: today } })
+      .sort({ "screening.date": 1 })
+      .toArray();
+
+    res.status(200).json(bookingsXUser);
+  } catch (error) {
+    console.error("Error fetching and sorting bookingsXuser collection:", error);
+    res.status(500).json({
+      error: "An error occurred while fetching and sorting bookingsXuser collection",
+      details: error.message,
+    });
+  }
+};
+
+export { getBookingsXuser };
 
 const postMovie = async (req, res) => {
   const movie = req.body;
