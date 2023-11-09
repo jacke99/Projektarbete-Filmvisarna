@@ -45,7 +45,7 @@ export default function ConfirmBooking({ bookingResult, movie, screening }) {
 
       </li>
       <li className="flex justify-between"> <p>Rad: </p><p>{`${bookingResult.row}`}</p></li>
-      <li className="flex justify-between"> <p>Plats:</p> <p>{`${bookingResult.seats?.map((seat) => seat.seatNumber)}`}</p></li>
+      <li className="flex justify-between"> <p>Plats:</p> <p>{`${bookingResult.seats?.map((seat) => seat.seatNumber).join(", ")}`}</p></li>
       <li className="flex justify-between"> <p>Salong: </p>{screening.theaterName}</li>
       <li className="flex justify-between"> <p>Datum:</p> <p> {screening.date}</p></li>
       <li className="flex justify-between"> <p>Epost:</p> <p>{bookingResult.customerEmail}</p></li>
