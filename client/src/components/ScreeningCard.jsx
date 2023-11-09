@@ -5,12 +5,12 @@ import { styles } from "../styles";
 import useFetch from "../hooks/useFetch";
 
 
-export default function ScreeningCard({  query, setInputValues}) {
+export default function ScreeningCard({ query, setInputValues}) {
   const navigate = useNavigate();
   useAutoKeys();
 
   const { data, isPending, error } = useFetch(`/api/filteredscreenings${query?"?":""}${query}`);
-
+console.log(query)
 
   function resetSearch() {
     setInputValues({
