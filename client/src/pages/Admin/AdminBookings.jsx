@@ -27,11 +27,18 @@ export default function AdminBookings() {
     //get bookings
     useEffect(() => {
         async function getBookings() {
-            const resp = await performRequest("/api/bookings", "GET")
-            setBookings(resp)
+            try {
+                const resp = await performRequest("/api/bookings", "GET");
+                setBookings(resp);
+            } catch (error) {
+                console.error("Error fetching bookings:", error);
+            }
         }
-        getBookings()
-    }, [])
+        getBookings();
+    }, []);
+
+
+
 
     //Cancel booking
     async function cancelBooking(cancelID, bookingId) {
@@ -98,7 +105,7 @@ export default function AdminBookings() {
                                         </td>
 
                                         <td>{booking.customerEmail}</td>
-                                        <td>{"Bokningens datum"}</td>
+                                        <td>{booking.screening ? `${new Date(booking.screening.date).toLocaleDateString()} ${booking.screening.time}` : "N/A"}</td>
                                         <td className="p-4 text-center">
                                             <button
                                                 className={`rounded-md bg-red-200 p-1 px-4 text-black-100 self-center`}
