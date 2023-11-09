@@ -34,7 +34,7 @@ export default function ConfirmBooking({ bookingResult, movie, screening }) {
       <li className="flex justify-between"><p>Bokningsnummer:</p> <p>{bookingResult.bookingId}</p> </li>
       <li className="flex justify-between"><p>Film:</p> <p>{movie.title}</p></li>
       <li className="flex justify-between"> <p>Biljettyp:</p> 
-      
+      <div className="flex">
       { bookingResult.ticketType.adult ===1 ? <p> {bookingResult.ticketType.adult} Vuxen</p> : null}
         { bookingResult.ticketType.adult >1 ? <p> {bookingResult.ticketType.adult} Vuxna</p> : null}
 
@@ -42,7 +42,7 @@ export default function ConfirmBooking({ bookingResult, movie, screening }) {
        
         {bookingResult.ticketType.senior ===1 ? <p> {bookingResult.ticketType.senior} Pensionär</p> : null}
         {bookingResult.ticketType.senior >1 ? <p> {bookingResult.ticketType.senior} Pensionärer</p> : null}
-
+        </div>
       </li>
       <li className="flex justify-between"> <p>Rad: </p><p>{`${bookingResult.row}`}</p></li>
       <li className="flex justify-between"> <p>Plats:</p> <p>{`${bookingResult.seats?.map((seat) => seat.seatNumber).join(", ")}`}</p></li>
