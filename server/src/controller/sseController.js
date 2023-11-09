@@ -14,7 +14,7 @@ let clients = [];
 const postBooking = async (req, res) => {
   const body = req.body
   const totalTickets = body.adult + body.child + body.senior
-
+  console.log(body.seats)
   if(body.seats.length !== totalTickets) {
     return res.status(400).send({message: "Number of seats does not match number of ticketTypes"})
   }
@@ -33,14 +33,20 @@ const postBooking = async (req, res) => {
   try{
     
   const screening = await fetchCollection("screenings").findOne({_id: new ObjectId(body.id)})
-  for(let i = 0; i < body.seats.length; i++) {
-      if(screening.seats[body.row - 1][body.seats[i].seat - 1].seat === true) {
-       return res.status(400).send({message: "The seats you are trying to book are already taken"})
-      }
+  screening.seats.forEach((row) => {
+    row.forEach((seat) => {
+      for(let i = 0; i < body.seats.length; i++) {
+        if(seat.seatNumber === body.seats[i].seatNumber && seat.seat === true) {
+          return res.status(400).send({message: "The seats you are trying to book are already taken"})
 
-      screening.seats[body.row - 1][body.seats[i].seat - 1] = {seat: true, seatNumber: screening.seats[body.row - 1][body.seats[i].seat - 1].seatNumber}
-      body.seats[i].seatNumber = screening.seats[body.row - 1][body.seats[i].seat - 1].seatNumber
-  }
+        } else if(seat.seatNumber === body.seats[i].seatNumber) {
+          seat.seat = true
+        }
+      }
+    })
+  })
+
+
     await fetchCollection("screenings").updateOne({_id: new ObjectId(body.id)}, {$set: screening})
     clients.forEach((client) => {
       client.res.write(`data: ${JSON.stringify(screening)}\n\n`);
