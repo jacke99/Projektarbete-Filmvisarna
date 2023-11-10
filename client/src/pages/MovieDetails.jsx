@@ -11,9 +11,9 @@ export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState("");
 
-  //eslint-disable-next-line
-  const { data, isPending, error } = useFetch(`/api/movies/${id}`);
-
+ 
+   //eslint-disable-next-line
+   const { data, isPending, error } = useFetch(`/api/movies/${id}`);
  
 
 
@@ -26,6 +26,8 @@ export default function MovieDetails() {
       }
     })();
   }, [data]);
+
+
 
   function handleClickScroll() {
     const element = document.getElementById("scrollTo");
