@@ -33,17 +33,18 @@ export default function ConfirmBooking({ bookingResult, movie, screening }) {
       <p className="text-xl sm:text-2xl lg:text-3xl text-left mb-6">En bokningsbekräftelse har nu skickats till din email!</p>
       <li className="flex justify-between"><p>Bokningsnummer:</p> <p>{bookingResult.bookingId}</p> </li>
       <li className="flex justify-between"><p>Film:</p> <p>{movie.title}</p></li>
-      <li className="flex justify-between"> <p>Biljettyp:</p> 
-      <div className="flex">
-      { bookingResult.ticketType.adult ===1 ? <p> {bookingResult.ticketType.adult} Vuxen</p> : null}
-        { bookingResult.ticketType.adult >1 ? <p> {bookingResult.ticketType.adult} Vuxna</p> : null}
+      <li className="flex justify-between">
+  <p>Biljettyp:</p>
+  <div className="flex gap-3">
+    {[bookingResult.ticketType.adult === 1 ? `${bookingResult.ticketType.adult} Vuxen` : null,
+      bookingResult.ticketType.adult > 1 ? `${bookingResult.ticketType.adult} Vuxna` : null,
+      bookingResult.ticketType.child !== 0 ? `${bookingResult.ticketType.child} Barn` : null,
+      bookingResult.ticketType.senior === 1 ? `${bookingResult.ticketType.senior} Pensionär` : null,
+      bookingResult.ticketType.senior > 1 ? `${bookingResult.ticketType.senior} Pensionärer` : null
+    ].filter(Boolean).join(', ')}
+  </div>
+</li>
 
-        { bookingResult.ticketType.child !== 0 ? <p> {bookingResult.ticketType.child} Barn</p> : null}
-       
-        {bookingResult.ticketType.senior ===1 ? <p> {bookingResult.ticketType.senior} Pensionär</p> : null}
-        {bookingResult.ticketType.senior >1 ? <p> {bookingResult.ticketType.senior} Pensionärer</p> : null}
-        </div>
-      </li>
       <li className="flex justify-between"> <p>Rad: </p><p>{`${bookingResult.row}`}</p></li>
       <li className="flex justify-between"> <p>Plats:</p> <p>{`${bookingResult.seats?.map((seat) => seat.seatNumber).join(", ")}`}</p></li>
       <li className="flex justify-between"> <p>Salong: </p>{screening.theaterName}</li>
