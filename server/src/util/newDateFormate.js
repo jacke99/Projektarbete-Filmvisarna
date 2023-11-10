@@ -5,7 +5,7 @@ const newDateFormate = (date) => {
         month: "long",
         day: "numeric"
     }
-  date = new Date().toLocaleDateString("sv-SE", dateOptions)
+  date = new Date(date).toLocaleDateString("sv-SE", dateOptions)
   
   return date
 }
