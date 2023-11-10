@@ -93,7 +93,7 @@ export default function BookingTickets(){
               {booking.senior >1 ? <p className="font-inconsolata">{booking.senior} x Pensionärer</p> : null}
 
               <p>Rad: <span>{`${booking.row}`}</span></p>
-              <p>Plats: <span>{`${booking.seats?.map((seat) => seat.seatNumber)}`}</span></p>
+              <p>Plats: <span>{`${booking.seats?.map((seat) => seat.seatNumber).join(', ')}`}</span></p>
             </div>
 
             <div className="text-white-100 mb-10">
