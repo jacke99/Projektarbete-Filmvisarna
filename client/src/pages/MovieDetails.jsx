@@ -6,17 +6,12 @@ import { useEffect, useState } from "react";
 import { performRequest } from "../service/fetchService.js";
 import MovieTrailer from "../components/moviesPage/MovieTrailer.jsx";
 
-
 export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState("");
-
- 
    //eslint-disable-next-line
    const { data, isPending, error } = useFetch(`/api/movies/${id}`);
  
-
-
   useEffect(() => {
     (async () => {
       if (data) {
@@ -25,9 +20,7 @@ export default function MovieDetails() {
         setMovie(resp);
       }
     })();
-  }, [data]);
-
-
+  }, [data, id]);
 
   function handleClickScroll() {
     const element = document.getElementById("scrollTo");
@@ -42,7 +35,7 @@ export default function MovieDetails() {
       {data && (
         <div className="mb-20 h-full bg-primary">
           <div className=" md:m-auto ">
-            <MovieTrailer id={id} /> {data.trailer}
+            <MovieTrailer movieDetails={data} /> {data.trailer}
           </div>
           <div className="m-auto flex flex-col p-8 sm:p-12 lg:pb-8">
             <div
