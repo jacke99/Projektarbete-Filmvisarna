@@ -79,15 +79,18 @@ const deleteMovie = async (req, res) => {
 const getBookingsXuser = async (req, res) => {
   try {
     const bookingsCollection = await fetchCollection("bookingsXuser");
-
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = 10;
     const today = new Date().toISOString().split("T")[0];
 
-    const bookingsXUser = await bookingsCollection
+    const bookings = await bookingsCollection
       .find({ "screening.date": { $gte: today } })
       .sort({ "screening.date": 1 })
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
       .toArray();
 
-    res.status(200).json(bookingsXUser);
+    res.status(200).json(bookings);
   } catch (error) {
     console.error("Error fetching and sorting bookingsXuser collection:", error);
     res.status(500).json({
@@ -98,6 +101,8 @@ const getBookingsXuser = async (req, res) => {
 };
 
 export { getBookingsXuser };
+
+
 
 const postMovie = async (req, res) => {
   const movie = req.body;
