@@ -54,7 +54,7 @@ export default function MovieDetails() {
             </div>
             <div className="movie-poster pb-8 sm:text-xl md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto">
               <img
-                src={`/img/${data.img_header}`}
+                src={`/img/${data.img_poster}`}
                 alt="movie poster"
                 className="w-340 h-48 rounded-lg"
               />
