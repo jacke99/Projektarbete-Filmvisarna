@@ -28,6 +28,7 @@ export default function MyPages() {
     useEffect(() => {
         (async () => {
                 const data = await performRequest("/api/user/bookings")
+                console.log(data)
                 if(data.error) {
                     alert("Du måste logga in först")
                 } else {
@@ -47,11 +48,11 @@ export default function MyPages() {
         <div key={index} className={`${styles.subHeaderText} text-white border-2 border-gold p-4 rounded-lg`} >
             <ul className="flex flex-col">
                 <li className="flex justify-between"> <p className="text-gold">BokningsNr:</p> <p>{booking.bookingId}</p></li>
-                <li className="flex justify-between"> <p className="text-gold">Datum:</p> <p>{booking.screening.date}</p></li>
-                <li className="flex justify-between"> <p className="text-gold">Tid:</p> <p>{booking.screening.time}</p></li>
-                <li className="flex justify-between"> <p className="text-gold">Film:</p> <p>{booking.movie.title}</p></li>
+                <li className="flex justify-between"> <p className="text-gold">Datum:</p> <p>{booking.screening?.date}</p></li>
+                <li className="flex justify-between"> <p className="text-gold">Tid:</p> <p>{booking.screening?.time}</p></li>
+                <li className="flex justify-between"> <p className="text-gold">Film:</p> <p>{booking.movie?.title}</p></li>
                 <li className="flex justify-between"> <p className="text-gold">Pris:</p> <p>{booking.price}kr</p></li>
-                <li className="flex justify-between"> <p className="text-gold">Salong:</p> <p>{booking.screening.theater}</p></li>
+                <li className="flex justify-between"> <p className="text-gold">Salong:</p> <p>{booking.screening?.theater}</p></li>
                 <li className="flex justify-between"> <p className="text-gold">Rad:</p> <p>{booking.row}</p></li>
                 <li className="flex justify-between"> <p className="text-gold">Plats:</p> <p>{booking.seats.map((seat, i) => {
                     if(i + 1 === booking.seats.length) {
