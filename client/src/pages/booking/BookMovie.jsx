@@ -66,7 +66,7 @@ export default function BookMovie() {
   
   return (
     <>    
-    {screening && movie && <section className="mt-2 flex flex-col items-center min-h-screen mb-20">
+    {screening && movie && <section className="flex flex-col items-center min-h-screen mb-20">
         <TicketCounter screening={screening} movie={movie} seats={seats} setSeats={setSeats}/>
         <ChooseSeats screening={screening} seats={seats} setSeats={setSeats}/>
 
