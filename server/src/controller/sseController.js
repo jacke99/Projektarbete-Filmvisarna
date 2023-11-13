@@ -14,7 +14,7 @@ let clients = [];
 const postBooking = async (req, res) => {
   const body = req.body
   const totalTickets = body.adult + body.child + body.senior
-  console.log(body.seats)
+  console.log(body)
   if(body.seats.length !== totalTickets) {
     return res.status(400).send({message: "Number of seats does not match number of ticketTypes"})
   }
@@ -58,7 +58,7 @@ const postBooking = async (req, res) => {
       customerEmail: user.email, 
       ticketType: {adult: body.adult, child: body.child, senior: body.senior},
       screeningID: new ObjectId(body.id),
-      row: body.row,
+      rows: body.rows,
       seats: body.seats,
       price: totalPrice,
       status: true 

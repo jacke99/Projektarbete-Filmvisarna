@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 //eslint-disable-next-line
 export default function ConfirmBooking({ bookingResult, movie, screening }) {
-  console.log(bookingResult);
+  
   const navigate = useNavigate()
   return (
 <div className="w-3/4 md:w-7/12 lg:w-[35rem] rounded-md text-white m-auto">
@@ -45,7 +45,7 @@ export default function ConfirmBooking({ bookingResult, movie, screening }) {
   </div>
 </li>
 
-      <li className="flex justify-between"> <p>Rad: </p><p>{`${bookingResult.row}`}</p></li>
+      <li className="flex justify-between"> <p>Rad: </p><p>{`${bookingResult.rows?.map((row) => row.row).join(", ")}`}</p></li>
       <li className="flex justify-between"> <p>Plats:</p> <p>{`${bookingResult.seats?.map((seat) => seat.seatNumber).join(", ")}`}</p></li>
       <li className="flex justify-between"> <p>Salong: </p>{screening.theaterName}</li>
       <li className="flex justify-between"> <p>Datum:</p> <p> {screening.date}</p></li>

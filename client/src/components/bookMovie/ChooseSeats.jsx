@@ -7,13 +7,15 @@ import SeperateSeatsToggle from "./SeperateSeatsToggle";
 export default function ChooseSeats({ screening, seats, setSeats}) {
     const [toggle, setToggle] = useState(false)
     const s = useStates("toggleSeparateSeats")
-    
+   
     const counters = useStates("ticketCounter");
+    
     useEffect(() => {
       seats.forEach(seat => {
         document.getElementById(`row${seat.row}seat-${seat.seat}`).classList.add("bg-white")
       });
     }, [seats])
+    
     
     useEffect(() => {
       const selectedSeats = [];
@@ -115,31 +117,46 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
     }
 
     function bookSeparateSeats(event) {
-      const target = event.target 
-      const parent = event.target.parentElement
-        // eslint-disable-next-line
-        const [prefix, seatId] = target.id.split('-');
-        // eslint-disable-next-line
-        const [prefix2, row] = parent.id.split('-');
-        const seatIndex = parseInt(seatId, 10);
-        const rowIndex = parseInt(row, 10);
-        const selectedSeats = [...seats]; 
-        console.log(seatIndex)
-        if(selectedSeats.length === counters.total) {
-        selectedSeats.shift()
-        selectedSeats.push({ row: rowIndex, seat: seatIndex, seatNumber: screening.seats[rowIndex - 1][seatIndex - 1].seatNumber, booked: screening.seats[rowIndex - 1][seatIndex - 1].seat});
-        } else {
-          selectedSeats.push({ row: rowIndex, seat: seatIndex, seatNumber: screening.seats[rowIndex - 1][seatIndex - 1].seatNumber, booked: screening.seats[rowIndex - 1][seatIndex - 1].seat});
+      const target = event.target;
+      const parent = event.target.parentElement;
+      // eslint-disable-next-line
+      const [prefix, seatId] = target.id.split('-');
+      // eslint-disable-next-line
+      const [prefix2, row] = parent.id.split('-');
+      const seatIndex = parseInt(seatId, 10);
+      const rowIndex = parseInt(row, 10);
+      
+      const selectedSeats = [...seats];
+      console.log(seatIndex);
+    
+      // Check if the seat is already selected
+      const isSeatSelected = selectedSeats.find(
+        seat => seat.row === rowIndex && seat.seat === seatIndex
+      );
+    
+      if (!isSeatSelected) {
+        if (selectedSeats.length === counters.total) {
+          selectedSeats.shift();
         }
-        setSeats(selectedSeats)
+        
+        selectedSeats.push({
+          row: rowIndex,
+          seat: seatIndex,
+          seatNumber: screening.seats[rowIndex - 1][seatIndex - 1].seatNumber,
+          booked: screening.seats[rowIndex - 1][seatIndex - 1].seat
+        });
+        
+        setSeats(selectedSeats);
+      }
     }
+    
 
     // eslint-disable-next-line
     const Seat = ({ seatNumber, rowNumber, booked }) => (
         <button className={`${booked ? "bg-red-600" : "bg-footerGrey cursor-pointer"} seat lg:w-10 lg:h-7 md:w-8 md:h-8 w-5 h-5 `} 
         key={seatNumber} id={`row${rowNumber}seat-${seatNumber}`} onClick={(event) => booked ? undefined : s.toggle ? bookSeparateSeats(event) : bookSeats(event, counters.total)}
-        onMouseEnter={(event) => s.toggle ? undefined : handleMouseEnter(event, counters.total)}
-        onMouseLeave={(event) => s.toggle ? undefined : handleMouseLeave(event, counters.total)}
+        onMouseEnter={(event) => s.toggle ? handleMouseEnter(event, 1) : handleMouseEnter(event, counters.total)}
+        onMouseLeave={(event) => s.toggle ? handleMouseLeave(event, 1) : handleMouseLeave(event, counters.total)}
         disabled={booked}
         >
         </button>
@@ -170,8 +187,17 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
         {SeatGenerator()}
         <div className="text-white text-center mt-2 mb-4">
           <p>Antal biljetter:  {counters.total}</p>
-          {seats.length > 0 && <p>
+          {seats.length > 0 && !s.toggle ? <p>
            Rad: {seats.length && seats[0].row + " -"} Plats:{" "}
+          {seats && seats?.map((seat, i) => {
+            if(i + 1 === seats.length) {
+             return seat.seatNumber
+            } else {
+             return seat.seatNumber + ", "
+            }
+            })}
+          </p>: <p>
+           Plats:{" "}
           {seats && seats?.map((seat, i) => {
             if(i + 1 === seats.length) {
              return seat.seatNumber
