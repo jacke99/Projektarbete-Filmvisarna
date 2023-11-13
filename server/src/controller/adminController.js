@@ -1,8 +1,7 @@
 import { fetchCollection } from "../mongo/mongoClient.js";
 import { ObjectId } from "mongodb";
 import { calcSeatNumber } from "../util/seatNumberUtil.js";
-
-
+import { calcSeatRating } from "../util/calcSeatRating.js";
 
 
 const addScreening = async (req, res) => {
@@ -164,8 +163,11 @@ const addNewTheater = async (req, res) => {
             }
           }
         }
+      
+        let seatsWithRating = calcSeatRating(rows, seats)
+
         body.rows = rows.length
-        body.seats = seats
+        body.seats = seatsWithRating
         const result = await fetchCollection("theaters").insertOne(body);
         res.status(201).send({data: result, status: 201});
       } catch (error) {
