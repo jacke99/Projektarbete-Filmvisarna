@@ -7,7 +7,6 @@ import newDateFormate from "../util/newDateFormate.js";
 
 const addScreening = async (req, res) => {
     const body = req.body;
-    console.log(body)
   const {date, time, theater,
         title
   } = req.body;
@@ -82,9 +81,22 @@ const getBookingsXuser = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const pageSize = 10;
     const today = new Date().toISOString().split("T")[0];
+    const searchQuery = req.query.search || "";
 
     const bookings = await bookingsCollection
-      .find({ "screening.date": { $gte: today } })
+      .find({
+        $and: [
+          { "screening.date": { $gte: today } },
+          {
+            $or: [
+              { bookingId: { $regex: searchQuery, $options: "i" } },
+              { customerEmail: { $regex: searchQuery, $options: "i" } },
+              { "customer.name": { $regex: searchQuery, $options: "i" } },
+              { "customer.lastname": { $regex: searchQuery, $options: "i" } },
+            ],
+          },
+        ],
+      })
       .sort({ "screening.date": 1 })
       .skip((page - 1) * pageSize)
       .limit(pageSize)
@@ -101,6 +113,7 @@ const getBookingsXuser = async (req, res) => {
 };
 
 export { getBookingsXuser };
+
 
 
 

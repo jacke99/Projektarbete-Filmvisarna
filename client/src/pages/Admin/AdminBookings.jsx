@@ -28,11 +28,9 @@ export default function AdminBookings() {
 
     //get bookings
     useEffect(() => {
-        async function getBookings() {
+        async function fetchBookings() {
             try {
-                console.log("Fetching bookings...");
-                const resp = await performRequest(`/api/bookings?page=${page}`, "GET");
-                console.log("Bookings response:", resp);
+                const resp = await performRequest("/api/bookings", "GET", null, page, query);
 
                 if (Array.isArray(resp)) {
                     setBookings((prevBookings) => [...prevBookings, ...resp]);
@@ -43,8 +41,9 @@ export default function AdminBookings() {
                 console.error("Error fetching bookings:", error);
             }
         }
-        getBookings();
-    }, [page]);
+
+        fetchBookings();
+    }, [page, query]);
 
     const loadMore = () => {
         setPage((prevPage) => prevPage + 1);
@@ -58,13 +57,20 @@ export default function AdminBookings() {
         setBookings(updatedBookingsResp)
     }
 
-    //Search
     const filteredBookings = useMemo(() => {
-
         return bookings?.filter(booking => {
-            return booking.bookingId.toLowerCase().includes(query.toLowerCase()) || booking.customerEmail.toLowerCase().includes(query.toLowerCase()) || booking.customer?.name.toLowerCase().includes(query.toLowerCase()) || booking.customer?.lastname.toLowerCase().includes(query.toLowerCase())
-        })
-    }, [bookings, query])
+            const searchQuery = query.toLowerCase();
+            const bookingIdIncludes = booking.bookingId.toLowerCase().includes(searchQuery);
+            const emailIncludes = booking.customerEmail.toLowerCase().includes(searchQuery);
+            const nameIncludes = booking.customer?.name.toLowerCase().includes(searchQuery);
+            const lastnameIncludes = booking.customer?.lastname.toLowerCase().includes(searchQuery);
+            const dateIncludes = booking.screening?.date.toLowerCase().includes(searchQuery);
+
+            return bookingIdIncludes || emailIncludes || nameIncludes || lastnameIncludes || dateIncludes;
+        });
+    }, [bookings, query]);
+
+
 
     return (
         <div className="mt-12">
