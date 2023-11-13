@@ -8,13 +8,13 @@ export function calcSeatRating(rows, seats) {
     for(let i = 0; i < rows.length; i++) {
         if(i <= middleRow) {
           if(i !== middleRow && rows.length % 2 === 0) {
-            rating++
+            rating = rating + 2
           } else if(i !== middleRow && rows.length % 2 !== 0) {
-            rating++
+            rating = rating + 2
           }
           rows[i].rating = rating
         } else {
-          rating--
+          rating = rating - 2
           rows[i].rating = rating
         }
         let seatRating = rows[i].rating

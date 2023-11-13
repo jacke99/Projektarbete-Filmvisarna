@@ -27,7 +27,7 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
      }
       
       
-    }, [screening, setSeats])
+    }, [screening, setSeats, counters.total])
 
     function handleMouseEnter(event, numberOfSeats) {
         const target = event.target 
