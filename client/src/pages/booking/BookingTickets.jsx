@@ -5,6 +5,7 @@ import { useStates } from "react-easier"
 import { useEffect, useState } from "react";
 import { parseJwt } from "../../service/jwtService";
 import { performRequest } from "../../service/fetchService";
+import newDateFormate from "../../service/newDateFormate";
 
 export default function BookingTickets(){
   const [loggedIn, setLoggedIn] = useState(null)
@@ -63,7 +64,7 @@ export default function BookingTickets(){
               
             {!toggleConfirmation.toggle && 
             <>
-            <h1 className="text-white-100 text-xl mb-8 lg:text-4xl">{`${movie.title} | ${screening.date}`}</h1>
+            <h1 className="text-white-100 text-xl mb-8 lg:text-4xl">{`${movie.title} | ${newDateFormate(screening.date)}`}</h1>
             <div className="mb-10 max-w-full flex items-end justify-start md:justify-start lg:justify-start">
               <img
                 src={`/img/${movie.img_poster}`}
@@ -81,7 +82,7 @@ export default function BookingTickets(){
       
             <div className="text-white-100 text-base mb-10">
               <h2 className="font-inconsolata">{`${screening.theaterName}`}</h2>
-              <p className="font-inconsolata">{screening.date}</p>
+              <p className="font-inconsolata">{newDateFormate(screening.date)}</p>
               <p className="font-inconsolata">{`Klockan: ${screening.time}`}</p>
              
               {booking.adult ===1 ? <p className="font-inconsolata">{booking.adult} x Ordinarie/Vuxen</p> : null}
@@ -92,7 +93,7 @@ export default function BookingTickets(){
               {booking.senior ===1 ? <p className="font-inconsolata">{booking.senior} x Pensionär</p> : null}
               {booking.senior >1 ? <p className="font-inconsolata">{booking.senior} x Pensionärer</p> : null}
 
-              <p>Rad: <span>{`${booking.row}`}</span></p>
+              <p>Rad: <span>{`${booking.rows?.map((row) => row.row).join(', ')}`}</span></p>
               <p>Plats: <span>{`${booking.seats?.map((seat) => seat.seatNumber).join(', ')}`}</span></p>
             </div>
 
