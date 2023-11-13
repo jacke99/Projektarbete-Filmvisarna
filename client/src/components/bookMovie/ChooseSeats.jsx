@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useStates } from "react-easier"
+import { calcBestSeats } from "../../service/calcBestSeats"
 import PropTypes from "prop-types"
 import SeperateSeatsToggle from "./SeperateSeatsToggle";
 
@@ -18,27 +19,11 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
     
     
     useEffect(() => {
-      const selectedSeats = [];
-      const middleRow = Math.ceil(screening.seats.length / 2)
-      const middleSeat = Math.ceil(screening.seats[middleRow].length / 2)
-      if(!screening.seats[middleRow][middleSeat].seat) {
-        selectedSeats.push({ row: middleRow + 1, seat: middleSeat, seatNumber: screening.seats[middleRow][middleSeat - 1].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
-        selectedSeats.push({ row: middleRow + 1, seat: middleSeat + 1, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat + 1].seat});
-        return setSeats(selectedSeats)
-      } 
-      if (!screening.seats[middleRow - 1][middleSeat].seat) {
-        selectedSeats.push({ row: middleRow, seat: middleSeat, seatNumber: screening.seats[middleRow - 1][middleSeat - 1].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
-        selectedSeats.push({ row: middleRow, seat: middleSeat + 1, seatNumber: screening.seats[middleRow - 1][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat + 1].seat});
-        return setSeats(selectedSeats)
-      }
-      if (!screening.seats[middleRow + 1][middleSeat].seat) {
-        selectedSeats.push({ row: middleRow + 2, seat: middleSeat, seatNumber: screening.seats[middleRow + 1][middleSeat - 1].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
-        selectedSeats.push({ row: middleRow + 2, seat: middleSeat + 1, seatNumber: screening.seats[middleRow + 1][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat + 1].seat});
-        return setSeats(selectedSeats)
-      }
-     
-      
-    }, [screening, setSeats])
+     const recommendedSeats = calcBestSeats(screening.seats, counters.total)
+     if(recommendedSeats) {
+      setSeats(recommendedSeats)
+     }
+    }, [screening, setSeats, counters.total])
 
     function handleMouseEnter(event, numberOfSeats) {
         const target = event.target 
