@@ -12,7 +12,6 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
     const counters = useStates("ticketCounter");
     
     useEffect(() => {
-      console.log(seats);
       seats.forEach(seat => {
         document.getElementById(`row${seat.row}seat-${seat.seat}`).classList.add("bg-white")
       });
