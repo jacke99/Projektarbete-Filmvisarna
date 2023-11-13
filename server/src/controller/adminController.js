@@ -145,11 +145,13 @@ const addNewTheater = async (req, res) => {
               const seatNumber = calcSeatNumber(i, j, seats[i - 1][seats[i - 1].length - 1].seatNumber)
                 seats[i].push({
                   seat: false, 
+                  index: j,
                   seatNumber: seatNumber
                 })
               } else {
                 seats[i].push({
                   seat: false, 
+                  index: j,
                   seatNumber: j + 1
                 })
             }
