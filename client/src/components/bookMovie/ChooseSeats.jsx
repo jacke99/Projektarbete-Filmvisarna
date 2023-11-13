@@ -2,10 +2,13 @@ import { useEffect, useState } from "react"
 import { useStates } from "react-easier"
 import { calcBestSeats } from "../../service/calcBestSeats"
 import PropTypes from "prop-types"
+import SeperateSeatsToggle from "./SeperateSeatsToggle";
 
 
 export default function ChooseSeats({ screening, seats, setSeats}) {
     const [toggle, setToggle] = useState(false)
+    const s = useStates("toggleSeparateSeats")
+    
     const counters = useStates("ticketCounter");
     useEffect(() => {
       console.log(seats);
@@ -102,12 +105,32 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
         setSeats(selectedSeats)
     }
 
+    function bookSeparateSeats(event) {
+      const target = event.target 
+      const parent = event.target.parentElement
+        // eslint-disable-next-line
+        const [prefix, seatId] = target.id.split('-');
+        // eslint-disable-next-line
+        const [prefix2, row] = parent.id.split('-');
+        const seatIndex = parseInt(seatId, 10);
+        const rowIndex = parseInt(row, 10);
+        const selectedSeats = [...seats]; 
+        console.log(seatIndex)
+        if(selectedSeats.length === counters.total) {
+        selectedSeats.shift()
+        selectedSeats.push({ row: rowIndex, seat: seatIndex, seatNumber: screening.seats[rowIndex - 1][seatIndex - 1].seatNumber, booked: screening.seats[rowIndex - 1][seatIndex - 1].seat});
+        } else {
+          selectedSeats.push({ row: rowIndex, seat: seatIndex, seatNumber: screening.seats[rowIndex - 1][seatIndex - 1].seatNumber, booked: screening.seats[rowIndex - 1][seatIndex - 1].seat});
+        }
+        setSeats(selectedSeats)
+    }
+
     // eslint-disable-next-line
     const Seat = ({ seatNumber, rowNumber, booked }) => (
         <button className={`${booked ? "bg-red-600" : "bg-footerGrey cursor-pointer"} seat lg:w-10 lg:h-7 md:w-8 md:h-8 w-5 h-5 `} 
-        key={seatNumber} id={`row${rowNumber}seat-${seatNumber}`} onClick={(event) => booked ? undefined : bookSeats(event, counters.total)}
-        onMouseEnter={(event => handleMouseEnter(event, counters.total))}
-        onMouseLeave={(event) => handleMouseLeave(event, counters.total)}
+        key={seatNumber} id={`row${rowNumber}seat-${seatNumber}`} onClick={(event) => booked ? undefined : s.toggle ? bookSeparateSeats(event) : bookSeats(event, counters.total)}
+        onMouseEnter={(event) => s.toggle ? undefined : handleMouseEnter(event, counters.total)}
+        onMouseLeave={(event) => s.toggle ? undefined : handleMouseLeave(event, counters.total)}
         disabled={booked}
         >
         </button>
@@ -132,6 +155,7 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
     };
   return (
     <div className="lg:w-[700px] md:w-[70%] w-[80%] container mt-5">
+      <SeperateSeatsToggle setSeats={setSeats}/>
     <div className="screen mb-7 mt-4">
     </div>
         {SeatGenerator()}

@@ -21,12 +21,15 @@ const addScreening = async (req, res) => {
   body.uxDate = newDateFormate(date)
  
   try {
-    const movie = await fetchCollection("movies").findOne({"title": title})
+    const regex = new RegExp(title.split("").join("\\s*"), 'i');
+    console.log(regex)
+    const movie = await fetchCollection("movies").findOne({"title": { $regex: regex }})
     console.log(movie)
     body.movieID = movie._id
     const theaters = await fetchCollection("theaters").findOne({"theaterNr": theater})
     body.theaterName = theaters.name
     body.seats = theaters.seats
+    delete body.title
   } catch (error) {
     return res.status(500).send({ error: "Could not fetch screenings collection" });
   }
@@ -73,19 +76,29 @@ const deleteMovie = async (req, res) => {
         res.status(404).send({ error: "unvalid movie id" });
       }
 }
-
+//Get bookings collection
 const getBookingsXuser = async (req, res) => {
-    try {
-        const bookingsCollection = await fetchCollection("bookingsXuser");
-        const bookingsXUser = await bookingsCollection.find().toArray();
-        res.status(200).json(bookingsXUser);
-      } catch (error) {
-        res.status(500).json({
-          error: "An error occurred while fetching bookingsXuser collection",
-          details: error.message, 
-        });
-      }
-}
+  try {
+    const bookingsCollection = await fetchCollection("bookingsXuser");
+
+    const today = new Date().toISOString().split("T")[0];
+
+    const bookingsXUser = await bookingsCollection
+      .find({ "screening.date": { $gte: today } })
+      .sort({ "screening.date": 1 })
+      .toArray();
+
+    res.status(200).json(bookingsXUser);
+  } catch (error) {
+    console.error("Error fetching and sorting bookingsXuser collection:", error);
+    res.status(500).json({
+      error: "An error occurred while fetching and sorting bookingsXuser collection",
+      details: error.message,
+    });
+  }
+};
+
+export { getBookingsXuser };
 
 const postMovie = async (req, res) => {
   const movie = req.body;

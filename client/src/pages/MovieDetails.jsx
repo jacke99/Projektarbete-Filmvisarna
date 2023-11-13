@@ -1,4 +1,4 @@
-import BookMovieHero from "../components/ScreeningCard.jsx";
+import ScreeningCard from "../components/ScreeningCard.jsx";
 import { styles } from "../styles.js";
 import { useParams, Link } from 'react-router-dom';
 import useFetch from "../hooks/useFetch.js";
@@ -6,21 +6,21 @@ import { useEffect, useState } from "react";
 import { performRequest } from "../service/fetchService.js";
 import MovieTrailer from "../components/moviesPage/MovieTrailer.jsx";
 
-
 export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState("");
-  //eslint-disable-next-line
-  const { data, isPending, error } = useFetch(`/api/movies/${id}`);
-
+   //eslint-disable-next-line
+   const { data, isPending, error } = useFetch(`/api/movies/${id}`);
+ 
   useEffect(() => {
     (async () => {
       if (data) {
         const resp = await performRequest(`/api/filteredscreenings?movie=${data.title}`, "GET");
+        // console.log(data.title)
         setMovie(resp);
       }
     })();
-  }, [data]);
+  }, [data, id]);
 
   function handleClickScroll() {
     const element = document.getElementById("scrollTo");
@@ -29,13 +29,13 @@ export default function MovieDetails() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   }
-
+ 
   return (
     <>
       {data && (
         <div className="mb-20 h-full bg-primary">
           <div className=" md:m-auto ">
-            <MovieTrailer id={id} /> {data.trailer}
+            <MovieTrailer movieDetails={data} /> {data.trailer}
           </div>
           <div className="m-auto flex flex-col p-8 sm:p-12 lg:pb-8">
             <div
@@ -49,7 +49,7 @@ export default function MovieDetails() {
             </div>
             <div className="movie-poster pb-8 sm:text-xl md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto">
               <img
-                src={`/img/${data.img_header}`}
+                src={`/img/${data.img_poster}`}
                 alt="movie poster"
                 className="w-340 h-48 rounded-lg"
               />
@@ -90,7 +90,7 @@ export default function MovieDetails() {
             {movie.length > 0 ? (
               <div className="md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto">
                 <h2 className="text-white text-[25px] text-center m-auto mb-16 lg:mb-20">Aktuell visningar</h2>
-                <BookMovieHero data={movie} />
+                <ScreeningCard query={`movie=${data.title}`} />
 
               </div>
             ) : (

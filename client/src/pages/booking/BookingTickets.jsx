@@ -83,11 +83,17 @@ export default function BookingTickets(){
               <h2 className="font-inconsolata">{`${screening.theaterName}`}</h2>
               <p className="font-inconsolata">{screening.date}</p>
               <p className="font-inconsolata">{`Klockan: ${screening.time}`}</p>
-              {booking.adult !== 0 ? <p className="font-inconsolata">{booking.adult} x Ordinarie/Vuxna</p> : null}
+             
+              {booking.adult ===1 ? <p className="font-inconsolata">{booking.adult} x Ordinarie/Vuxen</p> : null}
+              {booking.adult >1 ? <p className="font-inconsolata">{booking.adult} x Ordinarie/Vuxna</p> : null}
+              
               {booking.child !== 0 ? <p className="font-inconsolata">{booking.child} x Barn</p> : null}
-              {booking.senior !== 0 ? <p className="font-inconsolata">{booking.senior} x Pensionär</p> : null}
+
+              {booking.senior ===1 ? <p className="font-inconsolata">{booking.senior} x Pensionär</p> : null}
+              {booking.senior >1 ? <p className="font-inconsolata">{booking.senior} x Pensionärer</p> : null}
+
               <p>Rad: <span>{`${booking.row}`}</span></p>
-              <p>Plats: <span>{`${booking.seats?.map((seat) => seat.seatNumber)}`}</span></p>
+              <p>Plats: <span>{`${booking.seats?.map((seat) => seat.seatNumber).join(', ')}`}</span></p>
             </div>
 
             <div className="text-white-100 mb-10">
