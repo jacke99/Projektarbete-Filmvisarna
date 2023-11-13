@@ -53,14 +53,8 @@ export default function MyPages() {
                 <li className="flex justify-between"> <p className="text-gold">Film:</p> <p>{booking.movie?.title}</p></li>
                 <li className="flex justify-between"> <p className="text-gold">Pris:</p> <p>{booking.price}kr</p></li>
                 <li className="flex justify-between"> <p className="text-gold">Salong:</p> <p>{booking.screening?.theater}</p></li>
-                <li className="flex justify-between"> <p className="text-gold">Rad:</p> <p>{booking.row}</p></li>
-                <li className="flex justify-between"> <p className="text-gold">Plats:</p> <p>{booking.seats.map((seat, i) => {
-                    if(i + 1 === booking.seats.length) {
-                        return seat.seatNumber
-                    } else {
-                        return seat.seatNumber + ", "
-                    }
-                })}</p></li>
+                <li className="flex justify-between"> <p className="text-gold">Rad:</p> <p>{`${booking.rows ? booking.rows?.map((row) => row.row).join(", "): booking.row}`}</p></li>
+                <li className="flex justify-between"> <p className="text-gold">Plats:</p> <p>{`${booking.seats?.map((seat) => seat.seatNumber).join(", ")}`}</p></li>
                 <li className="flex justify-between"> <p className="text-gold">Giltig:</p> <p>{booking.status ? "Bokad" : "Avbokad"}</p></li>
                 <li className="flex justify-between"> <p className="text-gold">{booking.status ? "Vill du avboka?" : ""}</p><button disabled={!booking.status} className="bg-red-400 px-2" onClick={() => cancel(booking)}>Avboka</button> </li>
             </ul>
