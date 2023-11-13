@@ -20,10 +20,7 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
     
     
     useEffect(() => {
-      
-      console.log(screening.seats);
      const recommendedSeats = calcBestSeats(screening.seats, counters.total)
-     console.log(recommendedSeats);
      if(recommendedSeats) {
       setSeats(recommendedSeats)
      }
