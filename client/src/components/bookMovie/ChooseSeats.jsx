@@ -24,8 +24,6 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
      if(recommendedSeats) {
       setSeats(recommendedSeats)
      }
-      
-      
     }, [screening, setSeats, counters.total])
 
     function handleMouseEnter(event, numberOfSeats) {
