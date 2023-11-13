@@ -9,6 +9,7 @@ import { performRequest } from "../../service/fetchService";
 export default function BookingTickets(){
   const [loggedIn, setLoggedIn] = useState(null)
   const [bookingResult, setBookingResult] = useState(null)
+  const [nodeMailerError, setNodeMailerError] = useState(null)
   const [inputValues, setInputValues] = useState({
     email: "",
     reEmail: "",
@@ -44,8 +45,10 @@ export default function BookingTickets(){
         }
       }
       const res = await performRequest("/api/booking", "POST", booking);
-      if(res.bookingId) {
-        setBookingResult(res)
+      console.log(res);
+      if(res.booking.bookingId) {
+        setBookingResult(res.booking)
+        setNodeMailerError(res.emailError)
       
         toggleConfirmation.toggle = true
       } else if (res.message){
@@ -106,7 +109,7 @@ export default function BookingTickets(){
             
           </div>}
           {toggleConfirmation.toggle && bookingResult &&(
-            <ConfirmBooking bookingResult={bookingResult} movie={movie} screening={screening}/>
+            <ConfirmBooking nodeMailerError={nodeMailerError} bookingResult={bookingResult} movie={movie} screening={screening}/>
             )}
         </>
     )

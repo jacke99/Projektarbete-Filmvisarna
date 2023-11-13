@@ -76,8 +76,8 @@ const postBooking = async (req, res) => {
     if(user.role) {
       await fetchCollection("users").updateOne({email: user.email}, {$push: {bookings: {bookingId: bookingID}}})
     }
-    return res.status(201).send(booking)
-
+    return res.status(201).send({booking, emailError})
+    
   
   } catch(err) {
    res.status(400).send(err)

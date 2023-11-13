@@ -16,7 +16,7 @@ function sendEmailWithNodemailer(booking) {
         secure: false,
         auth: {
           user: process.env.email,
-          pass: process.env.emailPassword, 
+          pass: process.env.emailPasswor, 
         },
         tls: {
             rejectUnauthorized: false,
