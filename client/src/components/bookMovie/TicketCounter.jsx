@@ -1,6 +1,7 @@
 /* eslint-disable */
 import {useStates} from "react-easier"
 import PropTypes from "prop-types"
+import newDateFormate from "../../service/newDateFormate";
 
 export default function TicketCounter({ screening, movie, seats, setSeats }) {
   const counters = useStates("ticketCounter");
@@ -89,7 +90,7 @@ export default function TicketCounter({ screening, movie, seats, setSeats }) {
         <img className="h-44 sm:h-60 sm:mt-auto" src={`/img/${movie.img_poster}`} alt="movie poster" />
         <div className="flex flex-col justify-end text-start text-base">
           <p className="text-xl">{movie.title}</p>
-          <p>{`${screening.date.replaceAll("/", "-")} | ${screening.time}`}</p>
+          <p>{`${newDateFormate(screening.date).replaceAll("/", "-")} | ${screening.time}`}</p>
           <p>{screening.theaterName}</p>
           <p>{movie.genre}</p>
           <p>{movie.length} </p>

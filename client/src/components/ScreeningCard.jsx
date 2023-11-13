@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAutoKeys } from 'react-easier';
 import { styles } from "../styles";
 import useFetch from "../hooks/useFetch";
+import newDateFormate from "../service/newDateFormate";
 
 
 export default function ScreeningCard({ query, setInputValues}) {
@@ -49,7 +50,7 @@ console.log(query)
             className="w-34 h-48 rounded-lg"
           />
           <div className="text-white-100 flex flex-col lg:px-6 md:px-6 ml-4">
-            <p className="text-xs md:text-base lg:text-lg">{`${screening.date} | ${screening.time}`}</p>
+            <p className="text-xs md:text-base lg:text-lg">{`${newDateFormate(screening.date)} | ${screening.time}`}</p>
             <h2 className="text-base font-extra-bold md:text-base lg:text-lg">{screening.movie.title}</h2>
             <p className="font-inconsolata text-xs md:text-base lg:text-lg">{screening.movie.genre}</p>
             <p className="font-inconsolata text-xs md:text-base lg:text-lg">{screening.theaterName}</p>
