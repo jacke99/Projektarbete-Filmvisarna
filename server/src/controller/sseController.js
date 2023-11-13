@@ -65,8 +65,11 @@ const postBooking = async (req, res) => {
     }
    
     // Sending emailconfirmation from email.js
-    sendEmailWithNodemailer(booking)
-   
+    let emailError;
+
+    await sendEmailWithNodemailer(booking).catch(error => {
+      emailError = error + "";
+    })
 
     await fetchCollection("bookings").insertOne(booking)
     
