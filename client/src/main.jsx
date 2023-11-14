@@ -20,7 +20,7 @@ import AdminAddScreenings from "./pages/Admin/AdminAddScreenings";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <App className="wrapper"/>,
     children: [
       { path: "/", element: <Home /> },
       { path: "/booking", element: <Tickets /> },

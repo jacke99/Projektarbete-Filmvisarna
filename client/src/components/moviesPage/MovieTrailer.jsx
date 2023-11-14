@@ -3,6 +3,8 @@ import { BsPlayCircleFill } from 'react-icons/bs';
 import { BsXCircle } from 'react-icons/bs';
 import PropTypes from 'prop-types';
 import './MovieTrailer.css';
+import { styles } from "../../styles.js";
+
 
 /**
  * @author Hipnosic (Daniel Rotaru)
@@ -35,7 +37,7 @@ const imgHeaderSrc = movieDetails.img_header ? `/img/${movieDetails.img_header}`
         <div className="relative w-full">
             <div className="w-full" style={{ paddingBottom: '4.25%' }}>
                 <div className="relative inset-0">
-                    <img src={imgHeaderSrc} alt="movie header" className="w-full object-cover object-center lg:h-[550px] cursor-pointer" onClick={openVideo} />
+                    <img src={imgHeaderSrc} alt="movie header" className={`${styles.imgHeader}cursor-pointer`} onClick={openVideo} />
                     <div className="translate-50-50 absolute left-1/2 top-1/2">
                         <BsPlayCircleFill className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl  text-white cursor-pointer play-button" onClick={openVideo} />
                     </div>

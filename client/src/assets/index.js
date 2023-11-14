@@ -11,6 +11,7 @@ import projektor from "./projektor.jpg";
 import footerIconIG from "../assets/footerIconIG.svg";
 import footerIconIN from "../assets/footerIconIN.svg";
 import refresh from "./refresh.svg"
+import account_circle_wght200 from "./account_circle_wght200.svg";
 export {
  
   logo,
@@ -25,4 +26,5 @@ export {
   footerIconIG,
   footerIconIN,
   refresh,
+  account_circle_wght200
 };

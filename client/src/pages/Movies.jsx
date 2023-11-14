@@ -1,4 +1,4 @@
-
+import { styles } from "../styles";
 import MovieCard from "../components/moviesPage/MovieCard";
 import useFetch from "../hooks/useFetch";
 
@@ -7,7 +7,7 @@ export default function Movies() {
   const { data, isPending, error } = useFetch("/api/movies");
 
   return (
-    <div className="mb-20 px-8">
+    <div className={`mb-20 px-8`}>
       <div
         className="
         mb-6 mt-20 
