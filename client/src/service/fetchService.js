@@ -14,14 +14,37 @@ const fetchOptionsNoJwt = (body, method) => ({
     }
 });
 
-export const performRequest = async (url, method, body) => { 
-    let options
-    if(sessionStorage.getItem("AuthToken")) {
+export const performRequest = async (url, method, body, page = 1, search = "") => { 
+  const searchParam = search ? `&search=${encodeURIComponent(search)}` : "";
+  const apiUrl = `${url}${url.includes("?") ? "&" : "?"}page=${page}${searchParam}`;
+
+  let options;
+  if (sessionStorage.getItem("AuthToken")) {
       options = fetchOptions(body, method);
-    } else {
+  } else {
       options = fetchOptionsNoJwt(body, method);
-    }
-    let resp = await fetch(url, options);
-    let data = await resp.json()
-    return data;
+  }
+
+  if (method === "GET") {
+      delete options.body;
+  } else {
+      options.body = JSON.stringify(body);
+  }
+
+  try {
+      const resp = await fetch(apiUrl, options);
+      if (!resp.ok) {
+          throw new Error(`HTTP error! Status: ${resp.status}`);
+      }
+
+      const data = await resp.json();
+      return data;
+  } catch (error) {
+      console.error("Error in performRequest:", error);
+      throw error;
+  }
 }
+
+
+
+
