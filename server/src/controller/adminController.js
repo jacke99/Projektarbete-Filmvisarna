@@ -16,9 +16,9 @@ const addScreening = async (req, res) => {
  
   try {
     const regex = new RegExp(title.split("").join("\\s*"), 'i');
-    console.log(regex)
+   
     const movie = await fetchCollection("movies").findOne({"title": { $regex: regex }})
-    console.log(movie)
+   
     body.movieID = movie._id
     const theaters = await fetchCollection("theaters").findOne({"theaterNr": theater})
     body.theaterName = theaters.name
