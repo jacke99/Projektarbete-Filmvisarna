@@ -6,10 +6,10 @@ export default function HeroMovie({movie}) {
  
   return (
     <section
-      className={`relative mt-16 flex items-center justify-center bg-primary text-center`}
+      className={`relative flex items-center justify-center bg-primary text-center`}
     >
       <img
-        className="w-full object-cover object-center lg:h-[550px]"
+        className={`${styles.imgHeader}`}
         src={`/img/${movie.img_header}`}
         alt="Img with main characters from Killers of the Flower Moon Movie"
       />

@@ -1,4 +1,8 @@
 const styles = {
+  //wrappers
+  wrapper: "mx-[auto] px-6 max-w-[1800px] mb-20",
+  imgHeader: "w-full object-cover object-center h-[30vh] sm:h-[40vh] md:h-[55vh] lg:h-[60vh] xl:h-[65vh] 2xl:min-h-[50vh]",
+
   paddingX: "sm:px-6 px-6",
   paddingY: "sm:py-16 py-6",
   padding: "sm:px-16 px-6 sm:py-16 py-10",
@@ -17,7 +21,7 @@ const styles = {
     "w-full border border-gray-300 rounded-md p-1.5 text-sm text-gray-400 my-2 h-8",
   centerAbsolutePos:
     "absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2",
-    buttonStyle:"bg-gold text-black-100 rounded-md px-4 p-1 ",
-};
+  buttonStyle:"bg-gold text-black-100 rounded-md px-4 p-1 ",
+  };
 
 export { styles };

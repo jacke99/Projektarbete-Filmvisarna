@@ -38,7 +38,7 @@ export default function MovieDetails() {
   return (
     <>
       {data && (
-        <div className="mb-20 h-full bg-primary">
+        <div className=" bg-primary">
           <div className=" md:m-auto ">
             <MovieTrailer id={id} /> {data.trailer}
           </div>

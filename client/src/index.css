@@ -6,12 +6,24 @@
 
 * {
   font-family: "Karla", sans-serif;
+  box-sizing: border-box;
+
 }
 
 @layer utilities {
   .translate-50-50 {
     transform: translate(-50%, -50%);
   }
+}
+
+#wrapper {
+  /* margin-right: auto;
+  margin-left:  auto; 
+
+  max-width: 1500px;
+
+  padding-right: 10px; 
+  padding-left:  10px;  */
 }
 
 body {
