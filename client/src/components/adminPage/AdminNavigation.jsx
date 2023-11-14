@@ -10,6 +10,7 @@ export default function AdminNavigation() {
     setActive(pathParts[2])
   },[location])
     return (
+      
         <ul className="absolute flex flex-col gap-2 bg-gradient-to-r from-primary to-footerGrey rounded-xl h-[50%] w-40 px-2 py-2">
           <h2 className="text-white text-center">Meny</h2>
           <li className="">
@@ -23,7 +24,7 @@ export default function AdminNavigation() {
             <Link to="/admin/screenings" className={`${
                 active === "screenings" ? "text-white" : "text-gold"
               } cursor-pointer hover:text-white`}>
-               Screenings
+               Visningar
             </Link>
           </li>
           <li className="">
@@ -41,5 +42,6 @@ export default function AdminNavigation() {
             </Link>
           </li>
         </ul>
+       
      );
 }

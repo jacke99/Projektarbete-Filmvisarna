@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo } from "react"
-import AdminNavigation from "../../components/adminPage/AdminNavigation";
 import { performRequest } from "../../service/fetchService"
 import { styles } from "../../styles.js";
 import { useNavigate } from "react-router-dom";
@@ -9,9 +8,11 @@ import { parseJwt } from "../../service/jwtService";
 
 
 export default function AdminBookings() {
-    const [bookings, setBookings] = useState(undefined)
-    const [query, setQuery] = useState("")
-    const navigate = useNavigate()
+    const [bookings, setBookings] = useState([]);
+    const [query, setQuery] = useState("");
+    const navigate = useNavigate();
+    const [page, setPage] = useState(1);
+
     useEffect(() => {
         const authToken = sessionStorage.getItem("AuthToken");
         if (!authToken || authToken === "") {
@@ -26,19 +27,26 @@ export default function AdminBookings() {
 
     //get bookings
     useEffect(() => {
-        async function getBookings() {
+        async function fetchBookings() {
             try {
-                const resp = await performRequest("/api/bookings", "GET");
-                setBookings(resp);
+                const resp = await performRequest("/api/bookings", "GET", null, page, query);
+
+                if (Array.isArray(resp)) {
+                    setBookings((prevBookings) => [...prevBookings, ...resp]);
+                } else {
+                    console.error("Invalid response format:", resp);
+                }
             } catch (error) {
                 console.error("Error fetching bookings:", error);
             }
         }
-        getBookings();
-    }, []);
 
+        fetchBookings();
+    }, [page, query]);
 
-
+    const loadMore = () => {
+        setPage((prevPage) => prevPage + 1);
+    };
 
     //Cancel booking
     async function cancelBooking(cancelID, bookingId) {
@@ -48,17 +56,23 @@ export default function AdminBookings() {
         setBookings(updatedBookingsResp)
     }
 
-    //Search
     const filteredBookings = useMemo(() => {
-
         return bookings?.filter(booking => {
-            return booking.bookingId.toLowerCase().includes(query.toLowerCase()) || booking.customerEmail.toLowerCase().includes(query.toLowerCase()) || booking.customer?.name.toLowerCase().includes(query.toLowerCase()) || booking.customer?.lastname.toLowerCase().includes(query.toLowerCase())
-        })
-    }, [bookings, query])
+            const searchQuery = query.toLowerCase();
+            const bookingIdIncludes = booking.bookingId.toLowerCase().includes(searchQuery);
+            const emailIncludes = booking.customerEmail.toLowerCase().includes(searchQuery);
+            const nameIncludes = booking.customer?.name.toLowerCase().includes(searchQuery);
+            const lastnameIncludes = booking.customer?.lastname.toLowerCase().includes(searchQuery);
+            const dateIncludes = booking.screening?.date.toLowerCase().includes(searchQuery);
+
+            return bookingIdIncludes || emailIncludes || nameIncludes || lastnameIncludes || dateIncludes;
+        });
+    }, [bookings, query]);
+
+
 
     return (
         <div className="mt-12">
-            <AdminNavigation />
             <div className="max-w-fit flex flex-col justify-center m-auto">
 
                 <div id="UserListHeader" className="flex justify-between items-end p-4">
@@ -105,7 +119,7 @@ export default function AdminBookings() {
                                         </td>
 
                                         <td>{booking.customerEmail}</td>
-                                        <td>{booking.screening ? `${new Date(booking.screening.date).toLocaleDateString()} ${booking.screening.time}` : "N/A"}</td>
+                                        <td>{booking.screening ? `${new Date(booking.screening.date).toLocaleDateString()} ${booking.screening.time}` : "Inte tillgängligt"}</td>
                                         <td className="p-4 text-center">
                                             <button
                                                 className={`rounded-md bg-red-200 p-1 px-4 text-black-100 self-center`}
@@ -122,6 +136,9 @@ export default function AdminBookings() {
 
                     </tbody>
                 </table>
+                <div className="flex justify-center">
+                    <button className="mt-6 mb-16 rounded-md bg-gold p-1 px-4 text-black-100" onClick={loadMore}>Ladda fler</button>
+                </div>
             </div>
         </div>
     )

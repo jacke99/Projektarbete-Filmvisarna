@@ -1,12 +1,9 @@
 /* eslint-disable */
-import { styles } from "../../styles.js";
-import { useStates } from "react-easier"
 import { refresh } from "../../assets/index.js";
-import { close } from "../../assets/index.js";
+import DatePicker from "./DatePicker.jsx";
 
-export default function MovieFilterFormVersion2({ data, inputValues, setInputValues }) {
+export default function MovieFilterFormVersion2({ inputValues, setInputValues }) {
   
-  const s = useStates('globalState');
   return (
     <div className={"m-auto w-1/2 max-w-full lg:my-20 lg:flex lg:gap-10 lg:items-end"}>
 
@@ -35,7 +32,8 @@ export default function MovieFilterFormVersion2({ data, inputValues, setInputVal
           </div>
 
           <div className="flex flex-col lg:grow">
-            <label
+            <DatePicker setInputValues={setInputValues} inputValues={inputValues} />
+            {/* <label
               // htmlFor="datePicker"
               className={`text-sm text-white-100 md:text-xl lg:text-2xl`}
 
@@ -50,7 +48,7 @@ export default function MovieFilterFormVersion2({ data, inputValues, setInputVal
               className={`border border-gray-300 rounded-md p-1.5 text-sm text-gray-400 my-2 h-8 lg:h-12 lg:text-lg lg:p-3`}
               onChange={(e)=> setInputValues({...inputValues, date: e.target.value})}
             // {...s.bind("date")}
-            />
+            /> */}
           </div>
 
         

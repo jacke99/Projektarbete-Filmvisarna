@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import newDateFormat from "../../service/newDateFormat";
 
 
 //eslint-disable-next-line
@@ -57,10 +58,10 @@ export default function ConfirmBooking({ nodeMailerError, bookingResult, movie, 
   </div>
 </li>
 
-      <li className="flex justify-between"> <p>Rad: </p><p>{`${bookingResult.row}`}</p></li>
+      <li className="flex justify-between"> <p>Rad: </p><p>{`${bookingResult.rows?.map((row) => row.row).join(", ")}`}</p></li>
       <li className="flex justify-between"> <p>Plats:</p> <p>{`${bookingResult.seats?.map((seat) => seat.seatNumber).join(", ")}`}</p></li>
       <li className="flex justify-between"> <p>Salong: </p>{screening.theaterName}</li>
-      <li className="flex justify-between"> <p>Datum:</p> <p> {screening.date}</p></li>
+      <li className="flex justify-between"> <p>Datum:</p> <p> {newDateFormat(screening.date)}</p></li>
       <li className="flex justify-between"> <p>Epost:</p> <p>{bookingResult.customerEmail}</p></li>
       <li className="flex justify-between"> <p>Pris:</p> <p>{`${bookingResult.price} kr`}</p></li>
      

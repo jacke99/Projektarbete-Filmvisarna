@@ -30,11 +30,16 @@ const router = createBrowserRouter([
       { path: "/register", element: <Register /> },
       { path: "/movies/:id", element: <MovieDetails /> },
       { path: "/mypages", element: <MyPages />},
-      { path: "/admin", element: <Admin /> },
-      { path: "/admin/movies", element: <AdminAddMovies/> },
-      { path: "/admin/bookings", element: <AdminBookings/> },
-      { path: "/admin/users", element: <AdminUsers/> },
-      {path: "/admin/screenings", element: <AdminAddScreenings/>},
+      {
+        path: "/admin",
+        element: <Admin />,
+        children: [
+          { path: "movies", element: <AdminAddMovies /> },
+          { path: "bookings", element: <AdminBookings /> },
+          { path: "users", element: <AdminUsers /> },
+          { path: "screenings", element: <AdminAddScreenings /> },
+        ],
+      },
     ],
   },
 ]);
