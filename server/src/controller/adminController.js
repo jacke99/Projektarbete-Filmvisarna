@@ -1,13 +1,11 @@
 import { fetchCollection } from "../mongo/mongoClient.js";
 import { ObjectId } from "mongodb";
 import { calcSeatNumber } from "../util/seatNumberUtil.js";
-
-
+import { calcSeatRating } from "../util/calcSeatRating.js";
 
 
 const addScreening = async (req, res) => {
     const body = req.body;
-    console.log(body)
   const {date, time, theater,
         title
   } = req.body;
@@ -76,15 +74,31 @@ const deleteMovie = async (req, res) => {
 const getBookingsXuser = async (req, res) => {
   try {
     const bookingsCollection = await fetchCollection("bookingsXuser");
-
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = 10;
     const today = new Date().toISOString().split("T")[0];
+    const searchQuery = req.query.search || "";
 
-    const bookingsXUser = await bookingsCollection
-      .find({ "screening.date": { $gte: today } })
+    const bookings = await bookingsCollection
+      .find({
+        $and: [
+          { "screening.date": { $gte: today } },
+          {
+            $or: [
+              { bookingId: { $regex: searchQuery, $options: "i" } },
+              { customerEmail: { $regex: searchQuery, $options: "i" } },
+              { "customer.name": { $regex: searchQuery, $options: "i" } },
+              { "customer.lastname": { $regex: searchQuery, $options: "i" } },
+            ],
+          },
+        ],
+      })
       .sort({ "screening.date": 1 })
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
       .toArray();
 
-    res.status(200).json(bookingsXUser);
+    res.status(200).json(bookings);
   } catch (error) {
     console.error("Error fetching and sorting bookingsXuser collection:", error);
     res.status(500).json({
@@ -95,6 +109,9 @@ const getBookingsXuser = async (req, res) => {
 };
 
 export { getBookingsXuser };
+
+
+
 
 const postMovie = async (req, res) => {
   const movie = req.body;
@@ -164,8 +181,11 @@ const addNewTheater = async (req, res) => {
             }
           }
         }
+      
+        let seatsWithRating = calcSeatRating(rows, seats)
+
         body.rows = rows.length
-        body.seats = seats
+        body.seats = seatsWithRating
         const result = await fetchCollection("theaters").insertOne(body);
         res.status(201).send({data: result, status: 201});
       } catch (error) {
