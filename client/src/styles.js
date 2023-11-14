@@ -1,10 +1,10 @@
 const styles = {
   //wrappers
-  wrapper: "mx-[auto] px-6 max-w-[1800px] mb-20",
-  navWrapper: "px-6 py-3 sm:px-8 sm:py-5 md:px-8 md:py-5 lg:px-10 lg:py-5",
+  wrapper: "max-w-[2000px] mx-auto px-3 sm:px-8 md:px-8 lg:px-10 xl:px-10 2xl:px-10",
+  navWrapper: "max-w-[2000px] mx-auto px-3 sm:px-8 md:px-8 lg:px-10 py-3  sm:py-3  md:py-3  lg:py-4",
 
   //images & icons
-  imgHeader: "w-full object-cover object-center-top h-[15rem] sm:h-[18rem] md:h-[25rem] lg:h-[35rem] xl:h-[35rem] 2xl:min-h-[40rem]",
+  imgHeader: "w-full object-cover object-center-top h-[15rem] sm:h-[18rem] md:h-[25rem] lg:h-[35rem] xl:h-[40rem] 2xl:h-[40rem]",
   imgPoster: "",
   icons: "h-8 sm:h-10 md:h-10 lg:h-10 xl:h-10 2xl:h-10",
 
@@ -14,7 +14,7 @@ const styles = {
   padding: "sm:px-16 px-6 sm:py-16 py-10",
 
   //text
-  navText: "text-gold font-light text-2xl",
+  navText: "text-gold font-light text-2xl  ",
   heroText: "",
   headerText: "text-gold sm: text-[20px] md:text-[45px] lg:text-[50px]",
   subHeaderText: "text-gold sm:text-[16px] md:text-[25px] lg:text-[27px]",
