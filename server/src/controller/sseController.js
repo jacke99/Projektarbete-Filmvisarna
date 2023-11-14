@@ -64,9 +64,9 @@ const postBooking = async (req, res) => {
       status: true 
     }
    
-    // Sending emailconfirmation from email.js
+    
     let emailError;
-
+    // Sending emailconfirmation from email.js
     await sendEmailWithNodemailer(booking).catch(error => {
       emailError = error + "";
     })
