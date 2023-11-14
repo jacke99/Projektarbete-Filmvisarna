@@ -15,6 +15,7 @@ export default function BookingTickets(){
     reEmail: "",
     phone: ""
   })
+  
   const location = useLocation()
   const movie = location.state.movie;
   const screening = location.state.screening;

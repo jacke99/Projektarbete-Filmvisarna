@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
+
 //eslint-disable-next-line
 export default function ConfirmBooking({ nodeMailerError, bookingResult, movie, screening }) {
 
@@ -32,13 +33,13 @@ export default function ConfirmBooking({ nodeMailerError, bookingResult, movie, 
     <ul className="flex flex-col sm:text-lg md:text-xl ">
     
       {bookingResult && !nodeMailerError && (
-        <p className="text-xl sm:text-2xl lg:text-3xl text-left mb-6">En bokningsbekräftelse har nu skickats till din email : {bookingResult.customerEmail}!</p>  
+        <p className="text-xl sm:text-2xl lg:text-3xl text-left mb-6">En bokningsbekräftelse har nu skickats till din email! </p>  
       ) }
       
       {bookingResult && nodeMailerError && (
         <div>
-            <p className="text-xl sm:text-2xl lg:text-3xl text-left mb-6">Din boking har genomförts men vi hade problem att skicka ett mail till din epost</p>  
-            <p className="mb-10 text-left"> Är du medlem så finns din boking sparad på mina sidor.  <br /> För smidig hantering ta gärna en bild/skärmdump eller skriv ner ditt bokningsnummer. Tack för er förståelse!</p>
+            <p className="text-xl sm:text-2xl lg:text-3xl text-left mb-6">Din boking har genomförts men vi hade problem att skicka ett mail till din epost  </p>  
+            <p className="mb-10 text-left text-gold "> Är du medlem så finns din boking sparad på mina sidor. <br /> För smidig hantering ta gärna en bild/skärmdump eller skriv ner ditt bokningsnummer. Tack för er förståelse!</p>
         </div>
       )} 
 
