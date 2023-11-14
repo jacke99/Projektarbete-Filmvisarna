@@ -7,7 +7,7 @@ export default function AddScreeningForm( { handleSubmit, inputValues, setInputV
    
 
     return(
-        <div className="mt-32 mx-auto w-60 " >
+        <div className="mx-auto w-60 " >
         <h3 className="text-lg font-medium text-white mb-2">Lägg till ny filmvisning</h3>    
         <form onSubmit= {handleSubmit} className=" text-black" method="POST">
             <label className="text-white-100" htmlFor="date">Datum:</label>

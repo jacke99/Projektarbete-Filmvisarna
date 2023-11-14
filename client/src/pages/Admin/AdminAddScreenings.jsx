@@ -1,6 +1,4 @@
 /* eslint-disable */
-import AdminNavigation from "../../components/adminPage/AdminNavigation";
-import { Link } from "react-router-dom";
 import AddScreeningForm from "../../components/adminPage/AddScreeningForm";
 import { performRequest } from "../../service/fetchService";
 import { useState } from "react";
@@ -35,7 +33,6 @@ export default function AdminAddScreenings(){
       
     return(
         <div className="mt-12">
-        <AdminNavigation />
             <AddScreeningForm handleSubmit= {handleSubmit} inputValues={inputValues} setInputValues={setInputValues}/>
            
         </div>

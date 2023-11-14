@@ -1,7 +1,6 @@
 
 import { useEffect } from "react";
 import AddMovieForm from "../../components/adminPage/AddMovieForm";
-import AdminNavigation from "../../components/adminPage/AdminNavigation";
 import { Link, useNavigate } from "react-router-dom";
 import { parseJwt } from "../../service/jwtService";
 
@@ -21,7 +20,6 @@ export default function AdminAddMovies() {
       }, [navigate])
     return (
         <div className="mt-12">
-        <AdminNavigation/>
             <AddMovieForm/>
             <Link to="/admin/movies" className={`text-4-xl underline`}>
             ADMIN MOVIES
