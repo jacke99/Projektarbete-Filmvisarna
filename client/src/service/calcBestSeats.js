@@ -22,12 +22,15 @@ export function calcBestSeats(seatData, numberOfSeats) {
 
   if (bestSeatGroup) {
     const rowIndex = seatData.findIndex(row => row.includes(bestSeatGroup[0]));
-    const recommendedSeats = bestSeatGroup.map(seat => ({
-      row: rowIndex + 1,
-      seat: seat.index + 1,
-      seatNumber: seat.seatNumber,
-      booked: false,
-    }));
+    const recommendedSeats = bestSeatGroup.map(seat => {
+      const seatIndex = seatData[rowIndex].findIndex(s => s === seat);
+      return {
+        row: rowIndex + 1,
+        seat: seatIndex + 1,
+        seatNumber: seat.seatNumber,
+        booked: false,
+      };
+    });
     return recommendedSeats;
   }
 
