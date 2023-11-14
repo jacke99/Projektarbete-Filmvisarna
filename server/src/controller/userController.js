@@ -70,14 +70,11 @@ const getScreenings = async (req, res) => {
       query.age = req.query.age;
     }
 
-  // Check the object query
 if (Object.keys(query).length > 0) {
   let regex;
   if (query.movie) {
     regex = new RegExp(query.movie.split("").join("\\s*"), 'i');
   }
-
-  // Include today's date in the filter
   const currentDateFilter = { "date": { $gte: new Date().toISOString().split('T')[0] } };
 
   const filteredScreenings = await screeningsCollection
@@ -98,7 +95,6 @@ if (Object.keys(query).length > 0) {
   }
 }
  else {
-      // No specific query provided, get screenings from today onwards
       try {
         const currentDate = new Date().toISOString().split('T')[0];
         const screenings = await screeningsCollection
@@ -114,64 +110,6 @@ if (Object.keys(query).length > 0) {
     res.status(500).json({ err: 'Något gick fel, prova igen' });
   }
 };
-
-
-
-
-
-
-
-// const getScreenings = async (req, res) => {
-//   try {
-//       const screeningsCollection = await fetchCollection('screeningXmovie');
-//       const query = {}
-
-//       if (req.query.date) { 
-//       query.date = req.query.date 
-//       }
-  
-//       if (req.query.movie) { 
-//       query.movie = req.query.movie
-//       }
-      
-//       if (req.query.age) { 
-//       query.age = req.query.age
-//       }
-  
-//       // Check the object query
-//       if (Object.keys(query).length > 0) {
-          
-//           let regex;
-//           if(query.movie) {
-//             regex = new RegExp(query.movie.split("").join("\\s*"), 'i');
-//           }
-          
-//           const filteredScreenings = await screeningsCollection.find({$and: [
-//               query.date ? { "date": query.date } : {},
-//               query.movie ? { "movie.title": { $regex: regex } } : {}, 
-//               query.age ? { "movie.ageRestriction": {$lte: parseInt(query.age) } }: {}
-//               ]}).sort({"date": 1, "time": 1}).toArray();
-
-        
-//         if (filteredScreenings.length == 0) {
-//           res.status(200).json({ err: 'Inga filmer på din sökning hittades' });
-//         } else {
-//           res.status(200).json(filteredScreenings);
-//         }
-  
-//       } else {
-//         try {
-//         const screenings = await screeningsCollection.find().sort({"date": 1, "time": 1}).toArray()
-//           res.status(200).send(screenings);
-//         } catch (err) {
-//           res.status(500).send({ err: 'Något gick fel' });
-//         }
-//       }
-//     } catch (err) {
-//       res.status(500).json({ err: 'Något gick fel, prova igen' });
-//     }
-// }
-
 
 
 export default {getMovies, getScreenings, getMovie, getMoviesUpComing, getMoviescurrent}
