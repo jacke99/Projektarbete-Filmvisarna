@@ -23,9 +23,8 @@ export default {
         "auto-fit-lg": "repeat(auto-fill, minmax(max(25rem, 28rem), 1fr))",
       },
       objectPosition: {
-        "center-top": "center top",
-        "center-top-20": "center top 20%",
-      },
+        'center-top': 'center 30%',
+      }
     },
   },
   plugins: [],

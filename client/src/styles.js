@@ -1,11 +1,17 @@
 const styles = {
   //wrappers
   wrapper: "mx-[auto] px-6 max-w-[1800px] mb-20",
-  imgHeader: "w-full object-cover object-center h-[30vh] sm:h-[40vh] md:h-[55vh] lg:h-[60vh] xl:h-[65vh] 2xl:min-h-[50vh]",
 
+  //images
+  imgHeader: "w-full object-cover object-center-top h-[30vh] sm:h-[40vh] md:h-[55vh] lg:h-[60vh] xl:h-[65vh] 2xl:min-h-[50vh]",
+  imgPoster: "",
+
+  //padding
   paddingX: "sm:px-6 px-6",
   paddingY: "sm:py-16 py-6",
   padding: "sm:px-16 px-6 sm:py-16 py-10",
+
+  //text
   headerText: "text-gold sm: text-[20px] md:text-[45px] lg:text-[50px]",
   subHeaderText: "text-gold sm:text-[16px] md:text-[25px] lg:text-[27px]",
   movieTitle:
@@ -14,6 +20,8 @@ const styles = {
   trailerSubTitle: "text-gold sm:text-[13px] md:text-[18px] lg:text-[20px]",
   movieDescInfo:
     "text-white-100 sm:text-[12px] md:text-[15px] lg:text-[20px] flex flex-col py-2",
+
+  //buttons & Inputs
   regInputs:
     ": bg-white-500 shadow appearance-none border rounded-lg  py-4 px-3 m-2 my-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ",
 
