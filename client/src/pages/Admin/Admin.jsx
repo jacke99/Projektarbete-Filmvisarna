@@ -1,7 +1,7 @@
 
 import { useEffect } from "react";
 import AdminNavigation from "../../components/adminPage/AdminNavigation";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { parseJwt } from "../../service/jwtService";
 function Admin() {
 const navigate = useNavigate()
@@ -20,7 +20,8 @@ useEffect(() => {
     return (
         <div className="mt-12 h-screen">
           <AdminNavigation/>
-          <h1 className="text-2xl font-semibold text-white text-center">ADMIN STARTSIDA</h1>
+          <h1 className="text-2xl font-semibold text-gold text-center">ADMINSIDA</h1>
+          <Outlet />
         </div>
     );
 }
