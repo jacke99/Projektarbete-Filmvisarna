@@ -2,9 +2,11 @@ import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import newDateFormat from "../../service/newDateFormat";
 
+
 //eslint-disable-next-line
-export default function ConfirmBooking({ bookingResult, movie, screening }) {
-  
+export default function ConfirmBooking({ nodeMailerError, bookingResult, movie, screening }) {
+
+  console.log(bookingResult);
   const navigate = useNavigate()
   return (
 <div className="w-3/4 md:w-7/12 lg:w-[35rem] rounded-md text-white m-auto">
@@ -28,10 +30,20 @@ export default function ConfirmBooking({ bookingResult, movie, screening }) {
           <p className="font-inconsolata text-base text-start">{movie.genre}</p>
           <p className="text-base">{`${movie.ageRestriction === 0 ? "Ingen åldersgräns" : movie.ageRestriction + " år"}`}</p>
         </div>
-        
       </div>
     <ul className="flex flex-col sm:text-lg md:text-xl ">
-      <p className="text-xl sm:text-2xl lg:text-3xl text-left mb-6">En bokningsbekräftelse har nu skickats till din email!</p>
+    
+      {bookingResult && !nodeMailerError && (
+        <p className="text-xl sm:text-2xl lg:text-3xl text-left mb-6">En bokningsbekräftelse har nu skickats till din email! </p>  
+      ) }
+      
+      {bookingResult && nodeMailerError && (
+        <div>
+            <p className="text-xl sm:text-2xl lg:text-3xl text-left mb-6">Din boking har genomförts men vi hade problem att skicka ett mail till din epost  </p>  
+            <p className="mb-10 text-left text-gold "> Är du medlem så finns din boking sparad på mina sidor. <br /> För smidig hantering ta gärna en bild/skärmdump eller skriv ner ditt bokningsnummer. Tack för er förståelse!</p>
+        </div>
+      )} 
+
       <li className="flex justify-between"><p>Bokningsnummer:</p> <p>{bookingResult.bookingId}</p> </li>
       <li className="flex justify-between"><p>Film:</p> <p>{movie.title}</p></li>
       <li className="flex justify-between">
