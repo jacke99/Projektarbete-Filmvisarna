@@ -1,17 +1,20 @@
 const styles = {
   //wrappers
   wrapper: "mx-[auto] px-6 max-w-[1800px] mb-20",
+  navWrapper: "px-6 py-3 sm:px-8 sm:py-5 md:px-8 md:py-5 lg:px-10 lg:py-5",
 
-  //images
+  //images & icons
   imgHeader: "w-full object-cover object-center-top h-[30vh] sm:h-[40vh] md:h-[55vh] lg:h-[60vh] xl:h-[65vh] 2xl:min-h-[50vh]",
   imgPoster: "",
+  icons: "h-8 sm:h-10 md:h-10 lg:h-10 xl:h-10 2xl:h-10",
 
   //padding
-  paddingX: "sm:px-6 px-6",
-  paddingY: "sm:py-16 py-6",
+  paddingX: "sm:px-6 md:px-10 px-6",
+  paddingY: "sm:py-16 md:py-10 py-6",
   padding: "sm:px-16 px-6 sm:py-16 py-10",
 
   //text
+  navText: "text-gold font-light text-2xl",
   headerText: "text-gold sm: text-[20px] md:text-[45px] lg:text-[50px]",
   subHeaderText: "text-gold sm:text-[16px] md:text-[25px] lg:text-[27px]",
   movieTitle:
