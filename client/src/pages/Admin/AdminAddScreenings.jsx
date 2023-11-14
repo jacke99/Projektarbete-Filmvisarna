@@ -34,7 +34,7 @@ export default function AdminAddScreenings(){
       }
       
     return(
-        <div className="mt-20">
+        <div className="mt-12">
         <AdminNavigation />
             <AddScreeningForm handleSubmit= {handleSubmit} inputValues={inputValues} setInputValues={setInputValues}/>
            
