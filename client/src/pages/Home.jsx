@@ -17,12 +17,17 @@ getMovies()
 }, [])
 
   return (
-    <div> 
-        {movies && <HeroMovie movie={movies[2]} />}
-        <MultiCarouselCurrent id="wrapper" />
-        {movies && <HeroMovie movie={movies[0]} />}
-        <MultiCarouselUpcoming />
-        {movies && <HeroMovie movie={movies[4]} />}
-    </div>
+<>
+{movies &&
+<>
+  <HeroMovie movie={movies[2]}/>
+  <MultiCarouselCurrent />
+  <HeroMovie movie={movies[0]} />
+  <MultiCarouselUpcoming />
+  <HeroMovie movie={movies[4]} />
+  </>
+}
+</>
   );
 }
+

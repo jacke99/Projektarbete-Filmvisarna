@@ -14,7 +14,7 @@ let clients = [];
 const postBooking = async (req, res) => {
   const body = req.body
   const totalTickets = body.adult + body.child + body.senior
-  console.log(body.seats)
+  console.log(body)
   if(body.seats.length !== totalTickets) {
     return res.status(400).send({message: "Number of seats does not match number of ticketTypes"})
   }
@@ -58,7 +58,7 @@ const postBooking = async (req, res) => {
       customerEmail: user.email, 
       ticketType: {adult: body.adult, child: body.child, senior: body.senior},
       screeningID: new ObjectId(body.id),
-      row: body.row,
+      rows: body.rows,
       seats: body.seats,
       price: totalPrice,
       status: true 
@@ -122,18 +122,24 @@ const cancelBooking = async (req, res) => {
         return res.status(400).send({message: "Bad Request"})
     }
     let booking = await fetchCollection("bookings").findOne({_id: new ObjectId(body.id)})
-    
+    console.log(booking)
     if(booking == null || !booking.screeningID) {
         return res.status(404).send({message: "Booking not found"})
     }
     try {
        let currentScreening = await fetchCollection("screenings").findOne({_id: new ObjectId(booking.screeningID)})
-        for(let i = 0; i < booking.seats.length; i++) {
-            if(currentScreening.seats[booking.row - 1][booking.seats[i].seat - 1] == false) {
-                return res.status(400).send({message: "The seats you are trying to cancel are already canceled"})
-               }
-            currentScreening.seats[booking.row - 1][booking.seats[i].seat - 1] = {seat: false, seatNumber: currentScreening.seats[booking.row - 1][booking.seats[i].seat - 1].seatNumber}
-        }
+       currentScreening.seats.forEach((row) => {
+        row.forEach((seat) => {
+          for(let i = 0; i < booking.seats.length; i++) {
+            if(seat.seatNumber === booking.seats[i].seatNumber && seat.seat === false) {
+              return res.status(400).send({message: "The seats you are trying to cancel are allready canceled"})
+    
+            } else if(seat.seatNumber === booking.seats[i].seatNumber) {
+              seat.seat = false
+            }
+          }
+        })
+      })
         booking.status = false
         await fetchCollection("bookings").updateOne({_id: new ObjectId(body.id)}, {$set: booking})
         let result = await fetchCollection("screenings").updateOne({_id: new ObjectId(booking.screeningID)}, {$set: currentScreening})

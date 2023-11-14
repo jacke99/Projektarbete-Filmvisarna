@@ -77,11 +77,9 @@ export default function Tickets() {
     window.history.replaceState(null, null, `?${queryString}`);
   }
 
-  return (
+  return headerData && (
     <div className="mb-20 bg-primary font-inconsolata">
       <div className="relative">
-        {headerData && (
-          <>
             <img
               src={`/img/${headerData.movie.img_header}`}
               alt={`photo from the movie ${headerData.movie.title}`}
@@ -90,26 +88,20 @@ export default function Tickets() {
             <div
               className={`${styles.centerAbsolutePos} top-1/2 flex flex-col text-center text-gold`}
             >
-              <h1 className={`lg:text-4xl [text-shadow:1px_1px_2px_var(--tw-shadow-color)] shadow-black`}>{`${headerData.date} ${headerData.time}`}</h1>
+            <h1 className={`lg:text-4xl [text-shadow:1px_1px_2px_var(--tw-shadow-color)] shadow-black`}>{`${headerData.date} ${headerData.time}`}</h1>
 
-              <h2 className={`lg:text-4xl [text-shadow:1px_1px_2px_var(--tw-shadow-color)] shadow-black`}>{`${headerData.movie.title}`}</h2>
-              <Link to={`/movies/${headerData.movie._id}`} className={`text-4-xl underline [text-shadow:1px_1px_2px_var(--tw-shadow-color)] shadow-black`}>
+            <h2 className={`lg:text-4xl [text-shadow:1px_1px_2px_var(--tw-shadow-color)] shadow-black`}>{`${headerData.movie.title}`}</h2>
+            <Link to={`/movies/${headerData.movie._id}`} className={`text-4-xl underline [text-shadow:1px_1px_2px_var(--tw-shadow-color)] shadow-black`}>
                 Se trailer
-              </Link>
-            </div>
-          </>
-        )}
+            </Link>
+          </div>
       </div>
-     
-      
-      <MovieFilterFormVersion2 
-    
-      inputValues={inputValues} setInputValues={setInputValues} />
+     <MovieFilterFormVersion2 inputValues={inputValues} setInputValues={setInputValues} />
 
-    <ScreeningCard setInputValues={setInputValues} query={query} />
-        </div>
-
-);
+     <ScreeningCard setInputValues={setInputValues} query={query} />
+    </div>
+  )
+   
 }
 
 

@@ -1,8 +1,7 @@
 import { fetchCollection } from "../mongo/mongoClient.js";
 import { ObjectId } from "mongodb";
 import { calcSeatNumber } from "../util/seatNumberUtil.js";
-import newDateFormate from "../util/newDateFormate.js";
-
+import { calcSeatRating } from "../util/calcSeatRating.js";
 
 
 const addScreening = async (req, res) => {
@@ -15,9 +14,6 @@ const addScreening = async (req, res) => {
   if (!date || !time || !theater || !title) {
     return res.status(400).json({error: "Missing required properties, pls check your request body"});
   }
-
-  //ny property uxDate får värdet av newDateFormate(date)
-  body.uxDate = newDateFormate(date)
  
   try {
     const regex = new RegExp(title.split("").join("\\s*"), 'i');
@@ -167,8 +163,11 @@ const addNewTheater = async (req, res) => {
             }
           }
         }
+      
+        let seatsWithRating = calcSeatRating(rows, seats)
+
         body.rows = rows.length
-        body.seats = seats
+        body.seats = seatsWithRating
         const result = await fetchCollection("theaters").insertOne(body);
         res.status(201).send({data: result, status: 201});
       } catch (error) {
