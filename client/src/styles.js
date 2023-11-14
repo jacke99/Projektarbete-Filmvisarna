@@ -4,7 +4,7 @@ const styles = {
   navWrapper: "px-6 py-3 sm:px-8 sm:py-5 md:px-8 md:py-5 lg:px-10 lg:py-5",
 
   //images & icons
-  imgHeader: "w-full object-cover object-center-top h-[30vh] sm:h-[40vh] md:h-[55vh] lg:h-[60vh] xl:h-[65vh] 2xl:min-h-[50vh]",
+  imgHeader: "w-full object-cover object-center-top h-[15rem] sm:h-[18rem] md:h-[25rem] lg:h-[35rem] xl:h-[35rem] 2xl:min-h-[40rem]",
   imgPoster: "",
   icons: "h-8 sm:h-10 md:h-10 lg:h-10 xl:h-10 2xl:h-10",
 
@@ -15,6 +15,7 @@ const styles = {
 
   //text
   navText: "text-gold font-light text-2xl",
+  heroText: "",
   headerText: "text-gold sm: text-[20px] md:text-[45px] lg:text-[50px]",
   subHeaderText: "text-gold sm:text-[16px] md:text-[25px] lg:text-[27px]",
   movieTitle:
