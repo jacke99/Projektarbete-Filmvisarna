@@ -18,6 +18,8 @@ export default function AdminAddMovies() {
           }
         }
       }, [navigate])
+
+      //kommentar
     return (
         <div className="mt-12">
             <AddMovieForm/>
