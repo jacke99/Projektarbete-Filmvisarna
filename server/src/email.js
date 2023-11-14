@@ -49,7 +49,7 @@ function sendEmailWithNodemailer(booking) {
     ]
     };
     
-    transporter.sendMail(mailOptions)
+    return transporter.sendMail(mailOptions)
 
 }
 

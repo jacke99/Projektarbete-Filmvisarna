@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"
-import AdminNavigation from "../../components/adminPage/AdminNavigation";
 import { performRequest } from "../../service/fetchService"
 import { styles } from "../../styles.js";
 import { useNavigate } from "react-router-dom";
@@ -32,7 +31,6 @@ export default function AdminUsers() {
 
     return (
     <div className="mt-12">
-        <AdminNavigation/>
 
         <div className="max-w-fit flex flex-col justify-center m-auto">
             <div id="UserListHeader" className="flex justify-between items-end p-4">            

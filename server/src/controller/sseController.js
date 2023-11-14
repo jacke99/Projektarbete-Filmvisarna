@@ -64,17 +64,20 @@ const postBooking = async (req, res) => {
       status: true 
     }
    
+    
+    let emailError;
     // Sending emailconfirmation from email.js
-    sendEmailWithNodemailer(booking)
-   
+    await sendEmailWithNodemailer(booking).catch(error => {
+      emailError = error + "";
+    })
 
     await fetchCollection("bookings").insertOne(booking)
     
     if(user.role) {
       await fetchCollection("users").updateOne({email: user.email}, {$push: {bookings: {bookingId: bookingID}}})
     }
-    return res.status(201).send(booking)
-
+    return res.status(201).send({booking, emailError})
+    
   
   } catch(err) {
    res.status(400).send(err)

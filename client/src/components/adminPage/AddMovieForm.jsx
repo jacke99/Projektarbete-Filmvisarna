@@ -22,7 +22,7 @@ export default function AddMovieForm() {
     const authToken = sessionStorage.getItem("AuthToken");
 
     return (
-        <div className="mt-32 mx-auto w-96 " >
+        <div className="mx-auto w-96 " >
             <h3 className="text-lg font-medium text-white ml-[37%] ">Redigera Filmer</h3>    
             <form className=" relative  text-black" action={`/api/movies/${authToken}`} method="post" encType="multipart/form-data ">
 
