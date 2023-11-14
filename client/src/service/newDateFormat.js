@@ -1,4 +1,4 @@
-const newDateFormate = (date) => {
+const newDateFormat = (date) => {
     const options = {
         weekday: "long",
         month: "long",
@@ -26,7 +26,7 @@ const newDateFormate = (date) => {
     return finalFormattedDate;
 };
 
-export default newDateFormate;
+export default newDateFormat;
 
 
 
