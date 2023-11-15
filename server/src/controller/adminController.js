@@ -116,15 +116,16 @@ export { getBookingsXuser };
 const postMovie = async (req, res) => {
   const movie = req.body;
   console.log(req.body)
-  const { title, desc , trailer, // här vill vi att "img" ska hämtas från client/srs/assets och följa med posten upp til DB
+  const { title, description , trailer, // här vill vi att "img" ska hämtas från client/srs/assets och följa med posten upp til DB
     director, actors,length,
     genre, speech, subtitles,
     ageRestriction
   } = req.body;
   
+  console.log(title, description, trailer, director, actors, length, genre, speech, subtitles, ageRestriction  );
 
   if (
-    !title || !desc || !trailer ||
+    !title || !description || !trailer ||
     !director || !actors || !length ||
     !genre || !speech || !subtitles ||
     !ageRestriction ) {
@@ -144,7 +145,7 @@ const postMovie = async (req, res) => {
       movie.img_header = req.files['img_header'][0].originalname; // Use the original file name
 
       const result = await fetchCollection("movies").insertOne(movie)
-      res.status(201).json(result);
+      res.status(201).send(result);
     } catch (error) {
       res.status(500).json({ err: "Could not create a new document in collection movies" });
     }
