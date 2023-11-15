@@ -35,7 +35,7 @@ export default function Header() {
           <img
             src={logo}
             alt="logo"
-            className="mr-6 h-12 w-12 md:w-[80px] md:h-[80px] lg:h-12 lg:-w12 object-contain"
+            className={`${styles.icons} cursor-pointer object-contain`}
           />
         </Link>
       
@@ -128,14 +128,16 @@ export default function Header() {
           </Link>}
         </ul>
       </div>
-      <div className="flex w-fit justify-end gap-1 items-center">
+      
+      
+      <div className="flex gap-1 items-center">
         <p onClick={() => navigate("/mypages")}  className={`${styles.subHeaderText} mr-2 hidden cursor-pointer hover:text-white xl:flex`}>
         {currentUser ? currentUser.name : ""}
         </p>
         <img
           src={account_circle_new}
           alt="login"
-          className="w-8 h-8 sm:w-12 sm:h-12 object-contain cursor-pointer mr-2"
+          className={`${styles.icons} cursor-pointer`}
           onClick={() => currentUser ? navigate("/mypages"): t.toggle = true }
         />
         <p
@@ -147,7 +149,7 @@ export default function Header() {
         <img
           src={toggle ? close : menu_new}
           alt="menu"
-          className="h-9 w-9 md:h-12 md:w-12 object-contain xl:hidden"
+          className={`${styles.icons} cursor-pointer xl:hidden`}
           onClick={() => setToggle(!toggle)}
         />
         <div

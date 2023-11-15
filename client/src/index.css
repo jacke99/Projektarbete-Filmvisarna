@@ -260,7 +260,3 @@ input:checked ~ .dot {
 .grid-row-gap {
   grid-row-gap: 2rem;
 }
-
-.grid-center {
-  align-content: center;
-}
