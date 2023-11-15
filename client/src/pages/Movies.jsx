@@ -7,13 +7,9 @@ export default function Movies() {
   const { data, isPending, error } = useFetch("/api/movies");
 
   return (
-    <div className={`mb-20 px-8`}>
+    <div className={``}>
       <div
-        className="
-        mb-6 mt-20 
-        text-center text-2xl
-        text-white 
-        md-12 md:mt-32 lg-20 lg:mt-40"
+        className=""
       >
         <h1 className="font-extra-bold text-gold text-xl md:text-2xl lg:text-3xl">
           Våra Filmer
