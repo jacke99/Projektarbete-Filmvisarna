@@ -115,7 +115,7 @@ export { getBookingsXuser };
 
 const postMovie = async (req, res) => {
   const movie = req.body;
-  
+  console.log(req.body)
   const { title, desc , trailer, // här vill vi att "img" ska hämtas från client/srs/assets och följa med posten upp til DB
     director, actors,length,
     genre, speech, subtitles,
