@@ -1,10 +1,10 @@
 const styles = {
   //wrappers
-  wrapper: "max-w-[2000px] mx-auto px-3 sm:px-8 md:px-8 lg:px-10 xl:px-10 2xl:px-10",
-  navWrapper: "max-w-[2000px] mx-auto px-3 sm:px-8 md:px-8 lg:px-10 py-3  sm:py-3  md:py-3  lg:py-4",
+  wrapper: "max-w-[1300px] mx-auto px-3 sm:px-8 md:px-8 lg:px-8 xl:px-10 2xl:px-0",
+  navWrapper: "max-w-[1300px] mx-auto px-3 sm:px-8 md:px-8 lg:px-8 2xl:px-0 py-3 sm:py-3 md:py-3 lg:py-4 ",
 
   //images & icons
-  imgHeader: "w-full object-cover object-center-top h-[15rem] sm:h-[18rem] md:h-[25rem] lg:h-[35rem] xl:h-[40rem] 2xl:h-[40rem]",
+  imgHeader: "w-full object-cover object-center-top h-[15rem] sm:h-[18rem] md:h-[25rem] lg:h-[35rem] xl:h-[40rem] 2xl:h-[60vh]",
   imgPoster: "",
   icons: "h-8 sm:h-10 md:h-10 lg:h-10 xl:h-10 2xl:h-10",
 

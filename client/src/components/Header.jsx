@@ -23,7 +23,7 @@ export default function Header() {
     setActive(pathParts[1])
   },[location])
   return (
-    <nav className={`sticky top-0 z-20  border-b-2 border-gold bg-primary`}>
+    <nav className={`sticky top-0 z-20 border-gold bg-primary  shadow-black shadow-2xl`}>
     <div className={`${styles.navWrapper} flex justify-between`}>
       <div className={`flex items-center flex-row gap-10`}>
       <Link className={`${styles.navText}`}
