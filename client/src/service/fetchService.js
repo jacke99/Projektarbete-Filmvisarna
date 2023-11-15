@@ -17,6 +17,7 @@ const fetchOptionsNoJwt = (body, method) => ({
 export const performRequest = async (url, method, body, page = 1, search = "") => { 
   const searchParam = search ? `&search=${encodeURIComponent(search)}` : "";
   const apiUrl = `${url}${url.includes("?") ? "&" : "?"}page=${page}${searchParam}`;
+  console.log("API URL:", apiUrl);
 
   let options;
   if (sessionStorage.getItem("AuthToken")) {
