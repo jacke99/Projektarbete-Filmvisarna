@@ -34,7 +34,8 @@ export default function MultiCarouselUpcoming() {
 
   return (
     // Karusell från React-multi-carousel med movie från ovan.
-    <>
+  <div className={`${styles.wrapper}`} >
+
     <h1 className={`${styles.headerText}text-gold text-center mt-20`}>Kommande filmer</h1>
     <Carousel
       className={`mx-2 my-10 md:my-12`}
@@ -43,6 +44,6 @@ export default function MultiCarouselUpcoming() {
     >
       {movie}
     </Carousel>
-     </>
+  </div>
   );
 }

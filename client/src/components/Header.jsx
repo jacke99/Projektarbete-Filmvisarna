@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { styles } from "../styles";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { logo, account_circle_new, close, menu_new } from "../assets";
+import { logo, close, menu_new, account_circle_new} from "../assets";
 import Login from "./Login";
 import { parseJwt } from "../service/jwtService";
 import { useStates } from 'react-easier';
@@ -23,11 +23,10 @@ export default function Header() {
     setActive(pathParts[1])
   },[location])
   return (
-    <nav
-      className={`${styles.paddingX} sticky top-0 z-20 flex w-full border-b-2 border-gold bg-primary lg:py-2`}
-    >
-      <div className="flex w-full items-center">
-        <Link
+    <nav className={`sticky top-0 z-20 border-gold bg-primary  shadow-black shadow-2xl`}>
+    <div className={`${styles.navWrapper} flex justify-between`}>
+      <div className={`flex items-center flex-row gap-10`}>
+      <Link className={`${styles.navText}`}
           to="/"
           onClick={() => {
             window.scrollTo(0, 0);
@@ -39,10 +38,11 @@ export default function Header() {
             className="mr-6 h-12 w-12 md:w-[80px] md:h-[80px] lg:h-12 lg:-w12 object-contain"
           />
         </Link>
-        <ul
-          className={`${styles.subHeaderText} hidden list-none flex-row gap-10 xl:flex`}
-        >
-          <Link
+      
+        <ul className={`hidden list-none flex-row gap-10 xl:flex`}>
+        
+
+          <Link className={`${styles.navText}  block`}
             to="/"
             onClick={() => {
               window.scrollTo(0, 0);
@@ -56,7 +56,7 @@ export default function Header() {
               Hem
             </li>
           </Link>
-          <Link
+          <Link className={`${styles.navText}`}
             to="/movies"
             onClick={() => {
               window.scrollTo(0, 0);
@@ -70,7 +70,7 @@ export default function Header() {
               Filmer
             </li>
           </Link>
-          <Link
+          <Link className={`${styles.navText}`}
             to="/booking"
             onClick={() => {
               window.scrollTo(0, 0);
@@ -84,7 +84,7 @@ export default function Header() {
               Biljetter
             </li>
           </Link>
-          {!currentUser && <Link
+          {!currentUser && <Link className={`${styles.navText}`}
             to="/register"
             onClick={() => {
               window.scrollTo(0, 0);
@@ -98,7 +98,7 @@ export default function Header() {
               Bli medlem
             </li>
           </Link>}
-          {currentUser && <Link
+          {currentUser && <Link className={`${styles.navText}`}
             to="/mypages"
             onClick={() => {
               window.scrollTo(0, 0);
@@ -112,7 +112,7 @@ export default function Header() {
               Mina Sidor
             </li>
           </Link>}
-          {currentUser && currentUser.role === "ADMIN" && <Link
+          {currentUser && currentUser.role === "ADMIN" && <Link className={`${styles.navText}`}
             to="/admin"
             onClick={() => {
               window.scrollTo(0, 0);
@@ -139,7 +139,7 @@ export default function Header() {
           onClick={() => currentUser ? navigate("/mypages"): t.toggle = true }
         />
         <p
-          className={`${styles.subHeaderText} ${t.toggle ? "text-white" : "text-gold"} hidden cursor-pointer hover:text-white xl:flex min-w-[10rem]`}
+          className={`${styles.navText} ${t.toggle ? "text-white" : "text-gold"} hidden cursor-pointer hover:text-white xl:flex`}
           onClick={() => currentUser ? logout()  : t.toggle = true }
         >
           {currentUser ? "Logga ut" : "Logga in"}
@@ -248,6 +248,8 @@ export default function Header() {
         </div>
       </div>
       {t.toggle && <Login setCurrentUser={setCurrentUser}/>}
+    </div>
     </nav>
+    
   );
 }
