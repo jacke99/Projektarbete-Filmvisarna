@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { styles } from "../styles";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { logo, close, menu_new, account_circle_new, account_circle_wght200 } from "../assets";
+import { logo, account_circle_new, close, menu_new } from "../assets";
 import Login from "./Login";
 import { parseJwt } from "../service/jwtService";
 import { useStates } from 'react-easier';
@@ -23,9 +23,11 @@ export default function Header() {
     setActive(pathParts[1])
   },[location])
   return (
-    <nav className={`${styles.navWrapper} ${styles.navText} sticky top-0 z-20 flex justify-between border-b-2 border-gold bg-primary lg:py-2 `}>
-      <div className={`flex items-center flex-row gap-10`}>
-      <Link
+    <nav
+      className={`${styles.paddingX} sticky top-0 z-20 flex w-full border-b-2 border-gold bg-primary lg:py-2`}
+    >
+      <div className="flex w-full items-center">
+        <Link
           to="/"
           onClick={() => {
             window.scrollTo(0, 0);
@@ -34,13 +36,12 @@ export default function Header() {
           <img
             src={logo}
             alt="logo"
-            className={`${styles.icons} cursor-pointer object-contain`}
+            className="mr-6 h-12 w-12 md:w-[80px] md:h-[80px] lg:h-12 lg:-w12 object-contain"
           />
         </Link>
-      
-        <ul className={`hidden list-none flex-row gap-10 xl:flex`}>
-        
-
+        <ul
+          className={`${styles.subHeaderText} hidden list-none flex-row gap-10 xl:flex`}
+        >
           <Link
             to="/"
             onClick={() => {
@@ -127,20 +128,18 @@ export default function Header() {
           </Link>}
         </ul>
       </div>
-      
-      
-      <div className="flex gap-1 items-center">
+      <div className="flex w-fit justify-end gap-1 items-center">
         <p onClick={() => navigate("/mypages")}  className={`${styles.subHeaderText} mr-2 hidden cursor-pointer hover:text-white xl:flex`}>
         {currentUser ? currentUser.name : ""}
         </p>
         <img
           src={account_circle_new}
           alt="login"
-          className={`${styles.icons} cursor-pointer`}
+          className="w-8 h-8 sm:w-12 sm:h-12 object-contain cursor-pointer mr-2"
           onClick={() => currentUser ? navigate("/mypages"): t.toggle = true }
         />
         <p
-          className={`${styles.subHeaderText} ${t.toggle ? "text-white" : "text-gold"} hidden cursor-pointer hover:text-white xl:flex`}
+          className={`${styles.subHeaderText} ${t.toggle ? "text-white" : "text-gold"} hidden cursor-pointer hover:text-white xl:flex min-w-[10rem]`}
           onClick={() => currentUser ? logout()  : t.toggle = true }
         >
           {currentUser ? "Logga ut" : "Logga in"}
@@ -148,7 +147,7 @@ export default function Header() {
         <img
           src={toggle ? close : menu_new}
           alt="menu"
-          className={`${styles.icons} cursor-pointer xl:hidden`}
+          className="h-9 w-9 md:h-12 md:w-12 object-contain xl:hidden"
           onClick={() => setToggle(!toggle)}
         />
         <div

@@ -18,12 +18,15 @@ export default {
         inconsolata: ["Inconsolata", "monospace"],
       },
       gridTemplateColumns: {
-        "auto-fit-mobile": "repeat(auto-fill, minmax(max(15rem, 20rem), 1fr))",
-        "auto-fit-sm": "repeat(auto-fill, minmax(max(15rem, 20rem), 1fr))",
-        "auto-fit-lg": "repeat(auto-fill, minmax(max(25rem, 28rem), 1fr))",
+        // "auto-fit-mobile": "repeat(auto-fill, minmax(max(15rem, 20rem), 1fr))",
+        // "auto-fit-sm": "repeat(auto-fill, minmax(max(15rem, 20rem), 1fr))",
+        // "auto-fit-lg": "repeat(auto-fill, minmax(max(25rem, 28rem), 1fr))",
       },
       objectPosition: {
         'center-top': 'center 30%',
+      },
+      screens: {
+        xs: "364",
       }
     },
   },

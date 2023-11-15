@@ -1,4 +1,3 @@
-import { styles } from "../styles";
 import MovieCard from "../components/moviesPage/MovieCard";
 import useFetch from "../hooks/useFetch";
 
