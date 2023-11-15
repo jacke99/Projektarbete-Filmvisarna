@@ -73,11 +73,16 @@ const deleteMovie = async (req, res) => {
 //Get bookings collection
 const getBookingsXuser = async (req, res) => {
   try {
+    console.log('getBookingsXuser function');
     const bookingsCollection = await fetchCollection("bookingsXuser");
     const page = parseInt(req.query.page) || 1;
     const pageSize = 10;
     const today = new Date().toISOString().split("T")[0];
+    console.log('Today:', today);
     const searchQuery = req.query.search || "";
+    console.log('Page:', page);
+    console.log('Search Query:', searchQuery);
+
 
     const bookings = await bookingsCollection
       .find({
@@ -97,7 +102,7 @@ const getBookingsXuser = async (req, res) => {
       .skip((page - 1) * pageSize)
       .limit(pageSize)
       .toArray();
-
+      console.log('Bookings:', bookings);
     res.status(200).json(bookings);
   } catch (error) {
     console.error("Error fetching and sorting bookingsXuser collection:", error);
