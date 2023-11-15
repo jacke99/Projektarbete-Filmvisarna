@@ -9,7 +9,7 @@ export default function Movies() {
   return (
     <div className={`${styles.wrapper}`}>
       
-        <h1 className={`${styles.headerText}`}>
+        <h1 className={`${styles.headerText} ${styles.paddingTop} ${styles.paddingBottom} text-center`}>
           Våra Filmer
         </h1>
       

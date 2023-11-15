@@ -38,8 +38,8 @@ export default function MovieCard({ movie }) {
             <h2 className={`${styles.subHeaderText}`}>
               {movie.title}
             </h2>
-            <p className="font-inconsolata text-sm lg:text-base">{movie.genre}</p>
-            <p className="flex-col pt-1 text-sm lg:text-lg hidden md:block">{movie.description}</p>
+            <p className={`${styles.subText}`}>{movie.genre}</p>
+            <p className={`${styles.bodyText}`}>{movie.description}</p>
             <p className="flex-col pt-1 text-sm lg:text-lg md:hidden" onClick={toggleDescription}>
             {renderDescription()}
             </p>
