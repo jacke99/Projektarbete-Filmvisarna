@@ -26,9 +26,9 @@ const styles = {
   
   //Basic text
   headerText: "text-gold font-medium text-[25px] sm:text-[25px] md:text-[25px] lg:text-[30px] xl:text-[30px] 2xl:text-[40px]",
-  subHeaderText: "text-white font-regular text-[20px] sm:text-[20px] md:text-[25px] lg:text-[27px]", 
-  subText: "text-white font-regular font-inconsolata text-[16px] sm:text-[16px] md:text-[16px] lg:text-[20px] lg:text-[20px]",
-  bodyText:"text-white pt-1 font-regular text-[16px] sm:text-[18px] md:text-[20px] lg:text-[20px] lg:text-[20px]",
+  subHeaderText: "text-white font-regular text-[20px] sm:text-[20px] md:text-[25px] lg:text-[27px] 2xl:text-[27px]", 
+  subText: "text-white font-regular font-inconsolata text-[16px] sm:text-[16px] md:text-[16px] lg:text-[20px] lg:text-[20px] 2xl:text-[20px]",
+  bodyText:"text-white pt-1 font-regular text-[16px] sm:text-[16px] md:text-[16px] lg:text-[18px] xl:text-[18px] 2xl:text-[18px]",
 
   //MovieCard text
   movieTitle: "text-white-100 font-inconsolata  sm:text-[15px] md:text-[20px] lg:text-[25px]",
