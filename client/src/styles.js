@@ -10,19 +10,31 @@ const styles = {
 
   //padding under arbete
   paddingY: "py-8 sm:py-6 md:py-14 lg:py-14 xl:py-16 2xl:py-16",
-  paddingTop: "pt-12 sm:pt-12 md:pt-14 lg:pt-14 xl:pt-16 2xl:pt-16",
-  paddingBottom: "pb-6 sm:pb-6 md:pb-6 lg:pb-8 xl:pb-8 2xl:pb-10",
+  paddingTop: "pt-8 sm:pt-12 md:pt-14 lg:pt-14 xl:pt-16 2xl:pt-16",
+  paddingBottom: "pb-8 sm:pb-6 md:pb-6 lg:pb-8 xl:pb-8 2xl:pb-10",
 
 
   //text under arbete
-  navText: "text-gold font-light text-2xl  ",
-  heroText: " font-medium text-[25px] sm:text-[30px] md:text-[30px] lg:text-[50px] xl:text-[60px] 2xl:text-[5vh] text-gold [text-shadow:1px_1px_2px_var(--tw-shadow-color)] shadow-black",
+
+  //Navigation text
+  navText: "text-gold font-light text-2xl",
+
+  //Hero text
+  heroHeader: "font-medium text-[25px] sm:text-[30px] md:text-[30px] lg:text-[50px] xl:text-[60px] 2xl:text-[5vh] text-gold [text-shadow:1px_1px_2px_var(--tw-shadow-color)] shadow-black",
+  heroSubHeader: "text-[20px] sm:text-[30px] md:text-[25px] lg:text-[35px] xl:text-[40px] 2xl:text-[3vh] text-gold [text-shadow:1px_1px_2px_var(--tw-shadow-color)] shadow-black",
+  heroSubText: "text-[15px] sm:text-[18px] md:text-[20px] lg:text-[25px] xl:text-[28px] 2xl:text-[2.2vh] font-inconsolata text-gold underline underline-offset-4 [text-shadow:1px_1px_2px_var(--tw-shadow-color)] shadow-black",
+  
+  //Basic text
   headerText: "text-gold font-medium text-[25px] sm:text-[25px] md:text-[25px] lg:text-[30px] xl:text-[30px] 2xl:text-[40px]",
-  subHeaderText: "text-gold sm:text-[16px] md:text-[25px] lg:text-[27px]",
-  movieTitle:
-    "text-white-100 font-inconsolata  sm:text-[15px] md:text-[20px] lg:text-[25px]",
+  subHeaderText: "text-white font-regular text-[20px] sm:text-[20px] md:text-[25px] lg:text-[27px]", 
+  subText: "text-white font-regular font-inconsolata text-[16px] sm:text-[16px] md:text-[16px] lg:text-[20px] lg:text-[20px]",
+  bodyText:"text-white pt-1 font-regular text-[16px] sm:text-[18px] md:text-[20px] lg:text-[20px] lg:text-[20px]",
+
+  //MovieCard text
+  movieTitle: "text-white-100 font-inconsolata  sm:text-[15px] md:text-[20px] lg:text-[25px]",
   trailerTitle: "text-gold text-[25px] sm:text-[25px] md:text-[30px] lg:text-[35px]",
   trailerSubTitle: "text-gold sm:text-[13px] md:text-[18px] lg:text-[20px]",
+
   movieDescInfo:
     "text-white-100 sm:text-[12px] md:text-[15px] lg:text-[20px] flex flex-col py-2",
 
