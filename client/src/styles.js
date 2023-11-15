@@ -1,6 +1,6 @@
 const styles = {
   //wrappers under arbete
-  wrapper: "py-5 sm:py-6 md:py-8 lg:py-14 xl:py-14 2xl:py-16 max-w-[1500px] mx-auto px-3 sm:px-8 md:px-8 lg:px-8 xl:px-10 2xl:px-16",
+  wrapper: "max-w-[1500px] mx-auto px-3 sm:px-8 md:px-8 lg:px-8 xl:px-10 2xl:px-16",
   navWrapper: "max-w-[1800px] mx-auto px-3 sm:px-8 md:px-8 lg:px-8 xl:px-16 2xl:px-16 py-3 sm:py-3 md:py-3 lg:py-4 ",
 
   //images & icons under arbete
@@ -9,14 +9,15 @@ const styles = {
   icons: "h-8 sm:h-10 md:h-10 lg:h-10 xl:h-10 2xl:h-10",
 
   //padding under arbete
-  paddingX: "sm:px-6 md:px-10 px-6",
-  paddingY: "sm:py-16 md:py-10 py-6",
-  padding: "sm:px-16 px-6 sm:py-16 py-10",
+  paddingY: "py-8 sm:py-6 md:py-14 lg:py-14 xl:py-16 2xl:py-16",
+  paddingTop: "pt-12 sm:pt-12 md:pt-14 lg:pt-14 xl:pt-16 2xl:pt-16",
+  paddingBottom: "pb-6 sm:pb-6 md:pb-6 lg:pb-8 xl:pb-8 2xl:pb-10",
+
 
   //text under arbete
   navText: "text-gold font-light text-2xl  ",
-  heroText: "",
-  headerText: "text-gold font-medium text-center text-[25px] sm:text-[25px] md:text-[25px] lg:text-[30px] xl:text-[30px] 2xl:text-[40px]",
+  heroText: " font-medium text-[25px] sm:text-[30px] md:text-[30px] lg:text-[50px] xl:text-[60px] 2xl:text-[5vh] text-gold [text-shadow:1px_1px_2px_var(--tw-shadow-color)] shadow-black",
+  headerText: "text-gold font-medium text-[25px] sm:text-[25px] md:text-[25px] lg:text-[30px] xl:text-[30px] 2xl:text-[40px]",
   subHeaderText: "text-gold sm:text-[16px] md:text-[25px] lg:text-[27px]",
   movieTitle:
     "text-white-100 font-inconsolata  sm:text-[15px] md:text-[20px] lg:text-[25px]",

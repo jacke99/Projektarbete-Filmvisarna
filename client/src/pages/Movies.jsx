@@ -11,7 +11,7 @@ export default function Movies() {
       <div
         className=""
       >
-        <h1 className={`${styles.headerText}`}>
+        <h1 className={`${styles.headerText} ${styles.paddingY} text-center  `}>
           Våra Filmer
         </h1>
       </div>

@@ -45,7 +45,7 @@ export default function MyPages() {
     }
 
     const userBookings = userData?.map((booking, index) => (
-        <div key={index} className={`${styles.subHeaderText} text-white border-2 border-gold p-4 rounded-lg`} >
+        <div key={index} className={`${styles.subHeaderText} text-left text-white border-2 border-gold p-4 rounded-lg`} >
             <ul className="flex flex-col">
                 <li className="flex justify-between"> <p className="text-gold">BokningsNr:</p> <p>{booking.bookingId}</p></li>
                 <li className="flex justify-between"> <p className="text-gold">Datum:</p> <p>{booking.screening?.date}</p></li>
