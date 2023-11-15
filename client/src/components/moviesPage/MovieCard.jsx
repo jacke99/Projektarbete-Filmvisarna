@@ -10,15 +10,15 @@ export default function MovieCard({ movie }) {
 
 
   return (
-    <div className="lg:flex lg:justify-center">
-      <div className="lg:pr-15 flex max-w-7xl flex-col justify-between border-t-[0.5px] border-gold py-8 md:flex-row md:gap-4 md:pr-6 lg:flex-row lg:justify-start lg:gap-8">
+    <div className="lg:flex lg:justify-start">
+      <div className="flex max-w-7xl flex-col justify-between border-t-[0.5px] border-gold py-8 md:flex-row md:gap-4  lg:flex-row lg:justify-start lg:gap-8">
         <img
           src={`/img/${movie.img_poster}`}
           alt={`movie poster for ${movie.title}`}
           className="object-cover object-center sm:h-56 lg:h-72 rounded-xl"
         />
         <div className="md: flex flex-col justify-center md:justify-around lg:justify-around">
-          <div className="my-4 flex flex-col text-white-100 md:my-0 lg:my-0">
+          <div className="my-4 flex flex-col text-white-100">
             <h2 className="font-extra-bold text-base md:text-lg lg:text-xl">
               {movie.title}
             </h2>

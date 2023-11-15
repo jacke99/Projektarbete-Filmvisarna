@@ -1,7 +1,7 @@
 const styles = {
   //wrappers under arbete
-  wrapper: "max-w-[1300px] mx-auto px-3 sm:px-8 md:px-8 lg:px-8 xl:px-10 2xl:px-0",
-  navWrapper: "max-w-[1300px] mx-auto px-3 sm:px-8 md:px-8 lg:px-8 2xl:px-0 py-3 sm:py-3 md:py-3 lg:py-4 ",
+  wrapper: "py-5 sm:py-[6] md:py-[] max-w-[1500px] mx-auto px-3 sm:px-8 md:px-8 lg:px-8 xl:px-10 2xl:px-16",
+  navWrapper: "max-w-[1800px] mx-auto px-3 sm:px-8 md:px-8 lg:px-8 xl:px-16 2xl:px-16 py-3 sm:py-3 md:py-3 lg:py-4 ",
 
   //images & icons under arbete
   imgHeader: "w-full object-cover object-center-top h-[15rem] sm:h-[18rem] md:h-[25rem] lg:h-[35rem] xl:h-[40rem] 2xl:h-[60vh]",
@@ -16,7 +16,7 @@ const styles = {
   //text under arbete
   navText: "text-gold font-light text-2xl  ",
   heroText: "",
-  headerText: "text-gold sm: text-[20px] md:text-[45px] lg:text-[50px]",
+  headerText: "text-gold font-medium text-[25px] sm:text-[25px] md:text-[25px] lg:text-[30px] xl:text-[30px] 2xl:text-[35px]",
   subHeaderText: "text-gold sm:text-[16px] md:text-[25px] lg:text-[27px]",
   movieTitle:
     "text-white-100 font-inconsolata  sm:text-[15px] md:text-[20px] lg:text-[25px]",
