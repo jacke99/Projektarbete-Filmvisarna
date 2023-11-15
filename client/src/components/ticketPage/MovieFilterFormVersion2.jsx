@@ -51,7 +51,10 @@ export default function MovieFilterFormVersion2({ inputValues, setInputValues })
             /> */}
           </div>
 
-        
+      <div className="flex flex-col lg:grow">
+          <label className={`text-sm text-white-100 md:text-xl lg:text-2xl`}>
+              Sök:
+          </label>
           <input
             value={inputValues.movie}
             placeholder="Sök filmtitel..."
@@ -62,6 +65,8 @@ export default function MovieFilterFormVersion2({ inputValues, setInputValues })
             onChange={(e)=> setInputValues({...inputValues, movie: e.target.value})}
           // {...s.bind("filmTitle")}
           />
+
+      </div>
               
 
        

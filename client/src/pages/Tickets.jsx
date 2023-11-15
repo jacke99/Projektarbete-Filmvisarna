@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 // import MovieFilterForm from "../components/ticketPage/MovieFilterForm.jsx";
 import MovieFilterFormVersion2 from "../components/ticketPage/MovieFilterFormVersion2.jsx";
 import ScreeningCard from "../components/ScreeningCard.jsx";
+import newDateFormat from "../service/newDateFormat.js";
 
 import { useEffect, useState } from "react";
 
@@ -79,7 +80,7 @@ export default function Tickets() {
 
   return headerData && (
     <div className="mb-20 bg-primary font-inconsolata">
-      <div className="relative">
+      {/* <div className="relative">
             <img
               src={`/img/${headerData.movie.img_header}`}
               alt={`photo from the movie ${headerData.movie.title}`}
@@ -95,7 +96,31 @@ export default function Tickets() {
                 Se trailer
             </Link>
           </div>
-      </div>
+      </div> */}
+
+          <section className={`relative flex items-center justify-center bg-primary text-center`}>
+            <img
+              className={`${styles.imgHeader}`}
+              src={`/img/${headerData.movie.img_header}`}
+              alt="Img with from movie"
+            />
+            <div className="translate-50-50 absolute left-1/2 top-1/2">
+
+              <h2 className={`${styles.heroHeader}`}>{newDateFormat(headerData.date)} {headerData.time}</h2>
+
+              <h2 className={`${styles.heroSubHeader} [text-shadow:1px_1px_2px_var(--tw-shadow-color)] shadow-black`}>
+                {headerData.movie.title}
+              </h2>
+
+              <Link to={`/movies/${headerData.movie._id}`}>
+              <p className={`${styles.heroSubText}`}>
+                Mer info {">"}
+              </p> 
+              </Link>
+            </div>
+    </section>
+
+
      <MovieFilterFormVersion2 inputValues={inputValues} setInputValues={setInputValues} />
 
      <ScreeningCard setInputValues={setInputValues} query={query} />
