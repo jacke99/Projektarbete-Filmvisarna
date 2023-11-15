@@ -7,11 +7,11 @@ export default function Movies() {
   const { data, isPending, error } = useFetch("/api/movies");
 
   return (
-    <div className={``}>
+    <div className={`${styles.wrapper}`}>
       <div
         className=""
       >
-        <h1 className="font-extra-bold text-gold text-xl md:text-2xl lg:text-3xl">
+        <h1 className={`${styles.headerText}`}>
           Våra Filmer
         </h1>
       </div>
