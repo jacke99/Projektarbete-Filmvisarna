@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { styles } from "../../styles";
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 export default function MovieCard({ movie }) {
@@ -34,11 +35,11 @@ export default function MovieCard({ movie }) {
         />
         <div className="md: flex flex-col justify-center md:justify-around lg:justify-around">
           <div className="my-4 flex flex-col text-white-100">
-            <h2 className="font-extra-bold text-base md:text-lg lg:text-xl">
+            <h2 className={`${styles.subHeaderText}`}>
               {movie.title}
             </h2>
-            <p className="font-inconsolata text-sm lg:text-base">{movie.genre}</p>
-            <p className="flex-col pt-1 text-sm lg:text-lg hidden md:block">{movie.description}</p>
+            <p className={`${styles.subText}`}>{movie.genre}</p>
+            <p className={`${styles.bodyText}`}>{movie.description}</p>
             <p className="flex-col pt-1 text-sm lg:text-lg md:hidden" onClick={toggleDescription}>
             {renderDescription()}
             </p>
