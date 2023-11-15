@@ -8,13 +8,11 @@ export default function Movies() {
 
   return (
     <div className={`${styles.wrapper}`}>
-      <div
-        className=""
-      >
+      
         <h1 className={`${styles.headerText}`}>
           Våra Filmer
         </h1>
-      </div>
+      
       {data && (
         <div className="">
           {data.map((movie, index) => (
