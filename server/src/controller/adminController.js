@@ -122,7 +122,9 @@ const postMovie = async (req, res) => {
     ageRestriction
   } = req.body;
   
-  console.log(title, description, trailer, director, actors, length, genre, speech, subtitles, ageRestriction  );
+  movie.ageRestriction = parseInt(movie.ageRestriction);
+  console.log(movie.ageRestriction);
+
 
   if (
     !title || !description || !trailer ||
