@@ -6,14 +6,12 @@ export default function Movies() {
   const { data, isPending, error } = useFetch("/api/movies");
 
   return (
-    <div className={``}>
-      <div
-        className=""
-      >
-        <h1 className="font-extra-bold text-gold text-xl md:text-2xl lg:text-3xl">
+    <div className={`${styles.wrapper}`}>
+      
+        <h1 className={`${styles.headerText} ${styles.paddingTop} ${styles.paddingBottom} text-center`}>
           Våra Filmer
         </h1>
-      </div>
+      
       {data && (
         <div className="">
           {data.map((movie, index) => (

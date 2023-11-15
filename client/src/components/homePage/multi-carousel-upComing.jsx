@@ -34,11 +34,11 @@ export default function MultiCarouselUpcoming() {
 
   return (
     // Karusell från React-multi-carousel med movie från ovan.
-  <div className={`${styles.wrapper}`} >
+    <div className={`${styles.wrapper} ${styles.paddingY} `} >
 
-    <h1 className={`${styles.headerText}text-gold text-center mt-20`}>Kommande filmer</h1>
+    <h1 className={`${styles.headerText} text-center `}>Kommande filmer</h1>
     <Carousel
-      className={`mx-2 my-10 md:my-12`}
+      className={`${styles.paddingTop} `}      
       responsive={responsive}
       renderArrowsWhenDisabled={true}
     >

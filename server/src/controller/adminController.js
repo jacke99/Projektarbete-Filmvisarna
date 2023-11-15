@@ -73,11 +73,16 @@ const deleteMovie = async (req, res) => {
 //Get bookings collection
 const getBookingsXuser = async (req, res) => {
   try {
+    console.log('getBookingsXuser function');
     const bookingsCollection = await fetchCollection("bookingsXuser");
     const page = parseInt(req.query.page) || 1;
     const pageSize = 10;
     const today = new Date().toISOString().split("T")[0];
+    console.log('Today:', today);
     const searchQuery = req.query.search || "";
+    console.log('Page:', page);
+    console.log('Search Query:', searchQuery);
+
 
     const bookings = await bookingsCollection
       .find({
@@ -97,7 +102,7 @@ const getBookingsXuser = async (req, res) => {
       .skip((page - 1) * pageSize)
       .limit(pageSize)
       .toArray();
-
+      console.log('Bookings:', bookings);
     res.status(200).json(bookings);
   } catch (error) {
     console.error("Error fetching and sorting bookingsXuser collection:", error);
@@ -115,16 +120,19 @@ export { getBookingsXuser };
 
 const postMovie = async (req, res) => {
   const movie = req.body;
-  
-  const { title, desc , trailer, // här vill vi att "img" ska hämtas från client/srs/assets och följa med posten upp til DB
+  console.log(req.body)
+  const { title, description , trailer, // här vill vi att "img" ska hämtas från client/srs/assets och följa med posten upp til DB
     director, actors,length,
     genre, speech, subtitles,
     ageRestriction
   } = req.body;
   
+  movie.ageRestriction = parseInt(movie.ageRestriction);
+  console.log(movie.ageRestriction);
+
 
   if (
-    !title || !desc || !trailer ||
+    !title || !description || !trailer ||
     !director || !actors || !length ||
     !genre || !speech || !subtitles ||
     !ageRestriction ) {
@@ -144,7 +152,7 @@ const postMovie = async (req, res) => {
       movie.img_header = req.files['img_header'][0].originalname; // Use the original file name
 
       const result = await fetchCollection("movies").insertOne(movie)
-      res.status(201).json(result);
+      res.status(201).send(result);
     } catch (error) {
       res.status(500).json({ err: "Could not create a new document in collection movies" });
     }
