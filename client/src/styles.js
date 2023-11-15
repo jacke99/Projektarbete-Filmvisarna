@@ -1,6 +1,6 @@
 const styles = {
   //wrappers under arbete
-  wrapper: "py-5 sm:py-[6] md:py-[] max-w-[1500px] mx-auto px-3 sm:px-8 md:px-8 lg:px-8 xl:px-10 2xl:px-16",
+  wrapper: "py-5 sm:py-6 md:py-8 lg:py-14 xl:py-14 2xl:py-16 max-w-[1500px] mx-auto px-3 sm:px-8 md:px-8 lg:px-8 xl:px-10 2xl:px-16",
   navWrapper: "max-w-[1800px] mx-auto px-3 sm:px-8 md:px-8 lg:px-8 xl:px-16 2xl:px-16 py-3 sm:py-3 md:py-3 lg:py-4 ",
 
   //images & icons under arbete
@@ -16,7 +16,7 @@ const styles = {
   //text under arbete
   navText: "text-gold font-light text-2xl  ",
   heroText: "",
-  headerText: "text-gold font-medium text-[25px] sm:text-[25px] md:text-[25px] lg:text-[30px] xl:text-[30px] 2xl:text-[35px]",
+  headerText: "text-gold font-medium text-center text-[25px] sm:text-[25px] md:text-[25px] lg:text-[30px] xl:text-[30px] 2xl:text-[40px]",
   subHeaderText: "text-gold sm:text-[16px] md:text-[25px] lg:text-[27px]",
   movieTitle:
     "text-white-100 font-inconsolata  sm:text-[15px] md:text-[20px] lg:text-[25px]",
