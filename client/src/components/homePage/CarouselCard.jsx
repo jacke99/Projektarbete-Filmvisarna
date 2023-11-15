@@ -15,7 +15,7 @@ export default function CarouselCard({ title, img, alt, link}) {
 
       <h2
         className="lg:text-l
-       text-xs min-w-[150px] font-inconsolata text-white lg:min-w-[200px]"
+       text-xs w-[150px] font-inconsolata text-white lg:min-w-[200px]"
       >
         {title}
       </h2>
