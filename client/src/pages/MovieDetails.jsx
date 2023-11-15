@@ -88,20 +88,19 @@ export default function MovieDetails() {
 
             </div>
             {movie.length > 0 ? (
-              <div className="md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto">
-                <h2 className="text-white text-[25px] text-center m-auto mb-16 lg:mb-20">Aktuell visningar</h2>
+              <div className="md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto" >
+                <h2 className="text-white text-[25px] text-center m-auto mb-16 lg:mb-20" id="scrollTo">Aktuella visningar</h2>
                 <ScreeningCard query={`movie=${data.title}`} />
 
               </div>
             ) : (
               <div className="p-4 text-center">
-                <p className="text-white-100">Tyvärr finns inga visningar tillgängliga just nu för {`${data.title}`}</p>
+                <p className="text-white-100" id="scrollTo">Tyvärr finns inga visningar tillgängliga just nu för {`${data.title}`}</p>
                 <Link to={"/booking"} className={`text-4-xl underline text-white-100`}>
                   Andra filmer som visas
                 </Link>
               </div>
             )}
-            <p id="scrollTo"></p>
           </div>
         </div>
       )}
