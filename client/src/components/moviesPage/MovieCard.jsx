@@ -39,7 +39,7 @@ export default function MovieCard({ movie }) {
               {movie.title}
             </h2>
             <p className={`${styles.subText}`}>{movie.genre}</p>
-            <p className={`${styles.bodyText}`}>{movie.description}</p>
+            <p className={`${styles.bodyText} hidden md:block`}>{movie.description}</p>
             <p className="flex-col pt-1 text-sm lg:text-lg md:hidden" onClick={toggleDescription}>
             {renderDescription()}
             </p>
