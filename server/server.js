@@ -24,6 +24,10 @@ app.get("/health", (req, res) => {
     res.send("Server is up and healthy");
 })
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'));
+});
+
 app.listen(port, addr, () => {
     console.log(`Server is listening on http://${addr}:${port}`);
 })
