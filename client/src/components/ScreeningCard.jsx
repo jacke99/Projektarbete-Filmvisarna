@@ -2,16 +2,29 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useAutoKeys } from 'react-easier';
 import { styles } from "../styles";
+import useFetch from "../hooks/useFetch";
+import newDateFormat from "../service/newDateFormat";
 
 
-export default function ScreeningCard({ data, isPending, error, handleSubmit }) {
+export default function ScreeningCard({ query, setInputValues}) {
   const navigate = useNavigate();
   useAutoKeys();
+
+  const { data, isPending, error } = useFetch(`/api/filteredscreenings${query?"?":""}${query}`);
+
+  function resetSearch() {
+    setInputValues({
+      age: "",
+      date:"",
+      movie:"",
+    })
+ 
+  }
   if(data && data.err || error) {
     return (
       <div className="flex flex-col">
         <div className="text-white text-center sm:text-xl md:text-2xl">Kunde inte hitta något på din sökning</div>
-        <button className={`${styles.buttonStyle}m-auto mt-6`} onClick={handleSubmit}>Se alla visningar</button>
+        <button className={`${styles.buttonStyle}m-auto mt-6`} onClick={resetSearch}>Se alla visningar</button>
       </div>
     )
   }
@@ -36,7 +49,7 @@ export default function ScreeningCard({ data, isPending, error, handleSubmit }) 
             className="w-34 h-48 rounded-lg"
           />
           <div className="text-white-100 flex flex-col lg:px-6 md:px-6 ml-4">
-            <p className="text-xs md:text-base lg:text-lg">{`${screening.date} | ${screening.time}`}</p>
+            <p className="text-xs md:text-base lg:text-lg">{`${newDateFormat(screening.date)} | ${screening.time}`}</p>
             <h2 className="text-base font-extra-bold md:text-base lg:text-lg">{screening.movie.title}</h2>
             <p className="font-inconsolata text-xs md:text-base lg:text-lg">{screening.movie.genre}</p>
             <p className="font-inconsolata text-xs md:text-base lg:text-lg">{screening.theaterName}</p>

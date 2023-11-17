@@ -6,24 +6,39 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const register = async (req, res) => {
-    const { email, lastname, name, password, phone } = req.body;
-    const user = req.body 
-    // Check if all required properties are present
-    if (!email || !lastname || !name || !password || !phone) {
-        return res.status(400).json({ error: 'Missing required properties' });
-    }
-    const hash = bcrypt.hashSync(user.password, parseInt(process.env.saltRounds));
-    user.password = hash
-    user.bookings = []
-    user.role = "USER"
-    const result = await fetchCollection("users").updateOne({email: user.email}, {$setOnInsert: user}, {upsert: true})
+  const { email, lastname, name, password, phone } = req.body;
+  const user = req.body;
+
+  if (!email || !lastname || !name || !password || !phone) {
+      return res.status(400).json({ error: 'Missing required properties' });
+  }
+
+  // Regular expression to enforce password criteria
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+  if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+          error: 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number'
+      });
+  }
+try {
+  const hash = bcrypt.hashSync(user.password, parseInt(process.env.saltRounds));
+  user.password = hash;
+  user.bookings = [];
+  user.role = "USER";
+
+  const result = await fetchCollection("users").updateOne({ email: user.email }, { $setOnInsert: user }, { upsert: true });
 
   if (result.matchedCount !== 0) {
-    return res.status(400).send({msg: "User allready exists"});
+      return res.status(400).send({ msg: "User already exists" });
   } else {
-    return res.status(201).send({msg: "Account was created"});
+      return res.status(201).send({ msg: "Account was created" });
+  }} catch (error) {
+    console.log(error);
+    return res.status(500).send({ error: 'Internal server error' });
   }
 }
+
 
 const login = async (req, res) => {
     const login = req.body;
@@ -44,15 +59,16 @@ const login = async (req, res) => {
         res.sendStatus(400);
       }
     }} catch (error) {
+      console.log(error);
       return res.status(500).send({ error: 'Internal server error' });
     }
 }
 
 const getUserBookings = async (req, res) => {
   const authHeader = req.headers['authorization'];
+  console.log(req);
   if (authHeader == undefined) {
-    response.status(400);
-    response.send("Authorization header is missing");
+    res.status(400).send("Authorization header is missing");
   } else {
 
     

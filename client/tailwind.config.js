@@ -18,10 +18,25 @@ export default {
         inconsolata: ["Inconsolata", "monospace"],
       },
       gridTemplateColumns: {
-        "auto-fit-mobile": "repeat(auto-fill, minmax(max(15rem, 20rem), 1fr))",
+        // "auto-fit-mobile": "repeat(auto-fill, minmax(max(15rem, 20rem), 1fr))",
+        // "auto-fit-sm": "repeat(auto-fill, minmax(max(15rem, 20rem), 1fr))",
+        // "auto-fit-lg": "repeat(auto-fill, minmax(max(25rem, 28rem), 1fr))",
+        // "auto-fit-mobile": "repeat(1, minmax(max(15rem, 20rem), 1fr))",
+        "auto-fit-mobile": "repeat(1, minmax(16rem, 1fr))",
+        "auto-fit-sm+": "repeat(auto-fill, minmax(max(25rem, 25rem), 1fr))",
         "auto-fit-sm": "repeat(auto-fill, minmax(max(15rem, 20rem), 1fr))",
         "auto-fit-lg": "repeat(auto-fill, minmax(max(25rem, 28rem), 1fr))",
       },
+      objectPosition: {
+        'center-top': 'center 30%',
+      },
+      screens: {
+        xs: "384px",
+        mdd: "800px",
+        llg: "1124px",
+        xxl: "1440px",
+      },
+      
     },
   },
   plugins: [],

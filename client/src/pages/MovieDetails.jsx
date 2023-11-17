@@ -1,81 +1,41 @@
-import BookMovieHero from "../components/ScreeningCard.jsx";
+import ScreeningCard from "../components/ScreeningCard.jsx";
 import { styles } from "../styles.js";
 import { useParams, Link } from 'react-router-dom';
 import useFetch from "../hooks/useFetch.js";
-import YouTube from 'react-youtube';
 import { useEffect, useState } from "react";
 import { performRequest } from "../service/fetchService.js";
-
+import MovieTrailer from "../components/moviesPage/MovieTrailer.jsx";
 
 export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState("");
-  //eslint-disable-next-line
-  const { data, isPending, error } = useFetch(`/api/movies/${id}`);
-
-
-  const getWindowWidth = () => window.innerWidth;
-
+   //eslint-disable-next-line
+   const { data, isPending, error } = useFetch(`/api/movies/${id}`);
+ 
   useEffect(() => {
     (async () => {
       if (data) {
         const resp = await performRequest(`/api/filteredscreenings?movie=${data.title}`, "GET");
+        // console.log(data.title)
         setMovie(resp);
       }
     })();
-  }, [data]);
+  }, [data, id]);
 
   function handleClickScroll() {
     const element = document.getElementById("scrollTo");
-    
+
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
   }
-
-  // Funktion som ändrar storleken på youtubeframen beroende på storlek. Dock måste man uppdatera sidan innan den nya storlkene visas
-   // Dock är inte det ett problem om man inte är en person som byter från desktop till mobil 
-
-  const getWindowSpecificOpts = () => {
-    const windowWidth = getWindowWidth();
-    if (windowWidth >= 1200) {
-      return {
-        height: '500',
-        width: '1200',
-      };
-    } else if (windowWidth >= 1024) {
-      return {
-        height: '400',
-        width: '1000',
-      };
-    } else if (windowWidth >= 768) {
-      return {
-        height: '300',
-        width: '800',
-      };
-    } else {
-      return {
-        height: '200',
-        width: '400',
-      };
-    }
-  };
-
-   // Kallar på funktionen som ändra storlek 
-  const opts = getWindowSpecificOpts();
-
+ 
   return (
     <>
       {data && (
-        <div className="mb-20 h-full bg-primary w-1/10">
-          <div className="md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto w-1/10">
-{/*             
-            Importerar embedded youtube med bilbioteket react-youtube */}
-            <YouTube
-              videoId={data.trailer}
-              opts={opts}
-              className="trailer-container flex md:mt-20 mt-10 lg:w-full"
-            />
+        <div className=" bg-primary">
+          <div className=" md:m-auto ">
+            <MovieTrailer movieDetails={data} /> {data.trailer}
           </div>
           <div className="m-auto flex flex-col p-8 sm:p-12 lg:pb-8">
             <div
@@ -89,7 +49,7 @@ export default function MovieDetails() {
             </div>
             <div className="movie-poster pb-8 sm:text-xl md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto">
               <img
-                src={`/img/${data.img_header}`}
+                src={`/img/${data.img_poster}`}
                 alt="movie poster"
                 className="w-340 h-48 rounded-lg"
               />
@@ -125,23 +85,22 @@ export default function MovieDetails() {
               <span>{data.ageRestriction}</span>
             </div>
             <div className="text-white text-[25px] sm:text-[25px] md:text-[30px] lg:text-[35px] md:mt-32 lg:mt-32 mt-20 md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto">
-             
+
             </div>
             {movie.length > 0 ? (
-              <div className="md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto">
-                <h2 className="text-white text-[25px] text-center m-auto mb-16 lg:mb-20">Aktuell visningar</h2>
-                <BookMovieHero data={movie} />
-                
+              <div className="md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto" >
+                <h2 className="text-white text-[25px] text-center m-auto mb-16 lg:mb-20" id="scrollTo">Aktuella visningar</h2>
+                <ScreeningCard query={`movie=${data.title}`} />
+
               </div>
             ) : (
               <div className="p-4 text-center">
-                <p className="text-white-100">Tyvärr finns inga visningar tillgängliga just nu för {`${data.title}`}</p>
+                <p className="text-white-100" id="scrollTo">Tyvärr finns inga visningar tillgängliga just nu för {`${data.title}`}</p>
                 <Link to={"/booking"} className={`text-4-xl underline text-white-100`}>
                   Andra filmer som visas
                 </Link>
               </div>
             )}
-            <p id="scrollTo"></p>
           </div>
         </div>
       )}

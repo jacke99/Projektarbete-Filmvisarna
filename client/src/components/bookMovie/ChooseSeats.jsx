@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react"
 import { useStates } from "react-easier"
+import { calcBestSeats } from "../../service/calcBestSeats"
 import PropTypes from "prop-types"
+import SeperateSeatsToggle from "./SeperateSeatsToggle";
 
 
 export default function ChooseSeats({ screening, seats, setSeats}) {
     const [toggle, setToggle] = useState(false)
+    const s = useStates("toggleSeparateSeats")
+   
     const counters = useStates("ticketCounter");
     
     useEffect(() => {
@@ -12,27 +16,14 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
         document.getElementById(`row${seat.row}seat-${seat.seat}`).classList.add("bg-white")
       });
     }, [seats])
+    
+    
     useEffect(() => {
-      const selectedSeats = [];
-      const middleRow = Math.ceil(screening.seats.length / 2)
-      const middleSeat = Math.ceil(screening.seats[middleRow].length / 2)
-      if(!screening.seats[middleRow][middleSeat].seat) {
-        selectedSeats.push({ row: middleRow + 1, seat: middleSeat, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
-        selectedSeats.push({ row: middleRow + 1, seat: middleSeat + 1, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
-        return setSeats(selectedSeats)
-      } 
-      if (!screening.seats[middleRow - 1][middleSeat].seat) {
-        selectedSeats.push({ row: middleRow, seat: middleSeat, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
-        selectedSeats.push({ row: middleRow, seat: middleSeat + 1, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
-        return setSeats(selectedSeats)
-      }
-      if (!screening.seats[middleRow + 1][middleSeat].seat) {
-        selectedSeats.push({ row: middleRow + 2, seat: middleSeat, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
-        selectedSeats.push({ row: middleRow + 2, seat: middleSeat + 1, seatNumber: screening.seats[middleRow][middleSeat].seatNumber, booked: screening.seats[middleRow][middleSeat].seat});
-        return setSeats(selectedSeats)
-      }
-     
-      
+     const recommendedSeats = calcBestSeats(screening.seats, counters.total)
+     if(recommendedSeats) {
+      setSeats(recommendedSeats)
+     }
+     //eslint-disable-next-line
     }, [screening, setSeats])
 
     function handleMouseEnter(event, numberOfSeats) {
@@ -111,12 +102,47 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
         setSeats(selectedSeats)
     }
 
+    function bookSeparateSeats(event) {
+      const target = event.target;
+      const parent = event.target.parentElement;
+      // eslint-disable-next-line
+      const [prefix, seatId] = target.id.split('-');
+      // eslint-disable-next-line
+      const [prefix2, row] = parent.id.split('-');
+      const seatIndex = parseInt(seatId, 10);
+      const rowIndex = parseInt(row, 10);
+      
+      const selectedSeats = [...seats];
+      console.log(seatIndex);
+    
+      // Check if the seat is already selected
+      const isSeatSelected = selectedSeats.find(
+        seat => seat.row === rowIndex && seat.seat === seatIndex
+      );
+    
+      if (!isSeatSelected) {
+        if (selectedSeats.length === counters.total) {
+          selectedSeats.shift();
+        }
+        
+        selectedSeats.push({
+          row: rowIndex,
+          seat: seatIndex,
+          seatNumber: screening.seats[rowIndex - 1][seatIndex - 1].seatNumber,
+          booked: screening.seats[rowIndex - 1][seatIndex - 1].seat
+        });
+        
+        setSeats(selectedSeats);
+      }
+    }
+    
+
     // eslint-disable-next-line
     const Seat = ({ seatNumber, rowNumber, booked }) => (
         <button className={`${booked ? "bg-red-600" : "bg-footerGrey cursor-pointer"} seat lg:w-10 lg:h-7 md:w-8 md:h-8 w-5 h-5 `} 
-        key={seatNumber} id={`row${rowNumber}seat-${seatNumber}`} onClick={(event) => booked ? undefined : bookSeats(event, counters.total)}
-        onMouseEnter={(event => handleMouseEnter(event, counters.total))}
-        onMouseLeave={(event) => handleMouseLeave(event, counters.total)}
+        key={seatNumber} id={`row${rowNumber}seat-${seatNumber}`} onClick={(event) => booked ? undefined : s.toggle ? bookSeparateSeats(event) : bookSeats(event, counters.total)}
+        onMouseEnter={(event) => s.toggle ? handleMouseEnter(event, 1) : handleMouseEnter(event, counters.total)}
+        onMouseLeave={(event) => s.toggle ? handleMouseLeave(event, 1) : handleMouseLeave(event, counters.total)}
         disabled={booked}
         >
         </button>
@@ -133,7 +159,7 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
     );
     };
       
-    const DivGenerator = () => {
+    const SeatGenerator = () => {
     const rows = screening.seats.map((row, index) => (
         <Row key={index} rowNumber={index + 1} />
     ));
@@ -141,13 +167,23 @@ export default function ChooseSeats({ screening, seats, setSeats}) {
     };
   return (
     <div className="lg:w-[700px] md:w-[70%] w-[80%] container mt-5">
+      <SeperateSeatsToggle setSeats={setSeats}/>
     <div className="screen mb-7 mt-4">
     </div>
-        {DivGenerator()}
+        {SeatGenerator()}
         <div className="text-white text-center mt-2 mb-4">
           <p>Antal biljetter:  {counters.total}</p>
-          {seats.length > 0 && <p>
+          {seats.length > 0 && !s.toggle ? <p>
            Rad: {seats.length && seats[0].row + " -"} Plats:{" "}
+          {seats && seats?.map((seat, i) => {
+            if(i + 1 === seats.length) {
+             return seat.seatNumber
+            } else {
+             return seat.seatNumber + ", "
+            }
+            })}
+          </p>: <p>
+           Plats:{" "}
           {seats && seats?.map((seat, i) => {
             if(i + 1 === seats.length) {
              return seat.seatNumber

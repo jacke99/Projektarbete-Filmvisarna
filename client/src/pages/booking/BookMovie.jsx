@@ -12,6 +12,7 @@ export default function BookMovie() {
   const [screening, setScreening] = useState(null);
   const [movie, setMovie] = useState(null);
   const [seats, setSeats] = useState([])
+  const s = useStates("toggleSeparateSeats")
   //eslint-disable-next-line
   const counters = useStates("ticketCounter", {
     adult: 2,
@@ -52,7 +53,9 @@ export default function BookMovie() {
   async function navToBookingP2() {
     const booking = {
       id: screening._id,
-      row: seats[0].row,
+      rows: s.toggle ? seats.map(seat => {
+        return {row: seat.row}
+      }) : [{row: seats[0].row}],
       seats: seats.map(seat => {
         return {seat: seat.seat, seatNumber: seat.seatNumber}
       }),
@@ -66,11 +69,11 @@ export default function BookMovie() {
   
   return (
     <>    
-    {screening && movie && <section className="mt-2 flex flex-col items-center min-h-screen mb-20">
-        <TicketCounter screening={screening} movie={movie}/>
+    {screening && movie && <section className="flex flex-col items-center min-h-screen mb-20">
+        <TicketCounter screening={screening} movie={movie} seats={seats} setSeats={setSeats}/>
         <ChooseSeats screening={screening} seats={seats} setSeats={setSeats}/>
 
-        <button className="bg-gold text-black-100 rounded-md px-6 p-2" onClick={navToBookingP2}>Fortsätt</button>
+        <button className="bg-gold text-black-100 rounded-md px-6 p-2" onClick={counters.total === seats.length ? navToBookingP2 : undefined}>Fortsätt</button>
     </section>}
     </>
   );

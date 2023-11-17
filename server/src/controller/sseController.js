@@ -3,22 +3,18 @@ import { fetchCollection } from "../mongo/mongoClient.js";
 import jwtUtil from "../util/jwtUtil.js";
 import idUtil from "../util/idUtil.js";
 import calcTotalPrice from "../util/calcTotalPrice.js";
-import nodemailer from 'nodemailer';
 import * as dotenv from "dotenv";
+
 dotenv.config();
-import {dirname, join as pathJoin} from "path";
-import { fileURLToPath } from "url";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const logoPath = pathJoin(__dirname, "..", "assets"  );
-
+import sendEmailWithNodemailer from "../email.js";
 
 let clients = [];
 
 const postBooking = async (req, res) => {
   const body = req.body
   const totalTickets = body.adult + body.child + body.senior
-
+  console.log(body)
   if(body.seats.length !== totalTickets) {
     return res.status(400).send({message: "Number of seats does not match number of ticketTypes"})
   }
@@ -35,15 +31,22 @@ const postBooking = async (req, res) => {
   }
   
   try{
-    
+  let seatsOk = true
   const screening = await fetchCollection("screenings").findOne({_id: new ObjectId(body.id)})
-  for(let i = 0; i < body.seats.length; i++) {
-      if(screening.seats[body.row - 1][body.seats[i].seat - 1].seat === true) {
-       return res.status(400).send({message: "The seats you are trying to book are already taken"})
+  screening.seats.forEach((row) => {
+    row.forEach((seat) => {
+      for(let i = 0; i < body.seats.length; i++) {
+        if(seat.seatNumber === body.seats[i].seatNumber && seat.seat === true) {
+          seatsOk = false
+          return 
+        } else if(seat.seatNumber === body.seats[i].seatNumber) {
+          seat.seat = true
+        }
       }
-
-      screening.seats[body.row - 1][body.seats[i].seat - 1] = {seat: true, seatNumber: screening.seats[body.row - 1][body.seats[i].seat - 1].seatNumber}
-      body.seats[i].seatNumber = screening.seats[body.row - 1][body.seats[i].seat - 1].seatNumber
+    })
+  })
+  if(!seatsOk) {
+    return res.status(400).send({message: "The seats you are trying to book are already booked"})
   }
     await fetchCollection("screenings").updateOne({_id: new ObjectId(body.id)}, {$set: screening})
     clients.forEach((client) => {
@@ -56,64 +59,26 @@ const postBooking = async (req, res) => {
       customerEmail: user.email, 
       ticketType: {adult: body.adult, child: body.child, senior: body.senior},
       screeningID: new ObjectId(body.id),
-      row: body.row,
+      rows: body.rows,
       seats: body.seats,
       price: totalPrice,
       status: true 
     }
-
-    // Nodemailer börjar här
-    const transporter = nodemailer.createTransport({
-      host: process.env.host,
-      port: 587,
-      secure: false,
-      auth: {
-        user: process.env.email,
-        pass: process.env.emailPassword, // Om du använder tvåfaktorsautentisering (2FA), använd ett appspecifikt lösenord här
-      },
-      tls: {
-          rejectUnauthorized: false,
-      }
-    });
-
-
-const mailOptions = {
-  from: `"Filmvisarna 🎥🍿 ${process.env.email}` ,
-  to: booking.customerEmail, 
-  subject: 'Bokningsbekräftelse',
-  text:`  `,
-  html: `  <div style="border:#DACA88; border-width:2px; border-style:solid; padding:10px; text-align:center; width:400px; border-radius:8px; font-size:16px;">
-  <h2 style="color:black;">Tack för din bokning.</h2> 
-  <p>Ditt bokningsnummer är: <span style="font-weight:800">${booking.bookingId}</span> 
-  <br><h1></h1> 
-  Vi på Filmvisarna önskar en underbar biostund.
-  Bokningsnummret visar du upp i kassan i samband <br> med betalning.
-  <br>
-  <br>
-  Välkommen!</p> 
-  <br><img width="40px" src="cid:${process.env.email}">
-  <br>
-  </div>`,
-  attachments: [
-    {   // utf-8 string as an attachment
-      filename: 'logo.png',
-        path: `${logoPath}/logo.png`,
-        cid: process.env.email //same cid value as in the html img src
-    }
-  ]
-};
-
-  transporter.sendMail(mailOptions)
-
-  // Nodemailer slutar ---------------------------------------------------------------
+   
+    
+    let emailError;
+    // Sending emailconfirmation from email.js
+    await sendEmailWithNodemailer(booking).catch(error => {
+      emailError = error + "";
+    })
 
     await fetchCollection("bookings").insertOne(booking)
     
     if(user.role) {
       await fetchCollection("users").updateOne({email: user.email}, {$push: {bookings: {bookingId: bookingID}}})
     }
-    return res.status(201).send(booking)
-
+    return res.status(201).send({booking, emailError})
+    
   
   } catch(err) {
    res.status(400).send(err)
@@ -161,18 +126,24 @@ const cancelBooking = async (req, res) => {
         return res.status(400).send({message: "Bad Request"})
     }
     let booking = await fetchCollection("bookings").findOne({_id: new ObjectId(body.id)})
-    
+    console.log(booking)
     if(booking == null || !booking.screeningID) {
         return res.status(404).send({message: "Booking not found"})
     }
     try {
        let currentScreening = await fetchCollection("screenings").findOne({_id: new ObjectId(booking.screeningID)})
-        for(let i = 0; i < booking.seats.length; i++) {
-            if(currentScreening.seats[booking.row - 1][booking.seats[i].seat - 1] == false) {
-                return res.status(400).send({message: "The seats you are trying to cancel are already canceled"})
-               }
-            currentScreening.seats[booking.row - 1][booking.seats[i].seat - 1] = {seat: false, seatNumber: currentScreening.seats[booking.row - 1][booking.seats[i].seat - 1].seatNumber}
-        }
+       currentScreening.seats.forEach((row) => {
+        row.forEach((seat) => {
+          for(let i = 0; i < booking.seats.length; i++) {
+            if(seat.seatNumber === booking.seats[i].seatNumber && seat.seat === false) {
+              return res.status(400).send({message: "The seats you are trying to cancel are allready canceled"})
+    
+            } else if(seat.seatNumber === booking.seats[i].seatNumber) {
+              seat.seat = false
+            }
+          }
+        })
+      })
         booking.status = false
         await fetchCollection("bookings").updateOne({_id: new ObjectId(body.id)}, {$set: booking})
         let result = await fetchCollection("screenings").updateOne({_id: new ObjectId(booking.screeningID)}, {$set: currentScreening})

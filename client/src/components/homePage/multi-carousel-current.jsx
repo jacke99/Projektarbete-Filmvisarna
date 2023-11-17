@@ -34,15 +34,15 @@ export default function MultiCarouselCurrent() {
 
   return (
     // Karusell från React-multi-carousel med movie från ovan.
-    <>
-    <h1 className={`${styles.headerText}text-gold text-center mt-20`}>Just nu på bio</h1>
+    <div className={`${styles.wrapper} ${styles.paddingY} `} >
+    <h1 className={`${styles.headerText} text-center `}>Just nu på bio</h1>
     <Carousel
-      className={`mx-2 my-10 md:my-12`}
+      className={`${styles.paddingTop} `}
       responsive={responsive}
       renderArrowsWhenDisabled={true}
     >
       {movie}
     </Carousel>
-    </>
+    </div>
   );
 }

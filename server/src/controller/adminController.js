@@ -1,25 +1,31 @@
 import { fetchCollection } from "../mongo/mongoClient.js";
 import { ObjectId } from "mongodb";
 import { calcSeatNumber } from "../util/seatNumberUtil.js";
-
+import { calcSeatRating } from "../util/calcSeatRating.js";
 
 
 const addScreening = async (req, res) => {
     const body = req.body;
-    console.log(body)
   const {date, time, theater,
-        movieID
+        title
   } = req.body;
-  if (!date || !time || !theater || !movieID) {
+
+  if (!date || !time || !theater || !title) {
     return res.status(400).json({error: "Missing required properties, pls check your request body"});
   }
-  body.movieID = new ObjectId(body.movieID)
+ 
   try {
+    const regex = new RegExp(title.split("").join("\\s*"), 'i');
+   
+    const movie = await fetchCollection("movies").findOne({"title": { $regex: regex }})
+   
+    body.movieID = movie._id
     const theaters = await fetchCollection("theaters").findOne({"theaterNr": theater})
     body.theaterName = theaters.name
     body.seats = theaters.seats
+    delete body.title
   } catch (error) {
-    res.status(500).send({ error: "Could not fetch screenings collection" });
+    return res.status(500).send({ error: "Could not fetch screenings collection" });
   }
   if (
     Object.values(body).every((value) => value !== "" && value !== undefined)
@@ -64,32 +70,69 @@ const deleteMovie = async (req, res) => {
         res.status(404).send({ error: "unvalid movie id" });
       }
 }
-
+//Get bookings collection
 const getBookingsXuser = async (req, res) => {
-    try {
-        const bookingsCollection = await fetchCollection("bookingsXuser");
-        const bookingsXUser = await bookingsCollection.find().toArray();
-        res.status(200).json(bookingsXUser);
-      } catch (error) {
-        res.status(500).json({
-          error: "An error occurred while fetching bookingsXuser collection",
-          details: error.message, 
-        });
-      }
-}
+  try {
+    console.log('getBookingsXuser function');
+    const bookingsCollection = await fetchCollection("bookingsXuser");
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = 10;
+    const today = new Date().toISOString().split("T")[0];
+    console.log('Today:', today);
+    const searchQuery = req.query.search || "";
+    console.log('Page:', page);
+    console.log('Search Query:', searchQuery);
+
+
+    const bookings = await bookingsCollection
+      .find({
+        $and: [
+          { "screening.date": { $gte: today } },
+          {
+            $or: [
+              { bookingId: { $regex: searchQuery, $options: "i" } },
+              { customerEmail: { $regex: searchQuery, $options: "i" } },
+              { "customer.name": { $regex: searchQuery, $options: "i" } },
+              { "customer.lastname": { $regex: searchQuery, $options: "i" } },
+            ],
+          },
+        ],
+      })
+      .sort({ "screening.date": 1 })
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
+      .toArray();
+      console.log('Bookings:', bookings);
+    res.status(200).json(bookings);
+  } catch (error) {
+    console.error("Error fetching and sorting bookingsXuser collection:", error);
+    res.status(500).json({
+      error: "An error occurred while fetching and sorting bookingsXuser collection",
+      details: error.message,
+    });
+  }
+};
+
+export { getBookingsXuser };
+
+
+
 
 const postMovie = async (req, res) => {
   const movie = req.body;
-  
-  const { title, desc , trailer, // här vill vi att "img" ska hämtas från client/srs/assets och följa med posten upp til DB
+  console.log(req.body)
+  const { title, description , trailer, // här vill vi att "img" ska hämtas från client/srs/assets och följa med posten upp til DB
     director, actors,length,
     genre, speech, subtitles,
     ageRestriction
   } = req.body;
   
+  movie.ageRestriction = parseInt(movie.ageRestriction);
+  console.log(movie.ageRestriction);
+
 
   if (
-    !title || !desc || !trailer ||
+    !title || !description || !trailer ||
     !director || !actors || !length ||
     !genre || !speech || !subtitles ||
     !ageRestriction ) {
@@ -109,7 +152,7 @@ const postMovie = async (req, res) => {
       movie.img_header = req.files['img_header'][0].originalname; // Use the original file name
 
       const result = await fetchCollection("movies").insertOne(movie)
-      res.status(201).json(result);
+      res.status(201).send(result);
     } catch (error) {
       res.status(500).json({ err: "Could not create a new document in collection movies" });
     }
@@ -146,8 +189,11 @@ const addNewTheater = async (req, res) => {
             }
           }
         }
+      
+        let seatsWithRating = calcSeatRating(rows, seats)
+
         body.rows = rows.length
-        body.seats = seats
+        body.seats = seatsWithRating
         const result = await fetchCollection("theaters").insertOne(body);
         res.status(201).send({data: result, status: 201});
       } catch (error) {

@@ -16,7 +16,7 @@ export default function Footer() {
       </div>
       <div className="flex w-full justify-end text-xs  mr-3.5 mb-0 mt-3 lg:absolute lg:right-1">
         <span>© 2023 Copyright:</span>
-        <a className="ml-1 mb-1 font-semibold tracking-widest text-white" href="https://tailwind-elements.com/">
+        <a className="ml-1 mb-1 font-semibold tracking-widest text-white" href="/">
           Filmvisarna
         </a>
       </div>

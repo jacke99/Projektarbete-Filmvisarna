@@ -1,0 +1,15 @@
+.play-button,
+.close-button {
+    /* width: 6rem; */
+    /* height: auto; */
+    position: relative;
+    /* top: -10%; */
+    fill: #DACA88;
+    transition: transform 0.3s, height 0.3s, color 0.3s, fill 0.3s;
+}
+
+.play-button:hover,
+.close-button:hover {
+    transform: scale(1.4);
+    fill: #ffffff;
+}
