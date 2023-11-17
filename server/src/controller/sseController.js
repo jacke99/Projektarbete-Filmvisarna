@@ -31,22 +31,23 @@ const postBooking = async (req, res) => {
   }
   
   try{
-    
+  let seatsOk = true
   const screening = await fetchCollection("screenings").findOne({_id: new ObjectId(body.id)})
   screening.seats.forEach((row) => {
     row.forEach((seat) => {
       for(let i = 0; i < body.seats.length; i++) {
         if(seat.seatNumber === body.seats[i].seatNumber && seat.seat === true) {
-          return res.status(400).send({message: "The seats you are trying to book are already taken"})
-
+          seatsOk = false
+          return 
         } else if(seat.seatNumber === body.seats[i].seatNumber) {
           seat.seat = true
         }
       }
     })
   })
-
-
+  if(!seatsOk) {
+    return res.status(400).send({message: "The seats you are trying to book are already booked"})
+  }
     await fetchCollection("screenings").updateOne({_id: new ObjectId(body.id)}, {$set: screening})
     clients.forEach((client) => {
       client.res.write(`data: ${JSON.stringify(screening)}\n\n`);
