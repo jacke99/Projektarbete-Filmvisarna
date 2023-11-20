@@ -260,3 +260,21 @@ input:checked ~ .dot {
 .grid-row-gap {
   grid-row-gap: 2rem;
 }
+
+.react-multiple-carousel__arrow--right {
+  right: calc(0% - 15px);
+  color: #daca88;
+}
+
+.react-multiple-carousel__arrow--left {
+  left: calc(0% - 15px);
+  color: #daca88;
+}
+
+.react-multiple-carousel__arrow::before {
+  color: #daca88;
+}
+
+.react-multiple-carousel__arrow:hover {
+  transform: scale(1.4);
+}

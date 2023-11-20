@@ -1,7 +1,6 @@
 import { styles } from "../styles.js";
 import { Link } from "react-router-dom";
-// import MovieFilterForm from "../components/ticketPage/MovieFilterForm.jsx";
-import MovieFilterFormVersion2 from "../components/ticketPage/MovieFilterFormVersion2.jsx";
+import MovieFilterForm from "../components/ticketPage/MovieFilterForm.jsx";
 import ScreeningCard from "../components/ScreeningCard.jsx";
 import newDateFormat from "../service/newDateFormat.js";
 
@@ -84,7 +83,7 @@ export default function Tickets() {
         <div className="translate-50-50 absolute left-1/2 top-1/2">
         <h2 className={`${styles.heroHeader}`}>{newDateFormat(headerData.date)} {headerData.time}</h2>
         <h2 className={`${styles.heroSubHeader} [text-shadow:1px_1px_2px_var(--tw-shadow-color)] shadow-black`}>{headerData.movie.title} </h2>
-        <Link to={`/movies/${headerData.movie._id}`}>
+        <Link to={`/filmer/${headerData.movie._id}`}>
               <p className={`${styles.heroSubText}`}>
                 Mer info {">"}
               </p> 
@@ -94,7 +93,7 @@ export default function Tickets() {
 
     <h1 className={` ${styles.wrapper} ${styles.paddingTop} ${styles.headerText} text-center`}>Biljetter till föreställningar</h1>
 
-    <MovieFilterFormVersion2 inputValues={inputValues} setInputValues={setInputValues} />
+    <MovieFilterForm inputValues={inputValues} setInputValues={setInputValues} />
     <ScreeningCard setInputValues={setInputValues} query={query}/>
     </div>
   )

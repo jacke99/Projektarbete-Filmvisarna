@@ -66,7 +66,7 @@ export default function BookingTickets(){
         <>
       {movie && screening &&
             <div className="mt-40 px-6 flex flex-col md:items-center">
-              <NavLink to={`/booking/${screening._id}`} className="text-white-100 font-inconsolata underline mb-6"> Tillbaka</NavLink>
+              <NavLink to={`/bokning/${screening._id}`} className="text-white-100 font-inconsolata underline mb-6"> Tillbaka</NavLink>
               
               
             {!toggleConfirmation.toggle && 

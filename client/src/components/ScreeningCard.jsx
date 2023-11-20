@@ -59,7 +59,7 @@ export default function ScreeningCard({ query, setInputValues}) {
           </div>
             <button className="bg-white text-black-100 rounded-md px-4 p-1 max-w-fit sm:hidden"
             onClick={() => {
-              navigate(`/booking/${screening._id}`)
+              navigate(`/bokning/${screening._id}`)
               window.scrollTo(0, 0)
             }}>Boka
           </button>
@@ -67,7 +67,7 @@ export default function ScreeningCard({ query, setInputValues}) {
 
           <button className="bg-gold text-black-100 rounded-md px-4 p-1 md:px-6 md:py-2 h-10 max-w-fit hidden sm:block"
             onClick={() => {
-              navigate(`/booking/${screening._id}`)
+              navigate(`/bokning/${screening._id}`)
               window.scrollTo(0, 0)
             }}>Boka
           </button>

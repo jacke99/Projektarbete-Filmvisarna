@@ -36,7 +36,7 @@ export default function Header() {
   }, [])
   
   return (
-    <nav className={`sticky top-0 z-20 border-gold bg-primary border-b-2`}>
+    <nav className={`sticky top-0 z-[2000] border-gold bg-primary border-b-2`}>
     <div className={`${styles.navWrapper} flex justify-between`}>
       <div className={`flex items-center flex-row gap-10`}>
       <Link className={`${styles.navText}`}
@@ -70,56 +70,56 @@ export default function Header() {
             </li>
           </Link>
           <Link className={`${styles.navText}`}
-            to="/movies"
+            to="/filmer"
             onClick={() => {
               window.scrollTo(0, 0);
             }}
           >
             <li
               className={`${
-                active === "movies" ? "text-white" : "text-gold"
+                active === "filmer" ? "text-white" : "text-gold"
               } cursor-pointer hover:text-white`}
             >
               Filmer
             </li>
           </Link>
           <Link className={`${styles.navText}`}
-            to="/booking"
+            to="/bokning"
             onClick={() => {
               window.scrollTo(0, 0);
             }}
           >
             <li
               className={`${
-                active === "booking" ? "text-white" : "text-gold"
+                active === "bokning" ? "text-white" : "text-gold"
               } cursor-pointer hover:text-white`}
             >
               Biljetter
             </li>
           </Link>
           {!currentUser && <Link className={`${styles.navText}`}
-            to="/register"
+            to="/registrera"
             onClick={() => {
               window.scrollTo(0, 0);
             }}
           >
             <li
               className={`${
-                active === "register" ? "text-white" : "text-gold"
+                active === "registrera" ? "text-white" : "text-gold"
               } cursor-pointer hover:text-white`}
             >
               Bli medlem
             </li>
           </Link>}
           {currentUser && <Link className={`${styles.navText}`}
-            to="/mypages"
+            to="/minasidor"
             onClick={() => {
               window.scrollTo(0, 0);
             }}
           >
             <li
               className={`${
-                active === "mypages" ? "text-white" : "text-gold"
+                active === "minasidor" ? "text-white" : "text-gold"
               } cursor-pointer hover:text-white`}
             >
               Mina Sidor
@@ -144,14 +144,14 @@ export default function Header() {
       
       
       <div className="flex gap-1 items-center">
-        <p onClick={() => navigate("/mypages")}  className={`${styles.subHeaderText} mr-2 hidden cursor-pointer hover:text-white xl:flex`}>
+        <p onClick={() => navigate("/minasidor")}  className={`${styles.subHeaderText} mr-2 hidden cursor-pointer hover:text-white xl:flex`}>
         {currentUser ? currentUser.name : ""}
         </p>
         <img
           src={account_circle_new}
           alt="login"
           className={`${styles.icons} cursor-pointer`}
-          onClick={() => currentUser ? navigate("/mypages"): t.toggle = true }
+          onClick={() => currentUser ? navigate("/minasidor"): t.toggle = true }
         />
         <p
           className={`${styles.navText} ${t.toggle ? "text-white" : "text-gold"} hidden cursor-pointer hover:text-white xl:flex`}
@@ -187,56 +187,56 @@ export default function Header() {
               </li>
             </Link>
             <Link
-              to="/movies"
+              to="/filmer"
               onClick={() => {
                 window.scrollTo(0, 0);
               }}
             >
               <li
                 className={`${
-                  active === "movies" ? "text-white" : "text-gold"
+                  active === "filmer" ? "text-white" : "text-gold"
                 } cursor-pointer hover:text-white`}
               >
                 Filmer
               </li>
             </Link>
             <Link
-              to="/booking"
+              to="/bokning"
               onClick={() => {
                 window.scrollTo(0, 0);
               }}
             >
               <li
                 className={`${
-                  active === "booking" ? "text-white" : "text-gold"
+                  active === "bokning" ? "text-white" : "text-gold"
                 } cursor-pointer hover:text-white`}
               >
                 Biljetter
               </li>
             </Link>
             {!currentUser && <Link
-              to="/register"
+              to="/registrera"
               onClick={() => {
                 window.scrollTo(0, 0);
               }}
             >
               <li
                 className={`${
-                  active === "register" ? "text-white" : "text-gold"
+                  active === "registrera" ? "text-white" : "text-gold"
                 } cursor-pointer hover:text-white`}
               >
                 Bli medlem
               </li>
             </Link>}
             {currentUser && <Link
-            to="/mypages"
+            to="/minasidor"
             onClick={() => {
               window.scrollTo(0, 0);
             }}
           >
             <li
               className={`${
-                active === "mypages" ? "text-white" : "text-gold"
+                active === "minasidor" ? "text-white" : "text-gold"
               } cursor-pointer hover:text-white`}
             >
               Mina Sidor

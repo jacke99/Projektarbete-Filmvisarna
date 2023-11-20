@@ -6,7 +6,7 @@ export default function MovieCard({ movie }) {
   const navigate = useNavigate();
   const [showFullDescription, setShowFullDescription] = useState(false);
   const handleReadMoreClick = () => {
-    navigate(`/movies/${movie._id}`);
+    navigate(`/filmer/${movie._id}`);
   };
 
   const toggleDescription = () => {
