@@ -96,7 +96,7 @@ export default function MovieDetails() {
             ) : (
               <div className="p-4 text-center">
                 <p className="text-white-100" id="scrollTo">Tyvärr finns inga visningar tillgängliga just nu för {`${data.title}`}</p>
-                <Link to={"/booking"} className={`text-4-xl underline text-white-100`}>
+                <Link to={"/bokning"} className={`text-4-xl underline text-white-100`}>
                   Andra filmer som visas
                 </Link>
               </div>
