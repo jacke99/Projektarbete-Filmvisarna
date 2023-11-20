@@ -6,7 +6,6 @@ import newDateFormat from "../../service/newDateFormat";
 
 export default function CancelBooking({booking, setToggle}) {
     async function cancelBooking(ID) {
-        console.log(ID)
         const resp = await performRequest("/api/bookings", "PATCH", {id: ID})
         if(resp.message === "Din bokning är nu avbokad!") {
             window.location.reload();
