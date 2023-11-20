@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react"
-import { performRequest } from "../../service/fetchService"
+import { performRequest, performRequestAdmin } from "../../service/fetchService"
 import { styles } from "../../styles.js";
 import { useNavigate } from "react-router-dom";
 import { parseJwt } from "../../service/jwtService";
@@ -27,12 +27,12 @@ export default function AdminBookings() {
 
     //get bookings
     useEffect(() => {
-        async function fetchBookings(page, query) {
+        async function fetchBookings() {
             try {
-                const resp = await performRequest("/api/bookings", "GET", null, page, query);
+                const resp = await performRequestAdmin("/api/bookings", "GET", null, page, query);
 
                 if (Array.isArray(resp)) {
-                    setBookings(resp)
+                    setBookings((prevBookings) => [...prevBookings, ...resp]);
                 } else {
                     console.error("Invalid response format:", resp);
                 }
@@ -41,8 +41,9 @@ export default function AdminBookings() {
             }
         }
 
-        fetchBookings();
+        fetchBookings(page, query);
     }, [page, query]);
+
 
     const loadMore = () => {
         setPage((prevPage) => prevPage + 1);
@@ -95,44 +96,46 @@ export default function AdminBookings() {
 
 
                         </tr>
-                        {filteredBookings && filteredBookings.map((booking, key) => {
+                        {filteredBookings && filteredBookings.map((booking, key) => (
 
-                            if (booking.status) {
-                                return (
-                                    <tr key={key} className="">
-                                        <td>{booking.customer?.name ? `${booking.customer?.name} ${booking.customer?.lastname}` : "Gäst"}</td>
-                                        <td>{booking.bookingId}</td>
-                                        <td>{booking.seats.map((seat, key) => {
-                                            if (key + 1 === booking.seats.length) {
 
-                                                return seat.seatNumber
-                                            } else {
-                                                return seat.seatNumber + ", "
-                                            }
-                                        }
-                                        )}
-                                        </td>
-                                        <td>
-                                            <p>{booking.ticketType.adult >= 1 ? `Vuxen: ${booking.ticketType.adult}` : null}</p>
-                                            <p>{booking.ticketType.child >= 1 ? `Barn: ${booking.ticketType.child}` : null}</p>
-                                            <p>{booking.ticketType.senior >= 1 ? `Pensionär: ${booking.ticketType.senior}` : null}</p>
-                                        </td>
+                            <tr key={key} className="">
+                                <td>{booking.customer?.name ? `${booking.customer?.name} ${booking.customer?.lastname}` : "Gäst"}</td>
+                                <td>{booking.bookingId}</td>
+                                <td>{booking.seats.map((seat, key) => {
+                                    if (key + 1 === booking.seats.length) {
 
-                                        <td>{booking.customerEmail}</td>
-                                        <td>{booking.screening ? `${new Date(booking.screening.date).toLocaleDateString()} ${booking.screening.time}` : "Inte tillgängligt"}</td>
-                                        <td className="p-4 text-center">
-                                            <button
-                                                className={`rounded-md bg-red-200 p-1 px-4 text-black-100 self-center`}
-                                                onClick={() => cancelBooking(booking._id, booking.bookingId)}
-                                            >
-                                                Avboka
-                                            </button>
-                                        </td>
+                                        return seat.seatNumber
+                                    } else {
+                                        return seat.seatNumber + ", "
+                                    }
+                                }
+                                )}
+                                </td>
+                                <td>
+                                    <p>{booking.ticketType.adult >= 1 ? `Vuxen: ${booking.ticketType.adult}` : null}</p>
+                                    <p>{booking.ticketType.child >= 1 ? `Barn: ${booking.ticketType.child}` : null}</p>
+                                    <p>{booking.ticketType.senior >= 1 ? `Pensionär: ${booking.ticketType.senior}` : null}</p>
+                                </td>
 
-                                    </tr>)
-                            }
-                        })
-                        }
+                                <td>{booking.customerEmail}</td>
+                                <td>{booking.screening ? `${new Date(booking.screening.date).toLocaleDateString()} ${booking.screening.time}` : "Inte tillgängligt"}</td>
+                                <td className="p-4 text-center">
+                                    {booking.status ? (
+                                        <button
+                                            className={`rounded-md bg-red-200 p-1 px-4 text-black-100 self-center`}
+                                            onClick={() => cancelBooking(booking._id, booking.bookingId)}
+                                        >
+                                            Avboka
+                                        </button>
+                                    ) : (
+                                        <span className="text-gray-500">Avbokad</span>
+                                    )}
+                                </td>
+
+
+                            </tr>
+                        ))}
 
                     </tbody>
                 </table>
