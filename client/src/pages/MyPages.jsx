@@ -29,7 +29,6 @@ export default function MyPages() {
     useEffect(() => {
         (async () => {
                 const data = await performRequest("/api/user/bookings")
-                console.log(data)
                 if(data.error) {
                     alert("Du måste logga in först")
                 } else {

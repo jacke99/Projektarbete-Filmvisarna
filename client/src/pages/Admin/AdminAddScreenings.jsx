@@ -4,7 +4,7 @@ import { performRequest } from "../../service/fetchService";
 import { useState } from "react";
 
 export default function AdminAddScreenings(){
-
+    const [loader, setLoader] = useState(false)
     const [inputValues, setInputValues]= useState({
         date: "",
         time:"",
@@ -13,8 +13,8 @@ export default function AdminAddScreenings(){
     })
     async function handleSubmit(e) {
         e.preventDefault();
+        setLoader(true)
         const response = await performRequest("/api/screenings", "post", inputValues);
-        console.log(response);
       
         if (response.insertedId) {
           alert("Filmvisningen är nu tillagd i systemet!");
@@ -29,11 +29,13 @@ export default function AdminAddScreenings(){
         } else {
           alert("Något gick fel, prova igen.");
         }
+        setLoader(false)
       }
       
     return(
         <div className="mt-12">
-            <AddScreeningForm handleSubmit= {handleSubmit} inputValues={inputValues} setInputValues={setInputValues}/>
+            <AddScreeningForm handleSubmit={handleSubmit} inputValues={inputValues} setInputValues={setInputValues} 
+              loader={loader} />
            
         </div>
     )
