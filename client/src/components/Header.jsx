@@ -22,6 +22,19 @@ export default function Header() {
     const pathParts = location.pathname.split('/');
     setActive(pathParts[1])
   },[location])
+
+  useEffect(() => {
+    const hamburgerCloser = event => {
+      if(!event.target.closest(".hamburger-menu") && !event.target.closest(".hamburger-menu-icon")) {
+        setToggle(false)
+      }
+    };
+    document.body.addEventListener("click", hamburgerCloser);
+    return () => {
+      document.body.removeEventListener("click", hamburgerCloser);
+    }
+  }, [])
+  
   return (
     <nav className={`sticky top-0 z-20 border-gold bg-primary  shadow-black shadow-2xl`}>
     <div className={`${styles.navWrapper} flex justify-between`}>
@@ -149,14 +162,14 @@ export default function Header() {
         <img
           src={toggle ? close : menu_new}
           alt="menu"
-          className={`${styles.icons} cursor-pointer xl:hidden`}
+          className={`${styles.icons} cursor-pointer xl:hidden hamburger-menu-icon`}
           onClick={() => setToggle(!toggle)}
         />
         <div
           className={`${
             !toggle ? "hidden" : "flex"
           } absolute right-0 top-20 z-10
-            mx-4 my-2 min-w-[140px] rounded-xl bg-gradient-to-r from-footerGrey to-primary p-6 `}
+            mx-4 my-2 min-w-[140px] rounded-xl bg-gradient-to-r from-footerGrey to-primary p-6 hamburger-menu`}
         >
           <ul className="flex list-none flex-col items-start justify-end gap-4 text-gold">
             <Link
