@@ -77,7 +77,7 @@ export default function Header() {
           >
             <li
               className={`${
-                active === "movies" ? "text-white" : "text-gold"
+                active === "filmer" ? "text-white" : "text-gold"
               } cursor-pointer hover:text-white`}
             >
               Filmer
@@ -91,7 +91,7 @@ export default function Header() {
           >
             <li
               className={`${
-                active === "booking" ? "text-white" : "text-gold"
+                active === "bokning" ? "text-white" : "text-gold"
               } cursor-pointer hover:text-white`}
             >
               Biljetter
