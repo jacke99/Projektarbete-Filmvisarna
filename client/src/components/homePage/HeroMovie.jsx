@@ -21,7 +21,7 @@ export default function HeroMovie({movie}) {
           {movie.title}
         </h2>
 
-        <Link to={`movies/${movie._id}`}>
+        <Link to={`filmer/${movie._id}`}>
         <p className={`${styles.heroSubText}`}>
           Mer info {">"}
         </p> 

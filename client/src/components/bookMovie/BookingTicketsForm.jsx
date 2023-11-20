@@ -22,7 +22,7 @@ export default function BookingTicketsForm({ inputValues, setInputValues }) {
                     <li className="ml-6">Rabatt på dryck och snacks</li>
                 </ul>
 
-                <button className="bg-gold w-36 text-black px-6 py-2 rounded m-auto" onClick={() => navigate("/register")}>Bli medlem</button>
+                <button className="bg-gold w-36 text-black px-6 py-2 rounded m-auto" onClick={() => navigate("/registrera")}>Bli medlem</button>
                 <p className="text-center mb-8 mt-1">eller <span className="underline cursor-pointer" onClick={() => t.toggle = true}>logga in!</span></p>
             </div>
             <div className="flex flex-col">

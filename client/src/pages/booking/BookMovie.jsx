@@ -64,7 +64,7 @@ export default function BookMovie() {
       senior: counters.senior,
     }
 
-    navigate("/booking/confirm", {state: {booking: booking, movie: movie, screening: screening}})
+    navigate("/bokning/bekraftelse", {state: {booking: booking, movie: movie, screening: screening}})
   }
   
   return (

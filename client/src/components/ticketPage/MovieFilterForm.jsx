@@ -3,7 +3,7 @@ import { refresh } from "../../assets/index.js";
 import DatePicker from "./DatePicker.jsx";
 import { styles } from "../../styles.js";
 
-export default function MovieFilterFormVersion2({ inputValues, setInputValues }) {
+export default function MovieFilterForm({ inputValues, setInputValues }) {
   
   return (
     <div className={` ${styles.wrapper} ${styles.paddingY} w-2/3 max-w-full lg:flex lg:gap-10 lg:items-end`}>
