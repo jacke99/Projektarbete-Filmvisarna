@@ -34,7 +34,7 @@ export const performRequestAdmin = async (url, method, body, page = 1, search = 
   const pageParam = `page=${page}`;
 
   const apiUrl = `${url}${url.includes("?") ? "&" : "?"}${searchParam}${pageParam}`;
-  console.log("API URL:", apiUrl);
+  
 
   const options = fetchOptions(body, method);
 
