@@ -56,7 +56,7 @@ export default function MovieDetails() {
             <p className={`mb-4 text-white sm:text-xl md:w-5/6 lg:mt-14 lg:mb-10 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}>
               {data.description}
             </p>
-            <button onClick={handleClickScroll} className="mb-4 mt-10 md:mt-10 md:mb-6 lg:mt-12 lg:mb-8 rounded-xl bg-gold px-4 py-2 text-xl text-black sm:px-5 sm:text-2xl mx-auto">
+            <button onClick={handleClickScroll} className={`${styles.buttonStyle}mb-4 mt-10 md:mt-10 md:mb-6 lg:mt-12 lg:mb-8  sm:px-5 sm:text-2xl mx-auto`}>
               Biljetter
             </button>
             <div className={`${styles.movieDescInfo} md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}>

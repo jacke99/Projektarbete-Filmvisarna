@@ -42,7 +42,8 @@ export default function ScreeningCard({ query, setInputValues}) {
 
       {data && !data.err && data?.map((screening) =>
       <>
-        <div className="max-w-full p-4 flex items-center sm:w-[35rem] md:w-[40rem] lg:w-[54rem] sm:m-auto sm:px-12">
+        <div className="max-w-full p-4 flex justify-between items-center sm:w-[35rem] md:w-[40rem] lg:w-[54rem] sm:m-auto sm:px-12">
+          
           <img
             src={`/img/${screening.movie.img_poster}`}
             alt={`poster from the movie: ${screening.movie.title}`}
@@ -57,7 +58,8 @@ export default function ScreeningCard({ query, setInputValues}) {
             <p className="text-xs md:text-base lg:text-lg">{screening.movie.length}</p>
             <p className="text-xs md:text-base lg:text-lg">{`${screening.movie.ageRestriction === 0 ? "Ingen åldersgräns" : screening.movie.ageRestriction + " år"}`}</p>
           </div>
-            <button className="bg-white text-black-100 rounded-md px-4 p-1 max-w-fit sm:hidden"
+        
+            <button className={`${styles.buttonStyle} sm:hidden max-w-fit`}
             onClick={() => {
               navigate(`/bokning/${screening._id}`)
               window.scrollTo(0, 0)
@@ -65,7 +67,7 @@ export default function ScreeningCard({ query, setInputValues}) {
           </button>
           </div>
 
-          <button className="bg-gold text-black-100 rounded-md px-4 p-1 md:px-6 md:py-2 h-10 max-w-fit hidden sm:block"
+          <button className={`${styles.buttonStyle}md:px-6 md:py-2 h-10 max-w-fit hidden sm:block`}
             onClick={() => {
               navigate(`/bokning/${screening._id}`)
               window.scrollTo(0, 0)
