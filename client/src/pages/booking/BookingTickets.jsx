@@ -47,7 +47,6 @@ export default function BookingTickets(){
         }
       }
       const res = await performRequest("/api/booking", "POST", booking);
-      console.log(res);
       if(res.booking.bookingId) {
         setBookingResult(res.booking)
         setNodeMailerError(res.emailError)
