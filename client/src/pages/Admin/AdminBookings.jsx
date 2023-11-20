@@ -100,7 +100,7 @@ export default function AdminBookings() {
 
 
                             <tr key={key} className="">
-                                <td>{booking.customer?.name ? `${booking.customer?.name} ${booking.customer?.lastname}` : "Gäst"}</td>
+                                <td className="whitespace-nowrap">{booking.customer?.name ? `${booking.customer?.name} ${booking.customer?.lastname}` : "Gäst"}</td>
                                 <td>{booking.bookingId}</td>
                                 <td>{booking.seats.map((seat, key) => {
                                     if (key + 1 === booking.seats.length) {
@@ -119,11 +119,11 @@ export default function AdminBookings() {
                                 </td>
 
                                 <td>{booking.customerEmail}</td>
-                                <td>{booking.screening ? `${new Date(booking.screening.date).toLocaleDateString()} ${booking.screening.time}` : "Inte tillgängligt"}</td>
+                                <td className="whitespace-nowrap">{booking.screening ? `${new Date(booking.screening.date).toLocaleDateString()} ${booking.screening.time}` : "Inte tillgängligt"}</td>
                                 <td className="p-4 text-center">
                                     {booking.status ? (
                                         <button
-                                            className={`rounded-md bg-red-200 p-1 px-4 text-black-100 self-center`}
+                                            className={`rounded-md hover:bg-white active:bg-gold bg-red-200 p-1 px-4 text-black-100 self-center`}
                                             onClick={() => cancelBooking(booking._id, booking.bookingId)}
                                         >
                                             Avboka
@@ -140,7 +140,7 @@ export default function AdminBookings() {
                     </tbody>
                 </table>
                 <div className="flex justify-center">
-                    <button className="mt-6 mb-16 rounded-md bg-gold p-1 px-4 text-black-100" onClick={loadMore}>Ladda fler</button>
+                    <button className={`rounded-md mt-6 mb-16 ${styles.buttonStyle}`} onClick={loadMore}>Ladda fler</button>
                 </div>
             </div>
         </div>
