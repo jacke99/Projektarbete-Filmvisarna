@@ -12,6 +12,8 @@ import footerIconIG from "../assets/footerIconIG.svg";
 import footerIconIN from "../assets/footerIconIN.svg";
 import refresh from "./refresh.svg"
 import account_circle_wght200 from "./account_circle_wght200.svg";
+import expandMore from "./expandMore.svg";
+import expandLess from "./expandLess.svg";
 export {
  
   logo,
@@ -26,5 +28,7 @@ export {
   footerIconIG,
   footerIconIN,
   refresh,
-  account_circle_wght200
+  account_circle_wght200,
+  expandMore,
+  expandLess,
 };

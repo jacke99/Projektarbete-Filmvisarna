@@ -1,6 +1,6 @@
-import { styles } from "../styles";
 import MovieCard from "../components/moviesPage/MovieCard";
 import useFetch from "../hooks/useFetch";
+import { styles } from "../styles";
 
 export default function Movies() {
   //eslint-disable-next-line

@@ -256,3 +256,7 @@ input:checked ~ .dot {
   transform: translateX(100%);
   background-color: #48bb78;
 }
+
+.grid-row-gap {
+  grid-row-gap: 2rem;
+}
