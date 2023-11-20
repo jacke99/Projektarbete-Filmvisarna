@@ -36,7 +36,7 @@ export default function Header() {
   }, [])
   
   return (
-    <nav className={`sticky top-0 z-20 border-gold bg-primary border-b-2`}>
+    <nav className={`sticky top-0 z-[2000] border-gold bg-primary border-b-2`}>
     <div className={`${styles.navWrapper} flex justify-between`}>
       <div className={`flex items-center flex-row gap-10`}>
       <Link className={`${styles.navText}`}
