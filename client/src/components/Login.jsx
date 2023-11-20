@@ -12,7 +12,6 @@ export default function Login({ setCurrentUser }) {
     email: "",
     password: "",
   })
-
   function handleChange(event) {
     const { name, value } = event.target;
     setInputValues((prev) => {
