@@ -14,7 +14,7 @@ const fetchOptionsNoJwt = (body, method) => ({
     }
 });
 
-export const performRequest = async (url, method, body, page = 1, search = "") => { 
+export const performRequestAdmin = async (url, method, body, page = 1, search = "") => { 
   const searchParam = search ? `&search=${encodeURIComponent(search)}` : "";
   const apiUrl = `${url}${url.includes("?") ? "&" : "?"}page=${page}${searchParam}`;
   console.log("API URL:", apiUrl);
@@ -45,7 +45,17 @@ export const performRequest = async (url, method, body, page = 1, search = "") =
       throw error;
   }
 }
-
+export const performRequest = async (url, method, body) => { 
+    let options
+    if(sessionStorage.getItem("AuthToken")) {
+      options = fetchOptions(body, method);
+    } else {
+      options = fetchOptionsNoJwt(body, method);
+    }
+    let resp = await fetch(url, options);
+    let data = await resp.json()
+    return data;
+}
 
 
 
