@@ -3,11 +3,13 @@ import { useState } from "react"
 import { performRequest } from "../service/fetchService";
 import { parseJwt } from "../service/jwtService";
 import { useStates } from 'react-easier';
+import Loader from "./Loader";
 
 //eslint-disable-next-line
 export default function Login({ setCurrentUser }) {
   const t = useStates("globalToggle")
   const [toggleError, setToggleError] = useState(false)
+  const [loader, setLoader] = useState(false)
   const [inputValues, setInputValues] = useState({
     email: "",
     password: "",
@@ -23,6 +25,7 @@ export default function Login({ setCurrentUser }) {
   }
 
   async function handleLogin() {
+    setLoader(true)
     setToggleError(false)
     if (inputValues.email !== "" || inputValues.password !== "") {
       const resp = await performRequest("/api/login", "PUT", inputValues)
@@ -35,9 +38,11 @@ export default function Login({ setCurrentUser }) {
         window.location.reload();
       } else {
         setToggleError(true)
+        setLoader(false)
       }
     } else {
       alert("Please enter email and password")
+      setLoader(false)
     }
   }
 
@@ -58,7 +63,7 @@ export default function Login({ setCurrentUser }) {
        text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password"
         name="password" value={inputValues.password} placeholder="Lösenord.." onChange={handleChange} />
       {toggleError && <p className="text-red-500">Email eller lösenord var inkorrekt</p>}
-      <button onClick={handleLogin} className="bg-gold text-black-100 rounded-md px-4 p-1 self-center">Logga in</button>
+      {!loader ? <button onClick={handleLogin} className="bg-gold text-black-100 rounded-md px-4 p-1 self-center">Logga in</button> : <Loader />}
       <p>Har du inte ett konto? Bli medlem</p>
     </div>
   )

@@ -6,11 +6,13 @@ import { useEffect, useState } from "react";
 import { parseJwt } from "../../service/jwtService";
 import { performRequest } from "../../service/fetchService";
 import newDateFormat from "../../service/newDateFormat";
+import Loader from "../../components/Loader";
 
 export default function BookingTickets(){
   const [loggedIn, setLoggedIn] = useState(null)
   const [bookingResult, setBookingResult] = useState(null)
   const [nodeMailerError, setNodeMailerError] = useState(null)
+  const [loader, setLoader] = useState(false)
   const [inputValues, setInputValues] = useState({
     email: "",
     reEmail: "",
@@ -37,6 +39,7 @@ export default function BookingTickets(){
   }
 
     async function handleBooking() {
+      setLoader(true)
       if(!loggedIn) {
         if(inputValues.email === inputValues.reEmail) {
           booking.email = inputValues.email
@@ -58,6 +61,7 @@ export default function BookingTickets(){
       } else {
         console.log(res.error);
       }
+      setLoader(false)
     }
     return(
         <>
@@ -105,7 +109,7 @@ export default function BookingTickets(){
               <p>{`Totalt att betala: ${calcTotalPrice(booking.adult, booking.child, booking.senior)} kr`}</p>
             </div>
             {!loggedIn && <BookingTicketsForm inputValues={inputValues} setInputValues={setInputValues}/>}
-            <button onClick={handleBooking} className={`bg-gold w-36 text-black px-6 py-2 rounded m-auto mb-10`}>Boka</button>
+            {!loader ? <button onClick={handleBooking} className={`bg-gold w-36 text-black px-6 py-2 rounded m-auto mb-10`}>Boka</button> : <Loader />}
             </>}
             
             
