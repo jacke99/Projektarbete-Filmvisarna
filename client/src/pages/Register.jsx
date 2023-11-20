@@ -73,7 +73,6 @@ export default function Register() {
         }
         resetForm();
         window.scrollTo(0, 0);
-        console.log("Form data after successful submission:", formData); // Log the formData
       } else if (result.msg === "User already exists") {
         setShowMsgToUser("Ett konto med denna epost finns redan");
         setShowUnsuccessfulPopupMsg(true);
