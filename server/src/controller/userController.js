@@ -1,8 +1,6 @@
 import { fetchCollection } from "../mongo/mongoClient.js";
 import { ObjectId } from "mongodb";
 
-
-
 const getMovies = async (req, res) => {
     try {
         const movies = await fetchCollection("movies").find().toArray()
@@ -39,9 +37,9 @@ const getMovie = async (req, res) => {
     try {
       if (ObjectId.isValid(req.params.id)){
       const movieId = req.params.id; 
-      console.log(movieId)
+     
       const movie = await fetchCollection("movies").findOne({ _id: new ObjectId(req.params.id) });
-      console.log(movie)
+      
       res.status(200).json(movie); 
     }else{
       res.status(404).send({error: "objectId is not valid"})

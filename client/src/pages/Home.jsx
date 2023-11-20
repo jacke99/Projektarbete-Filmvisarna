@@ -7,7 +7,6 @@ import { performRequest } from "../service/fetchService.js";
 export default function Home() {
 
 const [movies, setMovies] = useState(undefined)
-console.log(movies)
 useEffect(() => {
 async function getMovies() {
   const resp = await performRequest("api/movies/current", "GET")

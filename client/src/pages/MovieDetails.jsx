@@ -16,7 +16,6 @@ export default function MovieDetails() {
     (async () => {
       if (data) {
         const resp = await performRequest(`/api/filteredscreenings?movie=${data.title}`, "GET");
-        // console.log(data.title)
         setMovie(resp);
       }
     })();

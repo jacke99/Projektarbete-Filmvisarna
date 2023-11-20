@@ -70,17 +70,13 @@ const getUserBookings = async (req, res) => {
   if (authHeader == undefined) {
     res.status(400).send("Authorization header is missing");
   } else {
-
     
     try {
           const authToken = authHeader.replace("Bearer ", "");
           const decoded = jwtUtil.verify(authToken)
           const user = await fetchCollection("users").findOne({email: decoded.email});
-    
           const arrayToSearch = user.bookings.map(booking => booking.bookingId);
-    
           const userBookings = await fetchCollection("bookingsXscreeningXmovie").find({ bookingId: { $in: arrayToSearch } }).toArray();
-          console.log(userBookings)
           return res.send(userBookings);
       } catch (error) {
         console.error('Error fetching user bookings:', error);

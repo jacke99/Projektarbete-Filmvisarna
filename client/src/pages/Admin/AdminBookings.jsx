@@ -29,7 +29,6 @@ export default function AdminBookings() {
     useEffect(() => {
         async function fetchBookings(page, query) {
             try {
-                console.log('Search Parameter:', query);
                 const resp = await performRequest("/api/bookings", "GET", null, page, query);
 
                 if (Array.isArray(resp)) {

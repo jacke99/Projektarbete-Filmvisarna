@@ -15,7 +15,6 @@ export default function AdminAddScreenings(){
         e.preventDefault();
         setLoader(true)
         const response = await performRequest("/api/screenings", "post", inputValues);
-        console.log(response);
       
         if (response.insertedId) {
           alert("Filmvisningen är nu tillagd i systemet!");
