@@ -28,7 +28,6 @@ export default function MovieDetails() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   }
- 
   return (
     <>
       {data && (
@@ -42,8 +41,8 @@ export default function MovieDetails() {
             >
               <p className={`${styles.trailerTitle}`}>{data.title}</p>
               <p className={`${styles.trailerSubTitle}`}>{data.genre}</p>
-              <p className={`${styles.trailerSubTitle} bold font-inconsolata`}>
-                {data.length} | från {data.ageRestriction}år
+              <p className={`${styles.trailerSubTitle} bold font-inconsolata`}>                
+                {data.ageRestriction === 0 ? "Ingen åldersgräns" : data.ageRestriction + " år"}
               </p>
             </div>
             <div className="movie-poster pb-8 sm:text-xl md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto">
@@ -81,7 +80,7 @@ export default function MovieDetails() {
             </div>
             <div className={`${styles.movieDescInfo} md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}>
               <span>Åldersgräns:</span>
-              <span>{data.ageRestriction}</span>
+              <span> {data.ageRestriction === 0 ? "Ingen åldersgräns" : data.ageRestriction + " år"}</span>
             </div>
             <div className="text-white text-[25px] sm:text-[25px] md:text-[30px] lg:text-[35px] md:mt-32 lg:mt-32 mt-20 md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto">
 

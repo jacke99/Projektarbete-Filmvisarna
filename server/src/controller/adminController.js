@@ -73,17 +73,11 @@ const deleteMovie = async (req, res) => {
 //Get bookings collection
 const getBookingsXuser = async (req, res) => {
   try {
-    console.log('getBookingsXuser function');
     const bookingsCollection = await fetchCollection("bookingsXuser");
     const page = parseInt(req.query.page) || 1;
     const pageSize = 10;
     const today = new Date().toISOString().split("T")[0];
-    console.log('Today:', today);
     const searchQuery = req.query.search || "";
-    console.log('Page:', page);
-    console.log('Search Query:', searchQuery);
-
-
     const bookings = await bookingsCollection
       .find({
         $and: [
