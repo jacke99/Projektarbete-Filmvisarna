@@ -104,7 +104,7 @@ export default function Register() {
         <p className=" text-white text-center m-auto max-w-[80%] md:max-w-[60%]">
           Välkommen till oss på Filmvisarna. Vi älskar film och det verkar du också göra!
           Som medlem hos oss får du unika erbjudanden och chans till förhandsvisningar på spännande premiärer.
-          Det kostar självklart inget att bli medlem så vad väntar du på, fyll i dina uppgifter nedan och bli en del av familjen redan idag..
+          Det kostar självklart inget att bli medlem så vad väntar du på, fyll i dina uppgifter nedan och bli en del av familjen redan idag.
         </p>
 
       <header>

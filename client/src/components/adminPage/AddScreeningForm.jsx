@@ -30,8 +30,7 @@ export default function AddScreeningForm( { handleSubmit, inputValues, setInputV
             </select>
             <input onChange={(e) => setInputValues({...inputValues, title: e.target.value})} value={inputValues.title}
             className={`${styles.inputStyle}`} name="title" placeholder="Filmens titel" />
-            {!loader ? <button className=" mt-2 md:mt-6 md:mb-6 lg:mt-8 lg:mb-8 rounded-xl 
-             bg-gold px-4 py-2 text-xl text-black sm:px-5 sm:text-2xl mx-auto" type="submit">Skicka in</button> : <Loader />}
+            {!loader ? <button className={`${styles.buttonStyle} mt-4`} type="submit">Skicka in</button> : <Loader />}
         </form>
         </div>
     )
