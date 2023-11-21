@@ -28,7 +28,6 @@ export default function MovieDetails() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   }
- 
   return (
     <>
       {data && (
@@ -42,8 +41,8 @@ export default function MovieDetails() {
             >
               <p className={`${styles.trailerTitle}`}>{data.title}</p>
               <p className={`${styles.trailerSubTitle}`}>{data.genre}</p>
-              <p className={`${styles.trailerSubTitle} bold font-inconsolata`}>
-                {data.length} | från {data.ageRestriction}år
+              <p className={`${styles.trailerSubTitle} bold font-inconsolata`}>                
+                {data.ageRestriction === 0 ? "Ingen åldersgräns" : data.ageRestriction + " år"}
               </p>
             </div>
             <div className="movie-poster pb-8 sm:text-xl md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto">

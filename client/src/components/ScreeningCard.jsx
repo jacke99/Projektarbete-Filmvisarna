@@ -5,7 +5,6 @@ import { styles } from "../styles";
 import useFetch from "../hooks/useFetch";
 import newDateFormat from "../service/newDateFormat";
 
-
 export default function ScreeningCard({ query, setInputValues}) {
   const navigate = useNavigate();
   useAutoKeys();
@@ -37,8 +36,6 @@ export default function ScreeningCard({ query, setInputValues}) {
           <span></span>
           <span></span>
         </div>}
-
-      
 
       {data && !data.err && data?.map((screening) =>
       <>
