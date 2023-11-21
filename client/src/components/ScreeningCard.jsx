@@ -39,7 +39,7 @@ export default function ScreeningCard({ query, setInputValues }) {
 
       {data && !data.err && data?.map((screening) =>
         <>
-          <div className="max-w-full p-4 flex justify-center sm:justify-between items-center sm:w-[35rem] md:w-[40rem] lg:w-[54rem] sm:m-auto sm:px-12">
+          <div className="max-w-full p-4 flex justify-center sm:justify-between items-center sm:w-[35rem] md:w-[40rem] lg:w-[54rem] sm:m-auto sm:px-0">
             <div className="flex">
               <img
                 src={`/img/${screening.movie.img_poster}`}
