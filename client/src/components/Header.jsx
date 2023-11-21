@@ -1,270 +1,61 @@
 import { useEffect, useState } from "react";
 import { styles } from "../styles";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { logo, close, menu_new, account_circle_new} from "../assets";
+import { useNavigate, useLocation } from "react-router-dom";
 import Login from "./Login";
 import { parseJwt } from "../service/jwtService";
-import { useStates } from 'react-easier';
+import { useStates } from "react-easier";
+import MainNav from "./navbars/MainNav";
+import MobileNav from "./navbars/MobileNav";
 export default function Header() {
   const [active, setActive] = useState("");
-  const t = useStates("globalToggle", {toggle: false})
+  const t = useStates("globalToggle", { toggle: false });
   const [toggle, setToggle] = useState(false);
-  const [currentUser, setCurrentUser] = useState(parseJwt(sessionStorage.getItem("AuthToken")))
-  const navigate = useNavigate()
-  let location = useLocation()
+  const [currentUser, setCurrentUser] = useState(
+    parseJwt(sessionStorage.getItem("AuthToken")),
+  );
+  const navigate = useNavigate();
+  let location = useLocation();
   function logout() {
-    sessionStorage.removeItem("AuthToken")
-    setCurrentUser(undefined)
-    navigate("/")
+    sessionStorage.removeItem("AuthToken");
+    setCurrentUser(undefined);
+    navigate("/");
   }
 
   useEffect(() => {
-    const pathParts = location.pathname.split('/');
-    setActive(pathParts[1])
-  },[location])
+    const pathParts = location.pathname.split("/");
+    setActive(pathParts[1]);
+  }, [location]);
 
   useEffect(() => {
-    const hamburgerCloser = event => {
-      if(!event.target.closest(".hamburger-menu") && !event.target.closest(".hamburger-menu-icon")) {
-        setToggle(false)
+    const hamburgerCloser = (event) => {
+      if (
+        !event.target.closest(".hamburger-menu") &&
+        !event.target.closest(".hamburger-menu-icon")
+      ) {
+        setToggle(false);
       }
     };
     document.body.addEventListener("click", hamburgerCloser);
     return () => {
       document.body.removeEventListener("click", hamburgerCloser);
-    }
-  }, [])
-  
-  return (
-    <nav className={`sticky top-0 z-20 border-gold bg-primary border-b-2`}>
-    <div className={`${styles.navWrapper} flex justify-between`}>
-      <div className={`flex items-center flex-row gap-10`}>
-      <Link className={`${styles.navText}`}
-          to="/"
-          onClick={() => {
-            window.scrollTo(0, 0);
-          }}
-        >
-          <img
-            src={logo}
-            alt="logo"
-            className={`${styles.icons} cursor-pointer object-contain`}
-          />
-        </Link>
-      
-        <ul className={`hidden list-none flex-row gap-10 xl:flex`}>
-        
+    };
+  }, []);
 
-          <Link className={`${styles.navText}  block`}
-            to="/"
-            onClick={() => {
-              window.scrollTo(0, 0);
-            }}
-          >
-            <li
-              className={`${
-                active === "" ? "text-white" : "text-gold"
-              } cursor-pointer hover:text-white`}
-            >
-              Hem
-            </li>
-          </Link>
-          <Link className={`${styles.navText}`}
-            to="/movies"
-            onClick={() => {
-              window.scrollTo(0, 0);
-            }}
-          >
-            <li
-              className={`${
-                active === "movies" ? "text-white" : "text-gold"
-              } cursor-pointer hover:text-white`}
-            >
-              Filmer
-            </li>
-          </Link>
-          <Link className={`${styles.navText}`}
-            to="/booking"
-            onClick={() => {
-              window.scrollTo(0, 0);
-            }}
-          >
-            <li
-              className={`${
-                active === "booking" ? "text-white" : "text-gold"
-              } cursor-pointer hover:text-white`}
-            >
-              Biljetter
-            </li>
-          </Link>
-          {!currentUser && <Link className={`${styles.navText}`}
-            to="/register"
-            onClick={() => {
-              window.scrollTo(0, 0);
-            }}
-          >
-            <li
-              className={`${
-                active === "register" ? "text-white" : "text-gold"
-              } cursor-pointer hover:text-white`}
-            >
-              Bli medlem
-            </li>
-          </Link>}
-          {currentUser && <Link className={`${styles.navText}`}
-            to="/mypages"
-            onClick={() => {
-              window.scrollTo(0, 0);
-            }}
-          >
-            <li
-              className={`${
-                active === "mypages" ? "text-white" : "text-gold"
-              } cursor-pointer hover:text-white`}
-            >
-              Mina Sidor
-            </li>
-          </Link>}
-          {currentUser && currentUser.role === "ADMIN" && <Link className={`${styles.navText}`}
-            to="/admin"
-            onClick={() => {
-              window.scrollTo(0, 0);
-            }}
-          >
-            <li
-              className={`${
-                active === "admin" ? "text-white" : "text-gold"
-              } cursor-pointer hover:text-white`}
-            >
-              Admin
-            </li>
-          </Link>}
-        </ul>
-      </div>
-      
-      
-      <div className="flex gap-1 items-center">
-        <p onClick={() => navigate("/mypages")}  className={`${styles.subHeaderText} mr-2 hidden cursor-pointer hover:text-white xl:flex`}>
-        {currentUser ? currentUser.name : ""}
-        </p>
-        <img
-          src={account_circle_new}
-          alt="login"
-          className={`${styles.icons} cursor-pointer`}
-          onClick={() => currentUser ? navigate("/mypages"): t.toggle = true }
+  return (
+    <nav className={`sticky top-0 z-[2000] border-b-2 border-gold bg-primary`}>
+      <div className={`${styles.navWrapper} flex justify-between`}>
+        <MainNav active={active} currentUser={currentUser} />
+
+        <MobileNav
+          currentUser={currentUser}
+          navigate={navigate}
+          toggle={toggle}
+          logout={logout}
+          setToggle={setToggle}
+          active={active}
         />
-        <p
-          className={`${styles.navText} ${t.toggle ? "text-white" : "text-gold"} hidden cursor-pointer hover:text-white xl:flex`}
-          onClick={() => currentUser ? logout()  : t.toggle = true }
-        >
-          {currentUser ? "Logga ut" : "Logga in"}
-        </p>
-        <img
-          src={toggle ? close : menu_new}
-          alt="menu"
-          className={`${styles.icons} cursor-pointer xl:hidden hamburger-menu-icon`}
-          onClick={() => setToggle(!toggle)}
-        />
-        <div
-          className={`${
-            !toggle ? "hidden" : "flex"
-          } absolute right-0 top-20 z-10
-            mx-4 my-2 min-w-[140px] rounded-xl bg-gradient-to-r from-footerGrey to-primary p-6 hamburger-menu`}
-        >
-          <ul className="flex list-none flex-col items-start justify-end gap-4 text-gold">
-            <Link
-              to="/"
-              onClick={() => {
-                window.scrollTo(0, 0);
-              }}
-            >
-              <li
-                className={`${
-                  active === "" ? "text-white" : "text-gold"
-                } cursor-pointer hover:text-white`}
-              >
-                Hem
-              </li>
-            </Link>
-            <Link
-              to="/movies"
-              onClick={() => {
-                window.scrollTo(0, 0);
-              }}
-            >
-              <li
-                className={`${
-                  active === "movies" ? "text-white" : "text-gold"
-                } cursor-pointer hover:text-white`}
-              >
-                Filmer
-              </li>
-            </Link>
-            <Link
-              to="/booking"
-              onClick={() => {
-                window.scrollTo(0, 0);
-              }}
-            >
-              <li
-                className={`${
-                  active === "booking" ? "text-white" : "text-gold"
-                } cursor-pointer hover:text-white`}
-              >
-                Biljetter
-              </li>
-            </Link>
-            {!currentUser && <Link
-              to="/register"
-              onClick={() => {
-                window.scrollTo(0, 0);
-              }}
-            >
-              <li
-                className={`${
-                  active === "register" ? "text-white" : "text-gold"
-                } cursor-pointer hover:text-white`}
-              >
-                Bli medlem
-              </li>
-            </Link>}
-            {currentUser && <Link
-            to="/mypages"
-            onClick={() => {
-              window.scrollTo(0, 0);
-            }}
-          >
-            <li
-              className={`${
-                active === "mypages" ? "text-white" : "text-gold"
-              } cursor-pointer hover:text-white`}
-            >
-              Mina Sidor
-            </li>
-          </Link>}
-          {currentUser && currentUser.role === "ADMIN" && <Link
-            to="/admin"
-            onClick={() => {
-              window.scrollTo(0, 0);
-            }}
-          >
-            <li
-              className={`${
-                active === "admin" ? "text-white" : "text-gold"
-              } cursor-pointer hover:text-white`}
-            >
-              Admin
-            </li>
-          </Link>}
-          {currentUser && <li className="text-red-500" onClick={logout}>
-            Logga ut
-          </li>}
-          </ul>
-        </div>
+        {t.toggle && <Login setCurrentUser={setCurrentUser} />}
       </div>
-      {t.toggle && <Login setCurrentUser={setCurrentUser}/>}
-    </div>
     </nav>
-    
   );
 }

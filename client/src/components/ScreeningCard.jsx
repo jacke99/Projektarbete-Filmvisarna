@@ -5,7 +5,6 @@ import { styles } from "../styles";
 import useFetch from "../hooks/useFetch";
 import newDateFormat from "../service/newDateFormat";
 
-
 export default function ScreeningCard({ query, setInputValues}) {
   const navigate = useNavigate();
   useAutoKeys();
@@ -38,8 +37,6 @@ export default function ScreeningCard({ query, setInputValues}) {
           <span></span>
         </div>}
 
-      
-
       {data && !data.err && data?.map((screening) =>
       <>
         <div className="max-w-full p-4 flex items-center sm:w-[35rem] md:w-[40rem] lg:w-[54rem] sm:m-auto sm:px-12">
@@ -59,7 +56,7 @@ export default function ScreeningCard({ query, setInputValues}) {
           </div>
             <button className="bg-white text-black-100 rounded-md px-4 p-1 max-w-fit sm:hidden"
             onClick={() => {
-              navigate(`/booking/${screening._id}`)
+              navigate(`/bokning/${screening._id}`)
               window.scrollTo(0, 0)
             }}>Boka
           </button>
@@ -67,7 +64,7 @@ export default function ScreeningCard({ query, setInputValues}) {
 
           <button className="bg-gold text-black-100 rounded-md px-4 p-1 md:px-6 md:py-2 h-10 max-w-fit hidden sm:block"
             onClick={() => {
-              navigate(`/booking/${screening._id}`)
+              navigate(`/bokning/${screening._id}`)
               window.scrollTo(0, 0)
             }}>Boka
           </button>
