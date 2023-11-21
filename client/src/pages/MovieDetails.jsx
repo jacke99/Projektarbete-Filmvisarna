@@ -9,9 +9,9 @@ import MovieTrailer from "../components/moviesPage/MovieTrailer.jsx";
 export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState("");
-   //eslint-disable-next-line
-   const { data, isPending, error } = useFetch(`/api/movies/${id}`);
- 
+  //eslint-disable-next-line
+  const { data, isPending, error } = useFetch(`/api/movies/${id}`);
+
   useEffect(() => {
     (async () => {
       if (data) {
@@ -28,7 +28,7 @@ export default function MovieDetails() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   }
- 
+
   return (
     <>
       {data && (
