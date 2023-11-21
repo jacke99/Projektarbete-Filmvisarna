@@ -42,7 +42,7 @@ export default function ScreeningCard({ query, setInputValues}) {
 
       {data && !data.err && data?.map((screening) =>
       <>
-        <div className="max-w-full p-4 flex justify-between items-center sm:w-[35rem] md:w-[40rem] lg:w-[54rem] sm:m-auto sm:px-12">
+        <div className="max-w-full p-4 flex justify-between items-center sm:w-[35rem] md:w-[40rem] lg:w-[54rem] sm:m-auto sm:px-12 h-[300px]">
           
           <img
             src={`/img/${screening.movie.img_poster}`}
@@ -67,7 +67,7 @@ export default function ScreeningCard({ query, setInputValues}) {
           </button>
           </div>
 
-          <button className={`${styles.buttonStyle}md:px-6 md:py-2 h-10 max-w-fit hidden sm:block`}
+          <button className={`${styles.buttonStyle} hidden sm:block`}
             onClick={() => {
               navigate(`/bokning/${screening._id}`)
               window.scrollTo(0, 0)

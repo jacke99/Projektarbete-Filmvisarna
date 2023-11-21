@@ -45,7 +45,7 @@ const styles = {
     "w-full border border-gray-300 rounded-md p-1.5 text-sm text-gray-400 my-2 h-8",
   centerAbsolutePos:
     "absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2",
-  buttonStyle:"hover:bg-white active:bg-gold bg-gold text-black-100 rounded-md px-4 p-1 ",
+  buttonStyle:"hover:bg-white active:bg-gold bg-gold text-black-100 rounded-md px-3 text-sm p-1 h-10 md:px-5 md:py-2 md:text-base lg:text-lg lg:h-12",
   };
 
 export { styles };
