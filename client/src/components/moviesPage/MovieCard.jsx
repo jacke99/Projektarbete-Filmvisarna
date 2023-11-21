@@ -26,7 +26,7 @@ export default function MovieCard({ movie }) {
         <img
           src={`/img/${movie.img_poster}`}
           alt={`movie poster for ${movie.title}`}
-          className="object-cover sm:h-56 lg:h-72 rounded-xl hidden md:block"
+          className="object-cover sm:h-56 lg:h-72 rounded-xl hidden md:block w-[150px]"
         />
         <img
           src={`/img/${movie.img_header}`}
@@ -46,7 +46,7 @@ export default function MovieCard({ movie }) {
           </div>
           <button
             onClick={handleReadMoreClick}
-            className="self-start rounded-md bg-gold px-4 py-2 text-black-100 lg:px-6 lg:py-3 lg:text-lg"
+            className={`${styles.buttonStyle} self-start`}
           >
             Till filmen
           </button>
@@ -59,3 +59,4 @@ MovieCard.propTypes = {
   movie: PropTypes.object.isRequired,
 };
 
+// self-start rounded-md bg-gold px-4 py-2 text-black-100 lg:px-6 lg:py-3 lg:text-lg
