@@ -16,7 +16,6 @@ export default function MovieDetails() {
     (async () => {
       if (data) {
         const resp = await performRequest(`/api/filteredscreenings?movie=${data.title}`, "GET");
-        // console.log(data.title)
         setMovie(resp);
       }
     })();
@@ -29,7 +28,6 @@ export default function MovieDetails() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   }
- 
   return (
     <>
       {data && (
@@ -43,8 +41,8 @@ export default function MovieDetails() {
             >
               <p className={`${styles.trailerTitle}`}>{data.title}</p>
               <p className={`${styles.trailerSubTitle}`}>{data.genre}</p>
-              <p className={`${styles.trailerSubTitle} bold font-inconsolata`}>
-                {data.length} | från {data.ageRestriction}år
+              <p className={`${styles.trailerSubTitle} bold font-inconsolata`}>                
+                {data.ageRestriction === 0 ? "Ingen åldersgräns" : data.ageRestriction + " år"}
               </p>
             </div>
             <div className="movie-poster pb-8 sm:text-xl md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto">
@@ -57,7 +55,7 @@ export default function MovieDetails() {
             <p className={`mb-4 text-white sm:text-xl md:w-5/6 lg:mt-14 lg:mb-10 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}>
               {data.description}
             </p>
-            <button onClick={handleClickScroll} className="mb-4 mt-10 md:mt-10 md:mb-6 lg:mt-12 lg:mb-8 rounded-xl bg-gold px-4 py-2 text-xl text-black sm:px-5 sm:text-2xl mx-auto">
+            <button onClick={handleClickScroll} className={`${styles.buttonStyle} mx-auto sm:px-4 sm:py-2`}>
               Biljetter
             </button>
             <div className={`${styles.movieDescInfo} md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}>
@@ -82,7 +80,7 @@ export default function MovieDetails() {
             </div>
             <div className={`${styles.movieDescInfo} md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}>
               <span>Åldersgräns:</span>
-              <span>{data.ageRestriction}</span>
+              <span> {data.ageRestriction === 0 ? "Ingen åldersgräns" : data.ageRestriction + " år"}</span>
             </div>
             <div className="text-white text-[25px] sm:text-[25px] md:text-[30px] lg:text-[35px] md:mt-32 lg:mt-32 mt-20 md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto">
 
@@ -96,7 +94,7 @@ export default function MovieDetails() {
             ) : (
               <div className="p-4 text-center">
                 <p className="text-white-100" id="scrollTo">Tyvärr finns inga visningar tillgängliga just nu för {`${data.title}`}</p>
-                <Link to={"/booking"} className={`text-4-xl underline text-white-100`}>
+                <Link to={"/bokning"} className={`text-4-xl underline text-white-100`}>
                   Andra filmer som visas
                 </Link>
               </div>

@@ -5,7 +5,6 @@ import { styles } from "../styles";
 import useFetch from "../hooks/useFetch";
 import newDateFormat from "../service/newDateFormat";
 
-
 export default function ScreeningCard({ query, setInputValues}) {
   const navigate = useNavigate();
   useAutoKeys();
@@ -38,33 +37,44 @@ export default function ScreeningCard({ query, setInputValues}) {
           <span></span>
         </div>}
 
-      
-
       {data && !data.err && data?.map((screening) =>
-        <div className="max-w-full p-4 flex items-center justify-between md:justify-start lg:justify-start sm:w-[35rem] md:w-[40rem] lg:w-[54rem] sm:m-auto sm:px-12">
-          
-          <img
-            src={`/img/${screening.movie.img_poster}`}
-            alt={`poster from the movie: ${screening.movie.title}`}
-            className="w-34 h-48 rounded-lg"
-          />
-          <div className="text-white-100 flex flex-col lg:px-6 md:px-6 ml-4">
-            <p className="text-xs md:text-base lg:text-lg">{`${newDateFormat(screening.date)} | ${screening.time}`}</p>
-            <h2 className="text-base font-extra-bold md:text-base lg:text-lg">{screening.movie.title}</h2>
-            <p className="font-inconsolata text-xs md:text-base lg:text-lg">{screening.movie.genre}</p>
-            <p className="font-inconsolata text-xs md:text-base lg:text-lg">{screening.theaterName}</p>
-            <p className="text-xs md:text-base lg:text-lg">{screening.movie.length}</p>
-            <p className="text-xs md:text-base lg:text-lg">{`${screening.movie.ageRestriction === 0 ? "Ingen åldersgräns" : screening.movie.ageRestriction + " år"}`}</p>
-            
-          </div>
-          <button className="bg-gold text-black-100 rounded-md px-4 p-1 sm:ml-auto md:px-6 md:py-2"
-            onClick={() => {
-              navigate(`/booking/${screening._id}`)
-              window.scrollTo(0, 0)
-            }}
-          >Boka</button>
+      <>
+        <div className="max-w-full p-4 flex justify-center sm:justify-between items-center sm:w-[35rem] md:w-[40rem] lg:w-[54rem] sm:m-auto sm:px-12">
+          <div className="flex">
+              <img
+                src={`/img/${screening.movie.img_poster}`}
+                alt={`poster from the movie: ${screening.movie.title}`}
+                className="w-34 h-48 rounded-lg"/>
 
+              <div className="text-white-100 flex flex-col justify-center gap-3 ml-4 md:ml-6">
+              <div className="">
+                <p className="text-xs md:text-base lg:text-lg">{`${newDateFormat(screening.date)} | ${screening.time}`}</p>
+                <h2 className="text-base font-extra-bold md:text-base lg:text-lg">{screening.movie.title}</h2>
+                <p className="font-inconsolata text-xs md:text-base lg:text-lg">{screening.movie.genre}</p>
+                <p className="font-inconsolata text-xs md:text-base lg:text-lg">{screening.theaterName}</p>
+                <p className="text-xs md:text-base lg:text-lg">{screening.movie.length}</p>
+                <p className="text-xs md:text-base lg:text-lg">{`${screening.movie.ageRestriction === 0 ? "Ingen åldersgräns" : screening.movie.ageRestriction + " år"}`}</p>
+              </div>
+            
+                <button className={`${styles.buttonStyle} sm:hidden max-w-fit`}
+                onClick={() => {
+                  navigate(`/bokning/${screening._id}`)
+                  window.scrollTo(0, 0)
+                }}>Boka
+              </button>
+            </div>
+          </div>
+
+          <button className={`${styles.buttonStyle} hidden sm:block`}
+            onClick={() => {
+              navigate(`/bokning/${screening._id}`)
+              window.scrollTo(0, 0)
+            }}>Boka
+          </button>
         </div>
+        
+      </>
+        
       )}
     </>
   )

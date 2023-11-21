@@ -28,7 +28,7 @@ export default function MultiCarouselUpcoming() {
       title={movie.title}
       img={`${pathToFolder}${movie.img_poster}`} 
       alt={movie.title}
-      link={`/movies/${movie._id}`}
+      link={`/filmer/${movie._id}`}
     />
   ));
 

@@ -4,6 +4,7 @@ import { performRequest } from "../service/fetchService";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { projektor } from "../assets/index.js";
+import Loader from "../components/Loader.jsx";
 
 
 
@@ -13,6 +14,7 @@ export default function Register() {
   const [showMsgToUser, setShowMsgToUser] = useState(" Text till användaren ") // state för att visa upp ett meddelande till användaren
   const [showSuccessPopupMsg, setShowSuccessPopup] = useState(false); // state för att göra en popup OM status:msg=Account was created - alltså om allt gick bra 
   const [showUnsuccessfulPopupMsg, setShowUnsuccessfulPopupMsg] = useState(false) // state för att visa meddelande om något gått fel vi skapande av medlemskap
+  const [loader, setLoader] = useState(false)
 
 
   // använder useNavigate när man trycker på "stäng" 
@@ -55,6 +57,7 @@ export default function Register() {
   // När jag trycker på submit  så vill jag att en function en post method ska skicka med dessa uppgifter till databasen
 
   async function SignUp(e) {
+    setLoader(true)
     try {
       e.preventDefault();
       const result = await performRequest("/api/register", "POST", formRequestBody);
@@ -70,7 +73,6 @@ export default function Register() {
         }
         resetForm();
         window.scrollTo(0, 0);
-        console.log("Form data after successful submission:", formData); // Log the formData
       } else if (result.msg === "User already exists") {
         setShowMsgToUser("Ett konto med denna epost finns redan");
         setShowUnsuccessfulPopupMsg(true);
@@ -80,6 +82,7 @@ export default function Register() {
       console.error(err);
       setShowMsgToUser("Något oväntat fel har inträffat när kontot försökte att skapas");
     }
+    setLoader(false)
   }
 
 
@@ -101,7 +104,7 @@ export default function Register() {
         <p className=" text-white text-center m-auto max-w-[80%] md:max-w-[60%]">
           Välkommen till oss på Filmvisarna. Vi älskar film och det verkar du också göra!
           Som medlem hos oss får du unika erbjudanden och chans till förhandsvisningar på spännande premiärer.
-          Det kostar självklart inget att bli medlem så vad väntar du på, fyll i dina uppgifter nedan och bli en del av familjen redan idag..
+          Det kostar självklart inget att bli medlem så vad väntar du på, fyll i dina uppgifter nedan och bli en del av familjen redan idag.
         </p>
 
       <header>
@@ -176,10 +179,10 @@ export default function Register() {
         )}
 
         {/* Button Submit */}
-        <button
+        {!loader ? <button
           className="bg-gold w-40 px-4 rounded-lg py-4 my-5 lg:text-lg mb-10"
           disabled={showSuccessPopupMsg}
-          type="submit" >Registrera</button>
+          type="submit" >Registrera</button> : <Loader />}
 
 
         {/* Popup to user if account is created */}

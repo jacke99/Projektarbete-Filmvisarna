@@ -14,7 +14,7 @@ let clients = [];
 const postBooking = async (req, res) => {
   const body = req.body
   const totalTickets = body.adult + body.child + body.senior
-  console.log(body)
+
   if(body.seats.length !== totalTickets) {
     return res.status(400).send({message: "Number of seats does not match number of ticketTypes"})
   }
@@ -126,7 +126,6 @@ const cancelBooking = async (req, res) => {
         return res.status(400).send({message: "Bad Request"})
     }
     let booking = await fetchCollection("bookings").findOne({_id: new ObjectId(body.id)})
-    console.log(booking)
     if(booking == null || !booking.screeningID) {
         return res.status(404).send({message: "Booking not found"})
     }

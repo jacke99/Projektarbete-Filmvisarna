@@ -7,8 +7,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const distPath = path.join(__dirname, '..','client', 'dist');
 
-// console.log(distPath);
-
 const addr = "127.0.0.1";
 const port = 3030;
 const app = express();
