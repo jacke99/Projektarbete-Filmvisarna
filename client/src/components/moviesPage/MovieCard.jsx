@@ -26,7 +26,7 @@ export default function MovieCard({ movie }) {
         <img
           src={`/img/${movie.img_poster}`}
           alt={`movie poster for ${movie.title}`}
-          className="object-cover sm:h-56 lg:h-72 rounded-xl hidden md:block"
+          className="object-cover sm:h-56 lg:h-72 rounded-xl hidden md:block w-[150px]"
         />
         <img
           src={`/img/${movie.img_header}`}
