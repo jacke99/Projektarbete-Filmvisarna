@@ -50,7 +50,7 @@ export default function ScreeningCard({ query, setInputValues}) {
             className="w-34 h-48 rounded-lg"/>
 
           <div className="text-white-100 flex flex-col justify-center gap-3 lg:px-6 md:px-6 ml-4">
-          <div>
+          <div className="">
             <p className="text-xs md:text-base lg:text-lg">{`${newDateFormat(screening.date)} | ${screening.time}`}</p>
             <h2 className="text-base font-extra-bold md:text-base lg:text-lg">{screening.movie.title}</h2>
             <p className="font-inconsolata text-xs md:text-base lg:text-lg">{screening.movie.genre}</p>

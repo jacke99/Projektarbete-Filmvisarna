@@ -136,8 +136,8 @@ export default function AdminBookings() {
 
                     </tbody>
                 </table>
-                <div className="flex justify-center">
-                    <button className="mt-6 mb-16 rounded-md bg-gold p-1 px-4 text-black-100" onClick={loadMore}>Ladda fler</button>
+                <div className="flex justify-center mt-6">
+                    <button className={`${styles.buttonStyle}`} onClick={loadMore}>Ladda fler</button>
                 </div>
             </div>
         </div>
