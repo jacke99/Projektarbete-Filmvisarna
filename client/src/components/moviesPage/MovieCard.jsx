@@ -46,12 +46,12 @@ export default function MovieCard({ movie }) {
             <p className={`${styles.bodyText} hidden md:block`}>
               {movie.description}
             </p>
-            <p
-              className="flex-col pt-1 text-sm md:hidden lg:text-lg"
+            <div
+              className={`${styles.bodyText} md:hidden`}
               onClick={toggleDescription}
             >
               {renderDescription()}
-            </p>
+            </div>
           </div>
           <button
             onClick={handleReadMoreClick}

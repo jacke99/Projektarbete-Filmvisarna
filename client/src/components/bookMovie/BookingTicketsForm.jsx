@@ -11,7 +11,7 @@ export default function BookingTicketsForm({ inputValues, setInputValues }) {
     }, []);
     function handleChange(e) {
         setInputValues({ ...inputValues, [e.target.name]: e.target.value })
-        console.log(inputValues);
+        
     }
     return (
         <div className="text-white flex flex-col w-4/5 items-center m-auto">

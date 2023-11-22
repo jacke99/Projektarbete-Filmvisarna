@@ -16,7 +16,6 @@ export default function MovieTrailer(props) {
     const [showVideo, setShowVideo] = useState(false);
     const { movieDetails } = props;
 
-    console.log(movieDetails)
     const openVideo = () => {
         setShowVideo(true);
     };
@@ -79,7 +78,7 @@ MovieTrailer.propTypes = {
         title: PropTypes.string,
         genre: PropTypes.string,
         length: PropTypes.string,
-        ageRestriction: PropTypes.string,
+        ageRestriction: PropTypes.number,
     }),
 };
 
