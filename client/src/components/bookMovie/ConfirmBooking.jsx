@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 //eslint-disable-next-line
 export default function ConfirmBooking({ nodeMailerError, bookingResult, movie, screening }) {
 
-  console.log(bookingResult);
+ 
   const navigate = useNavigate()
   useEffect(() => {
     window.scrollTo(0, 0);
