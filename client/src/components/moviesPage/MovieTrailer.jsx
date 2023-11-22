@@ -14,9 +14,8 @@ import { styles } from "../../styles.js";
 export default function MovieTrailer(props) {
 
     const [showVideo, setShowVideo] = useState(false);
-    const {movieDetails} = props;
+    const { movieDetails } = props;
 
-    console.log(movieDetails)
     const openVideo = () => {
         setShowVideo(true);
     };
@@ -32,11 +31,18 @@ export default function MovieTrailer(props) {
     if (!movieDetails.trailer) {
         return <div>No trailer available for this movie.</div>;
     }
-const imgHeaderSrc = movieDetails.img_header ? `/img/${movieDetails.img_header}` : '';
+    const imgHeaderSrc = movieDetails.img_header ? `/img/${movieDetails.img_header}` : '';
     return (
         <div className="relative w-full">
-            <div className="w-full" style={{ paddingBottom: '4.25%' }}>
+            <div className="w-full">
                 <div className="relative inset-0">
+                    <div className={`${styles.trailerDetails} absolute bottom-0 left-0 p-4 text-white bg-black bg-opacity-20`}>
+                        <p className={`${styles.trailerTitle} text-2xl font-bold mb-1`} style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.8)' }}>{movieDetails.title}</p>
+                        <p className={`${styles.trailerSubTitle} text-md mb-1`} style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.8)' }}>{movieDetails.genre}</p>
+                        <p className={`${styles.trailerSubTitle} font-bold font-inconsolata text-md`} style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.8)' }}>
+                            {movieDetails.length} | från {movieDetails.ageRestriction} år
+                        </p>
+                    </div>
                     <img src={imgHeaderSrc} alt="movie header" className={`${styles.imgHeader}cursor-pointer`} onClick={openVideo} />
                     <div className="translate-50-50 absolute left-1/2 top-1/2">
                         <BsPlayCircleFill className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl  text-white cursor-pointer play-button" onClick={openVideo} />
@@ -66,10 +72,13 @@ const imgHeaderSrc = movieDetails.img_header ? `/img/${movieDetails.img_header}`
 }
 
 MovieTrailer.propTypes = {
-    
     movieDetails: PropTypes.shape({
         trailer: PropTypes.string,
         img_header: PropTypes.string,
-      }),
+        title: PropTypes.string,
+        genre: PropTypes.string,
+        length: PropTypes.string,
+        ageRestriction: PropTypes.number,
+    }),
 };
 
