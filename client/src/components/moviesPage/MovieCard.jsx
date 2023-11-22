@@ -32,11 +32,7 @@ export default function MovieCard({ movie }) {
         <img
           src={`/img/${movie.img_poster}`}
           alt={`movie poster for ${movie.title}`}
-<<<<<<< HEAD
-          className="hidden w-[150px] rounded-xl object-cover sm:h-56 md:block lg:h-72"
-=======
           className="hidden w-[200px] rounded-xl object-cover sm:h-56 md:block md:w-[200px] lg:h-72"
->>>>>>> dev
         />
         <img
           src={`/img/${movie.img_header}`}
@@ -49,15 +45,6 @@ export default function MovieCard({ movie }) {
             <p className={`${styles.subText}`}>{movie.genre}</p>
             <p className={`${styles.bodyText} hidden md:block`}>
               {movie.description}
-<<<<<<< HEAD
-=======
-            </p>
-            <p
-              className="flex-col pt-1 text-sm md:hidden lg:text-lg"
-              onClick={toggleDescription}
-            >
-              {renderDescription()}
->>>>>>> dev
             </p>
             <div
               className={`${styles.bodyText} md:hidden`}
