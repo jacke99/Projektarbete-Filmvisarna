@@ -9,9 +9,9 @@ import MovieTrailer from "../components/moviesPage/MovieTrailer.jsx";
 export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState("");
-   //eslint-disable-next-line
-   const { data, isPending, error } = useFetch(`/api/movies/${id}`);
- 
+  //eslint-disable-next-line
+  const { data, isPending, error } = useFetch(`/api/movies/${id}`);
+
   useEffect(() => {
     (async () => {
       if (data) {
@@ -35,16 +35,13 @@ export default function MovieDetails() {
           <div className=" md:m-auto ">
             <MovieTrailer movieDetails={data} /> {data.trailer}
           </div>
-          <div className="m-auto flex flex-col p-8 sm:p-12 lg:pb-8">
-            <div
-              className={`text-shadow flex flex-col pb-8 sm:text-xl md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}
-            >
-              <p className={`${styles.trailerTitle}`}>{data.title}</p>
-              <p className={`${styles.trailerSubTitle}`}>{data.genre}</p>
-              <p className={`${styles.trailerSubTitle} bold font-inconsolata`}>                
-                {data.ageRestriction === 0 ? "Ingen åldersgräns" : data.ageRestriction + " år"}
-              </p>
-            </div>
+          <div className="m-auto flex flex-col pl-12 pr-12 sm:pr-12 sm:pl-12 lg:pb-8">
+            <p className={`mb-4 text-white sm:text-xl md:w-5/6 lg:mt-14 lg:mb-10 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}>
+              {data.description}
+            </p>
+            <button onClick={handleClickScroll} className={`${styles.buttonStyle} mx-auto sm:px-4 sm:py-2`}>
+              Biljetter
+            </button>
             <div className="movie-poster pb-8 sm:text-xl md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto">
               <img
                 src={`/img/${data.img_poster}`}
@@ -52,38 +49,29 @@ export default function MovieDetails() {
                 className="w-340 h-48 rounded-lg"
               />
             </div>
-            <p className={`mb-4 text-white sm:text-xl md:w-5/6 lg:mt-14 lg:mb-10 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}>
-              {data.description}
-            </p>
-            <button onClick={handleClickScroll} className={`${styles.buttonStyle} mx-auto sm:px-4 sm:py-2`}>
-              Biljetter
-            </button>
             <div className={`${styles.movieDescInfo} md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}>
-              <span>Regi:</span>
+              <span className="font-bold">Regi:</span>
               <span>{data.director}</span>
             </div>
             <div className={`${styles.movieDescInfo} md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}>
-              <span>Skådespelare:</span>
+              <span className="font-bold">Skådespelare:</span>
               <span>{data.actors}</span>
             </div>
             <div className={`${styles.movieDescInfo} md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}>
-              <span>Originaltitel:</span>
+              <span className="font-bold">Originaltitel:</span>
               <span>{data.title}</span>
             </div>
             <div className={`${styles.movieDescInfo} md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}>
-              <span>Längd:</span>
+              <span className="font-bold">Längd:</span>
               <span>{data.length}</span>
             </div>
             <div className={`${styles.movieDescInfo} md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}>
-              <span>Originalspråk</span>
+              <span className="font-bold">Originalspråk:</span>
               <span>{data.speech}</span>
             </div>
             <div className={`${styles.movieDescInfo} md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto`}>
-              <span>Åldersgräns:</span>
+              <span className="font-bold">Åldersgräns:</span>
               <span> {data.ageRestriction === 0 ? "Ingen åldersgräns" : data.ageRestriction + " år"}</span>
-            </div>
-            <div className="text-white text-[25px] sm:text-[25px] md:text-[30px] lg:text-[35px] md:mt-32 lg:mt-32 mt-20 md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto">
-
             </div>
             {movie.length > 0 ? (
               <div className="md:w-5/6 lg:w-2/3 xl:w-3/5 2xl:w-3/6 md:m-auto" >
