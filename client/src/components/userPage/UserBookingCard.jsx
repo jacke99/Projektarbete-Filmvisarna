@@ -21,10 +21,10 @@ export default function UserBookingCard({
   return (
     <motion.div
       key={index}
-      className={`flex flex-col items-center rounded-lg text-white mdd:ml-8`}
+      className={`flex justify-center rounded-lg text-white mdd:ml-8`}
     >
       <div className="mx-auto w-full max-w-[17rem] xs:mx-0 xs:max-w-[24rem]">
-        <motion.div className="flex flex-col xs:flex-row xs:items-end">
+        <motion.div className="flex flex-col justify-center xs:flex-row xs:items-end">
           <img
             src={`/img/${booking.movie.img_poster}`}
             alt={`poster of the movie: ${booking.movie.title}`}
@@ -60,7 +60,7 @@ export default function UserBookingCard({
         <AnimatePresence>
           {isExpanded && (
             <motion.div
-              className={`mx-auto mt-2 w-full text-base`}
+              className={`mx-auto mt-2 w-11/12 text-base`}
               initial={{ opacity: 0, y: -30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -30 }}
