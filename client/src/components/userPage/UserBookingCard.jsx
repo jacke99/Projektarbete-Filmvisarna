@@ -21,9 +21,9 @@ export default function UserBookingCard({
   return (
     <motion.div
       key={index}
-      className={`relative mx-auto flex flex-col rounded-lg text-white  mdd:ml-8`}
+      className={`flex flex-col items-center rounded-lg text-white mdd:ml-8`}
     >
-      <div className="w-full max-w-[17rem] xs:mx-0 xs:max-w-[24rem]">
+      <div className="mx-auto w-full max-w-[17rem] xs:mx-0 xs:max-w-[24rem]">
         <motion.div className="flex flex-col xs:flex-row xs:items-end">
           <img
             src={`/img/${booking.movie.img_poster}`}
