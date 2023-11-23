@@ -12,7 +12,7 @@ function generate(user) {
   let payloadOptions = {
     issuer: "express-server",
     subject: "user access token",
-    expiresIn: "4h", // 4 hours,
+    expiresIn: "16h", // 4 hours,
     algorithm: "RS256",
   };
 
