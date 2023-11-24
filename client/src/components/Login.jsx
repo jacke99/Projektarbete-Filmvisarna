@@ -103,7 +103,7 @@ export default function Login({ setCurrentUser }) {
       {!loader ? (
         <button
           onClick={handleLogin}
-          className="self-center rounded-md bg-gold p-1 px-4 text-black-100"
+          className="login-btn self-center rounded-md bg-gold p-1 px-4 text-black-100"
         >
           Logga in
         </button>
