@@ -21,7 +21,7 @@ export default function UserBookingCard({
   return (
     <motion.div
       key={index}
-      className={`flex justify-center rounded-lg text-white mdd:ml-8`}
+      className={`flex justify-center rounded-lg text-white`}
     >
       <div className="mx-auto w-full max-w-[17rem] xs:mx-0 xs:max-w-[24rem]">
         <motion.div className="flex flex-col justify-center xs:flex-row xs:items-end">
@@ -60,7 +60,7 @@ export default function UserBookingCard({
         <AnimatePresence>
           {isExpanded && (
             <motion.div
-              className={`mx-auto mt-2 w-11/12 text-base`}
+              className={`mx-auto mt-2 w-10/12 text-base md:w-11/12`}
               initial={{ opacity: 0, y: -30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -30 }}
